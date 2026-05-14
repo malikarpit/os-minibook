@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="Unit 5: Memory Management — OS MiniBook DU B.Tech CSE Sem IV">
+<title>Unit 5 — Memory Management | OS MiniBook ⚡ Arpit</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/animations.css">
+<link rel="stylesheet" href="../assets/css/timer.css">
+<style>
+.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
+.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
+.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
+.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
+.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
+.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
+.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
+.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
+.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
+.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
+.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
+.mem-os{background:#4f46e5;color:#fff}
+.mem-p1{background:#059669;color:#fff}
+.mem-p2{background:#d97706;color:#fff}
+.mem-p3{background:#dc2626;color:#fff}
+.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
+.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
+.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
+.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="tts-toggle" class="icon-btn" title="Read Aloud">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+    </button>
+    
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Unit 5 — Sections</div>
+      <a href="#s-mem-intro" class="sidebar-link active"><span class="link-icon">🧠</span>5.1 Intro to Memory Mgmt</a>
+      <a href="#s-mem-binding" class="sidebar-link"><span class="link-icon">🔗</span>5.2 Address Binding</a>
+      <a href="#s-mem-contiguous" class="sidebar-link"><span class="link-icon">📦</span>5.3 Contiguous Allocation</a>
+      <a href="#s-mem-frag" class="sidebar-link"><span class="link-icon">🧩</span>5.4 Fragmentation</a>
+      <a href="#s-mem-paging" class="sidebar-link"><span class="link-icon">📄</span>5.5 Paging — Concept</a>
+      <a href="#s-mem-multilevel" class="sidebar-link"><span class="link-icon">📑</span>5.5b Multi-Level Paging</a>
+      <a href="#s-mem-tlb" class="sidebar-link"><span class="link-icon">⚡</span>5.6 Paging — TLB &amp; Hardware</a>
+      <a href="#s-mem-protection" class="sidebar-link"><span class="link-icon">🛡️</span>5.6b Memory Protection</a>
+      <a href="#s-mem-seg" class="sidebar-link"><span class="link-icon">📐</span>5.7 Segmentation</a>
+      <a href="#s-mem-virtual" class="sidebar-link"><span class="link-icon">🌐</span>5.8 Virtual Memory</a>
+      <a href="#s-mem-replace" class="sidebar-link"><span class="link-icon">🔄</span>5.9 Page Replacement</a>
+      <a href="#s-mem-thrash" class="sidebar-link"><span class="link-icon">🌀</span>5.10 Thrashing</a>
+      <a href="#s-mem-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ &amp; Q&amp;A</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">All Units</div>
+      <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+    
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Bookmarks</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">My Notes</div>
+      <div id="notes-sidebar-list"></div>
+    </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+<main id="main-content">
+<div class="content-inner">
+  <div class="chapter-hero">
+    <div class="chapter-breadcrumb">
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 5</span>
+    </div>
+    <div class="chapter-num">🧠 Unit 5 · DSC-10</div>
+    <h1 class="chapter-title">Memory Management</h1>
+    <div class="chapter-meta">
+      <span class="meta-tag">🎓 University</span>
+      <span class="meta-tag">⚡ GATE Ready</span>
+      <span class="meta-tag">13 Sections</span>
+      <span class="meta-tag">Paging · Segmentation · Virtual Memory · TLB</span>
+    </div>
+  </div>
+
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-mem-intro" class="toc-item"><span class="toc-num">5.1</span>Introduction to Memory Management</a>
+      <a href="#s-mem-binding" class="toc-item"><span class="toc-num">5.2</span>Address Binding &amp; Logical/Physical Addresses</a>
+      <a href="#s-mem-contiguous" class="toc-item"><span class="toc-num">5.3</span>Contiguous Memory Allocation</a>
+      <a href="#s-mem-frag" class="toc-item"><span class="toc-num">5.4</span>Fragmentation &amp; Compaction</a>
+      <a href="#s-mem-paging" class="toc-item"><span class="toc-num">5.5</span>Paging — Concept &amp; Page Table</a>
+      <a href="#s-mem-multilevel" class="toc-item"><span class="toc-num">5.5b</span>Multi-Level Paging &amp; Inverted Page Tables</a>
+      <a href="#s-mem-tlb" class="toc-item"><span class="toc-num">5.6</span>Paging — TLB &amp; Hardware Support</a>
+      <a href="#s-mem-protection" class="toc-item"><span class="toc-num">5.6b</span>Memory Protection &amp; Sharing</a>
+      <a href="#s-mem-seg" class="toc-item"><span class="toc-num">5.7</span>Segmentation</a>
+      <a href="#s-mem-virtual" class="toc-item"><span class="toc-num">5.8</span>Virtual Memory &amp; Demand Paging</a>
+      <a href="#s-mem-replace" class="toc-item"><span class="toc-num">5.9</span>Page Replacement Algorithms</a>
+      <a href="#s-mem-thrash" class="toc-item"><span class="toc-num">5.10</span>Thrashing &amp; Working Set Model</a>
+      <a href="#s-mem-pyq" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+    </div>
+  </div>
+
+  <!-- SECTION 5.1 -->
+  <section id="s-mem-intro" data-search-section="memory management introduction goals requirements protection relocation sharing binding">
+    <div class="section-heading">
+      <h2 class="prose">5.1 Introduction to Memory Management</h2>
+      <button class="bookmark-btn" data-id="s-mem-intro" data-label="5.1 Memory Intro" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Memory Management</div>
+          Memory management is the OS subsystem responsible for keeping track of which parts of main memory are being used, allocating memory to processes when they need it, and deallocating it when they are done — while ensuring <strong>protection, relocation, sharing, and efficiency</strong>.
+        </div>
+        <h3>The Memory Hierarchy</h3>
+        <table>
+          <thead><tr><th>Level</th><th>Type</th><th>Speed</th><th>Size</th><th>Managed by</th></tr></thead>
+          <tbody>
+            <tr><td>L1/L2/L3</td><td>CPU Cache (SRAM)</td><td>~1–10 ns</td><td>KB–MB</td><td>Hardware</td></tr>
+            <tr><td>Main Memory</td><td>RAM (DRAM)</td><td>~100 ns</td><td>GB</td><td>OS</td></tr>
+            <tr><td>Secondary</td><td>SSD/HDD</td><td>~0.1–10 ms</td><td>TB</td><td>File System</td></tr>
+            <tr><td>Tertiary</td><td>Tape, optical</td><td>seconds</td><td>PB</td><td>Archival system</td></tr>
+          </tbody>
+        </table>
+        <h3>Goals of Memory Management</h3>
+        <table>
+          <thead><tr><th>Goal</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Relocation</strong></td><td>A process can be loaded at any location in memory and still run correctly. Programs should not have hardcoded physical addresses.</td></tr>
+            <tr><td><strong>Protection</strong></td><td>Each process must be protected from unauthorized access by other processes — processes cannot read/write each other's memory.</td></tr>
+            <tr><td><strong>Sharing</strong></td><td>Multiple processes should be able to share common code (e.g., shared libraries like libc.so) to save memory.</td></tr>
+            <tr><td><strong>Logical Organization</strong></td><td>Memory should appear as a flat, linear address space to each process, regardless of the physical layout.</td></tr>
+            <tr><td><strong>Physical Organization</strong></td><td>The OS manages the two-level hierarchy: RAM + disk (swap space), moving data between them transparently.</td></tr>
+          </tbody>
+        </table>
+        <h3>Memory Layout of a Running Process</h3>
+        <div class="mem-diagram">
+          <div class="mem-block" style="background:#1e1b4b;color:#a5b4fc;border:1px solid #4f46e5">High Address ↑</div>
+          <div class="mem-block mem-p3">Stack (grows downward ↓) — local vars, function calls</div>
+          <div class="mem-block mem-free">↕ Gap (unused virtual address space)</div>
+          <div class="mem-block mem-p2">Heap (grows upward ↑) — dynamic malloc/new</div>
+          <div class="mem-block mem-p1">BSS Segment — uninitialized global variables</div>
+          <div class="mem-block mem-os" style="background:#1d4ed8">Data Segment — initialized global/static variables</div>
+          <div class="mem-block mem-os">Text Segment (Code) — executable instructions (read-only)</div>
+          <div class="mem-block" style="background:#1e1b4b;color:#a5b4fc;border:1px solid #4f46e5">Low Address (0x0000…) ↓</div>
+        </div>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Stack vs Heap Growth:</strong> The stack grows <em>downward</em> (from high to low addresses) and the heap grows <em>upward</em>. They grow toward each other. A <strong>stack overflow</strong> occurs when the stack grows into the heap region.</div>
+        </div>
+        <h3>Single vs Multi-Process Memory Models</h3>
+        <table>
+          <thead><tr><th>Model</th><th>Description</th><th>Problem</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Monoprogramming</strong></td><td>Only one process in memory at a time; it gets all of RAM</td><td>Low CPU utilization — CPU idles during I/O</td></tr>
+            <tr><td><strong>Multiprogramming</strong></td><td>Multiple processes reside in memory simultaneously</td><td>Need isolation, allocation, protection mechanisms</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>The text/code segment is typically <strong>read-only and shared</strong> — multiple instances of the same program share one copy of the code.</li>
+          <li>Stack and heap are per-process and grow toward each other in the virtual address space.</li>
+          <li>The OS does NOT manage CPU cache — that is handled entirely by hardware.</li>
+          <li>Memory management goals: <strong>R-P-S-L-P</strong> → Relocation, Protection, Sharing, Logical org, Physical org.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.2 -->
+  <section id="s-mem-binding" data-search-section="address binding compile time load time execution time logical physical address MMU relocation register base limit">
+    <div class="section-heading">
+      <h2 class="prose">5.2 Address Binding &amp; Logical/Physical Addresses</h2>
+      <button class="bookmark-btn" data-id="s-mem-binding" data-label="5.2 Address Binding" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Address Binding</div>
+          Mapping from symbolic names (variables, functions) in source code to actual memory addresses. This binding can happen at three different stages in the program lifecycle.
+        </div>
+        <h3>Three Stages of Address Binding</h3>
+        <table>
+          <thead><tr><th>Stage</th><th>When?</th><th>Addresses Fixed At</th><th>Flexibility</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Compile Time</strong></td><td>During compilation</td><td>Absolute addresses in machine code</td><td>❌ None — must reload to different address</td></tr>
+            <tr><td><strong>Load Time</strong></td><td>When OS loads program into RAM</td><td>Linker/loader computes final addresses</td><td>⚠️ Fixed after loading — no runtime relocation</td></tr>
+            <tr><td><strong>Execution Time</strong></td><td>While program is running</td><td>Hardware translates on every memory access</td><td>✅ Full flexibility — process can be moved during execution</td></tr>
+          </tbody>
+        </table>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>Modern OS:</strong> All modern operating systems use <strong>execution-time binding</strong> (via the MMU hardware). This is what enables virtual memory, process swapping, and shared libraries.</div>
+        </div>
+        <h3>Logical vs Physical Address</h3>
+        <table>
+          <thead><tr><th>Property</th><th>Logical Address (Virtual)</th><th>Physical Address</th></tr></thead>
+          <tbody>
+            <tr><td>Generated by</td><td>CPU — what the program sees</td><td>RAM — what actually gets accessed</td></tr>
+            <tr><td>Also called</td><td>Virtual address</td><td>Real address</td></tr>
+            <tr><td>Range</td><td>0 to max (virtual address space)</td><td>Depends on actual RAM installed</td></tr>
+            <tr><td>Visible to programmer?</td><td>Yes (via pointers in code)</td><td>No (hidden by OS/MMU)</td></tr>
+          </tbody>
+        </table>
+        <h3>Memory Management Unit (MMU)</h3>
+        <p>Hardware device that translates logical → physical addresses on every memory access. The simplest MMU uses a <strong>Relocation Register (Base Register)</strong>:</p>
+        <div class="addr-flow">
+          <div class="addr-box">CPU generates<br>Logical Addr 346</div>
+          <div class="addr-arrow">+</div>
+          <div class="addr-box">Base Register<br>= 14000</div>
+          <div class="addr-arrow">→ MMU →</div>
+          <div class="addr-box">Physical Addr<br>= 14346</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">RAM Access</div>
+        </div>
+        <h3>Base and Limit Registers</h3>
+        <p>A pair of hardware registers provides protection:</p>
+        <ul>
+          <li><strong>Base Register:</strong> Holds the starting physical address of the process.</li>
+          <li><strong>Limit Register:</strong> Holds the size of the process's address space.</li>
+          <li>On every memory access: MMU checks if <code>logical_addr &lt; limit</code>. If not → <strong>segmentation fault / protection fault</strong>!</li>
+        </ul>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">MMU Address Translation Logic</span><button class="code-copy">Copy</button></div>
+          <pre><code>// On every memory access by CPU:
+if (logical_addr >= limit_register) {
+    TRAP → OS → Segmentation Fault (kill process)
+} else {
+    physical_addr = base_register + logical_addr;
+    access RAM[physical_addr];
+}</code></pre>
+        </div>
+        <p>Example: Base=14000, Limit=3000. If CPU accesses logical address 4000 → 4000 ≥ 3000 → TRAP! If CPU accesses 500 → physical = 14000+500 = 14500 ✅</p>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Compile-time binding requires relocation of binary if load address changes. Load-time binding is done by <strong>linker/loader</strong>. Execution-time binding requires hardware MMU.</li>
+          <li>Logical address space size and physical address space size can be <strong>different</strong>. Virtual memory allows logical space &gt; physical RAM.</li>
+          <li>Base+Limit registers are loaded from PCB on context switch — each process has its own pair.</li>
+          <li>GATE key formula: <code>Physical = Base + Logical</code>. Protection check: <code>Logical &lt; Limit</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mode-adv">
+      <div class="mode-badge adv">🔬 Advanced</div>
+      <div class="prose">
+        <h3>Dynamic Loading, Dynamic Linking & Overlays</h3>
+        <ul>
+          <li><strong>Dynamic Loading:</strong> A routine is not loaded until it is called. All routines are kept on disk in a relocatable load format. Better memory-space utilization; unused routine is never loaded. No special OS support required.</li>
+          <li><strong>Dynamic Linking:</strong> Linking is postponed until execution time. A <em>stub</em> is included in the image for each library-routine reference. The stub replaces itself with the address of the routine, and executes the routine. OS is needed to check if routine is in processes' memory address. Essential for <strong>Shared Libraries (.so / .dll)</strong>.</li>
+          <li><strong>Overlays:</strong> Used when process is larger than amount of memory allocated to it. Keep in memory only those instructions and data that are needed at any given time. Implemented by user, no special OS support needed, programming design of overlay structure is complex. Mostly obsolete today due to virtual memory.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.0 — CACHE MEMORY -->
+  <section id="s-mem-cache" data-search-section="cache memory L1 L2 L3 direct mapped set associative fully associative hit ratio miss penalty EAT write through write back replacement LRU FIFO temporal spatial locality">
+    <div class="section-heading">
+      <h2 class="prose">5.0 Cache Memory</h2>
+      <button class="bookmark-btn" data-id="s-mem-cache" data-label="5.0 Cache Memory" title="Bookmark">🔖</button>
+    </div>
+    <div class="prose">
+
+      <h3>Memory Hierarchy & Why Cache Exists</h3>
+      <p>Accessing main RAM for every instruction is too slow. Cache memory (SRAM) bridges the speed gap between the ultra-fast CPU and slower DRAM.</p>
+      <table>
+        <thead><tr><th>Level</th><th>Location</th><th>Size</th><th>Latency</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CPU Registers</strong></td><td>On-chip</td><td>&lt;1 KB</td><td>~0.3 ns (1 cycle)</td></tr>
+          <tr><td><strong>L1 Cache</strong></td><td>On-chip (per core)</td><td>32–128 KB</td><td>~1 ns (4 cycles)</td></tr>
+          <tr><td><strong>L2 Cache</strong></td><td>On-chip (per core)</td><td>256 KB–2 MB</td><td>~4 ns (12 cycles)</td></tr>
+          <tr><td><strong>L3 Cache</strong></td><td>On-chip (shared)</td><td>4–64 MB</td><td>~10 ns (40 cycles)</td></tr>
+          <tr><td><strong>Main RAM (DRAM)</strong></td><td>DIMM slots</td><td>4–512 GB</td><td>~60–100 ns</td></tr>
+          <tr><td><strong>SSD (NVMe)</strong></td><td>PCIe slot</td><td>TB scale</td><td>~50–100 µs</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout info">
+        <span class="callout-icon">📌</span>
+        <div><strong>Locality of Reference:</strong><br>
+        • <strong>Temporal locality:</strong> A recently accessed address will likely be accessed again soon (loops, function variables).<br>
+        • <strong>Spatial locality:</strong> Addresses near a recently accessed address will likely be accessed soon (arrays, sequential code).<br>
+        Cache effectiveness depends entirely on programs exhibiting high locality.</div>
+      </div>
+
+      <h3>Cache Organization: How Addresses Map to Cache</h3>
+      <p>A physical address is split into <strong>Tag | Index (Set) | Block Offset</strong> fields.</p>
+
+      <table>
+        <thead><tr><th>Mapping Type</th><th>Structure</th><th>Pros</th><th>Cons</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Direct-Mapped</strong></td>
+            <td>Each memory block maps to exactly <strong>1 cache line</strong> (line = address mod N)</td>
+            <td>Simple, fast lookup — just check one slot</td>
+            <td><strong>Conflict misses:</strong> two blocks map to same line, thrashing</td>
+          </tr>
+          <tr>
+            <td><strong>k-way Set-Associative</strong></td>
+            <td>Cache split into sets; each block maps to <strong>one set but any of k ways</strong></td>
+            <td>Fewer conflict misses; practical sweet spot</td>
+            <td>LRU tracking logic for k slots</td>
+          </tr>
+          <tr>
+            <td><strong>Fully Associative</strong></td>
+            <td>A block can go into <strong>any cache line</strong>; no set restriction</td>
+            <td>Fewest misses (maximum flexibility)</td>
+            <td>Most expensive; need to compare all tags in parallel</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚡</span>
+        <div><strong>Direct-Mapped Example (4 lines, addresses 0–15):</strong><br>
+        Address 0 → line 0, Address 4 → line 0, Address 8 → line 0, Address 12 → line 0.<br>
+        If a loop accesses addresses 0 and 4 alternately: every access is a <em>conflict miss</em> — even though the cache is mostly empty!</div>
+      </div>
+
+      <h3>Cache Performance: EAT Formula (GATE Numerical)</h3>
+      <div class="formula-box">
+        <div class="formula-label">Effective Access Time — Cache</div>
+        EAT = h × T<sub>c</sub> + (1 − h) × (T<sub>c</sub> + T<sub>m</sub>)<br><br>
+        Where: h = hit rate, T<sub>c</sub> = cache access time, T<sub>m</sub> = main memory access time<br><br>
+        <strong>Simplification:</strong> EAT = T<sub>c</sub> + (1 − h) × T<sub>m</sub>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">GATE Numerical Example</span><button class="code-copy">Copy</button></div>
+        <pre><code>Given: T_c = 10 ns, T_m = 100 ns, h = 0.90 (90% hit rate)
+
+  EAT = h × T_c + (1 − h) × (T_c + T_m)
+      = 0.90 × 10 + 0.10 × (10 + 100)
+      = 9 + 0.10 × 110
+      = 9 + 11
+      = 20 ns
+
+  Without cache: T_m = 100 ns   ← 5× slower than with cache.
+
+  Alternate formula:
+  EAT = T_c + (1 − h) × T_m
+      = 10 + 0.10 × 100 = 10 + 10 = 20 ns ✅ (same result)
+
+  If h = 0.95:
+  EAT = 10 + 0.05 × 100 = 10 + 5 = 15 ns
+  → Higher hit rate → access time approaches T_c</code></pre>
+      </div>
+
+      <h3>Cache Replacement Policies</h3>
+      <p>When a cache miss occurs and the cache is full, a line must be evicted.</p>
+      <table>
+        <thead><tr><th>Policy</th><th>Rule</th><th>Pros / Cons</th></tr></thead>
+        <tbody>
+          <tr><td><strong>LRU (Least Recently Used)</strong></td><td>Evict the line not used for the longest time</td><td>Best practical hit rate; hardware-expensive for large caches</td></tr>
+          <tr><td><strong>FIFO</strong></td><td>Evict the oldest-loaded line regardless of recent use</td><td>Simple; suffers Bélády anomaly in some access patterns</td></tr>
+          <tr><td><strong>Random</strong></td><td>Evict a randomly chosen line</td><td>Lowest hardware cost; surprisingly good average performance</td></tr>
+          <tr><td><strong>LFU (Least Frequently Used)</strong></td><td>Evict line accessed fewest times</td><td>Works well for stable access patterns; stale block problem</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Write Policies</h3>
+      <table>
+        <thead><tr><th>Policy</th><th>Behaviour</th><th>When Used</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Write-Through</strong></td>
+            <td>Write to cache AND main memory simultaneously on every write</td>
+            <td>Always consistent; slower (every write goes to RAM)</td>
+          </tr>
+          <tr>
+            <td><strong>Write-Back (Copy-Back)</strong></td>
+            <td>Write only to cache; write to RAM only when the line is evicted (<em>dirty bit</em> set)</td>
+            <td>Faster (most writes stay in cache); risk of data loss on crash</td>
+          </tr>
+          <tr>
+            <td><strong>Write-Allocate</strong></td>
+            <td>On write miss: fetch block into cache, then write (pairs with write-back)</td>
+            <td>Exploits spatial locality for subsequent writes to same block</td>
+          </tr>
+          <tr>
+            <td><strong>No-Write-Allocate</strong></td>
+            <td>On write miss: write directly to RAM without loading into cache</td>
+            <td>Pairs with write-through; avoids polluting cache with one-time writes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout info">
+        <span class="callout-icon">📌</span>
+        <div><strong>Cache Coherence (Multi-core):</strong> When multiple CPU cores each have their own L1/L2 cache, a write by Core A may not be visible to Core B. <strong>MESI protocol</strong> (Modified/Exclusive/Shared/Invalid) is used to maintain coherence — each cache line has a state, and caches communicate via a bus or interconnect. This is why <code>volatile</code> alone is insufficient for thread synchronization in C/C++.</div>
+      </div>
+
+      <div class="callout gate">
+        <span class="callout-icon">⚡</span>
+        <div><strong>GATE Trap:</strong> GATE sometimes distinguishes two EAT formulas:<br>
+        1. <code>h × T_c + (1-h) × (T_c + T_m)</code> — assumes RAM access begins only after cache miss (sequential)<br>
+        2. <code>h × T_c + (1-h) × T_m</code> — assumes RAM access starts simultaneously with cache lookup (simultaneous)<br>
+        <strong>Default formula</strong> (unless stated otherwise): formula 1 (sequential). Always check the question wording.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.3 -->
+  <section id="s-mem-contiguous" data-search-section="contiguous memory allocation fixed partitioning variable partitioning first fit best fit worst fit hole free block">
+    <div class="section-heading">
+      <h2 class="prose">5.3 Contiguous Memory Allocation</h2>
+      <button class="bookmark-btn" data-id="s-mem-contiguous" data-label="5.3 Contiguous Allocation" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <p>Contiguous allocation assigns each process a <strong>single, continuous block</strong> of physical memory. Two classic approaches:</p>
+        <h3>Fixed Partitioning</h3>
+        <p>Memory is divided into fixed-size partitions at boot time. Each partition holds exactly one process.</p>
+        <div class="mem-diagram">
+          <div class="mem-block mem-os">OS (always in partition 0)</div>
+          <div class="mem-block mem-p1">Partition 1 — 8 MB (holds P1, 6 MB) — 2 MB wasted!</div>
+          <div class="mem-block mem-p2">Partition 2 — 8 MB (holds P2, 8 MB) — no waste</div>
+          <div class="mem-block mem-p3">Partition 3 — 8 MB (EMPTY)</div>
+        </div>
+        <ul>
+          <li><strong>Advantage:</strong> Simple, no allocation algorithm needed, OS overhead minimal.</li>
+          <li><strong>Disadvantage:</strong> <strong>Internal Fragmentation</strong> — process is smaller than partition, wasting space inside. Degree of multiprogramming limited by number of partitions.</li>
+        </ul>
+        <h3>Variable (Dynamic) Partitioning</h3>
+        <p>Partitions are created dynamically — each process gets exactly the memory it needs. OS maintains a list of free "holes" in memory.</p>
+        <h4>Allocation Algorithms (Strategies)</h4>
+        <table>
+          <thead><tr><th>Strategy</th><th>Method</th><th>Speed</th><th>Fragmentation</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><strong>First Fit</strong></td><td>Allocate first hole that is big enough</td><td>Fast</td><td>Medium</td><td>✅ Usually best</td></tr>
+            <tr><td><strong>Best Fit</strong></td><td>Allocate smallest hole that fits</td><td>Slow (scan all holes)</td><td>High (many tiny holes)</td><td>⚠️ Poor in practice</td></tr>
+            <tr><td><strong>Worst Fit</strong></td><td>Allocate largest hole</td><td>Slow</td><td>Medium (leftovers are large)</td><td>❌ Worst overall</td></tr>
+          </tbody>
+        </table>
+        <h4>First Fit Example</h4>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Memory State — First Fit Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>Free holes: 100K, 500K, 200K, 300K, 600K (in order)
+Request: 212K
+
+First Fit → finds 500K (first hole ≥ 212K) → allocate
+Remaining hole: 500K - 212K = 288K
+
+Best Fit  → finds 300K (smallest ≥ 212K) → allocate
+Remaining hole: 300K - 212K = 88K (tiny — wasted!)
+
+Worst Fit → finds 600K (largest) → allocate
+Remaining hole: 600K - 212K = 388K (still usable)</code></pre>
+        </div>
+        <p><strong>Simulation studies show:</strong> First Fit and Best Fit are both better than Worst Fit. First Fit is generally fastest and produces acceptable fragmentation.</p>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>First Fit</strong> is fastest (stops at first fit). <strong>Best Fit</strong> minimizes wasted space per allocation but creates many unusable tiny holes overall.</li>
+          <li>Variable partitioning suffers from <strong>external fragmentation</strong> — total free memory may be enough but not contiguous.</li>
+          <li>With First Fit, on average ~50% of allocated memory is lost to fragmentation — known as the <strong>50% rule</strong>.</li>
+          <li>GATE: "Which algorithm leads to maximum external fragmentation?" → <strong>Best Fit</strong> (creates many tiny leftover holes).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.4 -->
+  <section id="s-mem-frag" data-search-section="fragmentation internal external compaction paging segmentation solution holes memory waste">
+    <div class="section-heading">
+      <h2 class="prose">5.4 Fragmentation &amp; Compaction</h2>
+      <button class="bookmark-btn" data-id="s-mem-frag" data-label="5.4 Fragmentation" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Types of Fragmentation</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Definition</th><th>Occurs in</th><th>Solution</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Internal Fragmentation</strong></td><td>Allocated memory block is <em>larger than needed</em>. The extra space inside the block is wasted.</td><td>Fixed partitioning, paging (last page)</td><td>Use smaller allocation units</td></tr>
+            <tr><td><strong>External Fragmentation</strong></td><td>Total free memory is sufficient but scattered in non-contiguous holes. No single hole is large enough.</td><td>Variable partitioning, segmentation</td><td>Compaction, paging, segmentation</td></tr>
+          </tbody>
+        </table>
+        <h3>Visual Illustration</h3>
+        <div class="mem-diagram">
+          <div class="mem-block mem-p1">P1 (40 MB)</div>
+          <div class="mem-block mem-free">FREE — 10 MB (hole 1)</div>
+          <div class="mem-block mem-p2">P2 (30 MB)</div>
+          <div class="mem-block mem-free">FREE — 5 MB (hole 2)</div>
+          <div class="mem-block mem-p3">P3 (20 MB)</div>
+          <div class="mem-block mem-free">FREE — 15 MB (hole 3)</div>
+        </div>
+        <p>Total free = 10+5+15 = <strong>30 MB</strong>. But a new process needing 25 MB <strong>cannot be loaded</strong> — no single hole is 25 MB. This is <strong>external fragmentation</strong>.</p>
+        <h3>Compaction — The Solution to External Fragmentation</h3>
+        <div class="def-box">
+          <div class="def-term">Compaction</div>
+          Shuffle memory contents to place all free memory together in one large block. Processes are relocated to adjacent addresses, consolidating all free space into a single large hole.
+        </div>
+        <div class="mem-diagram" style="margin-top:0">
+          <div style="text-align:center;color:var(--tx-muted);font-size:var(--text-xs);padding:4px">After Compaction:</div>
+          <div class="mem-block mem-p1">P1 (40 MB)</div>
+          <div class="mem-block mem-p2">P2 (30 MB)</div>
+          <div class="mem-block mem-p3">P3 (20 MB)</div>
+          <div class="mem-block mem-free">FREE — 30 MB (consolidated!)</div>
+        </div>
+        <div class="callout danger">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>Compaction is Expensive:</strong> Moving processes in memory is very slow — requires copying all their data and updating all pointers. Only possible with execution-time binding (MMU can update base register). Compaction is often too slow for practical use, which is why paging (which eliminates external fragmentation) was invented.</div>
+        </div>
+        <h3>Solutions Summary</h3>
+        <table>
+          <thead><tr><th>Problem</th><th>Best Solution</th></tr></thead>
+          <tbody>
+            <tr><td>Internal Fragmentation</td><td>Use smaller page/block sizes</td></tr>
+            <tr><td>External Fragmentation</td><td><strong>Paging</strong> (eliminates it completely) or Compaction (expensive)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Paging eliminates <strong>external</strong> fragmentation but introduces <strong>internal</strong> fragmentation (last page of each process may be partially used).</li>
+          <li>Segmentation eliminates <strong>internal</strong> fragmentation but introduces <strong>external</strong> fragmentation.</li>
+          <li>Compaction requires execution-time binding — compile-time and load-time bound processes cannot be moved safely.</li>
+          <li><strong>Maximum internal fragmentation per page:</strong> (page_size − 1) bytes. On average: page_size/2.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.4b — SWAPPING -->
+  <section id="s-mem-swap" data-search-section="swapping swap space backing store medium term scheduler degree multiprogramming process swap in swap out">
+    <div class="section-heading">
+      <h2 class="prose">5.4b Swapping</h2>
+      <button class="bookmark-btn" data-id="s-mem-swap" data-label="5.4b Swapping" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Swapping</div>
+          Swapping is the process of temporarily moving an <strong>entire process</strong> out of main memory to a <strong>backing store</strong> (disk) and later bringing it back for continued execution. Unlike paging (which swaps individual pages), swapping moves the entire process image.
+        </div>
+        <h3>Why Swapping?</h3>
+        <p>When the degree of multiprogramming is too high and memory is exhausted, the OS can <strong>swap out</strong> an idle or low-priority process to free RAM for active processes. This is managed by the <strong>medium-term scheduler</strong>.</p>
+        <h3>Swapping Mechanism</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Swap-In / Swap-Out Process</span><button class="code-copy">Copy</button></div>
+          <pre><code>1. OS selects a process to swap out (e.g., blocked, low priority)
+2. Save process state (PCB, registers) to disk swap area
+3. Copy entire process address space to swap partition
+4. Free RAM frames for other processes
+5. Later, when process is needed:
+   - Swap in: copy from disk back to RAM
+   - Restore PCB and registers
+   - Process resumes from where it left off
+
+Swap Time = Transfer Time = (Process Size / Disk Bandwidth)
+
+Example: Process = 10 MB, Disk bandwidth = 50 MB/s
+  Swap out = 10/50 = 0.2 seconds = 200 ms
+  Swap in  = 200 ms more
+  Total overhead per swap = 400 ms — VERY expensive!</code></pre>
+        </div>
+        <h3>Swap Space Management</h3>
+        <table>
+          <thead><tr><th>Aspect</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Backing Store</strong></td><td>Dedicated swap partition (Linux: <code>/dev/sda2</code>) or swap file. Must be large enough to hold copies of all swapped processes.</td></tr>
+            <tr><td><strong>Linux Swap</strong></td><td><code>mkswap</code> to create, <code>swapon</code>/<code>swapoff</code> to manage. <code>free -h</code> shows swap usage. <code>/proc/swaps</code> lists active swap areas.</td></tr>
+            <tr><td><strong>Swap vs Paging</strong></td><td>Modern OS (Linux, Windows) use <strong>paging-based swapping</strong> — only individual pages are swapped, not entire processes. Traditional swapping (entire process) is rarely used today.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Modern Reality:</strong> Linux uses demand paging + swap. When RAM is full, the kernel's <strong>kswapd</strong> daemon swaps out least-recently-used pages to the swap partition. The OOM (Out-of-Memory) killer terminates processes as a last resort.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Swap time is dominated by <strong>transfer time</strong> (proportional to process/page size). Seek and rotational latency are smaller components.</li>
+          <li>Swapping increases effective degree of multiprogramming but adds significant I/O overhead.</li>
+          <li>GATE may ask: "What is the total time for swapping a 100KB process with disk transfer rate 1MB/s?" → 100/1000 = 0.1s per direction, 0.2s total.</li>
+          <li>Medium-term scheduler decides which processes to swap in/out — distinct from short-term (CPU) and long-term (job admission) schedulers.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.5 -->
+  <section id="s-mem-paging" data-search-section="paging page frame page table page number offset physical address logical address page size">
+    <div class="section-heading">
+      <h2 class="prose">5.5 Paging — Concept &amp; Page Table</h2>
+      <button class="bookmark-btn" data-id="s-mem-paging" data-label="5.5 Paging" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Paging</div>
+          Paging is a memory management scheme that <strong>eliminates external fragmentation</strong> by dividing both logical memory into fixed-size <strong>pages</strong> and physical memory into fixed-size <strong>frames</strong> of the same size. Pages can be stored in any available frames — they need not be contiguous.
+        </div>
+        <h3>Key Terminology</h3>
+        <table>
+          <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Page</strong></td><td>Fixed-size unit of logical memory (e.g., 4 KB)</td></tr>
+            <tr><td><strong>Frame</strong></td><td>Fixed-size unit of physical memory — same size as a page</td></tr>
+            <tr><td><strong>Page Table</strong></td><td>Per-process mapping table: page number → frame number</td></tr>
+            <tr><td><strong>Page Number (p)</strong></td><td>Upper bits of logical address — index into page table</td></tr>
+            <tr><td><strong>Page Offset (d)</strong></td><td>Lower bits of logical address — byte position within the page</td></tr>
+          </tbody>
+        </table>
+        <h3>Address Translation</h3>
+        <p>Logical address is split into two parts automatically by hardware:</p>
+        <div class="addr-flow">
+          <div class="addr-box">Logical Addr<br>(p | d)</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">Page Table<br>p → frame f</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">Physical Addr<br>(f | d)</div>
+          <div class="addr-arrow">→ RAM</div>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Paging — Address Translation Formula</span><button class="code-copy">Copy</button></div>
+          <pre><code>Page size = 2^n bytes  (n = number of offset bits)
+
+Logical Address = (page_number p) || (page_offset d)
+    p = logical_addr / page_size  (integer division)
+    d = logical_addr % page_size  (remainder)
+
+Physical Address = (frame_number f) || (page_offset d)
+    f = PageTable[p]              (lookup in page table)
+    Physical = f * page_size + d
+
+Example: Page size = 512 bytes, Logical addr = 2500
+    p = 2500 / 512 = 4 (page 4)
+    d = 2500 % 512 = 452 (byte 452 within the page)
+    If PageTable[4] = 7 → Physical = 7*512 + 452 = 4036</code></pre>
+        </div>
+        <h3>Page Table Entries (PTE)</h3>
+        <p>Each entry in the page table contains:</p>
+        <table>
+          <thead><tr><th>Bit/Field</th><th>Name</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>Frame Number</td><td>—</td><td>Which physical frame holds this page</td></tr>
+            <tr><td>V/P bit</td><td>Valid/Present</td><td>1 = page in RAM; 0 = not in RAM (triggers page fault)</td></tr>
+            <tr><td>R bit</td><td>Referenced</td><td>Set to 1 when page is accessed (for LRU approximation)</td></tr>
+            <tr><td>M/D bit</td><td>Modified/Dirty</td><td>1 = page was written to (must write back before evicting)</td></tr>
+            <tr><td>Protection bits</td><td>R/W/X</td><td>Read, Write, Execute permissions for this page</td></tr>
+          </tbody>
+        </table>
+        <h3>Page Table Size</h3>
+        <p>For a 32-bit address space with 4 KB (2¹²) page size:</p>
+        <ul>
+          <li>Number of pages = 2³²/2¹² = <strong>2²⁰ = 1 Million pages</strong></li>
+          <li>Page table size (4 bytes/entry) = 4 MB per process!</li>
+          <li>With 100 processes → 400 MB just for page tables → <strong>problem!</strong></li>
+        </ul>
+        <p>Solutions: Multi-level page tables, Inverted page tables, Hashed page tables (covered in advanced OS).</p>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Why Paging Eliminates External Fragmentation:</strong> Physical frames are assigned one at a time. Any free frame can hold any page — pages don't need to be in adjacent frames. The page table stitches them together logically. No hole is ever "too small" — any frame is usable!</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>Key formula:</strong> Logical addr → p = addr/page_size, d = addr%page_size. Physical = PageTable[p]*page_size + d.</li>
+          <li>If page size = 2ⁿ → split logical addr as: top (m−n) bits = page number, bottom n bits = offset.</li>
+          <li>Number of pages in logical space = 2^(m) / 2^(n) = 2^(m−n) where m = address bits.</li>
+          <li><strong>Internal fragmentation:</strong> Last page of a process wastes on average page_size/2 bytes.</li>
+          <li>Page table is stored in <strong>main memory</strong> (RAM) — pointed to by PTBR (Page Table Base Register).</li>
+          <li>Without TLB: every memory access = 2 memory accesses (1 for page table, 1 for data). TLB reduces this.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.5b — MULTI-LEVEL PAGING -->
+  <section id="s-mem-multilevel" data-search-section="multi-level paging two-level three-level hierarchical page table inverted page table hashed page table outer inner page directory">
+    <div class="section-heading">
+      <h2 class="prose">5.5b Multi-Level Paging &amp; Inverted Page Tables</h2>
+      <button class="bookmark-btn" data-id="s-mem-multilevel" data-label="5.5b Multi-Level Paging" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>The Problem: Page Table is Too Large</h3>
+        <p>With a 32-bit address space and 4KB pages, the page table has 2²⁰ = 1 million entries (4MB per process). With 64-bit addressing, the table would have 2⁵² entries — <strong>impossible to store!</strong> Solution: break the page table itself into pages.</p>
+
+        <h3>Two-Level (Hierarchical) Paging</h3>
+        <div class="def-box">
+          <div class="def-term">Two-Level Paging</div>
+          The page table is itself paged. A 32-bit logical address is split into three parts: <strong>outer page number (p1)</strong> — index into the outer (directory) page table, <strong>inner page number (p2)</strong> — index into the inner (second-level) page table, and <strong>page offset (d)</strong> — byte within the page. Only the page table pages that are actually needed are kept in memory.
+        </div>
+
+        <h4>32-bit Address Split (4KB pages)</h4>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Two-Level Paging — Address Structure</span><button class="code-copy">Copy</button></div>
+          <pre><code>32-bit Logical Address with 4KB (2¹²) pages:
+
+  ┌────────────┬────────────┬──────────────┐
+  │  p1 (10b)  │  p2 (10b)  │   d (12b)    │
+  └────────────┴────────────┴──────────────┘
+
+  p1 = Outer page table index (2¹⁰ = 1024 entries)
+  p2 = Inner page table index (2¹⁰ = 1024 entries per inner table)
+  d  = Page offset (2¹² = 4096 bytes per page)
+
+Translation:
+  Step 1: OuterPT[p1] → address of inner page table
+  Step 2: InnerPT[p2] → frame number f
+  Step 3: Physical Address = f × 4096 + d
+
+Memory Savings:
+  Without multi-level: 4MB contiguous page table always in RAM
+  With 2-level: Only outer table (4KB) + used inner tables
+  → If process uses only 1/1024 of address space: 4KB + 4KB = 8KB!</code></pre>
+        </div>
+
+        <h4>Address Translation Diagram</h4>
+        <div class="addr-flow">
+          <div class="addr-box">Logical Addr<br>(p1 | p2 | d)</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">Outer PT<br>p1 → Inner PT addr</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">Inner PT<br>p2 → frame f</div>
+          <div class="addr-arrow">→</div>
+          <div class="addr-box">Physical<br>(f | d)</div>
+        </div>
+
+        <h3>Three-Level Paging (64-bit Systems)</h3>
+        <p>64-bit systems need even more levels. x86-64 commonly uses <strong>4-level paging</strong> (PGD → PUD → PMD → PTE → Frame) for 48-bit canonical virtual addresses (256 TB virtual space). Modern systems may support <strong>5-level paging</strong> (PML5, LA57) for 57-bit virtual addresses on capable hardware:</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">x86-64 Four-Level Paging</span><button class="code-copy">Copy</button></div>
+          <pre><code>48-bit Virtual Address (x86-64, 4KB pages):
+
+  ┌─────────┬─────────┬─────────┬─────────┬──────────┐
+  │ PGD(9b) │ PUD(9b) │ PMD(9b) │ PTE(9b) │  d(12b)  │
+  └─────────┴─────────┴─────────┴─────────┴──────────┘
+
+  Each level has 2⁹ = 512 entries
+  Each entry = 8 bytes (64-bit)
+  Each page table page = 512 × 8 = 4096 bytes = 1 page ✅
+
+  Without multi-level: 2³⁶ entries × 8B = 512 GB per process!
+  With 4-level: typically only a few hundred KB per process</code></pre>
+        </div>
+
+        <h3>Inverted Page Table</h3>
+        <div class="def-box" style="border-color:var(--gate-b)">
+          <div class="def-term" style="color:var(--gate-c)">Inverted Page Table</div>
+          Instead of one page table per process, there is <strong>one global table with one entry per physical frame</strong>. Each entry records: (process-id, page-number) of the page occupying that frame. Lookup requires searching the table for (pid, page). Saves memory but lookup is O(n) — solved using a <strong>hash table</strong>.
+        </div>
+        <table>
+          <thead><tr><th>Type</th><th>Size</th><th>Lookup</th><th>Used By</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Multi-Level PT</strong></td><td>Per-process, variable</td><td>O(levels) — fast</td><td>x86, ARM</td></tr>
+            <tr><td><strong>Inverted PT</strong></td><td>One global table, fixed</td><td>O(1) with hash</td><td>PowerPC, IBM AS/400</td></tr>
+            <tr><td><strong>Hashed PT</strong></td><td>Per-process, hash table</td><td>O(1) average</td><td>64-bit systems</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>GATE Multi-Level Paging Formulas &amp; Numericals</h3>
+        <div class="formula-box">
+          <div class="formula-label">Multi-Level EAT (with TLB)</div>
+          EAT = h × (t + m) + (1−h) × (t + (n+1) × m)<br>
+          where h = TLB hit ratio, t = TLB time, m = memory access time, n = number of paging levels
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">GATE Numerical — Multi-Level EAT</span><button class="code-copy">Copy</button></div>
+          <pre><code>Q: A system uses 2-level paging. TLB access = 10ns,
+   memory access = 100ns, TLB hit rate = 95%.
+   Calculate EAT.
+
+Solution:
+  n = 2 (two levels of page table)
+  Hit path:  TLB + 1 memory = 10 + 100 = 110 ns
+  Miss path: TLB + 3 memory = 10 + 300 = 310 ns
+             (1 for outer PT + 1 for inner PT + 1 for data)
+
+  EAT = 0.95 × 110 + 0.05 × 310
+      = 104.5 + 15.5 = 120 ns ✅
+
+───────────────────────────────────────────
+Q: 4-level paging, no TLB. Memory access = 200ns.
+   How many memory accesses per data read?
+
+Answer: 5 accesses
+  (4 page table lookups + 1 data access)
+  EAT = 5 × 200 = 1000 ns
+  Without multi-level (single PT): 2 × 200 = 400 ns
+  → Multi-level trades speed for memory savings
+
+───────────────────────────────────────────
+Q: 32-bit addr, 8KB page size, PTE = 4 bytes.
+   How many levels needed? Address split?
+
+Solution:
+  Page offset = log₂(8192) = 13 bits
+  Page number bits = 32 - 13 = 19 bits
+  Entries per page = 8192 / 4 = 2048 = 2¹¹
+  → Each level indexes 11 bits
+  → Levels needed: ⌈19/11⌉ = 2 levels
+  → p1 = 8 bits (2⁸=256 entries), p2 = 11 bits, d = 13 bits</code></pre>
+        </div>
+        <ul>
+          <li>In multi-level paging, <strong>page table size ∝ address space actually used</strong>, not total virtual space.</li>
+          <li>Inverted page table: size = number of physical frames × entry size — independent of virtual address space size.</li>
+          <li>GATE trick: "How many memory accesses with n-level paging?" → <strong>n+1</strong> without TLB; with TLB: h×1 + (1−h)×(n+1) + 1 for data.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.6 -->
+  <section id="s-mem-tlb" data-search-section="TLB translation lookaside buffer hardware support PTBR PTLR associative memory hit miss effective access time EAT">
+    <div class="section-heading">
+      <h2 class="prose">5.6 Paging — TLB &amp; Hardware Support</h2>
+      <button class="bookmark-btn" data-id="s-mem-tlb" data-label="5.6 TLB" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Translation Lookaside Buffer (TLB)</div>
+          A small, ultra-fast hardware cache (associative memory) inside the CPU that stores recent page table entries. Instead of looking up the page table in RAM (slow), the MMU first checks the TLB. A <strong>TLB hit</strong> bypasses RAM lookup; a <strong>TLB miss</strong> fetches from the page table in RAM and loads it into TLB.
+        </div>
+        <h3>TLB Access Flow</h3>
+        <div class="addr-flow" style="flex-direction:column;gap:var(--sp-2);align-items:flex-start">
+          <div style="display:flex;align-items:center;gap:var(--sp-3)">
+            <div class="addr-box">CPU: Logical Addr (p, d)</div>
+            <div class="addr-arrow">→ Check TLB</div>
+          </div>
+          <div style="display:flex;gap:var(--sp-6);flex-wrap:wrap">
+            <div style="flex:1;min-width:160px">
+              <div style="color:#10b981;font-weight:700;font-size:var(--text-xs);margin-bottom:4px">✅ TLB HIT (fast path)</div>
+              <div class="addr-box" style="font-size:11px">Frame f found in TLB → Physical = f*sz+d → RAM access<br><strong>Total: 1 TLB + 1 RAM = fast!</strong></div>
+            </div>
+            <div style="flex:1;min-width:160px">
+              <div style="color:#f43f5e;font-weight:700;font-size:var(--text-xs);margin-bottom:4px">❌ TLB MISS (slow path)</div>
+              <div class="addr-box" style="font-size:11px">Look up Page Table in RAM → load into TLB → access data<br><strong>Total: 1 TLB + 1 Page Table RAM + 1 Data RAM</strong></div>
+            </div>
+          </div>
+        </div>
+        <h3>Effective Memory Access Time (EAT)</h3>
+        <p>Let: α = TLB hit rate, t = TLB access time (e.g., 20ns), m = memory access time (e.g., 100ns)</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">EAT Formula</span><button class="code-copy">Copy</button></div>
+          <pre><code>EAT = α × (t + m) + (1 − α) × (t + 2m)
+    = t + m + (1 − α) × m          [simplified]
+
+Example: α = 0.90, t = 20ns, m = 100ns
+    HIT  path: 20 + 100 = 120 ns (90% of accesses)
+    MISS path: 20 + 100 + 100 = 220 ns (10% of accesses)
+    EAT = 0.90 × 120 + 0.10 × 220
+        = 108 + 22 = 130 ns
+
+Without TLB: Every access = 2 × 100 = 200 ns
+With TLB (90% hit rate): EAT = 130 ns → 35% speedup!</code></pre>
+        </div>
+        <h3>TLB Properties</h3>
+        <table>
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Size</td><td>64–1024 entries (very small — must be fast)</td></tr>
+            <tr><td>Technology</td><td>Associative (content-addressable) memory — all entries searched in parallel</td></tr>
+            <tr><td>Hit rate (typical)</td><td>90–99% (due to locality of reference)</td></tr>
+            <tr><td>On context switch</td><td>TLB must be flushed (or entries tagged with ASID — Address Space ID)</td></tr>
+          </tbody>
+        </table>
+        <h3>Hardware Registers</h3>
+        <ul>
+          <li><strong>PTBR (Page Table Base Register):</strong> Points to the page table in RAM. Saved/restored on every context switch (stored in PCB).</li>
+          <li><strong>PTLR (Page Table Length Register):</strong> Holds the size of the page table — used for bounds checking on page number.</li>
+        </ul>
+        <div class="callout warn">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>TLB Flush on Context Switch:</strong> If the TLB is not flushed on context switch, a new process might use stale entries from the previous process → wrong frame mappings → security violation! Modern CPUs use ASID (Address Space Identifiers) to tag TLB entries, allowing them to persist across context switches safely.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>EAT = α(t+m) + (1−α)(t+2m)</strong> — memorize this. If t=0 (ignored): EAT = m + (1−α)m = (2−α)m.</li>
+          <li>Without TLB: EAT = 2m (one for page table, one for data). With TLB (hit rate α): EAT &lt; 2m always.</li>
+          <li>TLB is searched <strong>in parallel</strong> (associative memory) — all entries are compared simultaneously, not sequentially.</li>
+          <li>GATE numerical: "TLB hit rate 80%, memory time 100ns, TLB time 10ns. Find EAT." → EAT = 0.8(110) + 0.2(210) = 88 + 42 = <strong>130 ns</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.6b — MEMORY PROTECTION & SHARING -->
+  <section id="s-mem-protection" data-search-section="memory protection sharing base limit protection bits page table shared pages reentrant code read-only frame sharing">
+    <div class="section-heading">
+      <h2 class="prose">5.6b Memory Protection &amp; Sharing</h2>
+      <button class="bookmark-btn" data-id="s-mem-protection" data-label="5.6b Protection & Sharing" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Memory Protection Mechanisms</h3>
+        <p>The OS must ensure that a process can only access its own memory. Three hardware mechanisms provide this:</p>
+
+        <h4>1. Base-Limit Registers</h4>
+        <p>Each process has a <strong>base register</strong> (starting address) and a <strong>limit register</strong> (size). On every memory access: if addr &lt; 0 or addr ≥ limit → trap! Physical = base + addr. Loaded from PCB on context switch.</p>
+
+        <h4>2. Protection Bits in Page Table Entries</h4>
+        <table>
+          <thead><tr><th>Bit</th><th>Meaning</th><th>Violation Result</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Valid/Invalid (V)</strong></td><td>1 = page is in this process's address space; 0 = illegal address</td><td>Page fault → SIGSEGV</td></tr>
+            <tr><td><strong>Read (R)</strong></td><td>Page can be read</td><td>Protection fault if disallowed</td></tr>
+            <tr><td><strong>Write (W)</strong></td><td>Page can be written</td><td>Protection fault if read-only page written</td></tr>
+            <tr><td><strong>Execute (X)</strong></td><td>Page contains executable code</td><td>NX bit violation → prevents code injection attacks</td></tr>
+            <tr><td><strong>User/Supervisor (U/S)</strong></td><td>0 = only kernel can access; 1 = user can access</td><td>Prevents user access to kernel pages</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>NX (No-Execute) Bit:</strong> Modern CPUs support the NX bit (Intel: XD, AMD: NX) which marks data pages as non-executable. This prevents buffer overflow attacks from executing injected shellcode — a critical security feature.</div>
+        </div>
+
+        <h4>3. PTLR (Page Table Length Register)</h4>
+        <p>Bounds-checks the page number: if page_number ≥ PTLR → trap! This prevents a process from accessing page table entries beyond its own address space.</p>
+
+        <h3>Memory Sharing Between Processes</h3>
+        <p>While processes must be protected from each other, controlled sharing is often desirable:</p>
+
+        <h4>Shared Pages (Code Sharing)</h4>
+        <div class="def-box" style="border-color:var(--gate-b)">
+          <div class="def-term" style="color:var(--gate-c)">Reentrant Code / Shared Pages</div>
+          Multiple processes running the same program (e.g., 10 users running a text editor) can <strong>share the code pages</strong> while having private data pages. The code must be <strong>reentrant</strong> (pure code — never modifies itself). Each process's page table maps the code pages to the <strong>same physical frames</strong>.
+        </div>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Shared Pages Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>Scenario: 3 processes run the same editor (150KB code, 50KB data each)
+
+Without sharing:
+  3 × (150KB + 50KB) = 600KB total RAM needed
+
+With shared code pages:
+  1 × 150KB (shared code) + 3 × 50KB (private data) = 300KB
+  Savings: 300KB (50%!)
+
+Page Table Mapping:
+  Process P1:  Code pages → frames {5,6,7}   Data → frames {10,11}
+  Process P2:  Code pages → frames {5,6,7}   Data → frames {12,13}
+  Process P3:  Code pages → frames {5,6,7}   Data → frames {14,15}
+                            ↑ same frames!      ↑ different frames
+
+Shared code pages have protection bits: R-X (read+execute, no write)
+Private data pages have protection bits: R-W (read+write)</code></pre>
+        </div>
+
+        <h4>Shared Libraries (.so / .dll)</h4>
+        <p>Linux's <strong>shared libraries</strong> (<code>.so</code> files) are the most common form of page sharing. When multiple programs use <code>libc.so</code>, the OS maps the same physical frames into each process's virtual address space. The <code>mmap()</code> system call with <code>MAP_SHARED</code> enables this.</p>
+
+        <h4>Shared Memory IPC</h4>
+        <p>Two processes can explicitly share a memory region via <code>shmget()</code>/<code>shmat()</code> (System V) or <code>shm_open()</code>/<code>mmap()</code> (POSIX). Their page tables map different virtual addresses to the <strong>same physical frames</strong> — enabling the fastest form of IPC.</p>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>GATE Protection &amp; Sharing Quick Facts</h3>
+        <ul>
+          <li><strong>GATE classic:</strong> "40 users run same editor (200KB code, 50KB data). RAM needed with sharing?" → 200KB + 40×50KB = <strong>2200KB</strong> (vs 10,000KB without sharing)</li>
+          <li>Shared pages must be <strong>reentrant</strong> (read-only code). Data pages are NEVER shared (each process has private copy).</li>
+          <li>Protection is enforced by <strong>hardware (MMU)</strong> on every memory access — no software overhead.</li>
+          <li>Valid/Invalid bit in PTE: Invalid can mean (a) page not in process's address space OR (b) page on disk (demand paging). OS must distinguish these cases in the page fault handler.</li>
+          <li><strong>Frames saved by sharing</strong> = (N−1) × code_pages, where N = number of processes sharing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.7 -->
+  <section id="s-mem-seg" data-search-section="segmentation segment table base limit segment number offset logical physical address protection">
+    <div class="section-heading">
+      <h2 class="prose">5.7 Segmentation</h2>
+      <button class="bookmark-btn" data-id="s-mem-seg" data-label="5.7 Segmentation" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Segmentation</div>
+          Segmentation is a memory management scheme that divides a program into <strong>variable-size logical units called segments</strong> — matching the programmer's view (code, stack, heap, data, libraries). Each segment gets its own base address and limit. Provides meaningful protection (e.g., code segment is read-only).
+        </div>
+        <h3>User's View of Memory</h3>
+        <p>A programmer thinks in terms of segments, not page numbers:</p>
+        <table>
+          <thead><tr><th>Segment</th><th>Content</th><th>Typical Permissions</th></tr></thead>
+          <tbody>
+            <tr><td>Segment 0 — Code</td><td>Program instructions</td><td>Read + Execute only</td></tr>
+            <tr><td>Segment 1 — Data</td><td>Global variables</td><td>Read + Write</td></tr>
+            <tr><td>Segment 2 — Stack</td><td>Local variables, return addresses</td><td>Read + Write</td></tr>
+            <tr><td>Segment 3 — Heap</td><td>Dynamic allocations</td><td>Read + Write</td></tr>
+            <tr><td>Segment 4 — Library</td><td>Shared libc code</td><td>Read + Execute (shared)</td></tr>
+          </tbody>
+        </table>
+        <h3>Segment Table</h3>
+        <p>Each process has a Segment Table. Each entry = (Base, Limit) pair:</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Segmentation Address Translation</span><button class="code-copy">Copy</button></div>
+          <pre><code>Logical Address = (segment_number s, offset d)
+
+Translation:
+    1. Look up SegmentTable[s] → get (Base_s, Limit_s)
+    2. If d >= Limit_s → TRAP (segment fault — out of bounds!)
+    3. Physical Address = Base_s + d
+
+Example:
+    Segment 2 (Stack): Base = 4300, Limit = 1000
+    Access: (2, 852) → d=852 < 1000 ✅
+    Physical = 4300 + 852 = 5152 ✅
+
+    Access: (2, 1100) → d=1100 >= 1000 → TRAP! 🚨</code></pre>
+        </div>
+        <h3>Paging vs Segmentation</h3>
+        <table>
+          <thead><tr><th>Property</th><th>Paging</th><th>Segmentation</th></tr></thead>
+          <tbody>
+            <tr><td>Division unit</td><td>Fixed-size pages</td><td>Variable-size segments</td></tr>
+            <tr><td>Programmer visible?</td><td>No (transparent)</td><td>Yes (matches program structure)</td></tr>
+            <tr><td>External fragmentation</td><td>❌ None</td><td>✅ Yes (variable sizes)</td></tr>
+            <tr><td>Internal fragmentation</td><td>✅ Yes (last page)</td><td>❌ None (exact fit)</td></tr>
+            <tr><td>Sharing</td><td>Page-level sharing</td><td>Segment-level sharing (e.g., share code segment)</td></tr>
+            <tr><td>Protection</td><td>Per-page R/W/X bits</td><td>Per-segment R/W/X — more meaningful</td></tr>
+            <tr><td>Used in modern OS</td><td>✅ Primarily (x86 paging)</td><td>⚠️ Legacy (x86 mostly flat segments)</td></tr>
+          </tbody>
+        </table>
+        <h3>Segmented Paging (Hybrid) — Intel x86</h3>
+        <p>Modern systems combine both schemes: the logical space is divided into <strong>segments</strong>, and each segment is then divided into <strong>pages</strong>. This gives the protection benefits of segmentation plus the fragmentation elimination of paging.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Intel x86 Segmented Paging — Address Translation</span><button class="code-copy">Copy</button></div>
+          <pre><code>Logical Address = (Segment Number s, Offset within segment)
+
+Step 1: Segment Table lookup
+   → SegTable[s] gives (Base, Limit) of that segment
+   → Check: offset < Limit (else → segment fault)
+   → Linear Address = Base + offset
+
+Step 2: Paging on the Linear Address
+   → Linear Address split into (Page Number p, Page Offset d)
+   → Page Table lookup: PageTable[p] → frame f
+   → Physical Address = f × page_size + d
+
+Overall: Logical → (segmentation) → Linear → (paging) → Physical
+
+Example: Segment 2, Offset 5000. SegTable[2]=(Base=20000, Limit=8000).
+  Linear = 20000 + 5000 = 25000.
+  Page size = 4096. p = 25000/4096 = 6, d = 25000%4096 = 424.
+  If PageTable[6] = frame 10 → Physical = 10×4096 + 424 = 41384</code></pre>
+        </div>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>Linux Shortcut:</strong> Linux sets all segment bases to 0 and limits to max (flat model), effectively <em>bypassing</em> segmentation. The linear address equals the logical address, and only paging is used in practice. This simplifies the hardware path while maintaining x86 compatibility.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Segmentation address = (s, d). Check: d &lt; Limit[s], then Physical = Base[s] + d.</li>
+          <li>Segmentation suffers from <strong>external fragmentation</strong> (variable sizes). Paging suffers from <strong>internal fragmentation</strong>.</li>
+          <li>A segment fault occurs when d ≥ Limit — out-of-bounds access within a segment.</li>
+          <li>GATE: "Number of bits for segment number?" → log₂(number of segments). "Offset bits?" → log₂(max segment size).</li>
+          <li>Sharing in segmentation: two processes can have SegmentTable entries pointing to the <strong>same Base address</strong> for shared code.</li>
+        </ul>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">GATE Numerical Example — Segmentation Translation</span><button class="code-copy">Copy</button></div>
+          <pre><code>Given Segment Table:
+Seg   Base    Limit
+0     219     600
+1     2300    14
+2     90      100
+3     1327    580
+4     1952    96
+
+Calculate Physical Addresses for the following Logical Addresses (Segment, Offset):
+1. (0, 430)
+   - Check limit: 430 < 600 ✅ Valid
+   - Physical = Base + Offset = 219 + 430 = 649
+2. (1, 10)
+   - Check limit: 10 < 14 ✅ Valid
+   - Physical = 2300 + 10 = 2310
+3. (2, 500)
+   - Check limit: 500 < 100 ❌ INVALID (Trap / Segmentation Fault)
+4. (3, 400)
+   - Check limit: 400 < 580 ✅ Valid
+   - Physical = 1327 + 400 = 1727</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.8 -->
+  <section id="s-mem-virtual" data-search-section="virtual memory demand paging page fault pure demand paging lazy swapper valid invalid bit swap space">
+    <div class="section-heading">
+      <h2 class="prose">5.8 Virtual Memory &amp; Demand Paging</h2>
+      <button class="bookmark-btn" data-id="s-mem-virtual" data-label="5.8 Virtual Memory" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Virtual Memory</div>
+          Virtual memory is a technique that allows processes to execute even when not completely in RAM. The OS gives each process the illusion of a very large address space by keeping only the <strong>active pages in RAM</strong> and storing the rest on disk (swap space). The total virtual address space can be much larger than physical RAM.
+        </div>
+        <h3>Benefits of Virtual Memory</h3>
+        <ul>
+          <li>Programs can be larger than physical memory</li>
+          <li>More processes can run simultaneously (each uses less RAM)</li>
+          <li>Faster process startup (only load what's needed immediately)</li>
+          <li>Efficient sharing of code pages between processes</li>
+        </ul>
+        <h3>Demand Paging</h3>
+        <p>The most common virtual memory implementation. Pages are loaded into RAM only <strong>on demand</strong> — when a program tries to access them. Initially, no pages are loaded (pure demand paging).</p>
+        <h3>Page Fault — The Core Mechanism</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Page Fault Handling — Step by Step</span><button class="code-copy">Copy</button></div>
+          <pre><code>1. CPU tries to access page p → checks Page Table
+2. Valid bit = 0 → PAGE FAULT (hardware trap to OS)
+3. OS determines: is this a valid access or illegal?
+     a. Illegal address → terminate process (SIGSEGV)
+     b. Valid but not in RAM → continue handling
+4. OS finds a free frame in physical memory
+     → If no free frame: run Page Replacement Algorithm
+       to select a victim page and evict it
+5. OS reads page p from disk (swap space) into frame f
+6. Update Page Table: PageTable[p] = f, Valid bit = 1
+7. Restart the faulting instruction
+8. Process continues — page is now in RAM ✅</code></pre>
+        </div>
+        <h3>Page Fault Performance</h3>
+        <p>Effective Access Time (EAT) with page faults:</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">EAT Formula with Page Faults</span><button class="code-copy">Copy</button></div>
+          <pre><code>p = page fault rate (fraction of accesses that cause a fault)
+m = memory access time (e.g., 200ns)
+s = page fault service time (disk I/O, e.g., 8ms = 8,000,000ns)
+
+EAT = (1 − p) × m + p × s
+
+Example: p = 0.001 (1 fault per 1000 accesses)
+    EAT = 0.999 × 200 + 0.001 × 8,000,000
+        = 199.8 + 8000 = 8199.8 ns ≈ 41× slowdown!
+
+→ Page fault rate must be kept VERY LOW for acceptable performance</code></pre>
+        </div>
+        <div class="callout danger">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>A page fault is orders of magnitude slower than a memory access.</strong> With HDD, page fault service can be tens of thousands of times slower (~8 ms vs ~200 ns). Even with SSD/NVMe, it remains hundreds of times slower. This is why page replacement algorithms and working set management are critical.</div>
+        </div>
+        <h3>Copy-on-Write (COW)</h3>
+        <div class="def-box">
+          <div class="def-term">Copy-on-Write (COW)</div>
+          An optimization for <code>fork()</code>: instead of copying all parent pages, both parent and child share the same physical frames, marked as <strong>read-only</strong>. When either process tries to <strong>write</strong> to a shared page, a protection fault occurs → OS creates a private copy of just that page for the writing process. Unmodified pages remain shared forever.
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">COW — Step by Step</span><button class="code-copy">Copy</button></div>
+          <pre><code>Before fork():
+  Parent pages: [Code(R-X), Data1(R-W), Data2(R-W), Stack(R-W)]
+                 Frame:  5      10         11          20
+
+After fork() with COW:
+  Parent PT: [Code→F5, Data1→F10, Data2→F11, Stack→F20]  all R-ONLY
+  Child  PT: [Code→F5, Data1→F10, Data2→F11, Stack→F20]  all R-ONLY
+             ↑ SAME frames! No physical copy yet.
+
+Child writes to Data1:
+  1. Write to F10 → protection fault (page is read-only)
+  2. OS sees it's a COW page → allocates new frame F30
+  3. Copies F10 contents → F30
+  4. Updates Child PT: Data1→F30 (R-W)
+  5. If F10 ref count drops to 1 (parent only), parent PT: Data1→F10 (R-W).
+     If other sharers exist, parent stays read-only/COW until its own write.
+  6. Child continues writing to F30
+
+Result: Only 1 page copied, not entire address space!
+  → fork() + exec() pattern: child immediately calls exec()
+     which replaces all pages → COW means NO pages copied at all!</code></pre>
+        </div>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>COW + vfork():</strong> Linux also has <code>vfork()</code> which is even faster — the child <em>shares</em> the parent's address space (no page table copy at all). The parent is suspended until child calls <code>exec()</code>. Dangerous but maximally efficient for the fork+exec pattern.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>EAT with faults: EAT = (1−p)m + p·s. For acceptable performance: p must be &lt; 10⁻⁶.</li>
+          <li>Pure demand paging: start with 0 pages in memory. First instruction always page faults. Multiple faults possible for one instruction (if operands on different pages).</li>
+          <li>Valid bit = 1 → page in RAM. Valid bit = 0 → either on disk OR invalid address. OS must distinguish these two cases.</li>
+          <li>Copy-on-Write eliminates unnecessary copying → fork() is O(1) in time/space until first write.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.9 -->
+  <section id="s-mem-replace" data-search-section="page replacement algorithm FIFO optimal LRU least recently used Belady's anomaly clock second chance frame allocation">
+    <div class="section-heading">
+      <h2 class="prose">5.9 Page Replacement Algorithms</h2>
+      <button class="bookmark-btn" data-id="s-mem-replace" data-label="5.9 Page Replacement" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <p>When a page fault occurs and RAM is full, the OS must <strong>evict (replace)</strong> a page. The choice of which page to evict determines performance. Goal: minimize page fault rate.</p>
+        <h3>Reference String Example (used throughout)</h3>
+        <p>Reference string: <strong>7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1</strong> with <strong>3 frames</strong>.</p>
+
+        <h3>1. FIFO (First-In First-Out)</h3>
+        <p>Replace the page that has been in memory the <em>longest</em>. Simple queue.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">FIFO — 3 Frames Trace</span><button class="code-copy">Copy</button></div>
+          <pre><code>Ref:  7  0  1  2  0  3  0  4  2  3  0  3  2  1  2  0  1  7  0  1
+F1:   7  7  7  2  2  2  2  4  4  4  0  0  0  1  1  1  1  7  7  7
+F2:   -  0  0  0  0  3  3  3  2  2  2  2  2  2  2  0  0  0  0  0
+F3:   -  -  1  1  1  1  0  0  0  3  3  3  3  3  3  3  3  3  3  1
+Fault? F  F  F  F  -  F  F  F  F  F  F  -  -  F  -  F  -  F  F  F
+
+Total FIFO page faults = 15 (out of 20 accesses)</code></pre>
+        </div>
+        <div class="callout danger">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>Bélády's Anomaly:</strong> FIFO can exhibit more page faults with MORE frames! Adding frame 4→5 sometimes increases faults. This is unique to FIFO — LRU and Optimal do NOT suffer from this.</div>
+        </div>
+
+        <h3>2. Optimal (OPT / MIN)</h3>
+        <p>Replace the page that will NOT be used for the longest time in the future. Theoretical best — gives minimum page faults.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Optimal — 3 Frames Trace (ref: 7,0,1,2,0,3,0,4,2,3)</span><button class="code-copy">Copy</button></div>
+          <pre><code>Ref:  7  0  1  2  0  3  0  4  2  3  0  3  2  1  2  0  1  7  0  1
+F1:   7  7  7  2  2  2  2  2  2  2  2  2  2  2  2  2  2  7  7  7
+F2:   -  0  0  0  0  0  0  4  4  4  0  0  0  0  0  0  0  0  0  0
+F3:   -  -  1  1  1  3  3  3  3  3  3  3  3  1  1  1  1  1  1  1
+Fault? F  F  F  F  -  F  -  F  -  -  F  -  -  F  -  -  -  F  -  -
+
+Total Optimal page faults = 9 (minimum possible for this string, 3 frames)</code></pre>
+        </div>
+        <p><em>Problem: Requires future knowledge — impossible to implement in practice. Used as a benchmark.</em></p>
+
+        <h3>3. LRU (Least Recently Used)</h3>
+        <p>Replace the page that has not been used for the longest time. Uses past access history as predictor of future (locality of reference).</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">LRU Implementation Methods</span><button class="code-copy">Copy</button></div>
+          <pre><code>Method 1 — Counter: Each page has a timestamp of last access.
+    Evict page with smallest timestamp. O(n) search on fault.
+
+Method 2 — Stack: Use a doubly-linked stack.
+    On access: move page to top. Bottom = LRU victim. O(1) eviction.
+
+Method 3 — Approximation (Clock / Second Chance):
+    Uses a circular queue ("clock") with a clock hand pointer.
+    Each page has a Reference Bit (R), set to 1 on each access.
+
+    On page fault (need to evict):
+    REPEAT:
+      Check page under clock hand:
+      IF R == 0 → EVICT this page (victim found)
+      IF R == 1 → set R = 0, advance clock hand (give second chance)
+    UNTIL victim found
+
+    Clock Trace Example (4 frames, hand starts at frame 0):
+    Frames: [A(R=1), B(R=0), C(R=1), D(R=1)]
+    Page fault → need to replace:
+      Frame 0: A has R=1 → clear to 0, advance ↓
+      Frame 1: B has R=0 → EVICT B! Replace with new page.
+      Clock hand now points to frame 2.
+
+    ✅ Key insight: if a page was recently used (R=1), it gets
+       a "second chance" — its R bit is cleared but it survives.
+       Pages that haven't been used (R=0) are evicted first.
+       This approximates LRU with only 1 bit per page + O(1).</code></pre>
+        </div>
+        <h3>Algorithm Comparison</h3>
+        <table>
+          <thead><tr><th>Algorithm</th><th>Faults (3 frames)</th><th>Implementable?</th><th>Bélády's Anomaly?</th><th>Performance</th></tr></thead>
+          <tbody>
+            <tr><td><strong>FIFO</strong></td><td>15</td><td>✅ Yes</td><td>✅ Possible</td><td>Poor</td></tr>
+            <tr><td><strong>Optimal</strong></td><td>9</td><td>❌ No (future needed)</td><td>❌ Never</td><td>Best (benchmark)</td></tr>
+            <tr><td><strong>LRU</strong></td><td>12</td><td>✅ Yes (with overhead)</td><td>❌ Never</td><td>Good — near optimal</td></tr>
+            <tr><td><strong>Clock (2nd Chance)</strong></td><td>~12</td><td>✅ Yes (efficient)</td><td>⚠️ Not a stack algorithm</td><td>Good — used in practice</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>Optimal gives minimum page faults</strong> — use it as lower bound when comparing algorithms.</li>
+          <li>LRU does NOT have Bélády's Anomaly — belongs to a class of "stack algorithms" that are monotonically improving with more frames.</li>
+          <li>GATE: count page faults by simulating step-by-step. Mark a fault (F) when a page is not in any current frame.</li>
+          <li>Clock algorithm = LRU approximation with O(1) per access. Used in Linux VM subsystem.</li>
+          <li><strong>Frame allocation strategies:</strong>
+            <ul>
+              <li><strong>Equal allocation:</strong> frames_per_process = total_frames / n_processes. E.g., 100 frames, 5 processes → 20 each. Simple but ignores process size differences.</li>
+              <li><strong>Proportional allocation:</strong> frames_i = (size_i / Σsizes) × total_frames. Larger processes get more frames. E.g., 3 processes (10KB, 30KB, 60KB), 100 frames → 10, 30, 60 frames.</li>
+              <li><strong>Global vs Local replacement:</strong> Global = any process's page can be evicted for another (Linux uses this). Local = a process can only evict its own pages. Global gives better throughput; local gives more predictable per-process performance.</li>
+            </ul>
+          </li>
+          <li>Minimum frames per process = maximum number of pages any single instruction can reference (architecture-dependent). If fewer → instruction can never complete without faulting.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mode-adv">
+      <div class="mode-badge adv">🔬 Advanced</div>
+      <div class="prose">
+        <h3>Full LRU Trace Table (20 Accesses, 3 Frames)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">LRU — Step-by-Step Trace</span><button class="code-copy">Copy</button></div>
+          <pre><code>Ref:  7  0  1  2  0  3  0  4  2  3  0  3  2  1  2  0  1  7  0  1
+F1:   7  7  7  2  2  2  2  4  4  4  0  0  0  1  1  1  1  1  1  1
+F2:   -  0  0  0  0  0  0  0  0  3  3  3  3  3  3  0  0  0  0  0
+F3:   -  -  1  1  1  3  3  3  2  2  2  2  2  2  2  2  2  7  7  7
+Fault? F  F  F  F  -  F  -  F  F  F  F  -  -  F  -  F  -  F  -  -
+
+LRU victim selection at each fault:
+  Access 2: frames={7,0,1}. LRU=7 (oldest access). Replace 7→2.
+  Access 3: frames={2,0,1}. LRU=1 (last used at pos 3). Replace 1→3.
+  Access 4: frames={2,0,3}. LRU=2 (last used at pos 4). Replace 2→4.
+
+Corrected LRU: at each access, evict the page whose last use is FURTHEST in the past.
+Total LRU page faults = 12 (out of 20 accesses)</code></pre>
+        </div>
+        <h3>Bélády's Anomaly — Concrete FIFO Example</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">FIFO: More Frames → MORE Faults!</span><button class="code-copy">Copy</button></div>
+          <pre><code>Reference string: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5
+
+With 3 frames (FIFO):
+  Ref: 1  2  3  4  1  2  5  1  2  3  4  5
+  F1:  1  1  1  4  4  4  5  5  5  5  5  5
+  F2:  -  2  2  2  1  1  1  1  1  3  3  3
+  F3:  -  -  3  3  3  2  2  2  2  2  4  4
+  Faults: 9
+
+With 4 frames (FIFO):
+  Ref: 1  2  3  4  1  2  5  1  2  3  4  5
+  F1:  1  1  1  1  1  1  5  5  5  5  4  4
+  F2:  -  2  2  2  2  2  2  1  1  1  1  5
+  F3:  -  -  3  3  3  3  3  3  2  2  2  2
+  F4:  -  -  -  4  4  4  4  4  4  3  3  3
+  Faults: 10  ← MORE faults with MORE frames!
+
+This is Bélády's anomaly. Only non-stack algorithms (like FIFO) can exhibit it.
+Stack algorithms (LRU, Optimal) guarantee: more frames → ≤ faults.</code></pre>
+        </div>
+        <h3>Enhanced Second Chance (NRU — Not Recently Used)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Using (Reference, Dirty) Bit Pairs</span><button class="code-copy">Copy</button></div>
+          <pre><code>Each page has two bits: Reference (R) and Dirty/Modified (M).
+Priority classes for eviction (lowest = best victim):
+
+  (0,0) — not recently used, not modified    ← BEST victim
+  (0,1) — not recently used, but modified    ← needs write-back
+  (1,0) — recently used, not modified        ← may be used again
+  (1,1) — recently used AND modified         ← WORST victim
+
+Algorithm (Enhanced Clock):
+  Scan pages in circular order:
+  Pass 1: look for (0,0) — evict immediately if found
+  Pass 2: look for (0,1) — evict (write back first), clear R bits
+  Pass 3: repeat — now all R bits are 0, so (0,0) or (0,1) found
+
+Used by: macOS Mach VM system (historically).</code></pre>
+        </div>
+        <h3>Linux Memory Allocators: Buddy + Slab/SLUB</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Kernel Memory Allocation</span><button class="code-copy">Copy</button></div>
+          <pre><code>Buddy Allocator (page-level):
+  Manages physical pages in power-of-2 sized blocks.
+  Free lists: order 0 (1 page), order 1 (2 pages), ..., order 10 (1024 pages)
+  Allocation: find smallest block ≥ requested size, split if needed.
+  Deallocation: merge with buddy if buddy is also free (coalescing).
+  Internal fragmentation: up to ~50% (rounded up to power of 2).
+  External fragmentation: none (coalescing prevents it).
+  See: cat /proc/buddyinfo
+
+Slab Allocator (object-level):
+  For frequent small allocations (task_struct, inode, dentry, etc.).
+  Pre-allocates typed object pools called "slabs."
+  Each slab = one or more buddy-allocated pages.
+  Objects are pre-initialized → allocation = just pointer bump.
+  No internal fragmentation for same-type objects.
+  SLUB (default in modern Linux): simplified slab, better SMP scaling.
+  SLOB: minimal slab for embedded systems.
+  See: cat /proc/slabinfo or slabtop command.</code></pre>
+        </div>
+        <h3>TLB Reach, ASID, and PCID</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">TLB Optimization Techniques</span><button class="code-copy">Copy</button></div>
+          <pre><code>TLB Reach = (number of TLB entries) × (page size)
+  Example: 512 TLB entries × 4KB = 2MB reach
+  If working set > TLB reach → frequent TLB misses
+
+Increasing TLB Reach:
+  1. More TLB entries (expensive hardware)
+  2. Larger pages (huge pages: 2MB or 1GB on x86-64)
+     Linux: Transparent Huge Pages (THP) auto-promotes
+     Explicit: mmap() with MAP_HUGETLB, or hugetlbfs
+
+ASID (Address Space Identifier):
+  Each TLB entry tagged with process ASID (usually 8-16 bits).
+  Context switch: just change ASID register, NO TLB flush needed.
+  TLB entries from old process remain valid with different ASID.
+  ASID wraparound: must flush when all ASIDs exhausted.
+
+PCID (Process Context Identifier — x86-64):
+  Intel's version of ASID. 12-bit PCID in CR3.
+  Up to 4096 contexts cached simultaneously.
+  Critical for Meltdown mitigation (KPTI): switching between
+  user and kernel page tables no longer flushes TLB.
+
+Split TLB:
+  Separate I-TLB (instructions) and D-TLB (data) for L1.
+  Unified L2 TLB backs both.
+  Total reach = I-TLB reach + D-TLB reach (if no overlap).</code></pre>
+        </div>
+        <h3>Local vs Global Page Replacement — Detailed</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Replacement Scope Comparison</span><button class="code-copy">Copy</button></div>
+          <pre><code>Local Replacement:
+  Each process has a fixed frame allocation.
+  On page fault: process can only evict its OWN pages.
+  Pro: one process cannot steal another's frames.
+  Pro: predictable per-process performance.
+  Con: underutilized frames can't help other processes.
+  Con: must solve frame allocation problem separately.
+
+Global Replacement:
+  Any frame in the system can be evicted for any process.
+  On page fault: victim page may belong to another process.
+  Pro: better overall throughput, automatic frame redistribution.
+  Pro: simpler implementation (one global pool).
+  Con: one process's behavior affects others.
+  Con: harder to predict per-process fault rate.
+
+Linux uses GLOBAL replacement with per-process limits (cgroups).
+  kswapd: background daemon that reclaims pages when free < threshold.
+  Direct reclaim: if kswapd can't keep up, allocating process reclaims.
+  OOM killer: last resort, kills highest-score process to free memory.</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 5.10 -->
+  <section id="s-mem-thrash" data-search-section="thrashing working set model locality page fault rate frame allocation prepaging">
+    <div class="section-heading">
+      <h2 class="prose">5.10 Thrashing &amp; Working Set Model</h2>
+      <button class="bookmark-btn" data-id="s-mem-thrash" data-label="5.10 Thrashing" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Thrashing</div>
+          Thrashing occurs when a process spends more time paging (handling page faults) than executing. The process is constantly replacing pages it will need again almost immediately. CPU utilization drops to near zero — the system appears to hang.
+        </div>
+        <h3>Why Thrashing Happens</h3>
+        <p>If a process doesn't have enough frames to hold its <strong>working set</strong>, it will continuously page fault:</p>
+        <ol>
+          <li>Process page faults → OS evicts a page → that page was needed → another fault immediately</li>
+          <li>CPU utilization drops as process is blocked on I/O</li>
+          <li>OS sees low CPU → brings in MORE processes (to increase utilization)</li>
+          <li>More processes → even fewer frames per process → more thrashing!</li>
+          <li>CPU utilization crashes → system is effectively dead</li>
+        </ol>
+        <h3>Working Set Model (Denning, 1968)</h3>
+        <div class="def-box">
+          <div class="def-term">Working Set</div>
+          The <strong>working set</strong> W(t, Δ) of a process at time t is the set of pages referenced in the last Δ time units (the working set window). The working set represents the process's <strong>current locality</strong> — the pages it is actively using right now.
+        </div>
+        <p>If a process is given at least |W(t, Δ)| frames (enough to hold its working set), it will not thrash.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Working Set Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>Reference string: 2, 6, 1, 5, 7, 7, 7, 5, 1, 6, 2, ...
+                  |←————— Δ = 10 —————→|
+
+Working set at current time t:
+    Pages referenced in last 10 accesses = {1, 2, 5, 6, 7}
+    |W(t, Δ)| = 5 pages → process needs at least 5 frames
+
+If process gets only 3 frames → thrashing!
+If process gets ≥ 5 frames → stable execution</code></pre>
+        </div>
+        <h3>Preventing Thrashing</h3>
+        <table>
+          <thead><tr><th>Strategy</th><th>How</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Working Set Policy</strong></td><td>Track each process's working set. Sum = Σ|WSi|. If total &gt; total frames → suspend (swap out) a process to free frames for others.</td></tr>
+            <tr><td><strong>PFF (Page Fault Frequency)</strong></td><td>Monitor fault rate per process. If rate too high → give more frames. If rate too low → take frames away. Adaptive frame allocation.</td></tr>
+            <tr><td><strong>Load Control</strong></td><td>Reduce degree of multiprogramming — swap out entire processes to disk, freeing their frames for remaining processes.</td></tr>
+          </tbody>
+        </table>
+        <h3>Locality of Reference</h3>
+        <p>Programs exhibit two types of locality that working sets exploit:</p>
+        <ul>
+          <li><strong>Temporal Locality:</strong> A recently accessed page is likely to be accessed again soon (e.g., loop variables).</li>
+          <li><strong>Spatial Locality:</strong> Pages near recently accessed pages are likely to be accessed soon (e.g., sequential array access).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Thrashing = process spends more time paging than computing. CPU utilization vs. multiprogramming degree graph: rises then sharply drops at thrashing point.</li>
+          <li>Working set window Δ: if too small → misses locality. If too large → includes irrelevant pages. Typically set to a few thousand references.</li>
+          <li>PFF (Page Fault Frequency) control: upper threshold → give frames; lower threshold → take frames. Stable between thresholds.</li>
+          <li>Prepaging: load pages predicted to be needed (prefetch) before fault occurs — reduces startup page faults.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION ★ PYQ -->
+  <section id="s-mem-pyq" data-search-section="PYQ previous year questions GATE MCQ university memory management paging segmentation virtual memory TLB">
+    <div class="section-heading">
+      <h2 class="prose">★ Unit 5 PYQ &amp; Exam Prep</h2>
+      <button class="bookmark-btn" data-id="s-mem-pyq" data-label="Unit 5 PYQ" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University Exams</div>
+      <div class="prose">
+        <h3>Short Answer Questions (2–5 Marks)</h3>
+        <details class="qa-item">
+          <summary><strong>Q1:</strong> Differentiate between internal and external fragmentation.</summary>
+          <div class="qa-content"><strong>Internal fragmentation:</strong> Allocated block is larger than what the process needs. Wasted space is <em>inside</em> the allocated block. Occurs in fixed-size allocation units (fixed partitions, paging last page). <strong>External fragmentation:</strong> Total free memory is sufficient but split into non-contiguous holes — no single hole big enough for a new process. Occurs in variable partitioning and segmentation. Solution: paging eliminates external fragmentation; smaller block sizes reduce internal fragmentation.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q2:</strong> What is the TLB? How does it improve paging performance?</summary>
+          <div class="qa-content">The TLB (Translation Lookaside Buffer) is a small, fast hardware cache of recent page table entries. Without TLB, every memory access requires 2 RAM accesses (one for page table, one for data) — doubling memory access time. With TLB, if the entry is found (TLB hit, ~90–99% of the time), only 1 RAM access is needed. The EAT formula is: EAT = α(t+m) + (1−α)(t+2m), where α = hit rate, t = TLB time, m = memory time.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q3:</strong> Explain demand paging and the page fault handling procedure.</summary>
+          <div class="qa-content">Demand paging loads pages only when accessed. The valid bit in the page table entry indicates if a page is in RAM (1) or not (0). When the CPU accesses a page with valid bit=0, a page fault trap fires. The OS: (1) verifies it's a legal address, (2) finds a free frame (or runs page replacement), (3) reads the page from disk, (4) updates the page table, (5) restarts the instruction. The process continues transparently.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q4:</strong> Explain swapping. Why is it needed? How does it differ from demand paging?</summary>
+          <div class="qa-content"><strong>Swapping</strong> moves an entire process between main memory and disk (backing store). It is managed by the medium-term scheduler to free RAM when multiprogramming degree is too high. <strong>Demand paging</strong> moves individual pages on demand — only the faulted page is loaded, not the whole process. Modern OS (Linux, Windows) use demand paging with swap partitions — only inactive pages are swapped out, not entire processes. Swapping is more expensive (transfers entire process) but can free large chunks of RAM quickly.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q5:</strong> Explain the Clock (Second Chance) page replacement algorithm with an example.</summary>
+          <div class="qa-content">The Clock algorithm is an approximation of LRU using a circular queue. Each page has a reference bit (R), set to 1 on each access. When a page fault occurs: scan from the clock hand — if R=1, clear it to 0 and advance (give the page a second chance). If R=0, evict that page. Example with 4 frames: frames [A(1), B(0), C(1), D(1)], hand at A. Fault: A has R=1 → clear, advance. B has R=0 → evict B. The algorithm is O(1) amortized and used in Linux's VM subsystem. It does not suffer from Bélády's anomaly.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q6:</strong> Compare equal and proportional frame allocation with a numerical example.</summary>
+          <div class="qa-content">With 93 frames and 3 processes (sizes 10KB, 30KB, 50KB): <strong>Equal:</strong> 93/3 = 31 frames each — P1 gets far more than it needs, P3 may starve. <strong>Proportional:</strong> Total size = 90KB. P1 = (10/90)×93 ≈ 10 frames, P2 = (30/90)×93 ≈ 31 frames, P3 = (50/90)×93 ≈ 52 frames. Proportional is fairer and reduces thrashing for large processes. Used with global replacement in most OS.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q7:</strong> Explain Segmented Paging. How does Intel x86 translate a logical address to a physical address?</summary>
+          <div class="qa-content">Segmented Paging combines segmentation and paging. Logical address = (segment, offset). Step 1: Segment table lookup gives (base, limit) → check offset < limit → linear address = base + offset. Step 2: Linear address is split into (page, offset) → page table lookup → physical frame → physical address = frame × page_size + offset. In x86, segmentation produces a 32-bit linear address, which then goes through a two-level page directory (PD + PT) to get the physical address. Linux simplifies this by setting all segment bases to 0 (flat model), using only paging.</div>
+        </details>
+        <h3>Long Answer Questions (10 Marks)</h3>
+        <details class="qa-item">
+          <summary><strong>Q8:</strong> Compare FIFO, Optimal, and LRU page replacement algorithms with examples.</summary>
+          <div class="qa-content">All three replace a page when a page fault occurs and frames are full. <strong>FIFO:</strong> Replace the oldest loaded page (queue). Simple but can cause Bélády's Anomaly. <strong>Optimal:</strong> Replace the page not used for longest time in future. Minimum faults but requires future knowledge — only used as benchmark. <strong>LRU:</strong> Replace the page not used for longest time in past. Good approximation of Optimal, no Bélády's Anomaly. Implemented via counters or stack. For reference string 7,0,1,2,0,3,0,4 with 3 frames: FIFO=7 faults, Optimal=5, LRU=6.</div>
+        </details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE &amp; Competitive</div>
+      <div class="prose">
+        <h3>GATE Master MCQs</h3>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>1. A page table for a process has 4KB pages and a 32-bit logical address space. How many entries does the page table have?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>2²⁰ entries</li>
+            <li>2¹² entries</li>
+            <li>2³² entries</li>
+            <li>2¹⁶ entries</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: A (2²⁰ entries)</strong><br>4KB = 2¹² bytes → offset = 12 bits. 32-bit logical address → page number bits = 32 − 12 = 20 bits. Number of pages (entries) = 2²⁰ = 1,048,576 entries.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>2. TLB hit rate = 90%, memory access time = 100ns, TLB access time = 10ns. EAT = ?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>120 ns</li>
+            <li>130 ns</li>
+            <li>119 ns</li>
+            <li>110 ns</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: A (120 ns)</strong><br>EAT = α(t + m) + (1−α)(t + 2m) = 0.9(10 + 100) + 0.1(10 + 200) = 0.9 × 110 + 0.1 × 210 = 99 + 21 = <strong>120 ns</strong>.<br>
+            <strong>Convention note:</strong> On hit: TLB lookup (t) + one memory access (m). On miss: TLB lookup (t) + page table in memory (m) + data in memory (m). If a question gives EAT formula without TLB time, use h × m + (1−h) × 2m instead.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>3. Which page replacement algorithm is guaranteed to give the minimum number of page faults?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>FIFO</li>
+            <li>LRU</li>
+            <li>Optimal (OPT)</li>
+            <li>Clock (Second Chance)</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (Optimal)</strong><br>The Optimal algorithm replaces the page that will not be used for the longest time in the future. It provably gives the minimum number of page faults for any given reference string. It cannot be implemented in practice (requires future knowledge) but serves as a benchmark.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>4. Thrashing occurs when:</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>CPU utilization is very high and processes run efficiently</li>
+            <li>A process spends more time paging than executing</li>
+            <li>The TLB hit rate drops below 50%</li>
+            <li>External fragmentation exceeds 50% of total memory</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: B</strong><br>Thrashing is when a process (or the whole system) spends more time servicing page faults (disk I/O) than doing useful computation. CPU utilization drops dramatically. It is caused by insufficient frames allocated to a process — it cannot hold its working set in memory.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>5. In the Clock (Second Chance) algorithm, when the reference bit of a page is 1, the algorithm:</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>Evicts the page immediately</li>
+            <li>Clears the reference bit and moves to the next page</li>
+            <li>Swaps the page to disk</li>
+            <li>Moves the page to the top of the stack</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: B</strong><br>When the clock hand encounters a page with R=1, it gives the page a "second chance" — clears R to 0 and advances to the next page. Only pages with R=0 are evicted. This approximates LRU: recently-used pages survive.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>6. A system uses proportional frame allocation. 3 processes with sizes 10KB, 20KB, 70KB. Total frames = 100. How many frames does P3 get?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>33</li>
+            <li>50</li>
+            <li>70</li>
+            <li>100</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (70)</strong><br>Proportional: frames_P3 = (70 / (10+20+70)) × 100 = (70/100) × 100 = 70 frames. P1 gets 10, P2 gets 20.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>7. Swapping an entire process to disk is managed by which scheduler?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>Short-term scheduler</li>
+            <li>Long-term scheduler</li>
+            <li>Medium-term scheduler</li>
+            <li>Dispatcher</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (Medium-term scheduler)</strong><br>The medium-term scheduler manages swapping — it decides which processes to swap in/out to control the degree of multiprogramming. Short-term selects which ready process gets CPU. Long-term admits new jobs from disk. Dispatcher is the module that actually performs the context switch.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>8. In segmented paging (Intel x86), the address translation order is:</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>Logical → Physical → Linear</li>
+            <li>Logical → Linear → Physical</li>
+            <li>Linear → Logical → Physical</li>
+            <li>Physical → Linear → Logical</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: B</strong><br>In Intel x86: Logical address (segment:offset) → segmentation unit → Linear address → paging unit → Physical address. Linux bypasses segmentation (flat model: base=0), so logical ≈ linear, and only paging is active.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- GATE TRAP SHEET -->
+  <section id="s-mem-traps" data-search-section="GATE trap sheet memory paging TLB page replacement common mistakes">
+    <div class="section-heading">
+      <h2 class="prose">⚡ Unit 5 GATE Trap Sheet</h2>
+      <button class="bookmark-btn" data-id="s-mem-traps" data-label="Unit 5 Traps" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">15 High-Frequency GATE Traps — Memory Management</span><button class="code-copy">Copy</button></div>
+          <pre><code> 1. Page table entries = 2^(virtual_addr_bits − offset_bits).
+ 2. Page table size = entries × entry_size.
+ 3. EAT (serial TLB): h(t+m) + (1−h)(t+2m). Don’t forget: TLB miss = 2 memory accesses.
+ 4. TLB reach = TLB_entries × page_size. Increase via larger pages or more TLB entries.
+ 5. Internal fragmentation (paging): average = half_page_size per process.
+ 6. External fragmentation: paging has NONE. Segmentation has it.
+ 7. Multi-level paging page walk cost (no TLB) = levels + 1 memory accesses.
+ 8. Inverted page table: one entry per FRAME, not per page. Saves space.
+ 9. LRU and Optimal are stack algorithms → NO Bélády’s anomaly.
+    FIFO is NOT a stack algorithm → CAN exhibit Bélády’s anomaly.
+10. Clock/Second-Chance is an LRU approximation, NOT a strict stack algorithm.
+11. Page fault includes: trap + find frame + disk read + update PT + restart.
+    If victim is dirty: also write victim to disk first!
+12. COW fork(): O(PT-copy) not O(address-space-copy). Actual page copy only on write.
+13. Thrashing: CPU util drops; fix with local replacement, working set, or PFF.
+14. Working set model: D = ΣWSSᵢ. If D > m (total frames), thrashing begins.
+15. Logical→Linear→Physical in segmented-paging (x86). Linux: flat model, segment base=0.</code></pre>
+        </div>
+
+        <h3>📚 Advanced Reading</h3>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div>
+            <ul style="margin:0;padding-left:16px">
+              <li>Denning, “The Working Set Model for Program Behavior” (1968)</li>
+              <li>Bélády, “A Study of Replacement Algorithms” (1966)</li>
+              <li>Mattson et al., “Evaluation Techniques for Storage Hierarchies” (1970) — stack algorithms</li>
+              <li>Linux buddy allocator, slab/slub allocator, page cache</li>
+              <li>Huge pages (2 MB/1 GB) and TLB reach optimization</li>
+              <li>Clock-Pro (Jiang, Zhang 2005) and ARC (Megiddo, Modha 2003) as modern replacement</li>
+              <li>NUMA memory placement and NUMA-aware scheduling</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREV/NEXT NAV -->
+  <div class="prev-next">
+    <a href="unit4.html" class="nav-btn">← Unit 4</a>
+    <a href="unit6.html" class="nav-btn primary">Unit 6 — File Systems →</a>
+  </div>
+</div>
+</main>
+<div id="mode-panel">
+  <button class="mode-btn active" data-mode="all">📚 All</button>
+  <button class="mode-btn uni-btn" data-mode="uni">🎓 Uni</button>
+  <button class="mode-btn gate-btn" data-mode="gate">⚡ GATE</button>
+  <button class="mode-btn adv-btn" data-mode="advanced">🔬 Adv</button>
+</div>
+<div id="tts-panel">
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play">▶</button>
+    <button class="tts-btn" id="tts-stop">⏹</button>
+    <div class="tts-speed"><span>Speed</span><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1"><span id="tts-rate-label">1.0x</span></div>
+  </div>
+  <div class="tts-voice"><select id="tts-voice-select"><option>Loading…</option></select></div>
+</div>
+<!-- POMODORO WIDGET (Industry Edition) -->
+<div id="pomodoro">
+  <div id="pomo-app"><div id="pomo-card">
+    <div id="pomo-header">
+      <span id="pomo-label" data-phase="work">⏰ FOCUS · #1</span>
+      <div id="pomo-header-actions">
+        <button class="hdr-btn" id="pomo-btn-stats" title="Analytics">📊</button>
+        <button class="hdr-btn" id="pomo-btn-settings" title="Settings">⚙️</button>
+      </div>
+    </div>
+    <div id="pomo-ring-wrap">
+      <svg id="pomo-ring" viewBox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"/>
+        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      </svg>
+      <div id="pomo-time-wrap">
+        <div id="pomo-time">25:00</div>
+        <div aria-live="polite" id="pomo-time-live"></div>
+      </div>
+    </div>
+    <div id="pomo-sessions">
+      <div class="session-dot" id="dot-0"></div><div class="session-dot" id="dot-1"></div>
+      <div class="session-dot" id="dot-2"></div><div class="session-dot" id="dot-3"></div>
+    </div>
+    <div id="pomo-controls">
+      <button class="btn-icon" id="pomo-reset" title="Reset (R)">↺</button>
+      <button id="pomo-start" data-running="0">▶ Start</button>
+      <button class="btn-icon" id="pomo-skip" title="Skip (S)">⏭</button>
+    </div>
+    <div id="pomo-goal-wrap">
+      <div id="pomo-goal-label">
+        <span id="pomo-goal-text">0 / 8 sessions 🔥</span>
+        <span id="pomo-streak">0</span>
+      </div>
+      <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
+    </div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+  </div></div>
+</div>
+<div class="modal" id="pomo-distraction-modal" hidden></div>
+<div class="modal" id="pomo-settings-modal" hidden></div>
+<div class="modal" id="pomo-analytics-modal" hidden></div>
+<div id="pomo-toasts"></div>
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="s-icon">🔍</span><input id="search-input" type="text" placeholder="Search topics…" autocomplete="off"></div>
+    <div id="search-results"></div>
+    <div class="search-hint"><span><kbd>↵</kbd> navigate</span><span><kbd>Esc</kbd> close</span><span><kbd>Ctrl+K</kbd> open</span></div>
+  </div>
+</div>
+<nav id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
+  <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
+  <a href="#s-mem-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 5</a>
+  <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
+</nav>
+<div id="toast-container"></div>
+<script src="../assets/js/state.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/modes.js"></script>
+<script src="../assets/js/tts.js"></script>
+<script src="../assets/js/timer-settings.js"></script>      <!-- 1. Settings -->
+<script src="../assets/js/timer.js"></script>                <!-- 2. PomoBus + PomoTimer -->
+<script src="../assets/js/timer-analytics.js"></script>      <!-- 3. Analytics -->
+<script src="../assets/js/timer-notifications.js"></script>  <!-- 4. Notifications -->
+<script src="../assets/js/timer-ui.js"></script>             <!-- 5. UI (bootstraps on DOMContentLoaded) -->
+<script src="../assets/js/print.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/glossary.js"></script>
+</body>
+</html>

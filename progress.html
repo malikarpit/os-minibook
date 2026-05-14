@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 — Progress Dashboard -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="Study Progress Dashboard — OS MiniBook DU B.Tech CSE Sem IV">
+<meta name="application-name" content="OS MiniBook">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OS MiniBook">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Progress Dashboard | OS MiniBook ⚡ Arpit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<style>
+.dash-hero { padding: var(--sp-10) 0 var(--sp-6); border-bottom: 1px solid var(--bd-default); margin-bottom: var(--sp-8); }
+.dash-hero h1 { font-size: var(--text-4xl); font-weight: 800; letter-spacing: -.03em;
+  background: linear-gradient(135deg, var(--tx-primary) 0%, var(--accent-glow) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.dash-hero p { color: var(--tx-muted); margin-top: var(--sp-2); font-size: var(--text-sm); }
+.section-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--sp-5); color: var(--tx-primary); display: flex; align-items: center; gap: var(--sp-3); }
+.actions-row { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: 1px solid var(--bd-subtle); }
+.action-btn { padding: var(--sp-3) var(--sp-5); border-radius: var(--r-full); font-weight: 600; font-size: var(--text-sm); cursor: pointer; border: 1px solid var(--accent-border); color: var(--accent-light); background: var(--accent-soft); transition: all var(--t-fast); }
+.action-btn:hover { background: var(--accent); color: #fff; box-shadow: var(--sh-glow); }
+.action-btn.danger { border-color: rgba(239,68,68,.3); color: var(--danger); background: rgba(239,68,68,.08); }
+.action-btn.danger:hover { background: rgba(239,68,68,.2); box-shadow: none; }
+.notes-table { width:100%; border-collapse:collapse; font-size: var(--text-sm); margin-top: var(--sp-4); }
+.notes-table th { background: var(--accent-soft); color: var(--accent-light); padding: var(--sp-2) var(--sp-4); text-align:left; font-weight:700; border-bottom:2px solid var(--accent-border); }
+.notes-table td { padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--bd-subtle); color: var(--tx-secondary); vertical-align:top; }
+.notes-table tr:hover td { background: var(--accent-soft); }
+.note-dot { display:inline-block; width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle; }
+.empty-state { text-align:center; padding: var(--sp-10); color:var(--tx-muted); font-size:var(--text-sm); }
+.empty-icon  { font-size:2.5rem; margin-bottom:var(--sp-3); }
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="progress.html" class="sidebar-link active"><span class="link-icon">📊</span>Dashboard</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Chapters</div>
+      <a href="chapters/unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="chapters/unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="chapters/unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Concurrency</a>
+      <a href="chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="chapters/unit5.html" class="sidebar-link"><span class="link-icon">🧠</span>Unit 5 — Memory</a>
+      <a href="chapters/unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="chapters/gate-extra.html" class="sidebar-link" style="color:var(--gate-c)"><span class="link-icon">⚡</span>GATE Extra</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Progress</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+
+<main id="main-content">
+<div class="content-inner">
+
+  <div class="dash-hero">
+    <h1>📊 Study Dashboard</h1>
+    <p>Your OS MiniBook reading progress, notes, and study stats — all in one place.</p>
+  </div>
+
+  <!-- SUMMARY BAR -->
+  <div class="dash-summary-bar" id="dash-summary">
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-units-read">—</div><div class="dash-sum-lbl">Units Started</div></div>
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-overall">—</div><div class="dash-sum-lbl">Overall Progress</div></div>
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-bookmarks">—</div><div class="dash-sum-lbl">Bookmarks</div></div>
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-notes">—</div><div class="dash-sum-lbl">Notes Taken</div></div>
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-mcq">—</div><div class="dash-sum-lbl">MCQ Accuracy</div></div>
+    <div class="dash-sum-item"><div class="dash-sum-val" id="sum-focus">—</div><div class="dash-sum-lbl">Focus Sessions</div></div>
+  </div>
+
+  <!-- UNIT PROGRESS CARDS -->
+  <div class="section-title">📚 Reading Progress by Unit</div>
+  <div class="dash-grid" id="dash-unit-grid">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- NOTES TABLE -->
+  <div class="section-title" style="margin-top:var(--sp-10)">📝 Your Notes</div>
+  <div id="dash-notes-section">
+    <div class="empty-state"><div class="empty-icon">📝</div>No notes yet. Select any text in a chapter and click "✏️ Add Note".</div>
+  </div>
+
+  <!-- BOOKMARKS TABLE -->
+  <div class="section-title" style="margin-top:var(--sp-8)">🔖 Your Bookmarks</div>
+  <div id="dash-bookmarks-section">
+    <div class="empty-state"><div class="empty-icon">🔖</div>No bookmarks yet. Click the 🔖 icon next to any section heading.</div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions-row">
+    <button class="action-btn" id="dash-export">⬇ Export All Data (JSON)</button>
+    <button class="action-btn" id="dash-import">⬆ Import Backup</button>
+    <button class="action-btn danger" id="dash-clear-notes">🗑 Clear All Notes</button>
+    <button class="action-btn danger" id="dash-clear-all">⚠️ Reset All Progress</button>
+  </div>
+
+</div>
+</main>
+
+<!-- SEARCH MODAL -->
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <span class="s-icon">🔍</span>
+      <input id="search-input" type="text" placeholder="Search chapters, topics, algorithms…" autocomplete="off">
+    </div>
+    <div id="search-results"></div>
+    <div class="search-hint">
+      <span><kbd>↵</kbd> to navigate</span>
+      <span><kbd>Esc</kbd> to close</span>
+      <span><kbd>Ctrl+K</kbd> to open</span>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="assets/js/state.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/modes.js"></script>
+<script>
+// ─── Progress Dashboard Logic ────────────────────────────────────
+const escapeHTML = (value) => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
+
+const UNITS = [
+  { file: 'unit1.html', icon: '🖥️', name: 'Unit 1 — OS Intro & Linux',          href: 'chapters/unit1.html' },
+  { file: 'unit2.html', icon: '⚙️', name: 'Unit 2 — Processes & Scheduling',    href: 'chapters/unit2.html' },
+  { file: 'unit3.html', icon: '🔒', name: 'Unit 3 — Concurrency & Sync',        href: 'chapters/unit3.html' },
+  { file: 'unit4.html', icon: '💀', name: 'Unit 4 — Deadlocks',                 href: 'chapters/unit4.html' },
+  { file: 'unit5.html', icon: '🧠', name: 'Unit 5 — Memory Management',         href: 'chapters/unit5.html' },
+  { file: 'unit6.html', icon: '📁', name: 'Unit 6 — File Systems & Security',   href: 'chapters/unit6.html' },
+  { file: 'gate-extra.html', icon: '⚡', name: 'GATE Extra Topics',             href: 'chapters/gate-extra.html' },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const progress  = StateManager.getAllReadProgress?.() || {};
+  const bookmarks = StateManager.get('bookmarks') || [];
+  const mcqStats  = StateManager.getMCQStats?.() || { total:0, correct:0, pct:0 };
+  const notes     = JSON.parse(localStorage.getItem('os-notes-v1') || '{}');
+  const pomoData  = JSON.parse(localStorage.getItem('pomo-analytics') || '{}');
+  const sessions  = pomoData.allTimeSessions || 0;
+
+  // ── Summary Bar ───────────────────────────────────────────────
+  const started  = UNITS.filter(u => (progress[u.file] || 0) > 0).length;
+  const allPcts  = UNITS.map(u => progress[u.file] || 0);
+  const overall  = Math.round(allPcts.reduce((a,b) => a+b, 0) / UNITS.length);
+  const noteCount= Object.keys(notes).length;
+
+  document.getElementById('sum-units-read').textContent  = started;
+  document.getElementById('sum-overall').textContent     = overall + '%';
+  document.getElementById('sum-bookmarks').textContent   = bookmarks.length;
+  document.getElementById('sum-notes').textContent       = noteCount;
+  document.getElementById('sum-mcq').textContent        = mcqStats.total ? mcqStats.pct + '%' : '—';
+  document.getElementById('sum-focus').textContent       = sessions || '—';
+
+  // ── Unit Cards ────────────────────────────────────────────────
+  const grid = document.getElementById('dash-unit-grid');
+  grid.innerHTML = UNITS.map(u => {
+    const pct = progress[u.file] || 0;
+    const badge = pct >= 90 ? '✅' : pct >= 50 ? '📖' : pct > 0 ? '🔄' : '⬜';
+    return `
+      <a href="${u.href}" class="dash-unit-card" style="text-decoration:none;color:inherit">
+        <div class="dash-unit-top">
+          <div class="dash-unit-icon">${escapeHTML(u.icon)}</div>
+          <div>
+            <div class="dash-unit-name">${escapeHTML(u.name)}</div>
+            <div style="font-size:var(--text-xs);color:var(--tx-muted);margin-top:2px">${escapeHTML(badge)} ${pct >= 90 ? 'Completed' : pct >= 50 ? 'In Progress' : pct > 0 ? 'Started' : 'Not started'}</div>
+          </div>
+        </div>
+        <div class="dash-progress-bar">
+          <div class="dash-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="dash-progress-label">
+          <span>Scroll depth</span><span><strong>${pct}%</strong></span>
+        </div>
+      </a>
+    `;
+  }).join('');
+
+  // Animate fills after DOM is ready
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.dash-progress-fill').forEach(el => {
+      const w = el.style.width; el.style.width = '0'; 
+      setTimeout(() => el.style.width = w, 100);
+    });
+  });
+
+  // ── Notes Table ───────────────────────────────────────────────
+  const notesSection = document.getElementById('dash-notes-section');
+  const noteEntries  = Object.entries(notes);
+  if (noteEntries.length) {
+    notesSection.innerHTML = `
+      <table class="notes-table">
+        <thead><tr><th>Color</th><th>Highlighted Text</th><th>Your Note</th><th>Page</th><th>Date</th></tr></thead>
+        <tbody>
+          ${noteEntries.sort((a,b) => b[1].ts - a[1].ts).map(([id, n]) => `
+            <tr>
+              <td><span class="note-dot" style="background:${escapeHTML(n.color)}"></span></td>
+              <td style="color:var(--tx-primary);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHTML(n.selectedText)}">${escapeHTML(n.selectedText).slice(0,60)}${n.selectedText.length>60?'…':''}</td>
+              <td style="max-width:220px">${escapeHTML(n.noteText).slice(0,80)}${n.noteText.length>80?'…':''}</td>
+              <td><a href="chapters/${escapeHTML(n.page)}" style="color:var(--accent-light)">${escapeHTML(n.page)}</a></td>
+              <td style="white-space:nowrap;color:var(--tx-muted)">${escapeHTML(new Date(n.ts).toLocaleDateString('en-IN'))}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // ── Bookmarks Table ───────────────────────────────────────────
+  const bmSection = document.getElementById('dash-bookmarks-section');
+  if (bookmarks.length) {
+    bmSection.innerHTML = `
+      <table class="notes-table">
+        <thead><tr><th>Section</th><th>Link</th><th>Date Added</th></tr></thead>
+        <tbody>
+          ${bookmarks.map(b => `
+            <tr>
+              <td style="color:var(--tx-primary)">🔖 ${escapeHTML(b.label || b.id)}</td>
+              <td><a href="${escapeHTML(b.url)}" style="color:var(--accent-light)">${escapeHTML(b.url.split('/').pop())}</a></td>
+              <td style="color:var(--tx-muted)">${b.ts ? escapeHTML(new Date(b.ts).toLocaleDateString('en-IN')) : '—'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // ── Actions ───────────────────────────────────────────────────
+  document.getElementById('dash-export')?.addEventListener('click', () => StateManager.exportData());
+  document.getElementById('dash-import')?.addEventListener('click', () => StateManager.importData());
+  document.getElementById('dash-clear-notes')?.addEventListener('click', () => {
+    if (confirm('Delete ALL your notes? This cannot be undone.')) {
+      localStorage.removeItem('os-notes-v1');
+      Toast.show('🗑 All notes cleared.', 'info');
+      setTimeout(() => location.reload(), 800);
+    }
+  });
+  document.getElementById('dash-clear-all')?.addEventListener('click', () => {
+    if (confirm('Reset ALL progress (bookmarks, notes, read progress)? This cannot be undone.')) {
+      localStorage.clear();
+      Toast.show('⚠️ All data cleared. Reloading…', 'error');
+      setTimeout(() => location.reload(), 1200);
+    }
+  });
+});
+</script>
+</body>
+</html>

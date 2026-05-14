@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="Unit 6: File Systems — OS MiniBook DU B.Tech CSE Sem IV">
+<title>Unit 6 — File Systems | OS MiniBook ⚡ Arpit</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/animations.css">
+<link rel="stylesheet" href="../assets/css/timer.css">
+<style>
+.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
+.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
+.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
+.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
+.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
+.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
+.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
+.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
+.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
+.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
+.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
+.mem-os{background:#4f46e5;color:#fff}
+.mem-p1{background:#059669;color:#fff}
+.mem-p2{background:#d97706;color:#fff}
+.mem-p3{background:#dc2626;color:#fff}
+.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
+.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
+.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
+.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="tts-toggle" class="icon-btn" title="Read Aloud">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+    </button>
+    
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
+      <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Unit 6 — Sections</div>
+      <a href="#s-fs-intro" class="sidebar-link active"><span class="link-icon">📁</span>6.1 File System Intro</a>
+      <a href="#s-fs-concepts" class="sidebar-link"><span class="link-icon">📄</span>6.2 File Concepts</a>
+      <a href="#s-fs-ops" class="sidebar-link"><span class="link-icon">⚙️</span>6.3 File Operations</a>
+      <a href="#s-fs-dir" class="sidebar-link"><span class="link-icon">📂</span>6.4 Directory Structure</a>
+      <a href="#s-fs-alloc" class="sidebar-link"><span class="link-icon">🗂️</span>6.5 Allocation Methods</a>
+      <a href="#s-fs-free" class="sidebar-link"><span class="link-icon">🆓</span>6.6 Free Space Mgmt</a>
+      <a href="#s-fs-impl" class="sidebar-link"><span class="link-icon">🔩</span>6.7 FS Implementation</a>
+      <a href="#s-fs-disk" class="sidebar-link"><span class="link-icon">💿</span>6.8 Disk Scheduling</a>
+      <a href="#s-fs-raid" class="sidebar-link"><span class="link-icon">🛡️</span>6.9 RAID Levels</a>
+      <a href="#s-fs-vfs" class="sidebar-link"><span class="link-icon">🌐</span>6.10 VFS & Modern FS</a>
+      <a href="#s-fs-sec" class="sidebar-link"><span class="link-icon">🔒</span>6.11 Security</a>
+      <a href="#s-fs-case" class="sidebar-link"><span class="link-icon">🖥️</span>6.12 Case Studies</a>
+      <a href="#s-fs-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ &amp; Q&amp;A</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">All Units</div>
+      <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+    
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
+      <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Bookmarks</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">My Notes</div>
+      <div id="notes-sidebar-list"></div>
+    </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+<main id="main-content">
+<div class="content-inner">
+  <div class="chapter-hero">
+    <div class="chapter-breadcrumb">
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 6</span>
+    </div>
+    <div class="chapter-num">📁 Unit 6 · DSC-10</div>
+    <h1 class="chapter-title">File Systems</h1>
+    <div class="chapter-meta">
+      <span class="meta-tag">🎓 University</span>
+      <span class="meta-tag">⚡ GATE Ready</span>
+      <span class="meta-tag">11 Sections</span>
+      <span class="meta-tag">Inodes · Disk Scheduling · RAID · VFS</span>
+    </div>
+  </div>
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-fs-intro" class="toc-item"><span class="toc-num">6.1</span>Introduction to File Systems</a>
+      <a href="#s-fs-concepts" class="toc-item"><span class="toc-num">6.2</span>File Concepts &amp; Attributes</a>
+      <a href="#s-fs-ops" class="toc-item"><span class="toc-num">6.3</span>File Operations &amp; Access Methods</a>
+      <a href="#s-fs-dir" class="toc-item"><span class="toc-num">6.4</span>Directory Structure</a>
+      <a href="#s-fs-alloc" class="toc-item"><span class="toc-num">6.5</span>File Allocation Methods</a>
+      <a href="#s-fs-free" class="toc-item"><span class="toc-num">6.6</span>Free Space Management</a>
+      <a href="#s-fs-impl" class="toc-item"><span class="toc-num">6.7</span>File System Implementation &amp; Inodes</a>
+      <a href="#s-fs-disk" class="toc-item"><span class="toc-num">6.8</span>Disk Scheduling Algorithms</a>
+      <a href="#s-fs-raid" class="toc-item"><span class="toc-num">6.9</span>RAID Levels</a>
+      <a href="#s-fs-vfs" class="toc-item"><span class="toc-num">6.10</span>VFS &amp; Modern File Systems</a>
+      <a href="#s-fs-sec" class="toc-item"><span class="toc-num">6.11</span>Protection &amp; Security</a>
+      <a href="#s-fs-case" class="toc-item"><span class="toc-num">6.12</span>Case Studies: Linux vs Windows</a>
+      <a href="#s-fs-pyq" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+    </div>
+  </div>
+
+  <!-- SECTION 6.1 -->
+  <section id="s-fs-intro" data-search-section="file system introduction purpose structure storage disk block sector">
+    <div class="section-heading">
+      <h2 class="prose">6.1 Introduction to File Systems</h2>
+      <button class="bookmark-btn" data-id="s-fs-intro" data-label="6.1 File System Intro" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">File System</div>
+          A file system is the OS subsystem that manages how data is stored, organized, and retrieved on secondary storage (disks, SSDs). It provides an abstraction — named files — hiding the physical complexity of sector/track/cylinder addressing from users and applications.
+        </div>
+        <h3>Why File Systems Exist</h3>
+        <table>
+          <thead><tr><th>Problem</th><th>File System Solution</th></tr></thead>
+          <tbody>
+            <tr><td>Data must survive process termination</td><td>Persistent storage on disk</td></tr>
+            <tr><td>Multiple processes must share data</td><td>Named files accessible to all processes</td></tr>
+            <tr><td>Data can be huge (GBs, TBs)</td><td>Disk storage, much larger than RAM</td></tr>
+            <tr><td>Physical disk is complex (sectors, tracks)</td><td>Abstraction: logical blocks, directories</td></tr>
+          </tbody>
+        </table>
+        <h3>File System Layers</h3>
+        <table>
+          <thead><tr><th>Layer</th><th>Responsibility</th></tr></thead>
+          <tbody>
+            <tr><td>Application Layer</td><td>open(), read(), write(), close() system calls</td></tr>
+            <tr><td>Logical File System</td><td>File metadata (FCB/inode), directory management, protection</td></tr>
+            <tr><td>File Organization Module</td><td>Translates logical blocks → physical blocks, manages free space</td></tr>
+            <tr><td>Basic File System</td><td>Issues read/write commands to device driver for specific blocks</td></tr>
+            <tr><td>I/O Control</td><td>Device drivers, interrupt handlers — communicate with hardware</td></tr>
+            <tr><td>Devices</td><td>Physical disk, SSD, NVM</td></tr>
+          </tbody>
+        </table>
+        <h3>Key OS Data Structures for File Management</h3>
+        <table>
+          <thead><tr><th>Structure</th><th>Location</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>FCB / Inode</strong></td><td>Disk</td><td>Stores file metadata: size, owner, permissions, data block pointers</td></tr>
+            <tr><td><strong>Open-file table (system-wide)</strong></td><td>RAM</td><td>One entry per open file — shared by all processes that opened it</td></tr>
+            <tr><td><strong>Open-file table (per-process)</strong></td><td>RAM (PCB)</td><td>File descriptor → system table index + current file position</td></tr>
+            <tr><td><strong>Directory</strong></td><td>Disk</td><td>Maps file name → inode number</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>File Descriptor (fd):</strong> When you call open(), the OS returns an integer file descriptor. fd 0 = stdin, fd 1 = stdout, fd 2 = stderr. fd 3+ are user files. The fd indexes into the per-process open-file table.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>File systems provide <strong>three key abstractions:</strong> naming (human-readable names), persistence (data survives reboot), and protection (permissions).</li>
+          <li>FCB (File Control Block) = inode in Unix. Contains everything about a file <em>except its name</em> (name is stored in the directory).</li>
+          <li>File descriptor table: per-process. System open-file table: system-wide. Inode table: on disk.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.2 -->
+  <section id="s-fs-concepts" data-search-section="file concept attributes name type size owner permissions timestamps FCB inode file types">
+    <div class="section-heading">
+      <h2 class="prose">6.2 File Concepts &amp; Attributes</h2>
+      <button class="bookmark-btn" data-id="s-fs-concepts" data-label="6.2 File Concepts" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">File</div>
+          A file is a named collection of related information recorded on secondary storage. From the OS perspective, a file is the smallest unit of logical secondary storage — a logical address space. Files are mapped to physical devices by the OS.
+        </div>
+        <h3>File Attributes (Metadata)</h3>
+        <table>
+          <thead><tr><th>Attribute</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Name</strong></td><td>Human-readable symbolic name (only info in human-readable form)</td></tr>
+            <tr><td><strong>Identifier</strong></td><td>Unique tag (inode number) identifying the file in the file system</td></tr>
+            <tr><td><strong>Type</strong></td><td>Needed for systems that support different file types</td></tr>
+            <tr><td><strong>Location</strong></td><td>Pointer to device and location of file on the device</td></tr>
+            <tr><td><strong>Size</strong></td><td>Current file size (bytes, words, or blocks)</td></tr>
+            <tr><td><strong>Protection</strong></td><td>Access-control information (who can read, write, execute)</td></tr>
+            <tr><td><strong>Timestamps</strong></td><td>atime (last access), mtime (last modified), ctime (last status change)</td></tr>
+            <tr><td><strong>User/Group ID</strong></td><td>Owner and group for permission checking</td></tr>
+          </tbody>
+        </table>
+        <h3>File Types</h3>
+        <table>
+          <thead><tr><th>Type</th><th>UNIX indicator</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Regular file</strong></td><td>- (dash)</td><td>text files, executables, data</td></tr>
+            <tr><td><strong>Directory</strong></td><td>d</td><td>/home, /etc</td></tr>
+            <tr><td><strong>Symbolic link</strong></td><td>l</td><td>shortcuts to other files/dirs</td></tr>
+            <tr><td><strong>Block device</strong></td><td>b</td><td>/dev/sda (disk)</td></tr>
+            <tr><td><strong>Character device</strong></td><td>c</td><td>/dev/tty (terminal)</td></tr>
+            <tr><td><strong>Pipe (FIFO)</strong></td><td>p</td><td>IPC named pipes</td></tr>
+            <tr><td><strong>Socket</strong></td><td>s</td><td>Unix domain sockets</td></tr>
+          </tbody>
+        </table>
+        <h3>File Structure</h3>
+        <p>Three common internal structures an OS may impose or support:</p>
+        <ul>
+          <li><strong>Byte stream (flat):</strong> No internal structure — just a sequence of bytes. OS doesn't interpret contents. Used by Unix/Linux for all files.</li>
+          <li><strong>Fixed-length records:</strong> File = sequence of fixed-size records (e.g., 512-byte sectors). Each record operation reads/writes one record.</li>
+          <li><strong>Variable-length records:</strong> Records of different sizes. Requires delimiters or length fields. Used in old IBM mainframe OSes.</li>
+        </ul>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>Unix Philosophy:</strong> Unix treats everything as a flat byte stream (including devices, pipes, sockets). This elegance enables <code>cat file.txt | grep pattern | wc -l</code> to work — all "files" speak the same byte-stream language.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>File metadata is stored in the <strong>FCB (File Control Block)</strong> = inode in Unix. The directory only stores the file name → inode number mapping.</li>
+          <li>File type detection: UNIX uses <strong>magic numbers</strong> (first bytes of file) — e.g., ELF header for executables, JPEG header for images. Windows uses file extension.</li>
+          <li>File size in the FCB is updated on write — not guaranteed to reflect current write until flushed (fsync).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.3 -->
+  <section id="s-fs-ops" data-search-section="file operations open close read write seek truncate sequential random access methods direct indexed">
+    <div class="section-heading">
+      <h2 class="prose">6.3 File Operations &amp; Access Methods</h2>
+      <button class="bookmark-btn" data-id="s-fs-ops" data-label="6.3 File Operations" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Basic File Operations (System Calls)</h3>
+        <table>
+          <thead><tr><th>Operation</th><th>System Call</th><th>What OS Does</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Create</strong></td><td>creat() / open(O_CREAT)</td><td>Allocate space, create FCB/inode, add directory entry</td></tr>
+            <tr><td><strong>Open</strong></td><td>open(path, flags)</td><td>Search directory, copy FCB to memory, return file descriptor (fd)</td></tr>
+            <tr><td><strong>Read</strong></td><td>read(fd, buf, n)</td><td>Use file position pointer, read n bytes, advance pointer</td></tr>
+            <tr><td><strong>Write</strong></td><td>write(fd, buf, n)</td><td>Write n bytes at position pointer, advance, update size if grown</td></tr>
+            <tr><td><strong>Seek</strong></td><td>lseek(fd, offset, whence)</td><td>Reposition file pointer — no actual I/O</td></tr>
+            <tr><td><strong>Truncate</strong></td><td>truncate(path, len)</td><td>Reset file size to len, release extra disk blocks</td></tr>
+            <tr><td><strong>Close</strong></td><td>close(fd)</td><td>Release file descriptor, flush buffers, write back FCB if modified</td></tr>
+            <tr><td><strong>Delete</strong></td><td>unlink(path)</td><td>Remove directory entry; decrement inode link count; free blocks when count=0</td></tr>
+          </tbody>
+        </table>
+        <h3>Open File Table — How open() Works</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">open() System Call Internals</span><button class="code-copy">Copy</button></div>
+          <pre><code>fd = open("/home/arpit/notes.txt", O_RDWR);
+
+Kernel actions:
+1. Search directory tree for /home/arpit/notes.txt
+2. Load inode into memory (inode cache)
+3. Create system-wide open file description (struct file):
+   Entry: { inode pointer, file_offset, status_flags, ref_count }
+4. Create per-process fd table entry:
+   fd (e.g., 3) → pointer to the open file description
+5. Return fd=3 to user process
+
+Three-level model (UNIX/Linux):
+┌─────────────────┐     ┌───────────────────────┐     ┌─────────────┐
+│ Per-Process FD  │ →   │ Open File Description   │ →   │ Inode/Vnode │
+│ Table           │     │ (system-wide)           │     │ (on disk)   │
+│ fd → pointer    │     │ offset, flags, inode*   │     │ metadata,   │
+│ (per process)   │     │ ref_count (dup/fork)    │     │ block map   │
+└─────────────────┘     └───────────────────────┘     └─────────────┘
+
+Key: dup(fd) shares the SAME open file description (same offset).
+     Two separate open() calls get DIFFERENT descriptions (different offsets).
+     fork() shares open file descriptions between parent and child.
+
+Later: read(3, buf, 512)
+→ Kernel: lookup fd 3 → system table → inode → disk blocks → copy 512 bytes</code></pre>
+        </div>
+        <h3>File Access Methods</h3>
+        <table>
+          <thead><tr><th>Method</th><th>How</th><th>Use Case</th><th>Performance</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sequential Access</strong></td><td>Read/write from current position, advance automatically</td><td>Text files, streams, logs</td><td>Fast — no seek needed</td></tr>
+            <tr><td><strong>Direct (Random) Access</strong></td><td>Seek to any position, then read/write (lseek + read)</td><td>Databases, indexed files</td><td>Fast for non-sequential access</td></tr>
+            <tr><td><strong>Indexed Access</strong></td><td>Use a separate index file → find record → direct access</td><td>Large databases, B-trees</td><td>Fast lookup even for huge files</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>File Locking:</strong> When multiple processes open the same file, locking prevents corruption. <strong>Shared lock</strong> (read lock): multiple readers allowed simultaneously. <strong>Exclusive lock</strong> (write lock): only one writer, no readers. Implemented via fcntl() on Linux.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>open() does NOT read file data — it just loads the inode into memory and returns a file descriptor.</li>
+          <li>File position pointer is per-(process, file) — not per-file. Two processes opening the same file have independent pointers.</li>
+          <li>unlink() removes the directory entry. File data is freed only when <strong>link count reaches 0 AND no process has the file open</strong>.</li>
+          <li>Sequential vs Direct: sequential access cannot efficiently jump; direct access requires knowing the block/record number.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.4 -->
+  <section id="s-fs-dir" data-search-section="directory structure single level two level tree structured acyclic graph general graph hard link symbolic link path">
+    <div class="section-heading">
+      <h2 class="prose">6.4 Directory Structure</h2>
+      <button class="bookmark-btn" data-id="s-fs-dir" data-label="6.4 Directory Structure" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <p>A directory is a symbol table that translates file names to their directory entries (inode numbers). Several directory organizational schemes have been used:</p>
+        <h3>Directory Structures — Evolution</h3>
+        <table>
+          <thead><tr><th>Structure</th><th>Description</th><th>Limitation</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Single-Level</strong></td><td>One directory for all files, all users. Flat list.</td><td>Name collisions; no organization for multi-user systems</td></tr>
+            <tr><td><strong>Two-Level</strong></td><td>Master directory → per-user directory → files</td><td>No sharing between users; no subdirectories</td></tr>
+            <tr><td><strong>Tree-Structured</strong></td><td>Hierarchical tree. Each dir can contain files and subdirs. Absolute/relative paths.</td><td>No sharing of files between dirs (copying needed)</td></tr>
+            <tr><td><strong>Acyclic Graph</strong></td><td>Allow sharing via links — directories can share files. Hard links &amp; symbolic links.</td><td>Dangling pointers with symbolic links; cycles must be prevented</td></tr>
+            <tr><td><strong>General Graph</strong></td><td>Allow cycles in directory graph</td><td>Garbage collection needed; traversal may loop infinitely</td></tr>
+          </tbody>
+        </table>
+        <h3>Hard Links vs Symbolic Links</h3>
+        <table>
+          <thead><tr><th>Property</th><th>Hard Link</th><th>Symbolic (Soft) Link</th></tr></thead>
+          <tbody>
+            <tr><td>Points to</td><td>Inode directly</td><td>Path string (name)</td></tr>
+            <tr><td>Inode sharing</td><td>✅ Same inode</td><td>❌ New inode for the link itself</td></tr>
+            <tr><td>Cross-filesystem?</td><td>❌ Same FS only</td><td>✅ Can cross file systems</td></tr>
+            <tr><td>If target deleted?</td><td>File survives (ref count &gt; 0)</td><td>Dangling link — broken!</td></tr>
+            <tr><td>Can link to directory?</td><td>❌ Not allowed (prevents cycles)</td><td>✅ Yes (carefully)</td></tr>
+            <tr><td>Unix command</td><td>ln file link</td><td>ln -s target link</td></tr>
+          </tbody>
+        </table>
+        <h3>Directory Operations</h3>
+        <ul>
+          <li><strong>Create:</strong> mkdir() — creates new directory entry and allocates disk inode</li>
+          <li><strong>Delete:</strong> rmdir() — only if directory is empty; removes inode</li>
+          <li><strong>List:</strong> readdir() / ls — iterates directory entries</li>
+          <li><strong>Search:</strong> Linear scan through entries for name match</li>
+          <li><strong>Rename:</strong> unlink old entry + link new entry (or rename() syscall)</li>
+          <li><strong>Traverse:</strong> Used in path resolution — each component resolved at each level</li>
+        </ul>
+        <h3>Path Resolution Example</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Path Resolution — /home/arpit/os/notes.txt</span><button class="code-copy">Copy</button></div>
+          <pre><code>1. Start at root inode (/) — always inode 2 in ext4
+2. Look up "home" in root directory → inode 150
+3. Look up "arpit" in inode 150 → inode 312
+4. Look up "os" in inode 312 → inode 498
+5. Look up "notes.txt" in inode 498 → inode 1042
+6. Load inode 1042 → open file
+
+Each step = 1 directory read (disk I/O!)
+For deep paths, many I/Os needed → mitigated by directory cache (dcache)</code></pre>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Hard link increments inode's <strong>link count</strong>. unlink() decrements it. Disk space freed only when link count = 0.</li>
+          <li>Tree-structured directory: path uniquely identifies a file. Acyclic-graph: same file reachable via multiple paths.</li>
+          <li>GATE: "How many disk accesses to open /a/b/c?" → Access root dir + dir a + dir b + read inode of c = typically 4+ accesses depending on caching.</li>
+          <li>Working directory (cwd) shortens relative path resolution — avoids re-traversing from root.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.5 -->
+  <section id="s-fs-alloc" data-search-section="file allocation methods contiguous linked indexed FAT inode direct indirect blocks">
+    <div class="section-heading">
+      <h2 class="prose">6.5 File Allocation Methods</h2>
+      <button class="bookmark-btn" data-id="s-fs-alloc" data-label="6.5 Allocation Methods" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <p>How does the OS map a file's logical blocks to physical disk blocks? Three classic methods:</p>
+        <h3>1. Contiguous Allocation</h3>
+        <p>Each file occupies a set of <strong>contiguous blocks</strong> on disk. Directory entry stores: start block + length.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Contiguous — Directory Entry</span><button class="code-copy">Copy</button></div>
+          <pre><code>File "notes.txt": start=14, length=5
+→ Occupies blocks: 14, 15, 16, 17, 18
+
+Access block i: disk_block = start + i  (O(1), direct calculation)
+Sequential read: perfect — blocks adjacent on disk, fast seek</code></pre>
+        </div>
+        <table>
+          <thead><tr><th>Pros</th><th>Cons</th></tr></thead>
+          <tbody>
+            <tr><td>✅ Simple — only start+length needed</td><td>❌ External fragmentation (holes between files)</td></tr>
+            <tr><td>✅ Sequential AND direct access both fast</td><td>❌ File size must be known at creation</td></tr>
+            <tr><td>✅ Excellent for read-only media (CD, DVD)</td><td>❌ Growing a file may require moving it entirely</td></tr>
+          </tbody>
+        </table>
+        <h3>2. Linked Allocation</h3>
+        <p>Each disk block contains a <strong>pointer to the next block</strong>. Directory stores only start block. Blocks can be scattered anywhere.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Linked — Block Chain</span><button class="code-copy">Copy</button></div>
+          <pre><code>File "report.doc": start=9
+Block 9 → [data][next=16]
+Block 16 → [data][next=1]
+Block 1  → [data][next=10]
+Block 10 → [data][next=NULL]  ← end of file
+
+Access block i: Must traverse i pointers (O(i)) — no direct access!
+Sequential read: good. Random access: terrible.</code></pre>
+        </div>
+        <p><strong>FAT (File Allocation Table):</strong> Improvement — move all next-pointers out of data blocks into a dedicated table in RAM. FAT[9]=16, FAT[16]=1, FAT[1]=10, FAT[10]=EOF. Used in FAT32 (USB drives, SD cards).</p>
+        <table>
+          <thead><tr><th>Pros</th><th>Cons</th></tr></thead>
+          <tbody>
+            <tr><td>✅ No external fragmentation</td><td>❌ No direct access (must follow chain)</td></tr>
+            <tr><td>✅ Files can grow dynamically</td><td>❌ Pointer overhead (4 bytes per block)</td></tr>
+            <tr><td>✅ FAT variant is fast in RAM</td><td>❌ Reliability — broken pointer corrupts rest of file</td></tr>
+          </tbody>
+        </table>
+        <h3>3. Indexed Allocation</h3>
+        <p>Each file has an <strong>index block</strong> — a dedicated block containing an array of pointers to all the file's data blocks. The inode stores the address of the index block.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Indexed — Index Block Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>File inode → Index Block at disk addr 19
+Index Block[0] = 9   → data block 9
+Index Block[1] = 16  → data block 16
+Index Block[2] = 1   → data block 1
+
+Access block i: index_block[i] → O(1) direct access ✅
+
+For large files: multi-level indexing (indirect blocks)
+→ Single indirect: index block points to data blocks
+→ Double indirect: points to single-indirect blocks
+→ Triple indirect: points to double-indirect blocks</code></pre>
+        </div>
+        <h3>UNIX inode — Multi-Level Indexing</h3>
+        <table>
+          <thead><tr><th>Pointer Type</th><th>Blocks reachable</th><th>Max file size (4KB blocks, 1K ptrs/block)</th></tr></thead>
+          <tbody>
+            <tr><td>12 Direct pointers</td><td>12 blocks</td><td>12 × 4KB = 48 KB</td></tr>
+            <tr><td>1 Single indirect</td><td>1024 blocks</td><td>4 MB</td></tr>
+            <tr><td>1 Double indirect</td><td>1024² blocks</td><td>4 GB</td></tr>
+            <tr><td>1 Triple indirect</td><td>1024³ blocks</td><td>4 TB</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Why 12 direct pointers?</strong> Most files are small. With 12 direct pointers, files up to 48 KB need only ONE disk access for data (the inode has the direct pointer). Single indirect is only needed for larger files — optimized for the common case!</div>
+        </div>
+        <h3>Comparison</h3>
+        <table>
+          <thead><tr><th>Method</th><th>Sequential</th><th>Direct Access</th><th>Fragmentation</th><th>Used in</th></tr></thead>
+          <tbody>
+            <tr><td>Contiguous</td><td>✅ Fast</td><td>✅ O(1)</td><td>External</td><td>CD/DVD, old systems</td></tr>
+            <tr><td>Linked</td><td>✅ OK</td><td>❌ O(n)</td><td>None</td><td>FAT32 (USB drives)</td></tr>
+            <tr><td>Indexed</td><td>✅ OK</td><td>✅ O(1)</td><td>None</td><td>UNIX (ext4), NTFS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Contiguous: sequential + direct access both O(1). Linked: sequential O(1) per step but direct O(n). Indexed: both O(1).</li>
+          <li>GATE formula for inode max file size: if block=B bytes, ptrs per block=B/4, then max = 12B + (B/4)B + (B/4)²B + (B/4)³B.</li>
+          <li>FAT = linked allocation with index in RAM. FAT32 supports 4GB max file size (32-bit cluster numbers).</li>
+          <li>For indexed allocation, number of disk accesses to read block i: 1 (index) + 1 (data) = 2. For double indirect: 1+1+1=3.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.6 -->
+  <section id="s-fs-free" data-search-section="free space management bit vector bitmap linked list grouping counting free blocks disk">
+    <div class="section-heading">
+      <h2 class="prose">6.6 Free Space Management</h2>
+      <button class="bookmark-btn" data-id="s-fs-free" data-label="6.6 Free Space" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <p>The OS must track which disk blocks are free. When a file is created or extended, it must quickly find and allocate free blocks.</p>
+        <h3>1. Bit Vector (Bitmap)</h3>
+        <p>One bit per disk block. Bit = 0 → free. Bit = 1 → allocated.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Bit Vector Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>1 disk = 100 blocks
+Bitmap: 1 1 0 0 1 1 0 0 0 1 1 1 0 ...
+         ↑ ↑ ↑ ↑                ↑
+         alloc  free             free
+
+Block 2 is free → bit[2] = 0
+To find first free block: scan bitmap for first 0 bit
+Hardware word operations (CPU bitwise ops) make this fast!</code></pre>
+        </div>
+        <table>
+          <thead><tr><th>Property</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Space</td><td>n bits for n disk blocks (e.g., 1TB disk, 4KB blocks = 256MB bitmap)</td></tr>
+            <tr><td>Find free block</td><td>Fast with CPU bitwise instructions (check one word = 32/64 bits at once)</td></tr>
+            <tr><td>Contiguous free blocks</td><td>✅ Easy to find — look for runs of consecutive 0s</td></tr>
+            <tr><td>Must be in RAM?</td><td>Ideally yes — for performance. Large disks need partial loading.</td></tr>
+          </tbody>
+        </table>
+        <h3>2. Linked Free List</h3>
+        <p>Free blocks are chained together — each free block contains a pointer to the next free block. Only the first free block's address is stored (in superblock).</p>
+        <ul>
+          <li><strong>Pros:</strong> No wasted space (uses blocks that are free anyway)</li>
+          <li><strong>Cons:</strong> To find n free blocks, must traverse n links — slow for large allocations. Poor performance for contiguous allocation.</li>
+        </ul>
+        <h3>3. Grouping</h3>
+        <p>Modification of linked list: store addresses of n free blocks in the first free block. The last of these n addresses points to another block with n more addresses. Allows finding many free blocks quickly.</p>
+        <h3>4. Counting</h3>
+        <p>Since free blocks often appear in contiguous runs (after a file is deleted), store (first_free_block, count) pairs. More compact than bitmap for large free regions.</p>
+        <h3>Comparison</h3>
+        <table>
+          <thead><tr><th>Method</th><th>Space</th><th>Find free block</th><th>Contiguous alloc</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Bit Vector</strong></td><td>n/8 bytes</td><td>Fast (word ops)</td><td>✅ Easy</td></tr>
+            <tr><td><strong>Linked List</strong></td><td>1 pointer/free block</td><td>Slow (O(n) links)</td><td>❌ Hard</td></tr>
+            <tr><td><strong>Grouping</strong></td><td>Moderate</td><td>Medium</td><td>⚠️ OK</td></tr>
+            <tr><td><strong>Counting</strong></td><td>Small (run-length)</td><td>Fast for runs</td><td>✅ Good</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>Bit vector</strong> is the most commonly used method — used in ext4, NTFS. Fast with modern CPU bitwise instructions.</li>
+          <li>Bitmap size = total_blocks / 8 bytes. For 1 TB disk with 4 KB blocks: 2³²/8 / 1024 = 512 MB bitmap.</li>
+          <li>Linked free list is space-efficient but sequential — suitable only for sequential allocation, not random.</li>
+          <li>GATE: "Bitmap of disk with n blocks, block size B bytes — how many blocks does bitmap itself occupy?" → ⌈n / (8B)⌉ blocks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.7 -->
+  <section id="s-fs-impl" data-search-section="file system implementation inode structure superblock boot block disk layout ext4 NTFS buffer cache">
+    <div class="section-heading">
+      <h2 class="prose">6.7 File System Implementation &amp; Inodes</h2>
+      <button class="bookmark-btn" data-id="s-fs-impl" data-label="6.7 FS Implementation" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>On-Disk Structure of a Unix File System (ext4 layout)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Disk Partition Layout</span><button class="code-copy">Copy</button></div>
+          <pre><code>[ Boot Block | Superblock | Inode Bitmap | Data Bitmap | Inode Table | Data Blocks ]
+     ↑              ↑             ↑               ↑              ↑              ↑
+  MBR/bootloader  FS metadata  which inodes   which blocks  array of inodes  actual file data
+                               are free       are free</code></pre>
+        </div>
+        <table>
+          <thead><tr><th>Region</th><th>Contents</th><th>Size</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Boot Block</strong></td><td>Bootloader code (only on boot partition). Empty on non-boot partitions.</td><td>1 block</td></tr>
+            <tr><td><strong>Superblock</strong></td><td>FS metadata: total inodes, total blocks, free inode count, free block count, block size, mount count</td><td>1 block</td></tr>
+            <tr><td><strong>Inode Bitmap</strong></td><td>Bit per inode — 0=free, 1=used</td><td>⌈n_inodes / (8 × block_size)⌉ blocks</td></tr>
+            <tr><td><strong>Data Bitmap</strong></td><td>Bit per data block — 0=free, 1=used</td><td>⌈n_blocks / (8 × block_size)⌉ blocks</td></tr>
+            <tr><td><strong>Inode Table</strong></td><td>Fixed-size array of inodes (128 bytes historically; 256 bytes common in modern ext4)</td><td>n_inodes × inode_size bytes</td></tr>
+            <tr><td><strong>Data Blocks</strong></td><td>Actual file/directory data</td><td>Rest of partition</td></tr>
+          </tbody>
+        </table>
+        <h3>Inode Structure (ext4)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Inode Fields — ext4 (inode size is filesystem-configurable; 256B common)</span><button class="code-copy">Copy</button></div>
+          <pre><code>struct ext4_inode {
+    mode        // file type + permissions (rwxrwxrwx)
+    uid, gid    // owner user ID and group ID
+    size        // file size in bytes
+    atime       // last access time
+    mtime       // last modification time
+    ctime       // last inode change time
+    links_count // hard link count
+    blocks      // number of 512-byte blocks used on disk
+    flags       // special flags (immutable, append-only, etc.)
+    block[15]   // Classic UNIX/ext2/ext3 model (for GATE numericals):
+                //   12 direct + 1 single + 1 double + 1 triple indirect
+                // Modern ext4 normally uses EXTENTS (start_block + length)
+                // instead of 15 pointers, for efficient large-file mapping.
+}</code></pre>
+        </div>
+        <h3>In-Memory Structures (OS Caches)</h3>
+        <table>
+          <thead><tr><th>Structure</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Buffer Cache (Page Cache)</strong></td><td>Caches recently read disk blocks in RAM — reduces disk I/O</td></tr>
+            <tr><td><strong>Inode Cache</strong></td><td>Recently accessed inodes kept in RAM — avoids re-reading from disk</td></tr>
+            <tr><td><strong>Dentry Cache (dcache)</strong></td><td>Directory entry cache — maps path components to inodes without re-reading dirs</td></tr>
+            <tr><td><strong>Open File Table</strong></td><td>System-wide table of currently open files (one entry per open file)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>sync() / fsync():</strong> Buffer cache means writes may stay in RAM for seconds before hitting disk. sync() flushes ALL dirty buffers to disk. fsync(fd) flushes only one file's buffers. Without fsync, a crash after write() may lose data!</div>
+        </div>
+        <h3>Consistency &amp; Journaling</h3>
+        <p>If the system crashes mid-write, the file system may become inconsistent (e.g., inode updated but bitmap not). Solutions:</p>
+        <ul>
+          <li><strong>fsck (File System Check):</strong> Scan entire disk at boot to repair inconsistencies. Slow — takes minutes for large disks.</li>
+          <li><strong>Journaling (ext3/ext4, NTFS):</strong> Log operations to a journal before applying. On crash, replay journal. Fast recovery — seconds not minutes.</li>
+          <li><strong>Copy-on-Write FS (ZFS, Btrfs):</strong> Never overwrite data in place. Write to new location, then update pointer atomically. Always consistent by design.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>Inode number 2 = root directory in ext4 (inode 1 is reserved, inode 0 = null).</li>
+          <li>Superblock is <strong>critical</strong> — if corrupted, entire FS is unreadable. ext4 keeps multiple backup superblock copies in alternate block groups.</li>
+          <li>Buffer cache: write() returns immediately (data in RAM). fsync() waits for disk write. Trade-off: performance vs durability.</li>
+          <li>Journaling modes: data=writeback (metadata only), data=ordered (metadata after data), data=journal (full journal — safest but slowest).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.8 -->
+  <section id="s-fs-disk" data-search-section="disk scheduling FCFS SSTF SCAN C-SCAN LOOK C-LOOK seek time rotational latency seek head movement">
+    <div class="section-heading">
+      <h2 class="prose">6.8 Disk Scheduling Algorithms</h2>
+      <button class="bookmark-btn" data-id="s-fs-disk" data-label="6.8 Disk Scheduling" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Disk Scheduling</div>
+          When multiple I/O requests are pending, the OS must decide the order in which to service them. The goal is to minimize total seek time (disk head movement), improving disk throughput and reducing average wait time.
+        </div>
+        <h3>Disk Access Time Components</h3>
+        <table>
+          <thead><tr><th>Component</th><th>Definition</th><th>Typical Time</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Seek Time</strong></td><td>Time to move disk head to correct track (cylinder)</td><td>3–15 ms</td></tr>
+            <tr><td><strong>Rotational Latency</strong></td><td>Time for correct sector to rotate under head</td><td>0–8 ms (avg 4 ms @ 7200 RPM)</td></tr>
+            <tr><td><strong>Transfer Time</strong></td><td>Time to actually read/write data</td><td>~0.1 ms</td></tr>
+          </tbody>
+        </table>
+        <p>Seek time dominates → scheduling minimizes head movement = cylinder movements.</p>
+        <p><strong>Example queue</strong> (used for all algorithms): Requests at cylinders <strong>98, 183, 37, 122, 14, 124, 65, 67</strong>. Head starts at cylinder <strong>53</strong>.</p>
+        <h3>1. FCFS (First-Come First-Served)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">FCFS Trace</span><button class="code-copy">Copy</button></div>
+          <pre><code>Order: 53→98→183→37→122→14→124→65→67
+Movements: 45+85+146+85+108+110+59+2 = 640 cylinders
+Simple but poor performance — no optimization.</code></pre>
+        </div>
+        <h3>2. SSTF (Shortest Seek Time First)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">SSTF Trace</span><button class="code-copy">Copy</button></div>
+          <pre><code>From 53: nearest is 65 → 67 → 37 → 14 → 98 → 122 → 124 → 183
+Movements: 12+2+30+23+84+24+2+59 = 236 cylinders ✅ Much better!
+Problem: STARVATION — far cylinders may wait indefinitely.</code></pre>
+        </div>
+        <h3>3. SCAN (Elevator Algorithm)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">SCAN Trace (moving toward higher cylinders)</span><button class="code-copy">Copy</button></div>
+          <pre><code>Head moves in one direction servicing all requests until end,
+then reverses and services requests in other direction.
+
+From 53 (moving right): 65→67→98→122→124→183→[end 199]→reverse→37→14
+SCAN goes to disk END (199), not just last request (183).
+Movement: (199 − 53) + (199 − 14) = 146 + 185 = 331 cylinders
+
+SCAN is fair — no request waits more than 2 full disk sweeps.</code></pre>
+        </div>
+        <h3>4. C-SCAN (Circular SCAN)</h3>
+        <p>Like SCAN but head moves in ONE direction only. After reaching end, jumps back to start (cylinder 0) without servicing, then sweeps again. Provides more uniform wait times than SCAN.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">C-SCAN Trace</span><button class="code-copy">Copy</button></div>
+          <pre><code>From 53 (moving right): 65→67→98→122→124→183→[end 199]→[jump to 0]→14→37
+The return movement (199→0) does NOT service requests.
+Some problems count the return in total, some exclude it — follow question convention.
+Total (counting jump): (199−53) + 199 + 37 = 146+199+37 = 382 cylinders.</code></pre>
+        </div>
+        <h3>5. LOOK / C-LOOK</h3>
+        <p>Like SCAN/C-SCAN but head only goes as far as the last request in each direction (doesn't go all the way to disk end). More efficient for real workloads.</p>
+        <h3>Algorithm Comparison</h3>
+        <table>
+          <thead><tr><th>Algorithm</th><th>Head Movement</th><th>Starvation?</th><th>Fairness</th><th>Used in</th></tr></thead>
+          <tbody>
+            <tr><td>FCFS</td><td>640</td><td>❌ No</td><td>✅ Perfect</td><td>Low-load systems</td></tr>
+            <tr><td>SSTF</td><td>236</td><td>✅ Yes</td><td>❌ Poor</td><td>Not recommended</td></tr>
+            <tr><td>SCAN</td><td>331</td><td>❌ No</td><td>⚠️ Good</td><td>Elevators, HDDs</td></tr>
+            <tr><td>C-SCAN</td><td>382</td><td>❌ No</td><td>✅ Uniform</td><td>HDD scheduling</td></tr>
+            <tr><td>C-LOOK</td><td>&lt;C-SCAN</td><td>❌ No</td><td>✅ Good</td><td>Historically used; modern Linux uses mq-deadline, BFQ, etc.</td></tr>
+          </tbody>
+        </table>
+        <h3>SSD & NVMe Architecture</h3>
+        <p>Solid State Drives (SSDs) store data using NAND flash memory. Unlike HDDs, they have <strong>no moving parts</strong> — there is no read/write head, no spinning platter, and therefore <strong>no seek time or rotational latency</strong>.</p>
+        <ul>
+          <li><strong>Architecture:</strong> Flash memory is divided into blocks (usually 256KB-4MB) which contain pages (usually 4KB). You can read/write at the page level, but you can only <strong>erase</strong> at the block level.</li>
+          <li><strong>Flash Translation Layer (FTL):</strong> Firmware inside the SSD that maps logical block addresses (LBAs) from the OS to physical flash pages. It handles wear-leveling and garbage collection.</li>
+          <li><strong>NVMe (Non-Volatile Memory Express):</strong> A modern protocol designed specifically for fast flash storage, communicating directly over the PCIe bus rather than legacy SATA interfaces. It supports up to 64K queues with 64K commands each (compared to SATA's single queue of 32 commands).</li>
+        </ul>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>SSD Disk Scheduling:</strong> Because seek time is uniform (~0.1ms) across the entire SSD, traditional algorithms like SCAN or SSTF provide no benefit. Modern OSes use the <strong>NOOP</strong> (no-operation) or <strong>deadline</strong> schedulers for SSDs, which simply process requests in FIFO order with some basic merging.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>SSTF minimizes seek time locally but can cause starvation — not optimal globally. SCAN/C-SCAN are better for throughput.</li>
+          <li><strong>SCAN</strong>: head goes to <strong>disk end</strong> in current direction before reversing. <strong>LOOK</strong>: head goes only to <strong>last pending request</strong> before reversing. C-SCAN/C-LOOK: only service in one direction, then return.</li>
+          <li>GATE numericals: draw timeline of head movement, sum absolute differences between consecutive positions.</li>
+          <li><strong>Total head movement formula:</strong> Sum |cylinder[i+1] − cylinder[i]| for all transitions in the schedule.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.8b — DISK SCHEDULING GATE NUMERICALS -->
+  <section id="s-fs-disk-nums" data-search-section="disk scheduling numerical GATE worked example FCFS SSTF SCAN C-SCAN LOOK C-LOOK head movement calculation">
+    <div class="section-heading">
+      <h2 class="prose">6.8b Disk Scheduling — GATE Worked Numericals</h2>
+      <button class="bookmark-btn" data-id="s-fs-disk-nums" data-label="6.8b Disk Numericals" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Disk Scheduling — Complete Worked Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>Given: Disk has 200 cylinders (0–199).
+Head starts at cylinder 53. Direction: toward higher cylinders.
+Request queue: 98, 183, 37, 122, 14, 124, 65, 67
+
+═══════════════════════════════════════════════════════
+1. FCFS (First-Come First-Served):
+   Order: 53→98→183→37→122→14→124→65→67
+   Movement: |53-98|+|98-183|+|183-37|+|37-122|+|122-14|
+             +|14-124|+|124-65|+|65-67|
+           = 45+85+146+85+108+110+59+2 = 640 cylinders
+
+═══════════════════════════════════════════════════════
+2. SSTF (Shortest Seek Time First):
+   From 53: nearest = 65 (dist 12)
+   From 65: nearest = 67 (dist 2)
+   From 67: nearest = 37 (dist 30)
+   From 37: nearest = 14 (dist 23)
+   From 14: nearest = 98 (dist 84)
+   From 98: nearest = 122 (dist 24)
+   From 122: nearest = 124 (dist 2)
+   From 124: nearest = 183 (dist 59)
+   Total = 12+2+30+23+84+24+2+59 = 236 cylinders
+
+═══════════════════════════════════════════════════════
+3. SCAN (Elevator) — moving toward 199:
+   Go right: 53→65→67→98→122→124→183→(199)→reverse
+   Go left:  37→14
+   Order: 53,65,67,98,122,124,183,199,37,14
+   Movement: (199-53) + (199-14) = 146+185 = 331 cylinders
+
+═══════════════════════════════════════════════════════
+4. LOOK (SCAN without going to end):
+   Go right: 53→65→67→98→122→124→183→reverse (stop at 183)
+   Go left:  37→14
+   Order: 53,65,67,98,122,124,183,37,14
+   Movement: (183-53) + (183-14) = 130+169 = 299 cylinders
+
+═══════════════════════════════════════════════════════
+5. C-SCAN (Circular SCAN):
+   Go right: 53→65→67→98→122→124→183→(199)→jump to 0
+   Continue right: 14→37
+   Movement: (199-53) + (199-0) + (37-0) = 146+199+37 = 382 cyl
+
+═══════════════════════════════════════════════════════
+6. C-LOOK:
+   Go right: 53→65→67→98→122→124→183→jump to 14
+   Continue right: 14→37
+   Movement: (183-53) + (183-14) + (37-14) = 130+169+23 = 322 cyl
+
+Summary:
+  FCFS:   640 (worst — random zigzag)
+  SSTF:   236 (best locally, risk starvation)
+  SCAN:   331 (fair, predictable)
+  LOOK:   299 (SCAN without going to ends)
+  C-SCAN: 382 (uniform wait time)
+  C-LOOK: 322 (practical C-SCAN)</code></pre>
+        </div>
+
+        <div class="formula-box">
+          <div class="formula-label">Disk Access Time Formula</div>
+          Disk Access Time = Seek Time + Rotational Latency + Transfer Time<br>
+          Average Rotational Latency = 1/(2 × RPM/60) seconds<br>
+          Transfer Time = Data Size / (Transfer Rate)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.8c — I/O SUBSYSTEM -->
+  <section id="s-fs-io" data-search-section="I/O subsystem buffering single double circular spooling caching DMA interrupt driven programmed I/O device driver">
+    <div class="section-heading">
+      <h2 class="prose">6.8c I/O Subsystem</h2>
+      <button class="bookmark-btn" data-id="s-fs-io" data-label="6.8c I/O Subsystem" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>I/O Modes (How CPU Communicates with Devices)</h3>
+        <table>
+          <thead><tr><th>Mode</th><th>Mechanism</th><th>CPU Usage</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Programmed I/O</strong></td><td>CPU polls device status register in a busy-wait loop</td><td>100% — CPU wasted entirely</td><td>Simple embedded, slow devices</td></tr>
+            <tr><td><strong>Interrupt-Driven I/O</strong></td><td>CPU issues I/O command, does other work; device interrupts when done</td><td>Low — CPU freed between operations</td><td>Keyboard, mouse, low-speed</td></tr>
+            <tr><td><strong>DMA (Direct Memory Access)</strong></td><td>DMA controller transfers data between device and RAM; CPU interrupted once per block</td><td>Minimal — one interrupt per block</td><td>Disk, network, GPU, bulk transfers</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Buffering Strategies</h3>
+        <div class="def-box">
+          <div class="def-term">I/O Buffering</div>
+          A buffer is a memory area that stores data temporarily while it is being transferred between two devices or between a device and an application. Buffering decouples the producer (device) from the consumer (process) to handle speed mismatches.
+        </div>
+        <table>
+          <thead><tr><th>Strategy</th><th>How</th><th>Advantage</th></tr></thead>
+          <tbody>
+            <tr><td><strong>No Buffer</strong></td><td>Data transferred directly between device and process</td><td>Simple but slow — process must wait</td></tr>
+            <tr><td><strong>Single Buffer</strong></td><td>OS assigns one buffer. Device fills buffer while process uses previous data.</td><td>Overlap I/O and compute</td></tr>
+            <tr><td><strong>Double Buffer</strong></td><td>Two buffers alternate — device fills one while process reads other</td><td>Even more overlap; no idle time</td></tr>
+            <tr><td><strong>Circular Buffer</strong></td><td>Multiple buffers in a ring. Producer and consumer move around the ring.</td><td>Maximum throughput; handles bursts</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Spooling (SPOOL = Simultaneous Peripheral Operations On-Line)</h3>
+        <p>Spooling uses <strong>disk as a large buffer</strong> for a device that cannot accept interleaved data (like a printer). Jobs are queued on disk, and the device processes them one at a time from the spool queue. Example: print spooler — multiple users send print jobs, all stored on disk, printed sequentially.</p>
+
+        <h3>Caching vs Buffering</h3>
+        <table>
+          <thead><tr><th>Aspect</th><th>Caching</th><th>Buffering</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Purpose</strong></td><td>Speed up repeated access to same data</td><td>Smooth out speed differences between producer/consumer</td></tr>
+            <tr><td><strong>Copy?</strong></td><td>Creates a <strong>copy</strong> of data in faster storage</td><td>May be the <strong>only copy</strong> in transit</td></tr>
+            <tr><td><strong>Example</strong></td><td>Page cache, TLB, disk cache</td><td>Kernel I/O buffer, double buffering</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li><strong>Spooling</strong> is used for dedicated devices (printers). It allows multiple processes to "use" the printer simultaneously — they all write to the spool queue.</li>
+          <li>DMA reduces number of interrupts: without DMA, the CPU handles each data transfer via interrupts, requiring many interrupts for large transfers. With DMA, a single interrupt signals completion of the entire block transfer (not per byte).</li>
+          <li><strong>Double buffering</strong> time: max(C, T) per unit, where C = computation time, T = transfer time. Single buffering: C + T per unit.</li>
+          <li>Caching keeps a <strong>copy</strong>; buffer may hold the <strong>only copy</strong>. This distinction is important for consistency.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.9 -->
+  <section id="s-fs-raid" data-search-section="RAID levels redundant array independent disks RAID 0 1 5 6 mirroring striping parity fault tolerance">
+    <div class="section-heading">
+      <h2 class="prose">6.9 RAID Levels</h2>
+      <button class="bookmark-btn" data-id="s-fs-raid" data-label="6.9 RAID" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">RAID (Redundant Array of Independent Disks)</div>
+          RAID uses multiple physical disks to improve performance, reliability, or both. Data is distributed across disks using techniques like <strong>striping</strong> (split data across disks for speed), <strong>mirroring</strong> (duplicate data for reliability), and <strong>parity</strong> (store error-correction data to recover from failures).
+        </div>
+        <h3>Key Concepts</h3>
+        <table>
+          <thead><tr><th>Technique</th><th>How</th><th>Benefit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Striping</strong></td><td>Split data across N disks (block-level or bit-level)</td><td>Parallelism → higher throughput</td></tr>
+            <tr><td><strong>Mirroring</strong></td><td>Keep identical copy on 2 disks</td><td>Survives one disk failure; fast reads</td></tr>
+            <tr><td><strong>Parity</strong></td><td>XOR of data blocks stored on separate disk</td><td>Can reconstruct lost data from parity</td></tr>
+          </tbody>
+        </table>
+        <h3>RAID Levels</h3>
+        <table>
+          <thead><tr><th>Level</th><th>Name</th><th>Technique</th><th>Min Disks</th><th>Fault Tolerance</th><th>Read</th><th>Write</th><th>Usable Space</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RAID 0</strong></td><td>Striping</td><td>Striping only, no redundancy</td><td>2</td><td>❌ None (1 fail = all lost)</td><td>⚡ Fast</td><td>⚡ Fast</td><td>100% (N disks)</td></tr>
+            <tr><td><strong>RAID 1</strong></td><td>Mirroring</td><td>Exact duplicate on 2nd disk</td><td>2</td><td>✅ 1 disk</td><td>⚡ Fast</td><td>⚠️ Slower (2 writes)</td><td>50% (N/2)</td></tr>
+            <tr><td><strong>RAID 5</strong></td><td>Striping+Parity</td><td>Striped data + distributed parity</td><td>3</td><td>✅ 1 disk</td><td>✅ Good</td><td>⚠️ Penalty (parity update)</td><td>(N−1)/N</td></tr>
+            <tr><td><strong>RAID 6</strong></td><td>Double Parity</td><td>Striped + 2 parity blocks</td><td>4</td><td>✅ 2 disks</td><td>✅ Good</td><td>⚠️ Slower</td><td>(N−2)/N</td></tr>
+            <tr><td><strong>RAID 10</strong></td><td>Mirror+Stripe</td><td>RAID 1 arrays striped (RAID 0)</td><td>4</td><td>✅ 1 per mirror</td><td>⚡ Fast</td><td>✅ Good</td><td>50%</td></tr>
+          </tbody>
+        </table>
+        <h3>RAID 5 — Distributed Parity</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">RAID 5 — 3 Disk Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>Disk 1    Disk 2    Disk 3
+  A1        A2        Ap (parity = A1 XOR A2)
+  B1        Bp        B2
+  Cp        C1        C2
+
+Parity rotates across disks to distribute write load.
+If Disk 1 fails: recover A1 = Ap XOR A2, B2 already on Disk 3.
+Reads: parallel across 3 disks → fast
+Write: must update data block + recalculate parity (2 reads + 2 writes per logical write)</code></pre>
+        </div>
+        <h3>Choosing RAID Level</h3>
+        <table>
+          <thead><tr><th>Use Case</th><th>Best RAID</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>Pure speed, no care for data loss</td><td>RAID 0</td><td>Maximum throughput, no overhead</td></tr>
+            <tr><td>Critical data, small dataset</td><td>RAID 1</td><td>Fastest recovery, simplest</td></tr>
+            <tr><td>Large storage + fault tolerance</td><td>RAID 5</td><td>Best space efficiency with 1-disk tolerance</td></tr>
+            <tr><td>Enterprise, tolerate 2 failures</td><td>RAID 6</td><td>Two-disk tolerance</td></tr>
+            <tr><td>High performance + reliability</td><td>RAID 10</td><td>Best of both worlds</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>RAID 0: no fault tolerance. RAID 1: 50% space, survives 1 failure. RAID 5: (N−1)/N space, survives 1 failure. RAID 6: (N−2)/N, survives 2.</li>
+          <li>Parity: P = A XOR B XOR C. If A is lost: A = P XOR B XOR C. XOR is self-inverse.</li>
+          <li>RAID 5 write penalty: each logical write = 2 reads (old data + old parity) + 2 writes (new data + new parity) = 4 I/Os.</li>
+          <li>GATE: "N disks in RAID 5, each disk D GB. Usable space = (N−1) × D GB."</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.10 -->
+  <section id="s-fs-vfs" data-search-section="VFS virtual file system modern file systems ext4 NTFS APFS ZFS Btrfs NFS network file system mount namespace">
+    <div class="section-heading">
+      <h2 class="prose">6.10 VFS &amp; Modern File Systems</h2>
+      <button class="bookmark-btn" data-id="s-fs-vfs" data-label="6.10 VFS" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Virtual File System (VFS)</div>
+          VFS is a software abstraction layer in the OS kernel that provides a <strong>unified interface</strong> to different file system implementations. Applications call standard system calls (open, read, write) — VFS translates them to the specific operations of the underlying FS (ext4, FAT32, NFS, procfs, etc.).
+        </div>
+        <h3>VFS Architecture</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">VFS Layer Diagram</span><button class="code-copy">Copy</button></div>
+          <pre><code>User Application: open("/etc/passwd", O_RDONLY)
+        ↓ system call
+    VFS Layer (kernel)
+    ├── resolves path → VFS inode
+    ├── dispatches to correct FS driver
+    └── returns unified fd
+         ↓                    ↓                  ↓
+      ext4 driver         FAT32 driver        NFS driver
+      (local HDD)         (USB drive)         (network)
+         ↓                    ↓                  ↓
+      /dev/sda1           /dev/sdb1          remote server</code></pre>
+        </div>
+        <h3>VFS Key Objects (Linux)</h3>
+        <table>
+          <thead><tr><th>Object</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>superblock</strong></td><td>Represents a mounted file system — contains FS-wide info</td></tr>
+            <tr><td><strong>inode</strong></td><td>Represents a file — generic across all FS types</td></tr>
+            <tr><td><strong>dentry</strong></td><td>Directory entry — maps name to inode (cached in dcache)</td></tr>
+            <tr><td><strong>file</strong></td><td>Represents an open file — contains current position, flags</td></tr>
+          </tbody>
+        </table>
+        <h3>Modern File Systems Comparison</h3>
+        <table>
+          <thead><tr><th>File System</th><th>OS</th><th>Max File Size</th><th>Key Features</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ext4</strong></td><td>Linux</td><td>16 TB</td><td>Journaling, extents, delayed allocation, 64-bit volume</td></tr>
+            <tr><td><strong>NTFS</strong></td><td>Windows</td><td>16 EB</td><td>Journaling (MFT), compression, encryption (EFS), ACLs</td></tr>
+            <tr><td><strong>APFS</strong></td><td>macOS/iOS</td><td>8 EB</td><td>Copy-on-Write, snapshots, encryption, SSD-optimized</td></tr>
+            <tr><td><strong>ZFS</strong></td><td>Solaris/BSD</td><td>16 EB</td><td>CoW, 128-bit, checksums, built-in RAID (RAIDZ), snapshots</td></tr>
+            <tr><td><strong>Btrfs</strong></td><td>Linux</td><td>16 EB</td><td>CoW, snapshots, subvolumes, built-in RAID, checksums</td></tr>
+            <tr><td><strong>FAT32</strong></td><td>Universal</td><td>4 GB</td><td>Universal compatibility, no journaling, simple</td></tr>
+          </tbody>
+        </table>
+        <h3>File System Mounting</h3>
+        <p>Before a file system can be used, it must be <strong>mounted</strong> — attached to a directory in the existing namespace (mount point).</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Mounting Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>mount /dev/sdb1 /mnt/usb    # Mount USB drive at /mnt/usb
+mount -t nfs server:/share /mnt/nfs   # Mount NFS network share
+
+After mounting:
+/mnt/usb/ → maps to root of FAT32 on /dev/sdb1
+/mnt/nfs/ → maps to remote NFS server directory
+
+umount /mnt/usb             # Unmount — fails if any file open</code></pre>
+        </div>
+        <h3>Network File Systems</h3>
+        <ul>
+          <li><strong>NFS (Network File System):</strong> Unix standard for sharing files over network. Stateless protocol (NFSv3), stateful (NFSv4). Transparent to applications.</li>
+          <li><strong>SMB/CIFS (Samba):</strong> Windows network file sharing. Also supported on Linux (Samba).</li>
+          <li><strong>AFS (Andrew File System):</strong> Client-side caching of whole files; designed for large distributed environments.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <ul>
+          <li>VFS allows one OS to support multiple FS types simultaneously (ext4 on HDD, FAT32 on USB, NFS on network) — all accessed with same system calls.</li>
+          <li>dentry cache (dcache) prevents re-reading directories on every path lookup — critical for performance.</li>
+          <li>Mounting: the existing directory at the mount point becomes the root of the new FS. Files in that directory before mounting are hidden (but still exist).</li>
+          <li>NTFS uses Master File Table (MFT) instead of inode table. MFT is itself a file on disk.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.11 -->
+  <section id="s-fs-sec" data-search-section="protection security access matrix ACL capabilities authentication encryption firewall malware">
+    <div class="section-heading">
+      <h2 class="prose">6.11 Protection &amp; Security</h2>
+      <button class="bookmark-btn" data-id="s-fs-sec" data-label="6.11 Security" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <div class="def-box">
+          <div class="def-term">Protection vs Security</div>
+          <strong>Protection</strong> refers to mechanisms that control the access of programs, processes, or users to the resources defined by the computer system (internal). <strong>Security</strong> ensures the integrity of the system and its data against external and internal threats.
+        </div>
+
+        <h3>Protection: The Access Matrix</h3>
+        <p>The system is modeled as a matrix where <strong>Rows = Domains (Users/Processes)</strong> and <strong>Columns = Objects (Files/Printers)</strong>. Each cell <code>[i, j]</code> contains the rights domain <code>i</code> has over object <code>j</code>.</p>
+        <p>Since the matrix is sparse (mostly empty), it is implemented in two main ways:</p>
+        <ol>
+          <li><strong>Access Control Lists (ACL):</strong> By column. Each object has a list of <code>(Domain, Rights)</code> pairs. "Who can access this file?" (e.g., Windows NTFS ACLs).</li>
+          <li><strong>Capability Lists:</strong> By row. Each domain has a list of <code>(Object, Rights)</code> pairs. "What files can this process access?" (e.g., Android app permissions).</li>
+        </ol>
+
+        <h3>Security: Authentication & Encryption</h3>
+        <ul>
+          <li><strong>Authentication:</strong> Verifying user identity. Methods include Passwords (something you know), Smart Cards (something you have), and Biometrics (something you are). Passwords should be stored as salted hashes (e.g., bcrypt), never plaintext.</li>
+          <li><strong>Encryption:</strong>
+            <ul>
+              <li><em>Symmetric (AES):</em> Same key to encrypt and decrypt. Fast, used for bulk data.</li>
+              <li><em>Asymmetric (RSA):</em> Public key encrypts, private key decrypts. Slower, used for secure key exchange and digital signatures.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Security Threats & Malware</h3>
+        <table>
+          <thead><tr><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Virus</strong></td><td>Malicious code embedded in a legitimate program. Requires user action to execute and spread.</td></tr>
+            <tr><td><strong>Worm</strong></td><td>Self-replicating standalone program that spreads automatically over networks.</td></tr>
+            <tr><td><strong>Trojan Horse</strong></td><td>Malware disguised as useful software. Creates backdoors for attackers.</td></tr>
+            <tr><td><strong>Ransomware</strong></td><td>Encrypts user files and demands payment for the decryption key.</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Firewalls</h3>
+        <p>A network security system that monitors and controls incoming/outgoing traffic based on rules. Types include:</p>
+        <ul>
+          <li><strong>Packet-Filtering:</strong> Inspects IP addresses and ports (Layer 3/4).</li>
+          <li><strong>Stateful Inspection:</strong> Tracks active connection states, allowing return traffic for established connections.</li>
+          <li><strong>Application-Layer (WAF):</strong> Inspects actual HTTP payload for malicious requests like SQL injection (Layer 7).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION 6.12 -->
+  <section id="s-fs-case" data-search-section="case studies linux windows ntfs ext4 scheduling comparison">
+    <div class="section-heading">
+      <h2 class="prose">6.12 Case Studies: Linux vs Windows</h2>
+      <button class="bookmark-btn" data-id="s-fs-case" data-label="6.12 Case Studies" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <table>
+          <thead><tr><th>Feature</th><th>Linux (Ubuntu / RHEL)</th><th>Windows (10 / 11)</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Process Model</strong></td>
+              <td><code>fork()</code> and <code>exec()</code> model. PIDs map to <code>task_struct</code> in kernel.</td>
+              <td><code>CreateProcess()</code> API creates process and initial thread simultaneously. Uses <code>EPROCESS</code> block.</td>
+            </tr>
+            <tr>
+              <td><strong>Scheduling</strong></td>
+              <td>Completely Fair Scheduler (CFS). Uses red-black tree, tracks virtual runtime (vruntime).</td>
+              <td>Multilevel feedback queue with 32 priority levels. Round-robin within highest priority.</td>
+            </tr>
+            <tr>
+              <td><strong>File System</strong></td>
+              <td>ext4 (default) / Btrfs. Everything is a file (including devices in <code>/dev</code> and process info in <code>/proc</code>). Root directory is <code>/</code>.</td>
+              <td>NTFS. Uses Master File Table (MFT). Volume-based naming (<code>C:\</code>, <code>D:\</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Memory Mgmt</strong></td>
+              <td>Demand paging with Buddy System (kernel alloc) and Slab Allocator (kernel objects).</td>
+              <td>Demand paging with Virtual Address Descriptors (VADs) tracking memory regions per process.</td>
+            </tr>
+            <tr>
+              <td><strong>Security</strong></td>
+              <td>Discretionary Access Control (DAC) via rwx permissions. Mandatory Access Control (MAC) via SELinux/AppArmor.</td>
+              <td>Fine-grained Access Control Lists (ACLs) per file. Security Identifiers (SIDs) for users and groups. UAC for elevation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION ★ PYQ -->
+  <section id="s-fs-pyq" data-search-section="PYQ previous year GATE MCQ university file systems disk scheduling RAID inode allocation">
+    <div class="section-heading">
+      <h2 class="prose">★ Unit 6 PYQ &amp; Exam Prep</h2>
+      <button class="bookmark-btn" data-id="s-fs-pyq" data-label="Unit 6 PYQ" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University Exams</div>
+      <div class="prose">
+        <h3>Short Answer Questions (2–5 Marks)</h3>
+        <details class="qa-item">
+          <summary><strong>Q1:</strong> Compare contiguous, linked, and indexed file allocation methods.</summary>
+          <div class="qa-content"><strong>Contiguous:</strong> File occupies consecutive disk blocks. Sequential and direct access O(1). Suffers external fragmentation; file size must be known at creation. Used in CD/DVD. <strong>Linked:</strong> Blocks chained via pointers. No fragmentation; dynamic growth. Sequential access only — direct access O(n). FAT32 uses a RAM table variant. <strong>Indexed:</strong> Index block holds pointers to all data blocks. Both sequential and direct access O(1). No external fragmentation. Used in Unix (inode) and NTFS. Best for general-purpose FS.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q2:</strong> What is disk scheduling? Compare FCFS and SCAN algorithms.</summary>
+          <div class="qa-content">Disk scheduling determines the order in which disk I/O requests are serviced to minimize head movement (seek time). <strong>FCFS:</strong> Simple FIFO ordering. No starvation but poor throughput — head may zigzag across disk. <strong>SCAN (Elevator):</strong> Head moves in one direction servicing all requests, then reverses. Fair (max 2 sweeps wait) and efficient. Historically used in many systems; modern Linux prefers CFQ, mq-deadline, or BFQ schedulers for HDDs and NVMe.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q3:</strong> Explain the structure of a Unix inode and how it supports large files.</summary>
+          <div class="qa-content">An inode (index node) stores all file metadata: mode, uid, gid, size, timestamps, link count, and 15 block pointers. The 15 pointers are: 12 direct (point directly to data blocks — fast for small files), 1 single indirect (points to a block of 1024 pointers → 4MB reach), 1 double indirect (1024² pointers → 4GB reach), and 1 triple indirect (1024³ → 4TB reach). Small files (≤48 KB) access data in one disk I/O. Large files use multi-level indirection — the penalty grows with file size.</div>
+        </details>
+        <h3>Long Answer Questions (10 Marks)</h3>
+        <details class="qa-item">
+          <summary><strong>Q4:</strong> Explain RAID levels 0, 1, and 5 with diagrams and use cases.</summary>
+          <div class="qa-content"><strong>RAID 0 (Striping):</strong> Data split across N disks. Read/write speed multiplied by N. No fault tolerance — any disk failure loses all data. Use: video editing, temp storage. <strong>RAID 1 (Mirroring):</strong> Data duplicated on 2 disks. Survives 1 failure. Read speed doubled (can read from either). Write speed similar to single disk (both must be written). Use: OS drives, small databases. <strong>RAID 5 (Striped with Distributed Parity):</strong> Data + parity striped across N≥3 disks. Survives 1 disk failure — parity block allows reconstruction. Write penalty (4 I/Os per logical write). Usable space = (N-1)/N. Use: NAS, enterprise storage, file servers.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q5:</strong> Compare bit vector and linked list methods for free space management.</summary>
+          <div class="qa-content"><strong>Bit Vector (Bitmap):</strong> One bit per disk block (0=free, 1=allocated). Space = n/8 bytes for n blocks. Fast with CPU bitwise operations — can check 32/64 blocks at once. Easy to find contiguous free blocks. Must be kept in RAM for performance. Used in ext4, NTFS. <strong>Linked Free List:</strong> Free blocks chained via pointers. No extra space (uses free blocks themselves). Finding a free block is O(1) (head of list). But finding n free blocks requires traversing n links. Poor for contiguous allocation. Bitmap is superior for modern systems.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q6:</strong> What is VFS? How does it allow one OS to support multiple file systems?</summary>
+          <div class="qa-content">VFS (Virtual File System) is an abstraction layer in the kernel that provides a <strong>unified interface</strong> (open, read, write, close) regardless of the underlying file system type. Applications make standard system calls; VFS resolves the path, determines which FS driver owns that mount point, and dispatches the call to the correct driver (ext4, FAT32, NFS, etc.). Key VFS objects: superblock (mounted FS), inode (file), dentry (directory entry, cached for performance), and file (open file state). This lets you access a USB drive (FAT32) and network share (NFS) with the same code.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q7:</strong> Differentiate between hard links and symbolic links with examples.</summary>
+          <div class="qa-content"><strong>Hard link:</strong> Another directory entry pointing to the <em>same inode</em>. Created via <code>ln file link</code>. Same inode number, shared data. File survives until link count = 0. Cannot cross filesystem boundaries. Cannot link to directories (prevents cycles). <strong>Symbolic (soft) link:</strong> A separate file containing the <em>path string</em> of the target. Created via <code>ln -s target link</code>. Has its own inode. Can cross filesystems. Can link to directories. If target is deleted, symlink becomes a "dangling link" — broken reference. Example: <code>ln -s /usr/bin/python3 /usr/bin/python</code>.</div>
+        </details>
+        <details class="qa-item">
+          <summary><strong>Q8:</strong> Explain journaling in file systems. Why is it important?</summary>
+          <div class="qa-content">Journaling prevents file system corruption after crashes. Before modifying metadata (inodes, bitmaps), the FS writes the intended changes to a <strong>journal (log)</strong> on disk. If the system crashes mid-operation: on reboot, the FS replays the journal to complete pending operations or discards incomplete ones. This gives fast recovery (seconds vs minutes for fsck). <strong>ext3/ext4</strong> supports three modes: data=writeback (journal metadata only), data=ordered (metadata journaled after data written), data=journal (full journaling — safest but slowest). NTFS also uses journaling via its log file. <strong>Copy-on-Write FS</strong> (ZFS, Btrfs) avoid the problem entirely — they never overwrite data in place.</div>
+        </details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE &amp; Competitive</div>
+      <div class="prose">
+        <h3>GATE Master MCQs</h3>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>1. Requests at cylinders: 82, 170, 43, 140, 24, 16, 190. Head at 50, moving toward higher. Total head movement using SCAN?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>332</li>
+            <li>208</li>
+            <li>322</li>
+            <li>399</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: A (332)</strong><br>SCAN (disk end = 199, moving right from 50): service 82→140→170→190→[end 199]→reverse→43→24→16. Movement = (199 − 50) + (199 − 16) = 149 + 183 = <strong>332</strong>. Step-by-step check: 50→82(32) →140(58) →170(30) →190(20) →199(9) →43(156) →24(19) →16(8) = <strong>332</strong>.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>2. A disk has 10 blocks. An inode has 2 direct, 1 single-indirect pointer. Block size = 512 bytes, pointer size = 4 bytes. Max file size = ?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>1024 bytes</li>
+            <li>65536 bytes</li>
+            <li>66560 bytes</li>
+            <li>66048 bytes</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (66560 bytes)</strong><br>Pointers per block = 512/4 = 128. Direct blocks = 2 × 512 = 1024 bytes. Single indirect = 128 × 512 = 65536 bytes. Total = 1024 + 65536 = <strong>66560 bytes</strong>.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>3. Which of the following file allocation methods supports both sequential and direct access efficiently?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>Linked allocation</li>
+            <li>Contiguous allocation</li>
+            <li>Indexed allocation</li>
+            <li>Both B and C</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: D (Both B and C)</strong><br>Contiguous: sequential O(1) (blocks adjacent), direct O(1) (start + offset). Indexed: sequential O(1) (read index sequentially), direct O(1) (index[i] directly). Linked allocation only supports sequential efficiently — direct access requires O(n) pointer traversal.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>4. In RAID 5 with 5 disks each of 100 GB capacity, what is the total usable storage?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>500 GB</li>
+            <li>250 GB</li>
+            <li>400 GB</li>
+            <li>300 GB</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (400 GB)</strong><br>RAID 5 usable capacity = (N−1) × disk_size = (5−1) × 100 = 400 GB. One disk's worth of space is used for distributed parity. The parity is not on one dedicated disk but spread across all 5 disks, so reads are still parallelized.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>5. A disk has 2^20 blocks of 4KB each. How many blocks does the free-space bitmap itself occupy?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>32 blocks</li>
+            <li>128 blocks</li>
+            <li>256 blocks</li>
+            <li>64 blocks</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: A (32 blocks)</strong><br>Bitmap size = 2^20 bits = 2^20 / 8 = 131072 bytes = 128 KB. Each block = 4 KB. Blocks needed = 128 KB / 4 KB = <strong>32 blocks</strong>. Formula: ⌈n / (8 × block_size)⌉.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>6. Which file system consistency mechanism writes intended changes to a log before applying them?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>fsck</li>
+            <li>Copy-on-Write</li>
+            <li>Journaling</li>
+            <li>RAID parity</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer &amp; Explanation</summary>
+            <div><strong>Answer: C (Journaling)</strong><br>Journaling (used in ext3/ext4, NTFS) writes metadata changes to a journal/log before applying them to the actual FS structures. On crash, the journal is replayed for fast recovery. fsck scans the entire disk (slow). Copy-on-Write never overwrites in place (used by ZFS, Btrfs). RAID parity handles disk failures, not crash consistency.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- ADVANCED ENRICHMENTS — Unit 6 -->
+  <section id="s-fs-advanced" data-search-section="advanced file systems log structured LFS ZFS Btrfs COW directory hash B-tree RAID MTTDL rebuild C-LOOK LOOK">
+    <div class="section-heading">
+      <h2 class="prose">🔬 Advanced: File Systems Deep Dive</h2>
+      <button class="bookmark-btn" data-id="s-fs-advanced" data-label="Advanced FS Topics" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-adv">
+      <div class="mode-badge adv">🔬 Advanced</div>
+      <div class="prose">
+
+        <h3>LOOK vs C-LOOK — Full Step-by-Step Trace</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Same Queue as SCAN Examples: 14,37,65,67,98,122,124,183 | Head=53 moving right | Max=199</span><button class="code-copy">Copy</button></div>
+          <pre><code>═══ LOOK (stops at last request — 183, not disk end 199) ═══
+  Moving right from 53: 65→67→98→122→124→183
+  Reverse at 183 (last right-side request):   37→14
+  Step-by-step:
+    53→65:  +12
+    65→67:  +2
+    67→98:  +31
+    98→122: +24
+    122→124:+2
+    124→183:+59   ← reverse here (NO trip to 199)
+    183→37: +146
+    37→14:  +23
+  Total LOOK = 12+2+31+24+2+59+146+23 = 299 cylinders
+
+  Formula shortcut: (183−53) + (183−14) = 130 + 169 = 299 ✅
+
+═══ C-LOOK (circular — jumps back to lowest request, not 0) ═══
+  Moving right from 53: 65→67→98→122→124→183
+  Jump to lowest request (14), no service during jump:   14→37
+  Step-by-step:
+    53→65:  +12
+    65→67:  +2
+    67→98:  +31
+    98→122: +24
+    122→124:+2
+    124→183:+59   ← jump to 14 (no service)
+    183→14: jump (counted if question says so; often excluded)
+    14→37:  +23
+  Total C-LOOK (excluding jump) = 12+2+31+24+2+59+23 = 153 cylinders
+  Total C-LOOK (including jump) = 153 + (183−14) = 153+169 = 322 cyl
+
+  GATE convention: "total head movement" usually includes jump.
+  Check question wording carefully — some say "excluding return."
+
+═══ All-Algorithm Summary (same queue) ═══
+  FCFS:   640  (arrival order — worst)
+  SSTF:   236  (greedy nearest — starvation risk)
+  SCAN:   331  (elevator to disk end 199)
+  LOOK:   299  (elevator to last request 183)
+  C-SCAN: 382  (one-way to 199, jump to 0, service 14→37)
+  C-LOOK: 322  (one-way to 183, jump to 14, service to 37)</code></pre>
+        </div>
+
+        <h3>Log-Structured File System (LFS)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">LFS — All Writes Are Sequential</span><button class="code-copy">Copy</button></div>
+          <pre><code>Motivation: HDDs are fast for sequential I/O, slow for random.
+  Traditional FS: writes scatter across disk (data, inode, bitmap).
+  LFS: treats entire disk as a circular log. ALL writes are appended.
+
+LFS Structure:
+  Disk = one large circular log of fixed-size segments (~1MB each)
+  Every write: new data + new inode + new bitmap → appended to log
+  Old versions of blocks become "stale" in old segments
+
+Inode Map (imap):
+  LFS inodes move on every write (unlike fixed inode table).
+  imap: maps inode number → current location on disk.
+  imap chunks also written to log; checkpoint region stores imap addresses.
+
+Segment Cleaner (Garbage Collection):
+  Segments fill up with live + stale blocks.
+  Cleaner reads live blocks from old segments, writes them to new segment.
+  Cleaning cost: read N segments, identify live blocks, write live to new.
+  Utilization tradeoff: higher utilization → more cleaning work.
+
+Crash Recovery:
+  Log is append-only → on crash, just replay from last checkpoint.
+  Fast recovery vs ext3/4 journal (no need to scan full FS).
+
+Performance:
+  Write bandwidth: near-sequential disk speed for all writes.
+  Read bandwidth: similar to traditional FS (reads random blocks).
+  Used by: BSD LFS, NILFS2 (Linux), F2FS (Flash-Friendly FS for SSDs).
+
+F2FS (modern LFS for NAND flash):
+  Log-structured + flash-aware: segment size = erase block size.
+  Reduces write amplification. Default FS on Android phones.</code></pre>
+        </div>
+
+        <h3>Copy-on-Write File Systems (ZFS / Btrfs)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">COW FS — Never Overwrites In Place</span><button class="code-copy">Copy</button></div>
+          <pre><code>Core Principle: every write goes to a NEW location.
+  Old blocks become stale and are freed asynchronously.
+  The FS tree root pointer is updated atomically.
+
+Benefits:
+  ✅ Crash consistency: partial writes never corrupt FS tree
+     (root only points to fully written new tree).
+  ✅ Snapshots: O(1) — just save the old root pointer!
+     Snapshots share unchanged blocks with live FS.
+  ✅ Block-level checksums: every block has a checksum stored
+     in the parent node. Silent corruption detected on read.
+  ✅ Built-in RAID (ZFS): checksums + COW = detect + correct
+     silent disk errors that RAID-5/6 hardware cannot.
+
+ZFS Architecture:
+  Pool (zpool): raw storage from one or more disks.
+  Virtual Devices (vdevs): RAID configurations within pool.
+  Datasets: filesystems/volumes within pool.
+  ARC (Adaptive Replacement Cache): in-memory page cache.
+  L2ARC: SSD read cache. ZIL (ZFS Intent Log): SSD write log.
+
+Btrfs (Linux):
+  Linux's native COW FS. Features: subvolumes, snapshots,
+  RAID 0/1/5/6/10, send/receive, quota, deduplication.
+  Stable for RAID 0/1/10; RAID 5/6 historically had issues.
+
+COW vs Journaling:
+  Journaling: writes data in place, logs metadata for recovery.
+  COW: NEVER writes in place → inherently consistent.
+  COW avoids "journal replay on every crash" overhead.</code></pre>
+        </div>
+
+        <h3>Directory Implementation: Hash Tables vs B-Trees</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">How "ls" Finds Files Quickly</span><button class="code-copy">Copy</button></div>
+          <pre><code>Simple Linear List (ext2 small dirs):
+  Directory block = list of (inode#, name_len, name) entries.
+  Lookup: O(n) scan — fine for small directories.
+  Problem: 1000-file directory → 1000 comparisons per lookup.
+
+Hash Tree / HTree (ext3/ext4):
+  ext4 uses a B-tree-like structure called HTree (Hash Tree).
+  On directory creation, a "dx_root" block holds a hash index.
+  Lookup:
+    1. Hash the filename: e.g., half-MD4 hash.
+    2. Index block gives offset of leaf block containing that hash.
+    3. Linear search within leaf block (~16 entries).
+  O(log n) → single I/O for index + single I/O for leaf.
+  Enabled by default in ext4 (dir_index feature).
+
+B-Tree Directories (HFS+, NTFS, XFS, Btrfs):
+  Full B-tree: entries sorted by (hash, name).
+  Lookup: O(log n) guaranteed, even for millions of entries.
+  Insertion: rebalancing maintains sorted order.
+  XFS: uses B+ trees for directory entries AND extent maps.
+  NTFS: MFT B-tree for all metadata. $I30 for directory index.
+
+Comparison:
+  Method          Lookup      Insert    Space
+  Linear list     O(n)        O(1)*     Compact
+  Hash table      O(1) avg    O(1) avg  Hash collision risk
+  HTree (ext4)    O(log n)    O(log n)  Moderate
+  B-tree (XFS)    O(log n)    O(log n)  Best for huge dirs
+
+*Insert to linear list is O(1) but requires finding free space → O(n) scan.
+Rule: for directories with >1000 files, linear list is unacceptable.</code></pre>
+        </div>
+
+        <h3>RAID Rebuild Risk and MTTDL</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Why RAID 5 Is Risky for Large Drives</span><button class="code-copy">Copy</button></div>
+          <pre><code>MTTDL = Mean Time To Data Loss (reliability metric)
+
+For RAID 1 (mirroring, 2 disks):
+  MTTDL = MTTF² / (N × MTTR)
+  Where MTTF = Mean Time To Failure, MTTR = Mean Time To Repair
+  High MTTDL because second disk must fail during rebuild window.
+
+For RAID 5 (N disks, single parity):
+  On one disk failure → DEGRADED MODE.
+  System keeps running, but read every other disk for parity rebuild.
+  During rebuild: if ANY of the remaining (N-1) disks fails → DATA LOSS.
+  Rebuild time: proportional to disk capacity.
+
+The Rebuild Problem (Modern Reality):
+  2010: 1TB disk, rebuild time ≈ 4 hours.
+  2024: 20TB disk, rebuild time ≈ 80 hours (3+ days!).
+  URE (Unrecoverable Read Error): 1 bit error per 10^14-10^15 bits read.
+  A 20TB rebuild reads ~160 trillion bits → high URE probability.
+  RAID 5 + large drives + URE = catastrophic data loss scenario.
+
+MTTDL Formula (RAID 5, simplified):
+  MTTDL ≈ MTTF² / (N × (N−1) × MTTR)
+  Example: N=5, MTTF=100,000h, MTTR=24h
+  MTTDL ≈ (100,000)² / (5 × 4 × 24) ≈ 20.8 × 10⁶ hours ≈ 2,374 years
+  (Optimistic — ignores URE during rebuild)
+
+RAID 6 vs RAID 5 (rebuild):
+  RAID 6: dual parity → can tolerate 2 simultaneous disk failures.
+  Much safer for large-capacity disks.
+  Recommended for >4 disks or disk sizes >4TB.
+
+Modern Alternatives:
+  ZFS RAIDZ: RAID-Z1 (like RAID 5), RAID-Z2 (like RAID 6).
+  Block-level checksums catch URE → safer rebuilds.
+  Erasure Coding: used in object stores (Ceph, HDFS).
+  k-of-n recovery from k data + m parity shards.</code></pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- GATE TRAP SHEET -->
+  <section id="s-fs-traps" data-search-section="GATE trap sheet file system disk scheduling inode common mistakes">
+    <div class="section-heading">
+      <h2 class="prose">⚡ Unit 6 GATE Trap Sheet</h2>
+      <button class="bookmark-btn" data-id="s-fs-traps" data-label="Unit 6 Traps" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">14 High-Frequency GATE Traps — File Systems & I/O</span><button class="code-copy">Copy</button></div>
+          <pre><code> 1. SCAN goes to DISK END. LOOK goes to LAST REQUEST only.
+ 2. C-SCAN return jump: some questions count it, some don’t → follow convention.
+ 3. Max file size (classic inode): 12B + (B/P)B + (B/P)²B + (B/P)³B.
+    B = block size, P = pointer size.
+ 4. Inode does NOT store file name. Directory entry maps name → inode number.
+ 5. Hard link: new dir entry → same inode (link_count++). Deleting one name
+    decrements count; data freed only when count=0.
+ 6. Symbolic link: a separate file containing a path string. Can dangle.
+ 7. SSTF can starve far-away requests. SCAN/C-SCAN prevent starvation.
+ 8. Bitmap blocks = ⌈total_items / (8 × block_size_bytes)⌉.
+ 9. ext4 modern: uses extents, not 15-pointer model. GATE numericals use classic model.
+10. Three file table levels: per-process fd → open file description → inode.
+    dup()/fork() share open file description (same offset).
+11. Journaling modes: metadata-only (ext4 default), ordered, full data.
+12. RAID 5: distributed parity. N disks → capacity = (N−1) × disk_size.
+    Can survive 1 disk failure. RAID 6: dual parity, survives 2.
+13. DMA: device transfers data directly to memory; CPU interrupted only at end.
+14. SSD: no seek time → disk scheduling irrelevant. Use noop/deadline scheduler.</code></pre>
+        </div>
+
+        <h3>📚 Advanced Reading</h3>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div>
+            <ul style="margin:0;padding-left:16px">
+              <li>Rosenblum & Ousterhout, “The Design and Implementation of a Log-Structured File System” (1992)</li>
+              <li>McKusick et al., “A Fast File System for UNIX” (1984)</li>
+              <li>ZFS/Btrfs: copy-on-write, checksums, snapshots</li>
+              <li>Linux VFS architecture (Love, “Linux Kernel Development” Ch. 13)</li>
+              <li>SSD Flash Translation Layer (FTL) and write amplification</li>
+              <li>Patterson, Gibson, Katz, “A Case for Redundant Arrays of Inexpensive Disks (RAID)” (1988)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREV/NEXT NAV -->
+  <div class="prev-next">
+    <a href="unit5.html" class="nav-btn">← Unit 5</a>
+    <a href="../chapters/gate-extra.html" class="nav-btn primary">⚡ GATE Extra Topics →</a>
+  </div>
+</div>
+</main>
+<div id="mode-panel">
+  <button class="mode-btn active" data-mode="all">📚 All</button>
+  <button class="mode-btn uni-btn" data-mode="uni">🎓 Uni</button>
+  <button class="mode-btn gate-btn" data-mode="gate">⚡ GATE</button>
+  <button class="mode-btn adv-btn" data-mode="advanced">🔬 Adv</button>
+</div>
+<div id="tts-panel">
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play">▶</button>
+    <button class="tts-btn" id="tts-stop">⏹</button>
+    <div class="tts-speed"><span>Speed</span><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1"><span id="tts-rate-label">1.0x</span></div>
+  </div>
+  <div class="tts-voice"><select id="tts-voice-select"><option>Loading…</option></select></div>
+</div>
+<!-- POMODORO WIDGET (Industry Edition) -->
+<div id="pomodoro">
+  <div id="pomo-app"><div id="pomo-card">
+    <div id="pomo-header">
+      <span id="pomo-label" data-phase="work">⏰ FOCUS · #1</span>
+      <div id="pomo-header-actions">
+        <button class="hdr-btn" id="pomo-btn-stats" title="Analytics">📊</button>
+        <button class="hdr-btn" id="pomo-btn-settings" title="Settings">⚙️</button>
+      </div>
+    </div>
+    <div id="pomo-ring-wrap">
+      <svg id="pomo-ring" viewBox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"/>
+        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      </svg>
+      <div id="pomo-time-wrap">
+        <div id="pomo-time">25:00</div>
+        <div aria-live="polite" id="pomo-time-live"></div>
+      </div>
+    </div>
+    <div id="pomo-sessions">
+      <div class="session-dot" id="dot-0"></div><div class="session-dot" id="dot-1"></div>
+      <div class="session-dot" id="dot-2"></div><div class="session-dot" id="dot-3"></div>
+    </div>
+    <div id="pomo-controls">
+      <button class="btn-icon" id="pomo-reset" title="Reset (R)">↺</button>
+      <button id="pomo-start" data-running="0">▶ Start</button>
+      <button class="btn-icon" id="pomo-skip" title="Skip (S)">⏭</button>
+    </div>
+    <div id="pomo-goal-wrap">
+      <div id="pomo-goal-label">
+        <span id="pomo-goal-text">0 / 8 sessions 🔥</span>
+        <span id="pomo-streak">0</span>
+      </div>
+      <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
+    </div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+  </div></div>
+</div>
+<div class="modal" id="pomo-distraction-modal" hidden></div>
+<div class="modal" id="pomo-settings-modal" hidden></div>
+<div class="modal" id="pomo-analytics-modal" hidden></div>
+<div id="pomo-toasts"></div>
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="s-icon">🔍</span><input id="search-input" type="text" placeholder="Search topics…" autocomplete="off"></div>
+    <div id="search-results"></div>
+    <div class="search-hint"><span><kbd>↵</kbd> navigate</span><span><kbd>Esc</kbd> close</span><span><kbd>Ctrl+K</kbd> open</span></div>
+  </div>
+</div>
+<nav id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
+  <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
+  <a href="#s-fs-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 6</a>
+  <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
+</nav>
+<div id="toast-container"></div>
+<script src="../assets/js/state.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/modes.js"></script>
+<script src="../assets/js/tts.js"></script>
+<script src="../assets/js/timer-settings.js"></script>      <!-- 1. Settings -->
+<script src="../assets/js/timer.js"></script>                <!-- 2. PomoBus + PomoTimer -->
+<script src="../assets/js/timer-analytics.js"></script>      <!-- 3. Analytics -->
+<script src="../assets/js/timer-notifications.js"></script>  <!-- 4. Notifications -->
+<script src="../assets/js/timer-ui.js"></script>             <!-- 5. UI (bootstraps on DOMContentLoaded) -->
+<script src="../assets/js/print.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/glossary.js"></script>
+</body>
+</html>

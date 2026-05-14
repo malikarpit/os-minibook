@@ -1,0 +1,74 @@
+{
+  "id": "./index.html",
+  "name": "OS MiniBook — Arpit",
+  "short_name": "OS MiniBook",
+  "description": "Operating Systems interactive study companion — DU B.Tech CSE Sem IV. Works offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone"],
+  "dir": "ltr",
+  "background_color": "#070710",
+  "theme_color": "#7c3aed",
+  "orientation": "any",
+  "lang": "en",
+  "categories": ["education", "books"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%237c3aed'/><text y='130' x='30' font-size='120' font-family='system-ui' fill='white'>⚡</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%237c3aed'/><text y='360' x='60' font-size='340' font-family='system-ui' fill='white'>⚡</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Unit 1 — OS Intro",
+      "url": "./chapters/unit1.html",
+      "description": "OS evolution, kernel types, system calls"
+    },
+    {
+      "name": "Unit 2 — Processes",
+      "url": "./chapters/unit2.html",
+      "description": "Process management and CPU scheduling"
+    },
+    {
+      "name": "Unit 3 — Concurrency",
+      "url": "./chapters/unit3.html",
+      "description": "Threads, synchronization, and concurrency"
+    },
+    {
+      "name": "Unit 4 — Deadlocks",
+      "url": "./chapters/unit4.html",
+      "description": "Deadlock prevention, avoidance, and recovery"
+    },
+    {
+      "name": "Unit 5 — Memory",
+      "url": "./chapters/unit5.html",
+      "description": "Paging, segmentation, and virtual memory"
+    },
+    {
+      "name": "Unit 6 — File Systems",
+      "url": "./chapters/unit6.html",
+      "description": "File system layout, allocation, and security"
+    },
+    {
+      "name": "Mock Exams",
+      "url": "./exams/full-papers.html",
+      "description": "Full mock papers"
+    },
+    {
+      "name": "Progress Dashboard",
+      "url": "./progress.html",
+      "description": "Study progress and stats"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

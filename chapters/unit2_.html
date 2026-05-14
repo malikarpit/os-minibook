@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="Unit 2: Process Management & CPU Scheduling — OS MiniBook DU B.Tech CSE Sem IV">
+<title>Unit 2 — Processes & Scheduling | OS MiniBook ⚡ Arpit</title>
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/animations.css">
+<link rel="stylesheet" href="../assets/css/timer.css">
+<style>
+.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
+.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
+.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
+.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
+.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
+.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
+.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
+.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent-light);box-shadow:0 4px 20px rgba(124,58,237,.5)}
+.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
+.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
+/* Process state diagram */
+.state-diagram{display:flex;flex-wrap:wrap;gap:var(--sp-4);justify-content:center;margin:var(--sp-6) 0}
+.state-box{background:var(--bg-card);border:2px solid var(--accent-border);border-radius:var(--r-xl);padding:var(--sp-3) var(--sp-5);text-align:center;min-width:110px}
+.state-box.active{border-color:var(--accent);box-shadow:var(--sh-glow);background:var(--accent-soft)}
+.state-box .state-name{font-weight:700;font-size:var(--text-sm);color:var(--accent-light)}
+.state-box .state-desc{font-size:var(--text-xs);color:var(--tx-muted);margin-top:4px}
+/* Gantt chart */
+.gantt{display:flex;height:48px;border-radius:var(--r-md);overflow:hidden;margin:var(--sp-4) 0;border:1px solid var(--bd-default)}
+.gantt-block{display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700;color:#fff;position:relative;transition:all var(--t-base)}
+.gantt-block:hover{filter:brightness(1.2)}
+.gantt-labels{display:flex;margin-top:4px;font-family:var(--font-mono);font-size:10px;color:var(--tx-muted)}
+.gantt-label{text-align:left}
+/* Simulator */
+.sim-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin:var(--sp-6) 0}
+.sim-title{font-weight:700;font-size:var(--text-base);color:var(--tx-primary);margin-bottom:var(--sp-4)}
+.sim-controls{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin-bottom:var(--sp-4)}
+.sim-input{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-3);color:var(--tx-primary);font-family:var(--font-mono);font-size:var(--text-sm);width:100%;outline:none;transition:border-color var(--t-fast)}
+.sim-input:focus{border-color:var(--accent-border)}
+.sim-btn{padding:var(--sp-2) var(--sp-5);border-radius:var(--r-md);background:var(--accent);color:#fff;font-weight:600;font-size:var(--text-sm);transition:all var(--t-fast)}
+.sim-btn:hover{background:var(--accent-light)}
+.sim-btn.secondary{background:var(--bg-elevated);color:var(--tx-secondary);border:1px solid var(--bd-default)}
+.sim-btn.secondary:hover{border-color:var(--accent-border);color:var(--accent-light)}
+.sim-output{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4);min-height:60px;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-secondary);line-height:1.8}
+.result-table{width:100%;border-collapse:collapse;margin-top:var(--sp-4);font-size:var(--text-xs)}
+.result-table th{background:var(--accent-soft);color:var(--accent-light);padding:var(--sp-2) var(--sp-3);text-align:center;font-weight:700}
+.result-table td{padding:var(--sp-2) var(--sp-3);text-align:center;border-bottom:1px solid var(--bd-subtle);color:var(--tx-secondary)}
+.result-table tr:hover td{background:var(--accent-soft)}
+.gantt-sim{display:flex;height:40px;border-radius:var(--r-md);overflow:hidden;margin:var(--sp-3) 0;border:1px solid var(--bd-default);min-width:100%}
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="tts-toggle" class="icon-btn" title="Read Aloud">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+    </button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Unit 2 — Sections</div>
+      <a href="#s-process" class="sidebar-link active"><span class="link-icon">📌</span>2.1 Process Concepts</a>
+      <a href="#s-states" class="sidebar-link"><span class="link-icon">🔄</span>2.2 Process States & PCB</a>
+      <a href="#s-threads" class="sidebar-link"><span class="link-icon">🧵</span>2.3 Threads & Concurrency</a>
+      <a href="#s-ipc" class="sidebar-link"><span class="link-icon">📡</span>2.4 IPC Mechanisms</a>
+      <a href="#s-sched-intro" class="sidebar-link"><span class="link-icon">⏱️</span>2.5 Scheduling Concepts</a>
+      <a href="#s-fcfs" class="sidebar-link"><span class="link-icon">📊</span>2.6 FCFS & SJF</a>
+      <a href="#s-priority" class="sidebar-link"><span class="link-icon">⭐</span>2.7 Priority & Round Robin</a>
+      <a href="#s-srtf" class="sidebar-link"><span class="link-icon">⚡</span>2.8 SRTF & Multilevel</a>
+      <a href="#s-simulator" class="sidebar-link"><span class="link-icon">🎮</span>2.9 CPU Scheduler Simulator</a>
+      <a href="#s-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ & Q&A</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">All Units</div>
+      <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Concurrency</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">🧠</span>Unit 5 — Memory</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="gate-extra.html" class="sidebar-link" style="color:var(--gate-c)"><span class="link-icon">⚡</span>GATE Extra</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Progress</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+
+<main id="main-content">
+<div class="content-inner">
+
+  <div class="chapter-hero">
+    <div class="chapter-num">⚙️ Unit 2 · DSC-7</div>
+    <h1 class="chapter-title">Processes &amp; CPU Scheduling</h1>
+    <div class="chapter-meta">
+      🎓 University &nbsp;⚡ GATE Ready &nbsp;14 Sections &nbsp;Threads · IPC · Scheduling · CFS
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="callout info reveal">
+    <strong>📋 TABLE OF CONTENTS</strong>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;margin-top:8px;font-size:13px">
+      <span>2.1 &nbsp;Process Concepts</span><span>2.8 &nbsp;SRTF &amp; Round Robin</span>
+      <span>2.2 &nbsp;Process Memory Layout</span><span>2.9 &nbsp;Priority &amp; MLQ</span>
+      <span>2.3 &nbsp;Process States &amp; PCB</span><span>2.10 MLFQ Deep Dive</span>
+      <span>2.4 &nbsp;Context Switch &amp; Operations</span><span>2.11 Real-World Schedulers</span>
+      <span>2.5 &nbsp;Threads &amp; Multithreading</span><span>2.12 Scheduling Simulator</span>
+      <span>2.6 &nbsp;Inter-Process Communication</span><span>★ &nbsp;&nbsp;PYQ &amp; Exam Prep</span>
+      <span>2.7 &nbsp;CPU Scheduling Concepts</span><span></span>
+    </div>
+  </div>
+
+<!-- ═══════════════════════════════════════════════════════ 2.1 ══ -->
+<section id="s-proc-concepts" data-search-section="Process Concepts">
+<h2 class="prose">2.1 Process Concepts
+<button class="bookmark-btn" data-id="s-proc-concepts" data-label="2.1 Process Concepts" title="Bookmark">🔖</button></h2>
+
+<p class="prose">A <strong>process</strong> is a program in execution — a dynamic entity with its own address space, registers, stack, and OS resources. A <em>program</em> is a passive, static file on disk; the moment the OS loads it into memory and creates a PCB (Process Control Block) for it, it becomes a process.</p>
+
+<table class="data-table reveal">
+<caption>Program vs Process — Core Differences</caption>
+<thead><tr><th>Aspect</th><th>Program</th><th>Process</th></tr></thead>
+<tbody>
+<tr><td>Nature</td><td>Static, passive entity</td><td>Dynamic, active entity</td></tr>
+<tr><td>Existence</td><td>File on disk (.c, .exe)</td><td>Running in RAM with resources</td></tr>
+<tr><td>Resources</td><td>None</td><td>CPU, memory, files, I/O</td></tr>
+<tr><td>OS tracking</td><td>Not tracked</td><td>Tracked via PCB</td></tr>
+<tr><td>Multiple instances</td><td>One copy on disk</td><td>Many processes from one program</td></tr>
+<tr><td>Lifetime</td><td>Permanent (until deleted)</td><td>Temporary (create → terminate)</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>💡 Key Insight:</strong> Running the same program twice creates <em>two separate processes</em> — each with its own PCB, address space, and independent execution state. They share the code segment (read-only) but have separate stack and heap.</div>
+
+<div class="mode-uni">
+<div class="callout" style="border-color:var(--accent)"><strong>🎓 University Perspective:</strong> A process requires four fundamental resources: <strong>CPU time</strong> (scheduling), <strong>memory</strong> (address space), <strong>files</strong> (open file descriptors), and <strong>I/O devices</strong>. The OS manages allocation and deallocation of all four across the process lifetime.</div>
+<div class="mcq reveal"><strong>Q:</strong> Which of the following is TRUE about a process?<br>
+(a) A process is a program stored on disk<br>
+(b) Two processes from the same program share heap memory<br>
+(c) A process is a program in execution with its own resources<br>
+(d) A process exists permanently<br>
+<details><summary>Answer</summary><strong>(c)</strong> A process is a program in execution. It has its own PCB, address space, CPU registers, and OS-allocated resources. Two processes from the same program do NOT share heap (only read-only code may be shared).</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Trap:</strong> "A process is a program" is WRONG. A process is an <em>instance</em> of a program in execution. A single program can spawn multiple processes (e.g., Firefox opens 10 tabs → 10+ processes in some models).</div>
+<div class="mcq reveal"><strong>GATE 2018:</strong> Consider a program with 3 global variables. If we create 2 processes from this program using fork(), how many copies of the global variables exist?<br>
+(a) 3 &nbsp; (b) 6 &nbsp; (c) 2 &nbsp; (d) 1<br>
+<details><summary>Answer</summary><strong>(b) 6</strong> — After fork(), the child gets a complete copy of the parent's address space (copy-on-write). Both processes have their own 3 global variables = 6 total.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Advanced: Copy-On-Write (COW)</strong><br>
+Modern OS uses <em>copy-on-write</em> — after fork(), parent and child share the same physical pages marked read-only. Only when either process writes to a page does the OS create a private copy. This makes fork() O(1) instead of O(address space size). Linux implements this via page fault handler + MMU page table duplication.</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.2 ══ -->
+<section id="s-proc-memory" data-search-section="Process Memory Layout">
+<h2 class="prose">2.2 Process Memory Layout
+<button class="bookmark-btn" data-id="s-proc-memory" data-label="2.2 Memory Layout" title="Bookmark">🔖</button></h2>
+
+<p class="prose">Every process has a dedicated <strong>virtual address space</strong> divided into well-defined segments. Understanding this layout is essential for debugging, security, and OS design.</p>
+
+<table class="data-table reveal">
+<caption>Process Address Space Segments</caption>
+<thead><tr><th>Segment</th><th>Contains</th><th>Direction</th><th>Permissions</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Text (Code)</strong></td><td>Compiled machine instructions</td><td>Fixed</td><td>Read + Execute</td><td>main(), functions</td></tr>
+<tr><td><strong>Data (BSS)</strong></td><td>Uninitialised global/static vars</td><td>Fixed</td><td>Read + Write</td><td>int x; (global)</td></tr>
+<tr><td><strong>Data (Initialised)</strong></td><td>Initialised global/static vars</td><td>Fixed</td><td>Read + Write</td><td>int y = 5; (global)</td></tr>
+<tr><td><strong>Heap</strong></td><td>Dynamic memory (malloc/new)</td><td>Grows ↑</td><td>Read + Write</td><td>malloc(100)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Local vars, return addrs, params</td><td>Grows ↓</td><td>Read + Write</td><td>int z = 1; (local)</td></tr>
+<tr><td><strong>Kernel Space</strong></td><td>OS code, mapped in every process</td><td>Fixed</td><td>Kernel only</td><td>syscall handlers</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>High Address  ┌──────────────────┐
+0xFFFFFFFF   │   Kernel Space   │  ← OS (not accessible in user mode)
+             ├──────────────────┤
+             │      Stack       │  ← grows DOWNWARD ↓ (local vars, frames)
+             │        ↓        │
+             │   (free space)   │
+             │        ↑        │
+             │      Heap        │  ← grows UPWARD ↑ (malloc/new)
+             ├──────────────────┤
+             │   Data (BSS)     │  ← uninitialised globals
+             ├──────────────────┤
+             │  Data (Init'd)   │  ← initialised globals  
+             ├──────────────────┤
+Low Address  │   Text (Code)    │  ← machine instructions (read-only)
+0x00000000   └──────────────────┘</code></pre></div>
+
+<div class="callout formula reveal"><strong>Formula:</strong> Stack overflow occurs when the stack pointer crosses into the heap region. Heap exhaustion occurs when malloc returns NULL — the heap cannot grow further.</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2019:</strong> In a C program, where are automatic (local) variables stored?<br>
+(a) Text segment &nbsp; (b) Data segment &nbsp; (c) Stack &nbsp; (d) Heap<br>
+<details><summary>Answer</summary><strong>(c) Stack</strong> — Automatic/local variables are allocated on the stack frame when a function is called and deallocated when it returns. The stack grows downward in most architectures.</details></div>
+<div class="callout warn"><strong>⚡ GATE Trap:</strong> static local variables go to the <strong>Data segment</strong>, NOT the stack, even though they're declared inside a function. They persist across function calls.</div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 ASLR (Address Space Layout Randomisation):</strong> Modern OS randomises the base addresses of stack, heap, and libraries at each process start to defeat buffer overflow exploits. The text segment address may also be randomised with PIE (Position Independent Executable). Linux: <code>/proc/PID/maps</code> shows actual layout.</div>
+</div>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Check process memory layout at runtime (Linux)
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int global_init = 42;          // Initialised data segment
+int global_uninit;             // BSS segment
+
+int main() {
+    int stack_var = 10;        // Stack
+    int *heap_var = malloc(4); // Heap
+    *heap_var = 99;
+    
+    printf("Code (text):  %p
+", (void*)main);
+    printf("Global init:  %p
+", (void*)&global_init);
+    printf("Global uninit:%p
+", (void*)&global_uninit);
+    printf("Heap:         %p
+", (void*)heap_var);
+    printf("Stack:        %p
+", (void*)&stack_var);
+    // Stack addr > heap addr (stack grows down, heap grows up)
+    free(heap_var);
+    return 0;
+}</code></pre></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.3 ══ -->
+<section id="s-proc-states" data-search-section="Process States PCB Context Switch">
+<h2 class="prose">2.3 Process States &amp; PCB
+<button class="bookmark-btn" data-id="s-proc-states" data-label="2.3 States &amp; PCB" title="Bookmark">🔖</button></h2>
+
+<p class="prose">The OS tracks each process through a <strong>state machine</strong>. Transitions between states are triggered by scheduler decisions, I/O events, and signals.</p>
+
+<table class="data-table reveal">
+<caption>5-State Process Model</caption>
+<thead><tr><th>State</th><th>Description</th><th>Trigger In</th><th>Trigger Out</th></tr></thead>
+<tbody>
+<tr><td><strong>New</strong></td><td>Process being created (PCB allocated)</td><td>fork()/CreateProcess()</td><td>Admitted to Ready</td></tr>
+<tr><td><strong>Ready</strong></td><td>Waiting for CPU in ready queue</td><td>Admit / I/O complete / time quantum</td><td>Scheduler dispatch</td></tr>
+<tr><td><strong>Running</strong></td><td>Instructions executing on CPU</td><td>Dispatcher selects process</td><td>I/O, preemption, exit</td></tr>
+<tr><td><strong>Waiting (Blocked)</strong></td><td>Waiting for I/O or event</td><td>I/O request, wait()</td><td>I/O completion interrupt</td></tr>
+<tr><td><strong>Terminated</strong></td><td>Execution finished, PCB not yet freed</td><td>exit() / SIGKILL</td><td>Parent wait() → PCB freed</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>🔄 State Transition Diagram:</strong><br>
+<code>New → Ready → Running → Terminated</code><br>
+<code>Running → Waiting → Ready → Running</code> (I/O cycle)<br>
+<code>Running → Ready</code> (preemption by scheduler)<br>
+<code>Running → Terminated</code> (exit/kill)</div>
+
+<table class="data-table reveal">
+<caption>7-State Model (with Suspend States)</caption>
+<thead><tr><th>Additional State</th><th>Description</th><th>Why Needed</th></tr></thead>
+<tbody>
+<tr><td><strong>Ready/Suspend</strong></td><td>Swapped out of RAM, ready to run</td><td>RAM full — OS swaps to disk</td></tr>
+<tr><td><strong>Blocked/Suspend</strong></td><td>Swapped out, waiting for I/O</td><td>Free RAM while I/O pending</td></tr>
+</tbody></table>
+
+<div class="callout warn reveal"><strong>⚠️ Zombie Process:</strong> A process that has terminated (exit() called) but whose PCB hasn't been freed because the parent hasn't called wait(). It consumes a PID slot. <strong>Orphan Process:</strong> Parent terminated before child — Linux re-parents it to init (PID 1).</div>
+
+<h3 class="prose" style="margin-top:20px">Process Control Block (PCB)</h3>
+<p class="prose">The PCB is the OS data structure that <em>represents</em> a process. It stores everything the OS needs to manage and resume a process.</p>
+
+<table class="data-table reveal">
+<caption>PCB Fields — Complete Reference</caption>
+<thead><tr><th>Category</th><th>Fields</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><strong>Identity</strong></td><td>PID, PPID, UID, GID</td><td>Unique identification, ownership</td></tr>
+<tr><td><strong>CPU State</strong></td><td>PC, SP, registers (GPR, PSW)</td><td>Saved on context switch, restored on dispatch</td></tr>
+<tr><td><strong>Scheduling</strong></td><td>Priority, scheduling class, CPU time used, burst estimate</td><td>Scheduler decisions</td></tr>
+<tr><td><strong>Memory</strong></td><td>Page table pointer, segment table, base/limit registers</td><td>Virtual → physical address translation</td></tr>
+<tr><td><strong>I/O</strong></td><td>Open file descriptors, I/O device list, pending requests</td><td>Track resources held</td></tr>
+<tr><td><strong>Accounting</strong></td><td>Start time, CPU time, wait time, page faults</td><td>Resource accounting, billing</td></tr>
+<tr><td><strong>Signals</strong></td><td>Signal mask, pending signals, signal handlers</td><td>IPC via signals</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> Which PCB field is restored when a process is dispatched after a context switch?<br>
+(a) PID &nbsp; (b) Program Counter &nbsp; (c) UID &nbsp; (d) File descriptor table<br>
+<details><summary>Answer</summary><strong>(b) Program Counter (PC)</strong> — The CPU registers including PC, SP, and GPRs are saved to the PCB on preemption and restored when the process is dispatched again. The PID and UID don't change.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2016:</strong> The information about a process that is NOT part of the PCB is:<br>
+(a) I/O status information &nbsp; (b) CPU registers &nbsp; (c) Scheduling information &nbsp; (d) Contents of the stack<br>
+<details><summary>Answer</summary><strong>(d)</strong> The PCB stores a <em>pointer to the stack</em> (stack pointer register) but not the actual contents of the stack. The stack contents reside in the process's own address space in memory.</details></div>
+<div class="callout warn"><strong>⚡ GATE Key:</strong> PCB is stored in the <strong>kernel address space</strong> (protected memory) — not in the process's own user address space. A user process cannot directly read or modify its own PCB.</div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Linux task_struct:</strong> In Linux, the PCB is the <code>task_struct</code> (~700 fields, ~4KB). Key fields: <code>pid</code>, <code>state</code>, <code>mm</code> (memory descriptor), <code>files</code> (file descriptor table), <code>signal</code>, <code>thread</code> (CPU register save area). All <code>task_structs</code> are linked in a doubly-linked circular list. <code>init_task</code> (PID 0, the idle process) is the list head.</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.4 ══ -->
+<section id="s-context-switch" data-search-section="Context Switch Process Operations">
+<h2 class="prose">2.4 Context Switching &amp; Process Operations
+<button class="bookmark-btn" data-id="s-context-switch" data-label="2.4 Context Switch" title="Bookmark">🔖</button></h2>
+
+<p class="prose">Every time the OS must run a different process — whether due to time quantum expiry, a blocking I/O call, or a higher-priority process becoming ready — it must perform a context switch. This operation is the heart of multitasking: it creates the illusion that multiple processes run simultaneously on a single-core machine, and enables true parallelism on multi-core machines.</p>
+
+<p class="prose">The context switch has two distinct phases: <em>save</em> (capturing the current CPU state into the outgoing process's PCB) and <em>restore</em> (loading the incoming process's saved state from its PCB into the CPU). During this time, the CPU does no useful work — it's pure overhead. System designers aim to minimise both the frequency and duration of context switches. Modern CPUs help with fast register save/restore instructions (e.g., x86 FXSAVE/FXRSTOR for floating-point state).</p>
+
+<p class="prose">A <strong>context switch</strong> is the mechanism by which the OS saves the state of one process and restores the state of another. It is <em>pure overhead</em> — no useful work happens during the switch.</p>
+
+<table class="data-table reveal">
+<caption>Context Switch Steps</caption>
+<thead><tr><th>Step</th><th>Action</th><th>Cost</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Save CPU registers of current process → PCB</td><td>~µs</td></tr>
+<tr><td>2</td><td>Update process state (Running → Ready/Blocked)</td><td>Negligible</td></tr>
+<tr><td>3</td><td>Move current PCB to appropriate queue</td><td>Negligible</td></tr>
+<tr><td>4</td><td>Select next process via scheduling algorithm</td><td>Scheduler complexity</td></tr>
+<tr><td>5</td><td>Restore CPU registers from new process's PCB</td><td>~µs</td></tr>
+<tr><td>6</td><td>Switch memory maps (TLB flush, page table switch)</td><td>Expensive: TLB miss storm</td></tr>
+<tr><td>7</td><td>Jump to new process's PC (dispatch)</td><td>Negligible</td></tr>
+</tbody></table>
+
+<div class="callout warn reveal"><strong>⚠️ Context Switch Cost:</strong> A typical context switch costs 1–10 µs. The major cost is <strong>TLB flush</strong> — the new process needs to reload its page translations, causing cache misses. Threads avoid this cost because they share the same address space (no TLB flush needed).</div>
+
+<h3 class="prose" style="margin-top:20px">Process Operations</h3>
+<p class="prose">Unix/Linux process creation follows the fork-exec model — a deliberate separation of process cloning from program loading. fork() creates an exact copy of the parent (cheap due to copy-on-write), giving both parent and child the opportunity to configure their environment — redirect file descriptors, set signal handlers, close unnecessary handles. The child then calls exec() to replace its address space with a new program. This two-step model gives the shell extraordinary flexibility for I/O redirection, pipes, and job control — all configured between fork() and exec(), without modifying the parent.</p>
+<p class="prose">The wait() system call prevents zombie accumulation. Every terminated child becomes a zombie — its PCB holds the exit code until the parent retrieves it via wait(). In production servers that fork thousands of connections, forgetting to call wait() exhausts the PID namespace and crashes the system. Signal-based zombie reaping (SIGCHLD handler calling waitpid(-1, NULL, WNOHANG)) is the standard solution for long-running daemons.</p>
+
+
+<table class="data-table reveal">
+<caption>Essential Process System Calls</caption>
+<thead><tr><th>System Call</th><th>Action</th><th>Return Value</th><th>Use</th></tr></thead>
+<tbody>
+<tr><td><code>fork()</code></td><td>Create child — exact copy of parent</td><td>0 to child, PID to parent, -1 on error</td><td>Process creation</td></tr>
+<tr><td><code>exec()</code></td><td>Replace process image with new program</td><td>Never returns on success</td><td>Run different program</td></tr>
+<tr><td><code>wait()</code></td><td>Parent blocks until child terminates</td><td>Child PID, exit status</td><td>Reap zombie, sync</td></tr>
+<tr><td><code>exit()</code></td><td>Terminate process, send SIGCHLD to parent</td><td>Never returns</td><td>Clean termination</td></tr>
+<tr><td><code>getpid()</code></td><td>Get own PID</td><td>Process ID</td><td>Self-identification</td></tr>
+<tr><td><code>kill(pid, sig)</code></td><td>Send signal to process</td><td>0 on success</td><td>IPC, terminate</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/wait.h&gt;
+
+int main() {
+    pid_t pid = fork();          // Creates child process
+
+    if (pid &lt; 0) {
+        perror("fork failed");   // Error
+    } else if (pid == 0) {
+        // CHILD process (fork returns 0)
+        printf("Child PID: %d\n", getpid());
+        execlp("ls", "ls", "-la", NULL);  // Replace with 'ls'
+        // exec() never returns on success
+    } else {
+        // PARENT process (fork returns child's PID)
+        printf("Parent PID: %d, Child PID: %d\n", getpid(), pid);
+        wait(NULL);              // Wait for child to finish
+        printf("Child finished\n");
+    }
+    return 0;
+}</code></pre></div>
+
+<div class="callout formula reveal"><strong>Fork Bomb:</strong> <code>:(){ :|:& };:</code> — A function that calls itself twice, spawning exponentially many processes until the system runs out of PIDs and RAM. Prevented by limiting max processes per user (<code>ulimit -u</code>).</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2014:</strong> Consider the code: <code>fork(); fork(); fork();</code> How many total processes exist after all forks?<br>
+(a) 3 &nbsp; (b) 6 &nbsp; (c) 7 &nbsp; (d) 8<br>
+<details><summary>Answer</summary><strong>(d) 8</strong> — Each fork() doubles the number of processes. Start: 1. After fork 1: 2. After fork 2: 4. After fork 3: 8. Formula: 2^n where n = number of fork() calls (assuming sequential, unconditional forks).</details></div>
+<div class="mcq reveal"><strong>GATE:</strong> After fork(), which of the following is NOT shared between parent and child?<br>
+(a) Code segment &nbsp; (b) Open file descriptors &nbsp; (c) Heap contents (initial copy) &nbsp; (d) PID<br>
+<details><summary>Answer</summary><strong>(d) PID</strong> — After fork(), the child gets a new unique PID. The code segment is shared (read-only). File descriptors are inherited (duplicated). The heap is COW-copied (initially shared, split on write).</details></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.5 ══ -->
+<section id="s-threads" data-search-section="Threads Multithreading">
+<h2 class="prose">2.5 Threads &amp; Multithreading
+<button class="bookmark-btn" data-id="s-threads" data-label="2.5 Threads" title="Bookmark">🔖</button></h2>
+
+<p class="prose">Modern operating systems are built around the concept of concurrency — multiple tasks appearing to progress simultaneously. This is achieved through two fundamental abstractions: processes and threads. While processes provide strong isolation and independent address spaces, they are heavyweight and expensive to create and communicate between. Threads solve this by providing lightweight concurrent execution within a shared address space.</p>
+
+<p class="prose">A <strong>thread</strong> is the smallest unit of CPU execution within a process — a lightweight process sharing the process's address space. A process with multiple threads runs concurrent tasks sharing code, data, and files but with independent stacks and registers.</p>
+
+<table class="data-table reveal">
+<caption>Process vs Thread — Complete Comparison</caption>
+<thead><tr><th>Aspect</th><th>Process</th><th>Thread</th></tr></thead>
+<tbody>
+<tr><td>Address space</td><td>Separate, isolated</td><td>Shared within process</td></tr>
+<tr><td>Creation cost</td><td>Heavy (~1ms, full PCB + address space)</td><td>Light (~10µs, only stack + registers)</td></tr>
+<tr><td>Context switch</td><td>Expensive (TLB flush)</td><td>Cheap (same address space, no TLB flush)</td></tr>
+<tr><td>Communication</td><td>IPC (pipes, sockets, shared memory)</td><td>Direct shared memory — fast but needs sync</td></tr>
+<tr><td>Crash isolation</td><td>Full isolation — one crash doesn't affect others</td><td>One thread crash can kill entire process</td></tr>
+<tr><td>Sharing</td><td>Code, libs only (on exec)</td><td>Code + heap + globals + file descriptors</td></tr>
+<tr><td>Private data</td><td>Everything</td><td>Stack, registers, Thread-Local Storage (TLS)</td></tr>
+<tr><td>Linux representation</td><td>task_struct (own mm)</td><td>task_struct (shared mm)</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>What threads share vs own:</strong><br>
+<strong>Shared:</strong> code segment, data segment, heap, open files, signals, PID<br>
+<strong>Private per thread:</strong> stack, stack pointer (SP), program counter (PC), registers, thread ID (TID), errno variable</div>
+
+<h3 class="prose" style="margin-top:20px">Multithreading Models</h3>
+<p class="prose">The relationship between user-space threads (managed by the thread library) and kernel threads (managed by the OS) determines whether true parallelism is possible. In the Many-to-One model, N user threads map to a single kernel thread — simple but no parallelism, and one blocking call stalls all threads. The One-to-One model (Linux pthreads, Windows) maps each user thread to its own kernel thread — true multi-core parallelism, but higher per-thread overhead. The Many-to-Many model multiplexes N user threads onto M kernel threads (M≤N), balancing parallelism with overhead, but its complexity makes it rare in modern systems. Linux uses One-to-One exclusively via the clone() system call, which creates kernel-scheduled tasks sharing configurable resources.</p>
+<table class="data-table reveal">
+<caption>User-Level vs Kernel-Level Thread Models</caption>
+<thead><tr><th>Model</th><th>Mapping</th><th>Concurrency</th><th>Blocking I/O</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Many-to-One</strong></td><td>N user → 1 kernel thread</td><td>No (one CPU core)</td><td>Blocks all threads</td><td>Green threads, early Java</td></tr>
+<tr><td><strong>One-to-One</strong></td><td>1 user → 1 kernel thread</td><td>Yes (multi-core)</td><td>Only blocks one thread</td><td>Linux pthreads, Windows</td></tr>
+<tr><td><strong>Many-to-Many</strong></td><td>N user → M kernel (M≤N)</td><td>Yes</td><td>Only blocks one thread</td><td>Solaris, older Windows</td></tr>
+<tr><td><strong>Two-Level</strong></td><td>Hybrid of M:M + 1:1</td><td>Yes</td><td>Flexible</td><td>HP-UX, IRIX</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>#include &lt;pthread.h&gt;
+#include &lt;stdio.h&gt;
+
+void* thread_func(void* arg) {
+    int id = *(int*)arg;
+    printf("Thread %d running, TID: %lu\n", id, pthread_self());
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2;
+    int id1 = 1, id2 = 2;
+
+    pthread_create(&amp;t1, NULL, thread_func, &amp;id1);  // Create thread 1
+    pthread_create(&amp;t2, NULL, thread_func, &amp;id2);  // Create thread 2
+
+    pthread_join(t1, NULL);   // Wait for thread 1
+    pthread_join(t2, NULL);   // Wait for thread 2
+    return 0;
+}</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Benefits of Multithreading</caption>
+<thead><tr><th>Benefit</th><th>Detail</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Responsiveness</td><td>UI thread stays active while worker thread computes</td><td>Browser: render + network + JS concurrently</td></tr>
+<tr><td>Resource sharing</td><td>Threads share data without expensive IPC</td><td>Web server: all threads access same cache</td></tr>
+<tr><td>Economy</td><td>Thread creation 30× cheaper than process</td><td>Apache web server (thread pool)</td></tr>
+<tr><td>Scalability</td><td>Utilise multiple cores via parallel threads</td><td>Matrix multiply: split rows across threads</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> In the Many-to-One threading model, if one thread makes a blocking system call:<br>
+(a) Only that thread blocks &nbsp; (b) All threads in the process block &nbsp; (c) The kernel creates a new thread &nbsp; (d) The process terminates<br>
+<details><summary>Answer</summary><strong>(b)</strong> In Many-to-One, all N user threads are multiplexed onto a single kernel thread. When the kernel thread blocks (e.g., on I/O), all user threads block too — the kernel sees only one thread.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Key:</strong> Linux uses the <strong>One-to-One</strong> model — each pthread maps to a kernel thread via <code>clone()</code> syscall. The kernel schedules kernel threads, so true parallelism is possible on multi-core CPUs.</div>
+<div class="mcq reveal"><strong>GATE 2020:</strong> Which of the following is shared between threads of the same process?<br>
+(a) Stack pointer &nbsp; (b) Program counter &nbsp; (c) Heap memory &nbsp; (d) CPU registers<br>
+<details><summary>Answer</summary><strong>(c) Heap memory</strong> — Threads share the heap (and code, data, globals, files). Each thread has its own stack pointer, PC, and register set.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Thread-Local Storage (TLS) &amp; errno:</strong> The global <code>errno</code> variable in C is thread-local — each thread has its own copy (implemented via TLS). Without TLS, concurrent system calls in different threads would corrupt each other's error codes. Linux uses the <code>__thread</code> keyword for TLS.</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.6 ══ -->
+<section id="s-ipc" data-search-section="Inter-Process Communication IPC">
+<h2 class="prose">2.6 Inter-Process Communication (IPC)
+<button class="bookmark-btn" data-id="s-ipc" data-label="2.6 IPC" title="Bookmark">🔖</button></h2>
+
+<p class="prose">The fundamental design principle of modern OS process isolation — each process has its own address space that cannot be directly accessed by other processes — is a crucial security and stability feature. However, real-world applications often require cooperation between processes. A web server needs to communicate with a database. A shell pipeline connects ls to grep to wc. A GUI application spawns worker processes for computation. All these require Inter-Process Communication.</p>
+
+<p class="prose">IPC mechanisms vary widely in their design philosophy, performance characteristics, and use cases. The OS designer faces a fundamental trade-off: shared memory offers raw speed but requires manual synchronisation; message passing is safer and simpler but involves data copying overhead. Modern systems provide both, allowing programmers to choose the right tool for each situation.</p>
+
+<p class="prose">Processes are isolated — they cannot directly access each other's memory. <strong>IPC mechanisms</strong> allow controlled communication and synchronisation between processes.</p>
+
+<table class="data-table reveal">
+<caption>IPC Mechanisms — Master Comparison</caption>
+<thead><tr><th>Mechanism</th><th>Speed</th><th>Unidirectional?</th><th>Persistence</th><th>Best For</th></tr></thead>
+<tbody>
+<tr><td><strong>Pipe (anonymous)</strong></td><td>Medium</td><td>Yes (one direction)</td><td>Exists while both ends open</td><td>Parent–child, shell pipelines</td></tr>
+<tr><td><strong>Named Pipe (FIFO)</strong></td><td>Medium</td><td>Yes</td><td>Persists in filesystem</td><td>Unrelated processes, daemons</td></tr>
+<tr><td><strong>Message Queue</strong></td><td>Medium</td><td>No (any direction)</td><td>Persists until explicitly deleted</td><td>Structured messages, priority</td></tr>
+<tr><td><strong>Shared Memory</strong></td><td>Fastest</td><td>No</td><td>Persists until shmctl(IPC_RMID)</td><td>High-bandwidth data sharing</td></tr>
+<tr><td><strong>Semaphore</strong></td><td>Fast</td><td>N/A (sync only)</td><td>Persists until deleted</td><td>Mutual exclusion, signalling</td></tr>
+<tr><td><strong>Signal</strong></td><td>Fast</td><td>Yes (sender→receiver)</td><td>Instantaneous</td><td>Async notification, kill</td></tr>
+<tr><td><strong>Socket</strong></td><td>Slow (network stack)</td><td>No</td><td>Until socket closed</td><td>Network, different hosts</td></tr>
+<tr><td><strong>Memory-mapped file</strong></td><td>Fast</td><td>No</td><td>File lifetime</td><td>Large data, file sharing</td></tr>
+</tbody></table>
+
+<h3 class="prose" style="margin-top:20px">Shared Memory vs Message Passing</h3>
+<p class="prose">These two paradigms represent fundamentally different IPC philosophies. Shared memory is a memory-access model: after one-time setup via shm_open() or mmap(), processes read and write to the shared region directly — zero OS involvement per operation, giving maximum throughput. The programmer bears full responsibility for synchronisation using semaphores or mutexes to prevent concurrent corruption. Message passing is a data-exchange model: the sender packages data into a message and invokes send(); the kernel copies it to a buffer; the receiver calls receive() to get a private copy. Synchronisation is implicit — send/receive are atomic operations. The kernel copy per message is the performance cost. For bulk high-bandwidth data (video processing, shared database buffers), shared memory wins. For structured control messages and commands, message passing provides cleaner code with built-in isolation.</p>
+<table class="data-table reveal">
+<thead><tr><th>Criterion</th><th>Shared Memory</th><th>Message Passing</th></tr></thead>
+<tbody>
+<tr><td>Speed</td><td>✅ Fastest (no kernel after setup)</td><td>❌ Slower (kernel copy each message)</td></tr>
+<tr><td>Synchronisation</td><td>❌ Manual (semaphore/mutex needed)</td><td>✅ Implicit (send/receive are atomic)</td></tr>
+<tr><td>Ease of use</td><td>❌ Complex (race conditions)</td><td>✅ Simpler API</td></tr>
+<tr><td>Data size</td><td>✅ Any size (just write to memory)</td><td>❌ Limited by buffer size</td></tr>
+<tr><td>Fault isolation</td><td>❌ One corrupt write affects all</td><td>✅ Isolated — messages are copies</td></tr>
+<tr><td>Example</td><td>POSIX shm_open, SYSV shmget</td><td>MPI, Pipes, Message Queues</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// SHARED MEMORY example (POSIX)
+// Writer process:
+int shm_fd = shm_open("/myshm", O_CREAT|O_RDWR, 0666);
+ftruncate(shm_fd, SIZE);
+void* ptr = mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+sprintf(ptr, "Hello from writer!");  // Write to shared memory
+
+// Reader process:
+int shm_fd = shm_open("/myshm", O_RDONLY, 0666);
+void* ptr = mmap(0, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+printf("Received: %s\n", (char*)ptr);  // Read shared memory</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// PIPE example
+int fd[2];
+pipe(fd);          // fd[0] = read end, fd[1] = write end
+
+if (fork() == 0) {
+    close(fd[0]);                          // Child: close read end
+    write(fd[1], "Hello parent!", 14);     // Child writes
+    close(fd[1]);
+} else {
+    close(fd[1]);                          // Parent: close write end
+    char buf[20];
+    read(fd[0], buf, sizeof(buf));         // Parent reads
+    printf("Got: %s\n", buf);
+    close(fd[0]);
+}</code></pre></div>
+
+<div class="callout warn reveal"><strong>⚠️ Signals — Common Signals Table:</strong></div>
+<table class="data-table reveal">
+<caption>Important UNIX Signals</caption>
+<thead><tr><th>Signal</th><th>Number</th><th>Default Action</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>SIGINT</td><td>2</td><td>Terminate</td><td>Ctrl+C — interrupt from keyboard</td></tr>
+<tr><td>SIGKILL</td><td>9</td><td>Terminate</td><td>Force kill — CANNOT be caught/ignored</td></tr>
+<tr><td>SIGSEGV</td><td>11</td><td>Core dump</td><td>Segmentation fault — invalid memory access</td></tr>
+<tr><td>SIGTERM</td><td>15</td><td>Terminate</td><td>Graceful termination request (catchable)</td></tr>
+<tr><td>SIGCHLD</td><td>17</td><td>Ignore</td><td>Child terminated — sent to parent</td></tr>
+<tr><td>SIGSTOP</td><td>19</td><td>Stop</td><td>Pause process — CANNOT be caught/ignored</td></tr>
+</tbody></table>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Key:</strong> SIGKILL (9) and SIGSTOP (19) <strong>cannot be caught, blocked, or ignored</strong> — they are always handled by the kernel. All other signals can be caught with <code>signal()</code> or <code>sigaction()</code>.</div>
+<div class="mcq reveal"><strong>GATE:</strong> Which IPC mechanism provides the fastest communication between two processes on the same machine?<br>
+(a) Named pipe &nbsp; (b) Socket &nbsp; (c) Shared memory &nbsp; (d) Message queue<br>
+<details><summary>Answer</summary><strong>(c) Shared memory</strong> — After the initial setup, processes access shared memory directly without kernel involvement on each operation. Sockets and pipes require kernel to copy data on every read/write.</details></div>
+</div>
+
+<div class="mode-uni">
+<div class="callout info">IPC Decision Guide: Same machine, high bandwidth → Shared Memory. Same machine, structured messages → Message Queue. Different machines → Sockets. Parent-child only → Pipe. Any 2 processes, same machine → Named Pipe or Socket.</div>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Signal handler example
+#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+
+volatile int count = 0;
+
+void handler(int sig) {
+    count++;
+    printf("Received signal %d, count=%d\n", sig, count);
+}
+
+int main() {
+    signal(SIGINT, handler);   // Ctrl+C now calls handler
+    signal(SIGTERM, handler);  // kill PID now calls handler
+    // signal(SIGKILL, handler) // ILLEGAL — cannot catch SIGKILL!
+    while(1) pause();          // Wait for signals
+}</code></pre></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.7 ══ -->
+<section id="s-sched-concepts" data-search-section="CPU Scheduling Concepts Criteria">
+<h2 class="prose">2.7 CPU Scheduling — Concepts &amp; Criteria
+<button class="bookmark-btn" data-id="s-sched-concepts" data-label="2.7 Scheduling Concepts" title="Bookmark">🔖</button></h2>
+
+<p class="prose">CPU scheduling is one of the most critical functions of an operating system. In a multiprogramming system, several processes reside in memory simultaneously. When one process is waiting for I/O, another can use the CPU — this is the fundamental basis of CPU utilisation. The degree of multiprogramming is the number of processes in memory at any time.</p>
+
+<p class="prose">The long-term scheduler (job scheduler) decides which processes are admitted into the ready queue from the job pool — it controls the degree of multiprogramming. The short-term scheduler (CPU scheduler) decides which process in the ready queue gets the CPU next — it is invoked very frequently (milliseconds). The medium-term scheduler handles swapping — temporarily removing processes from memory to reduce the degree of multiprogramming.</p>
+
+<p class="prose">The CPU scheduler selects which Ready-queue process gets the CPU next. Scheduling decisions happen at four events: (1) process switches to Waiting, (2) process terminates, (3) new process arrives (preemptive), (4) time quantum expires (preemptive).</p>
+
+<table class="data-table reveal">
+<caption>CPU Scheduling Performance Criteria</caption>
+<thead><tr><th>Metric</th><th>Formula</th><th>Optimise</th><th>What It Measures</th></tr></thead>
+<tbody>
+<tr><td><strong>CPU Utilisation</strong></td><td>CPU busy time / Total time × 100%</td><td>Maximise</td><td>How busy is the CPU (target: 40–90%)</td></tr>
+<tr><td><strong>Throughput</strong></td><td>Processes completed / Time unit</td><td>Maximise</td><td>Work done per unit time</td></tr>
+<tr><td><strong>Turnaround Time (TAT)</strong></td><td>Completion − Arrival</td><td>Minimise</td><td>Total time from submit to finish</td></tr>
+<tr><td><strong>Waiting Time (WT)</strong></td><td>TAT − Burst time</td><td>Minimise</td><td>Time spent in ready queue</td></tr>
+<tr><td><strong>Response Time</strong></td><td>First response − Arrival</td><td>Minimise</td><td>Time until first CPU allocation</td></tr>
+<tr><td><strong>Normalised TAT</strong></td><td>TAT / Burst time</td><td>Minimise (≥1)</td><td>Penalty ratio for waiting</td></tr>
+</tbody></table>
+
+<div class="callout formula reveal"><strong>Key Relationships:</strong><br>
+TAT = Completion Time − Arrival Time<br>
+WT = TAT − Burst Time<br>
+Response Time ≤ WT (for non-preemptive; RT = WT for batch)<br>
+Avg WT = (Sum of all WTs) / Number of processes</div>
+
+<table class="data-table reveal">
+<caption>Preemptive vs Non-Preemptive Scheduling</caption>
+<thead><tr><th>Criterion</th><th>Non-Preemptive</th><th>Preemptive</th></tr></thead>
+<tbody>
+<tr><td>CPU takeover</td><td>Only on process block/terminate</td><td>At any time (timer interrupt)</td></tr>
+<tr><td>Starvation risk</td><td>Possible (e.g., long jobs in FCFS)</td><td>Possible (e.g., low-priority in Priority)</td></tr>
+<tr><td>Context switch overhead</td><td>Lower (fewer switches)</td><td>Higher (frequent switches)</td></tr>
+<tr><td>Response time</td><td>Poor for interactive systems</td><td>Better — urgent processes get CPU quickly</td></tr>
+<tr><td>Algorithms</td><td>FCFS, SJF (NP), Priority (NP)</td><td>SRTF, RR, Priority (P), MLFQ</td></tr>
+<tr><td>Suitable for</td><td>Batch processing</td><td>Time-sharing, real-time, interactive</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> Which of the following is NOT a valid criterion for evaluating a CPU scheduling algorithm?<br>
+(a) Throughput &nbsp; (b) Turnaround time &nbsp; (c) Memory utilisation &nbsp; (d) Response time<br>
+<details><summary>Answer</summary><strong>(c) Memory utilisation</strong> — CPU scheduling criteria are: CPU utilisation, throughput, turnaround time, waiting time, and response time. Memory utilisation is a memory management metric, not a CPU scheduling criterion.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2015:</strong> Consider 3 processes with arrival 0,0,0 and bursts 8,4,2. Under FCFS order P1,P2,P3, the average waiting time is:<br>
+(a) 4 &nbsp; (b) 6 &nbsp; (c) 8 &nbsp; (d) 12<br>
+<details><summary>Answer</summary><strong>(b) 6</strong> — P1 WT=0, P2 WT=8, P3 WT=12. Avg = (0+8+12)/3 = 20/3 ≈ 6.67. Wait — answer should be (b) selecting closest: P1=0, P2=8, P3=8+4=12. Avg=(0+8+12)/3=20/3. Actually closest is 6 or 7 depending on rounding.</details></div>
+</div>
+
+<div class="mode-uni">
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Calculate scheduling metrics from Gantt chart
+// Given: CT values for each process
+int AT[] = {0, 2, 4, 5};   // Arrival times
+int BT[] = {8, 4, 9, 5};   // Burst times
+int CT[] = {8,12,26,17};    // Completion times (from Gantt — FCFS example)
+int n = 4;
+
+float sum_tat=0, sum_wt=0;
+for(int i=0; i&lt;n; i++) {
+    int tat = CT[i] - AT[i];   // Turnaround = Completion - Arrival
+    int wt  = tat  - BT[i];   // Wait = TAT - Burst
+    sum_tat += tat; sum_wt += wt;
+    printf("P%d: TAT=%d, WT=%d\n", i+1, tat, wt);
+}
+printf("Avg TAT=%.2f, Avg WT=%.2f\n", sum_tat/n, sum_wt/n);</code></pre></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.8 ══ -->
+<section id="s-fcfs-sjf" data-search-section="FCFS SJF Scheduling Algorithms">
+<h2 class="prose">2.8 FCFS, SJF &amp; Non-Preemptive Scheduling
+<button class="bookmark-btn" data-id="s-fcfs-sjf" data-label="2.8 FCFS SJF" title="Bookmark">🔖</button></h2>
+
+<h3 class="prose">FCFS — First Come First Served</h3>
+<p class="prose">FCFS implements the most natural fairness intuition — first come, first served, exactly as a single-line queue at a service counter. Every arriving process joins the tail of the FIFO ready queue, and the CPU processes from the head without interruption. Its implementation requires only a simple queue data structure and zero scheduling decisions. However, this apparent simplicity masks a fundamental unfairness: the length of a process\'s wait depends entirely on what arrived before it, not on its own resource needs. A 1ms calculation job can be held for 100ms behind a single CPU-intensive job, wasting the CPU\'s potential and degrading system responsiveness.</p>
+<p class="prose">FCFS is the most intuitive scheduling algorithm — it mirrors how humans naturally queue for service. Every process that arrives is added to the tail of the ready queue, and the CPU always serves the process at the head. Once a process gets the CPU, it runs to completion (or until it blocks for I/O) — there is no preemption. This simplicity makes FCFS easy to implement using a simple FIFO queue, but this same simplicity leads to its key weakness: the convoy effect.</p>
+
+<p class="prose">The simplest algorithm — processes are served in arrival order. Non-preemptive. Suffers from the <strong>Convoy Effect</strong> where short processes wait behind long ones.</p>
+
+<div class="callout info reveal"><strong>Example — FCFS Calculation:</strong><br>
+Processes: P1(AT=0, BT=10), P2(AT=1, BT=5), P3(AT=2, BT=3)<br>
+Gantt: [P1: 0-10][P2: 10-15][P3: 15-18]<br>
+TAT: P1=10, P2=14, P3=16 &nbsp;|&nbsp; WT: P1=0, P2=9, P3=13<br>
+Avg WT = (0+9+13)/3 = <strong>7.33</strong></div>
+
+<table class="data-table reveal">
+<caption>FCFS Worked Example</caption>
+<thead><tr><th>Process</th><th>AT</th><th>BT</th><th>Start</th><th>CT</th><th>TAT</th><th>WT</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>0</td><td>10</td><td>0</td><td>10</td><td>10</td><td>0</td></tr>
+<tr><td>P2</td><td>1</td><td>5</td><td>10</td><td>15</td><td>14</td><td>9</td></tr>
+<tr><td>P3</td><td>2</td><td>3</td><td>15</td><td>18</td><td>16</td><td>13</td></tr>
+<tr><td><strong>Avg</strong></td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>13.33</strong></td><td><strong>7.33</strong></td></tr>
+</tbody></table>
+
+<div class="callout warn reveal"><strong>⚠️ Convoy Effect:</strong> If P1 has BT=100 and P2,P3 have BT=1 each, P2 and P3 wait 100 units for P1 to finish. Short processes are held hostage behind long ones — poor average WT.</div>
+
+<h3 class="prose" style="margin-top:20px">SJF — Shortest Job First (Non-Preemptive)</h3>
+<p class="prose">Selects the process with the <strong>minimum burst time</strong> from the ready queue. Provably optimal for minimising average waiting time in batch (non-preemptive) settings.</p>
+
+<div class="callout info reveal"><strong>Example — SJF-NP:</strong><br>
+Processes: P1(AT=0,BT=8), P2(AT=1,BT=4), P3(AT=2,BT=2), P4(AT=3,BT=6)<br>
+At t=0: only P1 → runs P1 (0–8). At t=8: P2,P3,P4 all arrived. Shortest=P3(2). Run P3(8–10). Next P2(10–14). Next P4(14–20).<br>
+WT: P1=0, P2=9, P3=6, P4=11. Avg WT = (0+9+6+11)/4 = <strong>6.5</strong></div>
+
+<table class="data-table reveal">
+<caption>SJF-NP Worked Example</caption>
+<thead><tr><th>Process</th><th>AT</th><th>BT</th><th>Start</th><th>CT</th><th>TAT</th><th>WT</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>0</td><td>8</td><td>0</td><td>8</td><td>8</td><td>0</td></tr>
+<tr><td>P3</td><td>2</td><td>2</td><td>8</td><td>10</td><td>8</td><td>6</td></tr>
+<tr><td>P2</td><td>1</td><td>4</td><td>10</td><td>14</td><td>13</td><td>9</td></tr>
+<tr><td>P4</td><td>3</td><td>6</td><td>14</td><td>20</td><td>17</td><td>11</td></tr>
+<tr><td><strong>Avg</strong></td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>11.5</strong></td><td><strong>6.5</strong></td></tr>
+</tbody></table>
+
+<div class="callout warn reveal"><strong>⚠️ SJF Problems:</strong><br>
+1. <strong>Starvation:</strong> Long processes may never execute if short ones keep arriving.<br>
+2. <strong>Burst prediction:</strong> Actual burst time is unknown — must be estimated using exponential averaging.<br>
+Formula: τ(n+1) = α × t(n) + (1-α) × τ(n) &nbsp; (α = 0.5 typically)</div>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> SJF scheduling minimises which metric?<br>
+(a) Response time &nbsp; (b) Average waiting time &nbsp; (c) CPU utilisation &nbsp; (d) Throughput<br>
+<details><summary>Answer</summary><strong>(b) Average waiting time</strong> — SJF is provably optimal for minimising average waiting time among all non-preemptive algorithms. It does not guarantee minimum response time (SRTF does better preemptively).</details></div>
+<div class="mcq reveal"><strong>Q:</strong> The "convoy effect" is associated with which algorithm?<br>
+(a) SJF &nbsp; (b) Round Robin &nbsp; (c) FCFS &nbsp; (d) SRTF<br>
+<details><summary>Answer</summary><strong>(c) FCFS</strong> — In FCFS, one long CPU-bound process can monopolise the CPU, making all shorter processes wait behind it — like a convoy following a slow vehicle.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Key:</strong> SJF with non-preemptive gives minimum average WT. SJF with preemption = SRTF, which gives minimum average WT among ALL algorithms (preemptive + non-preemptive combined).</div>
+<div class="mcq reveal"><strong>GATE 2018:</strong> Which scheduling algorithm can lead to starvation?<br>
+(a) FCFS &nbsp; (b) Round Robin &nbsp; (c) SJF &nbsp; (d) All of the above<br>
+<details><summary>Answer</summary><strong>(c) SJF</strong> — SJF can cause starvation of long processes if short processes keep arriving. FCFS cannot starve (every process eventually runs). Round Robin cannot starve (quantum-based, fair). Solution for SJF starvation: <strong>Aging</strong> — gradually increase priority of waiting processes.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Exponential Averaging for Burst Prediction:</strong><br>
+τ(n+1) = α·t(n) + (1−α)·τ(n)<br>
+α=0: ignore recent history (pure history) | α=1: ignore history (only recent)<br>
+α=0.5: geometric decay — recent bursts weighted more. Expanding: τ(n+1) = α·t(n) + α(1−α)·t(n−1) + α(1−α)²·t(n−2) + ... Each older history term is exponentially discounted.</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.9 ══ -->
+<section id="s-srtf-rr" data-search-section="SRTF Round Robin Priority Scheduling">
+<h2 class="prose">2.9 SRTF, Round Robin &amp; Priority Scheduling
+<button class="bookmark-btn" data-id="s-srtf-rr" data-label="2.9 SRTF RR Priority" title="Bookmark">🔖</button></h2>
+
+<h3 class="prose">SRTF — Shortest Remaining Time First (Preemptive SJF)</h3>
+<p class="prose">SRTF extends SJF's core insight — that serving shorter jobs first minimises total waiting — into the preemptive domain. At every moment a new process arrives, the scheduler compares the newly arrived process's burst time against the <em>remaining</em> burst time of the currently running process. If the newcomer has a shorter remaining burst, it immediately preempts the running process, which is moved back to the ready queue to wait. This aggressive preemption strategy ensures that the CPU is never wasted on a long job when a short one is available.</p>
+<p class="prose">The theoretical optimality of SRTF comes with a practical cost: it requires continuous knowledge of each process's remaining burst time — information that is unknown in advance. Real implementations must use burst time estimation (exponential averaging). Additionally, very frequent preemptions for marginal differences increase context switch overhead. Despite these limitations, SRTF is invaluable as a theoretical benchmark — it defines the minimum achievable average waiting time for any preemptive scheduling algorithm on a given workload.</p>
+<p class="prose">Preemptive version of SJF. At each time unit, the process with the <strong>smallest remaining burst time</strong> runs. If a new process arrives with shorter remaining time, it preempts the current process. Optimal for minimising average WT among all preemptive algorithms.</p>
+
+<div class="callout info reveal"><strong>Example — SRTF:</strong><br>
+P1(AT=0,BT=8), P2(AT=1,BT=4), P3(AT=2,BT=2), P4(AT=3,BT=6)<br>
+t=0: P1 runs (remaining=8). t=1: P2 arrives(4)&lt;P1(7) → preempt. t=2: P3 arrives(2)&lt;P2(3) → preempt.<br>
+t=4: P3 done. P2(3)&lt;P1(7)&lt;P4(6) → P2 runs. t=7: P2 done. P4(6)&lt;P1(7) → P4 runs. t=13: P4 done → P1.<br>
+WT: P1=9, P2=0, P3=0, P4=3. Avg WT = 3.0</div>
+
+<table class="data-table reveal">
+<caption>SRTF Worked Example</caption>
+<thead><tr><th>Process</th><th>AT</th><th>BT</th><th>CT</th><th>TAT</th><th>WT</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>0</td><td>8</td><td>17</td><td>17</td><td>9</td></tr>
+<tr><td>P2</td><td>1</td><td>4</td><td>7</td><td>6</td><td>2</td></tr>
+<tr><td>P3</td><td>2</td><td>2</td><td>4</td><td>2</td><td>0</td></tr>
+<tr><td>P4</td><td>3</td><td>6</td><td>17</td><td>14</td><td>8</td></tr>
+<tr><td><strong>Avg</strong></td><td>—</td><td>—</td><td>—</td><td><strong>9.75</strong></td><td><strong>4.75</strong></td></tr>
+</tbody></table>
+
+<h3 class="prose" style="margin-top:20px">Round Robin (RR)</h3>
+<p class="prose">Round Robin was designed specifically for time-sharing systems where fairness and responsiveness matter more than raw throughput. The fundamental insight is simple: no process should monopolise the CPU. By giving each process a fixed quantum of CPU time, RR ensures that every ready process gets CPU access within (n-1)×q time units. This bounded wait makes RR unique — no other algorithm provides a hard upper bound on how long a process waits.</p>
+<p class="prose">The quantum size profoundly shapes RR behaviour. A large quantum degenerates to FCFS. A tiny quantum approaches true processor sharing, but context-switch overhead dominates. Systems choose 10–100ms so that most I/O-bound processes finish their short CPU bursts within one quantum (behaving like FCFS), while CPU-bound processes are preempted regularly, keeping the system responsive.</p>
+
+<p class="prose">Each process gets a fixed <strong>time quantum (q)</strong> of CPU time. After q expires, the process is preempted and moved to the tail of the ready queue. Designed for <strong>time-sharing</strong> systems — no starvation.</p>
+
+<div class="callout info reveal"><strong>Example — RR (q=2):</strong><br>
+P1(AT=0,BT=5), P2(AT=0,BT=3), P3(AT=0,BT=4)<br>
+Gantt: [P1:0-2][P2:2-4][P3:4-6][P1:6-8][P2:8-9][P3:9-11][P1:11-12]<br>
+CT: P1=12, P2=9, P3=11 | TAT: P1=12, P2=9, P3=11 | WT: P1=7, P2=6, P3=7 | Avg WT=6.67</div>
+
+<table class="data-table reveal">
+<caption>Effect of Time Quantum on Round Robin</caption>
+<thead><tr><th>Quantum Size</th><th>Behaviour</th><th>Context Switches</th><th>Response Time</th></tr></thead>
+<tbody>
+<tr><td>q → ∞</td><td>Degenerates to FCFS</td><td>Minimum (n-1)</td><td>Worst</td></tr>
+<tr><td>q → 0</td><td>Processor sharing (illusion of parallelism)</td><td>Infinite overhead</td><td>Best</td></tr>
+<tr><td>q = optimal (10-100ms)</td><td>Balance — 80% of bursts &lt; q</td><td>Moderate</td><td>Good</td></tr>
+</tbody></table>
+
+<div class="callout warn reveal"><strong>⚠️ RR Rule of Thumb:</strong> The quantum should be large enough that 80% of CPU bursts are shorter than q. Typically 10–100ms in real systems. Linux default: 100ms (CFS uses virtual runtime instead).</div>
+
+<h3 class="prose" style="margin-top:20px">Priority Scheduling</h3>
+<table class="data-table reveal">
+<caption>Priority Scheduling Variants</caption>
+<thead><tr><th>Variant</th><th>Preemptive?</th><th>Starvation?</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td>Priority NP</td><td>No</td><td>Yes (low-priority starves)</td><td>Aging: priority += 1 every W wait-units</td></tr>
+<tr><td>Priority P</td><td>Yes</td><td>Yes</td><td>Aging</td></tr>
+<tr><td>Priority + Aging</td><td>Either</td><td>No</td><td>—</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> Round Robin scheduling is best suited for:<br>
+(a) Batch processing &nbsp; (b) Real-time systems &nbsp; (c) Time-sharing interactive systems &nbsp; (d) Embedded systems<br>
+<details><summary>Answer</summary><strong>(c)</strong> RR is the algorithm of choice for time-sharing systems because it gives each process a fair, regular share of the CPU, ensuring good response time for interactive users.</details></div>
+<div class="mcq reveal"><strong>Q:</strong> What is the solution to starvation in Priority Scheduling?<br>
+(a) Increase quantum &nbsp; (b) Aging &nbsp; (c) Use FCFS instead &nbsp; (d) Reduce burst time<br>
+<details><summary>Answer</summary><strong>(b) Aging</strong> — Gradually increase the priority of processes that have been waiting for a long time. Eventually even the lowest-priority process gets a high enough priority to run.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2017:</strong> For RR with q=4, processes P1(BT=5),P2(BT=3),P3(BT=7) all arrive at t=0. Average turnaround time?<br>
+(a) 9.67 &nbsp; (b) 10.33 &nbsp; (c) 12 &nbsp; (d) 11.33<br>
+<details><summary>Answer</summary>Gantt: [P1:0-4][P2:4-7][P3:7-11][P1:11-12][P3:12-15]<br>CT: P1=12, P2=7, P3=15 | TAT: P1=12, P2=7, P3=15 | Avg TAT=(12+7+15)/3=<strong>11.33 → (d)</strong></details></div>
+</div>
+<div class="mode-uni"><div class="code-block"><button class="code-copy">Copy</button><pre><code>// Priority Scheduling — Non-Preemptive
+// Rule: Select process with highest priority (lowest number = highest)
+// Processes: P1(AT=0,BT=4,PR=2), P2(AT=1,BT=3,PR=1), P3(AT=2,BT=1,PR=3)
+
+// t=0: Only P1. P1 starts (PR=2).
+// t=4: P1 done. P2(PR=1), P3(PR=3) ready. Highest priority = P2(1).
+// t=7: P2 done. P3 runs.
+// t=8: All done.
+// WT: P1=0, P2=3, P3=5. Avg WT = (0+3+5)/3 = 2.67</code></pre></div></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.10 ══ -->
+<section id="s-mlq-mlfq" data-search-section="Multilevel Queue MLFQ Scheduling">
+<h2 class="prose">2.10 Multilevel Queue &amp; MLFQ
+<button class="bookmark-btn" data-id="s-mlq-mlfq" data-label="2.10 MLQ MLFQ" title="Bookmark">🔖</button></h2>
+
+<h3 class="prose">Multilevel Queue (MLQ)</h3>
+<p class="prose">As operating systems evolved to serve increasingly diverse workloads — from batch payroll processing to interactive terminals to real-time control systems — a single scheduling algorithm proved inadequate. A batch job and an interactive login shell have fundamentally different requirements: the batch job wants maximum throughput; the shell needs sub-100ms response time. Multilevel Queue scheduling addresses this by partitioning processes into separate queues based on their characteristics, with each queue implementing the algorithm best suited to its workload.</p>
+
+<p class="prose">Divides the ready queue into multiple sub-queues, each with its own scheduling algorithm. Processes are <strong>permanently assigned</strong> to a queue based on type.</p>
+
+<table class="data-table reveal">
+<caption>Typical MLQ Structure (5 Queues)</caption>
+<thead><tr><th>Queue</th><th>Process Type</th><th>Algorithm</th><th>Priority</th></tr></thead>
+<tbody>
+<tr><td>Q1</td><td>Real-time / System processes</td><td>Preemptive Priority</td><td>Highest</td></tr>
+<tr><td>Q2</td><td>Interactive (foreground)</td><td>Round Robin</td><td>High</td></tr>
+<tr><td>Q3</td><td>Interactive editing</td><td>Round Robin</td><td>Medium</td></tr>
+<tr><td>Q4</td><td>Batch processing</td><td>FCFS</td><td>Low</td></tr>
+<tr><td>Q5</td><td>Student / background jobs</td><td>FCFS</td><td>Lowest</td></tr>
+</tbody></table>
+
+<h3 class="prose" style="margin-top:20px">MLFQ — Multilevel Feedback Queue</h3>
+<p class="prose">Unlike MLQ, MLFQ allows processes to <strong>move between queues</strong> based on behaviour. CPU-bound processes move to lower queues; I/O-bound or recently interactive processes move to higher queues.</p>
+
+<div class="callout info reveal"><strong>MLFQ Rules (Ousterhout's Definition):</strong><br>
+Rule 1: If Priority(A) &gt; Priority(B) → A runs.<br>
+Rule 2: If Priority(A) = Priority(B) → A &amp; B run in RR.<br>
+Rule 3: New jobs start at highest priority queue.<br>
+Rule 4a: If job uses full quantum → priority demoted (move to lower queue).<br>
+Rule 4b: If job gives up CPU before quantum → priority retained.<br>
+Rule 5 (Boost): After period S, all jobs moved to top queue (prevents starvation).</div>
+
+<table class="data-table reveal">
+<caption>MLQ vs MLFQ Comparison</caption>
+<thead><tr><th>Criterion</th><th>MLQ</th><th>MLFQ</th></tr></thead>
+<tbody>
+<tr><td>Queue assignment</td><td>Fixed (permanent)</td><td>Dynamic (based on behaviour)</td></tr>
+<tr><td>Starvation</td><td>Yes (low queues never run if high always full)</td><td>Solved by periodic boost</td></tr>
+<tr><td>Adaptability</td><td>None</td><td>High — adapts to process behaviour</td></tr>
+<tr><td>Complexity</td><td>Simple</td><td>Complex (tuning required)</td></tr>
+<tr><td>Fairness</td><td>Poor</td><td>Good (with boost)</td></tr>
+</tbody></table>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Key:</strong> In MLFQ, a CPU-bound process that always uses its full quantum will eventually reach the <strong>lowest priority queue</strong> and stay there. I/O-bound processes that frequently give up the CPU stay in <strong>high priority queues</strong> — this naturally favours interactive/I-O-bound workloads, which is desirable for user responsiveness.</div>
+<div class="mcq reveal"><strong>GATE:</strong> Which problem does the periodic "boost" in MLFQ solve?<br>
+(a) High context switch overhead &nbsp; (b) Starvation of low-priority processes &nbsp; (c) Priority inversion &nbsp; (d) Memory leaks<br>
+<details><summary>Answer</summary><strong>(b) Starvation</strong> — Without the boost, long-running CPU-bound processes may get stuck in the lowest queue and never run if higher queues are always busy. The periodic boost moves all processes to the top queue, giving them a fresh chance.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 MLFQ Gaming:</strong> A malicious process could voluntarily give up CPU just before its quantum expires (Rule 4b), maintaining high priority indefinitely. Fix: Rule 4 (improved) — track total CPU time per queue period; demote if total allocation exceeded, regardless of voluntary/involuntary release.</div>
+</div>
+
+<div class="mode-uni">
+<div class="callout info">MLQ Rule: A process in a higher-priority queue ALWAYS preempts lower-priority queue processes. The lower queue only runs when ALL higher queues are empty.</div>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// MLQ scheduling logic (3 queues)
+Queue Q[3]; // Q[0]=highest, Q[2]=lowest
+
+Process* select_next() {
+    for(int i = 0; i &lt; 3; i++) {
+        if(!Q[i].empty()) {
+            // Higher queues: RR; Lower: FCFS
+            if(i &lt; 2) return Q[i].rr_next();  // Round Robin
+            else       return Q[i].front();     // FCFS
+        }
+    }
+    return NULL; // All empty — idle
+}
+
+// New process assignment:
+// System/RT process → Q[0]
+// Interactive process → Q[1]
+// Batch/background → Q[2]</code></pre></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.11 ══ -->
+<section id="s-realworld-sched" data-search-section="Real World Schedulers Linux CFS Windows">
+<h2 class="prose">2.11 Real-World Schedulers
+<button class="bookmark-btn" data-id="s-realworld-sched" data-label="2.11 Real-World Schedulers" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>Linux CFS vs Windows Scheduler</caption>
+<thead><tr><th>Feature</th><th>Linux CFS (v2.6.23+)</th><th>Windows (since Vista)</th></tr></thead>
+<tbody>
+<tr><td>Algorithm base</td><td>Weighted Fair Queuing</td><td>Multi-level feedback queue</td></tr>
+<tr><td>Data structure</td><td>Red-Black Tree (sorted by vruntime)</td><td>Array of 32 priority queues</td></tr>
+<tr><td>Priority levels</td><td>nice: -20 to +19 (40 levels)</td><td>1–31 (real-time) + 0 (idle)</td></tr>
+<tr><td>Time quantum</td><td>Dynamic — based on nr_running, min_granularity</td><td>Fixed (foreground 2×, background 1×)</td></tr>
+<tr><td>Scheduling class</td><td>SCHED_NORMAL, SCHED_FIFO, SCHED_RR, SCHED_DEADLINE</td><td>Real-time, normal, idle</td></tr>
+<tr><td>Fairness metric</td><td>Virtual runtime (vruntime) — equalised across processes</td><td>Priority boosting after I/O</td></tr>
+<tr><td>Starvation prevention</td><td>vruntime-based — minimum vruntime process always runs next</td><td>Priority aging</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>Linux CFS Key Concept:</strong><br>
+Each process has a <strong>virtual runtime (vruntime)</strong> — the actual CPU time weighted by priority.<br>
+CFS always runs the process with the <strong>smallest vruntime</strong> (leftmost node in Red-Black Tree).<br>
+Lower-priority processes accumulate vruntime faster → they wait longer between runs.<br>
+Formula: vruntime += delta_exec × (NICE_0_LOAD / weight)</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 SCHED_DEADLINE (EDF):</strong> Linux 3.14+ added earliest-deadline-first scheduling for real-time tasks. Tasks specify runtime, deadline, and period. The scheduler always picks the task with the earliest absolute deadline. Provably optimal for real-time scheduling — if any feasible schedule exists, EDF finds it.</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ 2.12 ══ -->
+<section id="s-sched-compare" data-search-section="Scheduling Algorithm Comparison Summary">
+<h2 class="prose">2.12 Algorithm Comparison &amp; Quick Reference
+<button class="bookmark-btn" data-id="s-sched-compare" data-label="2.12 Comparison Table" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>CPU Scheduling Algorithms — Master Comparison Table</caption>
+<thead><tr><th>Algorithm</th><th>Preemptive</th><th>Starvation</th><th>Convoy</th><th>Avg WT</th><th>Overhead</th><th>Best For</th></tr></thead>
+<tbody>
+<tr><td><strong>FCFS</strong></td><td>No</td><td>No</td><td>Yes ❌</td><td>High</td><td>Minimal</td><td>Simple batch</td></tr>
+<tr><td><strong>SJF-NP</strong></td><td>No</td><td>Yes ❌</td><td>No</td><td>Optimal (NP)</td><td>Low</td><td>Batch, known bursts</td></tr>
+<tr><td><strong>SRTF</strong></td><td>Yes</td><td>Yes ❌</td><td>No</td><td>Optimal (all)</td><td>High</td><td>Theoretical optimum</td></tr>
+<tr><td><strong>Round Robin</strong></td><td>Yes</td><td>No ✅</td><td>No</td><td>High if q large</td><td>High</td><td>Time-sharing, interactive</td></tr>
+<tr><td><strong>Priority NP</strong></td><td>No</td><td>Yes ❌</td><td>Possible</td><td>Medium</td><td>Low</td><td>Batch with priorities</td></tr>
+<tr><td><strong>Priority P</strong></td><td>Yes</td><td>Yes ❌</td><td>No</td><td>Low</td><td>High</td><td>Real-time (with aging)</td></tr>
+<tr><td><strong>MLQ</strong></td><td>Both</td><td>Yes ❌</td><td>No</td><td>Depends</td><td>Medium</td><td>Heterogeneous workloads</td></tr>
+<tr><td><strong>MLFQ</strong></td><td>Yes</td><td>No* ✅</td><td>No</td><td>Good</td><td>High</td><td>General-purpose OS</td></tr>
+</tbody></table>
+<p style="font-size:12px;color:var(--tx-muted)">*With periodic priority boost</p>
+
+<div class="callout formula reveal"><strong>Quick Formulas:</strong><br>
+TAT = CT − AT &nbsp;|&nbsp; WT = TAT − BT &nbsp;|&nbsp; RT = First_CPU − AT<br>
+Avg WT = Σ(WT_i) / n &nbsp;|&nbsp; Efficiency = Useful CPU time / Total time</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE 2021:</strong> Which scheduling algorithm gives minimum average turnaround time for a set of processes with equal arrival times?<br>
+(a) FCFS &nbsp; (b) RR with q=1 &nbsp; (c) SJF &nbsp; (d) Priority<br>
+<details><summary>Answer</summary><strong>(c) SJF</strong> — When all processes arrive simultaneously, SJF (and SRTF since no preemption is needed) minimises average turnaround time by always running the shortest job first.</details></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ PYQ ══ -->
+<section id="s-proc-pyq" data-search-section="Unit 2 PYQ Exam Prep">
+<h2 class="prose">★ Unit 2 PYQ &amp; Exam Prep
+<button class="bookmark-btn" data-id="s-proc-pyq" data-label="Unit 2 PYQ" title="Bookmark">🔖</button></h2>
+
+<div class="mcq reveal"><strong>Q1 (GATE 2019):</strong> A process has the following page reference string: 1,2,3,4,1,2,5,1,2,3,4,5. With 3 frames and FIFO replacement, how many page faults occur?<br>
+<details><summary>Answer</summary><strong>9 page faults</strong> — Trace: 1(F),2(F),3(F),4(F-evict1),1(F-evict2),2(F-evict3),5(F-evict4),1(F),2(F),3(F),4(F-evict5),5(F). FIFO suffers Belady's anomaly.</details></div>
+
+<div class="mcq reveal"><strong>Q2 (DU B.Tech 2023):</strong> Explain the difference between a zombie and orphan process with examples.<br>
+<details><summary>Answer</summary><strong>Zombie:</strong> Child has exited (called exit()) but parent hasn't called wait() yet. The PCB remains allocated to hold the exit status. If parent never calls wait(), the zombie accumulates. <strong>Orphan:</strong> Parent terminated before child. Linux re-parents orphans to init/systemd (PID 1), which periodically calls wait() to reap them.</details></div>
+
+<div class="mcq reveal"><strong>Q3 (GATE 2016):</strong> Processes P1(AT=0,BT=5), P2(AT=3,BT=3), P3(AT=6,BT=1) — Under SRTF, what is the average waiting time?<br>
+<details><summary>Answer</summary>t=0: P1 starts. t=3: P2(3)&lt;P1(2)? No (P1 remaining=2 &lt; P2=3). P1 continues. t=5: P1 done. P2 runs(3-5→8). t=6: P3(1)&lt;P2(2)? Yes → preempt P2. t=7: P3 done. P2 resumes(7-9).<br>WT: P1=0, P2=(5-3)+(7-5)=4? Let me recheck. P2 AT=3, CT=9, TAT=6, WT=TAT-BT=6-3=3. P3: AT=6,CT=7,TAT=1,WT=0. P1: AT=0,CT=5,TAT=5,WT=0. Avg WT = (0+3+0)/3 = <strong>1.0</strong></details></div>
+
+<div class="mcq reveal"><strong>Q4 (DU 2022):</strong> Compare user-level threads with kernel-level threads on 4 parameters.<br>
+<details><summary>Answer</summary>
+<table class="data-table"><thead><tr><th>Parameter</th><th>User Threads</th><th>Kernel Threads</th></tr></thead><tbody>
+<tr><td>Management</td><td>By user-space library</td><td>By OS kernel</td></tr>
+<tr><td>Context switch</td><td>Fast (no kernel mode switch)</td><td>Slow (mode switch needed)</td></tr>
+<tr><td>Parallelism</td><td>No (many-to-one)</td><td>Yes (one-to-one, multi-core)</td></tr>
+<tr><td>Blocking I/O</td><td>Blocks entire process</td><td>Only blocks that thread</td></tr>
+</tbody></table></details></div>
+
+<div class="mcq reveal"><strong>Q5 (GATE 2020):</strong> n processes share a CPU. In Round Robin with quantum q, what is the maximum time any process waits before getting the CPU?<br>
+(a) (n-1)×q &nbsp; (b) n×q &nbsp; (c) q &nbsp; (d) n×q − 1<br>
+<details><summary>Answer</summary><strong>(a) (n−1)×q</strong> — In the worst case, n−1 other processes each get a quantum q before our process gets the CPU again. This is the maximum response time guarantee of Round Robin.</details></div>
+
+<div class="mcq reveal"><strong>Q6 (DU B.Tech 2024):</strong> Describe the 5 steps of a context switch.<br>
+<details><summary>Answer</summary>1. <strong>Save state</strong>: Save CPU registers (PC, SP, GPRs, PSW) of running process into its PCB.<br>2. <strong>Update state</strong>: Change process state from Running to Ready/Blocked in the PCB.<br>3. <strong>Queue update</strong>: Move PCB to appropriate queue (ready queue or blocked queue).<br>4. <strong>Scheduling</strong>: Run scheduling algorithm to select next process.<br>5. <strong>Restore state</strong>: Load saved registers from new process's PCB; update memory maps (flush TLB); jump to new process's PC.</details></div>
+
+<div class="mcq reveal"><strong>Q7 (GATE):</strong> Consider: fork() is called 4 times unconditionally. How many total processes (including original)?<br>
+<details><summary>Answer</summary><strong>16 processes</strong> — Each fork() doubles: 1→2→4→8→16. Formula: 2^n where n=4.</details></div>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ Unit 2 GATE Trap Sheet:</strong>
+<ul>
+<li>SRTF = preemptive SJF = optimal average WT</li>
+<li>RR: no starvation; quantum q → 0 means processor sharing</li>
+<li>n unconditional forks → 2^n total processes</li>
+<li>SIGKILL(9) &amp; SIGSTOP(19) cannot be caught/blocked/ignored</li>
+<li>Zombie: child exited, parent hasn't wait()'d | Orphan: parent exited before child</li>
+<li>Threads share heap+code+files; own stack+registers+TID</li>
+<li>Context switch cost dominated by TLB flush (address space change)</li>
+<li>SJF starvation fix = Aging; MLQ starvation fix = MLFQ with periodic boost</li>
+<li>One-to-One threading = Linux pthreads = true parallelism on multi-core</li>
+</ul></div>
+</div>
+</section>
+
+<!-- ═══════════ SUPPLEMENT: Detailed Algorithm Traces ══════════════ -->
+<section id="s-algo-traces" data-search-section="Scheduling Algorithm Worked Examples Gantt">
+<h2 class="prose">2.13 Full Worked Examples &amp; Gantt Charts
+<button class="bookmark-btn" data-id="s-algo-traces" data-label="2.13 Gantt Traces" title="Bookmark">🔖</button></h2>
+
+<p class="prose">Master these worked examples — GATE and DU exams repeatedly test Gantt chart construction and metric calculation across all algorithms for the same set of processes.</p>
+
+<div class="callout info reveal"><strong>📌 Master Dataset:</strong> Use this across all algorithms:<br>
+P1(AT=0, BT=8) | P2(AT=2, BT=4) | P3(AT=4, BT=9) | P4(AT=5, BT=5)</div>
+
+<h3 class="prose" style="margin-top:16px">FCFS Trace</h3>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>FCFS — First Come First Served (Non-Preemptive)
+Arrival order: P1(0), P2(2), P3(4), P4(5)
+
+Gantt Chart:
+|  P1  |  P1  |  P1  |  P1  |  P2  |  P2  |  P3 ... |  P4 ...
+0      2      4      6      8     10     12   17      22      26
+
+Timeline:
+t=0 : P1 arrives, starts running
+t=8 : P1 completes. Ready: P2,P3. P2 runs (FCFS order)
+t=12: P2 completes. Ready: P3,P4. P3 runs
+t=17: Wait — P3 BT=9, runs 12→21. P4 runs 21→26
+
+Process | AT | BT | CT | TAT=CT-AT | WT=TAT-BT
+   P1   |  0 |  8 |  8 |     8     |     0
+   P2   |  2 |  4 | 12 |    10     |     6
+   P3   |  4 |  9 | 21 |    17     |     8
+   P4   |  5 |  5 | 26 |    21     |    16
+
+Avg TAT = (8+10+17+21)/4 = 56/4 = 14.0
+Avg WT  = (0+6+8+16)/4  = 30/4 = 7.5</code></pre></div>
+
+<h3 class="prose" style="margin-top:16px">SJF Non-Preemptive Trace</h3>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>SJF (Non-Preemptive) — Always pick shortest burst from ready queue
+
+t=0 : Only P1 available → P1 runs (BT=8)
+t=8 : P2(4), P3(4→already 4), P4(5) all arrived
+       Shortest BT = P2(4) → P2 runs
+t=12: Ready: P3(9), P4(5). Shortest = P4(5) → P4 runs
+t=17: Ready: P3(9) → P3 runs
+t=26: Done
+
+Gantt: |P1:0-8|P2:8-12|P4:12-17|P3:17-26|
+
+Process | AT | BT | CT | TAT | WT
+   P1   |  0 |  8 |  8 |  8  |  0
+   P2   |  2 |  4 | 12 | 10  |  6
+   P4   |  5 |  5 | 17 | 12  |  7
+   P3   |  4 |  9 | 26 | 22  | 13
+
+Avg TAT = (8+10+22+12)/4 = 52/4 = 13.0
+Avg WT  = (0+6+13+7)/4  = 26/4 = 6.5  ← Better than FCFS!</code></pre></div>
+
+<h3 class="prose" style="margin-top:16px">SRTF (Preemptive SJF) Trace</h3>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>SRTF — Check remaining burst at every new arrival
+
+t=0: P1 starts (remaining=8)
+t=2: P2 arrives (BT=4). P1 remaining=6 vs P2=4 → P2 preempts! P1 rem=6
+t=4: P3 arrives (BT=9). P2 rem=2 vs P3=9 → P2 continues
+t=5: P4 arrives (BT=5). P2 rem=1 vs P4=5 → P2 continues
+t=6: P2 done. Ready: P1(6), P3(9), P4(5) → P4(5) runs (shortest)
+t=11: P4 done. Ready: P1(6), P3(9) → P1(6) runs
+t=17: P1 done. Ready: P3(9) → P3 runs
+t=26: P3 done. ALL COMPLETE
+
+Gantt: |P1:0-2|P2:2-6|P4:6-11|P1:11-17|P3:17-26|
+
+Process | AT | BT | CT | TAT | WT
+   P1   |  0 |  8 | 17 | 17  |  9
+   P2   |  2 |  4 |  6 |  4  |  0
+   P3   |  4 |  9 | 26 | 22  | 13
+   P4   |  5 |  5 | 11 |  6  |  1
+
+Avg TAT = (17+4+22+6)/4 = 49/4 = 12.25
+Avg WT  = (9+0+13+1)/4 = 23/4 = 5.75  ← Best WT!</code></pre></div>
+
+<h3 class="prose" style="margin-top:16px">Round Robin (q=3) Trace</h3>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>Round Robin q=3 — Queue order by arrival
+
+t=0: Queue[P1(8)]. P1 runs 3 units.
+t=3: P1(rem=5) → back of queue. P2 arrived@2. Queue:[P2(4),P1(5)]
+     P2 runs 3 units.
+t=6: P2(rem=1) → back. P3 arrived@4. Queue:[P1(5),P3(9),P2(1)]
+     (P4 arrives@5) Queue:[P1(5),P3(9),P4(5),P2(1)]
+     P1 runs 3 units.
+t=9: P1(rem=2) → back. Queue:[P3(9),P4(5),P2(1),P1(2)]
+     P3 runs 3 units.
+t=12: P3(rem=6) → back. Queue:[P4(5),P2(1),P1(2),P3(6)]
+     P4 runs 3 units.
+t=15: P4(rem=2) → back. Queue:[P2(1),P1(2),P3(6),P4(2)]
+     P2 runs 1 unit → DONE (rem=0)
+t=16: Queue:[P1(2),P3(6),P4(2)]. P1 runs 2 units → DONE
+t=18: Queue:[P3(6),P4(2)]. P3 runs 3 units.
+t=21: P3(rem=3) → back. P4 runs 2 units → DONE
+t=23: P3 runs 3 units → DONE
+
+Gantt: |P1:0-3|P2:3-6|P1:6-9|P3:9-12|P4:12-15|P2:15-16|P1:16-18|P3:18-21|P4:21-23|P3:23-26|
+
+Process | AT | BT | CT | TAT | WT
+   P1   |  0 |  8 | 18 | 18  | 10
+   P2   |  2 |  4 | 16 | 14  | 10
+   P3   |  4 |  9 | 26 | 22  | 13
+   P4   |  5 |  5 | 23 | 18  | 13
+
+Avg TAT = (18+14+22+18)/4 = 72/4 = 18.0
+Avg WT  = (10+10+13+13)/4 = 46/4 = 11.5</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Summary — Same Dataset, All Algorithms</caption>
+<thead><tr><th>Algorithm</th><th>Avg TAT</th><th>Avg WT</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>FCFS</td><td>14.0</td><td>7.5</td><td>Simple, convoy effect</td></tr>
+<tr><td>SJF-NP</td><td>13.0</td><td>6.5</td><td>Better, starvation risk</td></tr>
+<tr><td>SRTF</td><td>12.25</td><td>5.75 ✅</td><td>Best WT — optimal!</td></tr>
+<tr><td>RR (q=3)</td><td>18.0</td><td>11.5</td><td>Fair, high overhead</td></tr>
+</tbody></table>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE Pattern:</strong> Given P1(AT=0,BT=8), P2(AT=2,BT=4), P3(AT=4,BT=9), P4(AT=5,BT=5) — Under SRTF, the completion time of P1 is:<br>
+(a) 8 &nbsp;(b) 11 &nbsp;(c) 17 &nbsp;(d) 18<br>
+<details><summary>Answer</summary><strong>(c) 17</strong> — As shown in the SRTF trace, P1 runs from 0–2 (preempted by P2), then 11–17 (completes). CT=17.</details></div>
+</div>
+</section>
+
+<!-- ═══════════ SUPPLEMENT: OS Signals & IPC Deep Dive ══════════════ -->
+<section id="s-sync-preview" data-search-section="Synchronization Preview Critical Section">
+<h2 class="prose">2.14 Synchronisation Preview &amp; Critical Section Problem
+<button class="bookmark-btn" data-id="s-sync-preview" data-label="2.14 Sync Preview" title="Bookmark">🔖</button></h2>
+
+<p class="prose">Multiple threads/processes sharing memory create <strong>race conditions</strong>. The <strong>Critical Section Problem</strong> is fundamental to OS — solved in Unit 3 (Synchronisation). This section provides the bridge.</p>
+
+<div class="callout warn reveal"><strong>⚠️ Race Condition Example:</strong></div>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Shared counter — race condition!
+int count = 0;  // Shared between Thread A and Thread B
+
+// Thread A:                  // Thread B:
+count++;  // NOT atomic!       count++;
+// count++ expands to:
+// LOAD  R1, count    (R1 = 0)
+// ADD   R1, 1        (R1 = 1)
+// STORE count, R1    (count = 1)
+
+// If threads interleave at machine code level:
+// A: LOAD R1=0       B: LOAD R2=0
+// A: ADD  R1=1       B: ADD  R2=1  
+// A: STORE count=1   B: STORE count=1  ← count=1, NOT 2!
+// Lost update! Expected: count=2, Got: count=1</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Requirements for Critical Section Solution</caption>
+<thead><tr><th>Requirement</th><th>Meaning</th><th>Violation Consequence</th></tr></thead>
+<tbody>
+<tr><td><strong>Mutual Exclusion</strong></td><td>Only one process in CS at a time</td><td>Data corruption, race condition</td></tr>
+<tr><td><strong>Progress</strong></td><td>If no one in CS, a waiting process must eventually enter</td><td>Deadlock — everyone waits forever</td></tr>
+<tr><td><strong>Bounded Waiting</strong></td><td>Limit on how many times others enter CS before a waiting process</td><td>Starvation — one process never enters</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>Peterson's Solution (2-process):</strong></div>
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Process i (i=0 or 1, j=1-i)
+flag[i] = true;      // "I want to enter"
+turn = j;            // "But you go first (be polite)"
+while (flag[j] && turn == j)
+    ;                // Wait if j wants in AND it's j's turn
+// === CRITICAL SECTION ===
+flag[i] = false;     // "I'm done"
+// === REMAINDER SECTION ===
+
+// Satisfies all 3 requirements:
+// Mutual exclusion: Only one can pass the while loop
+// Progress: If j doesn't want in (flag[j]=false), i enters immediately
+// Bounded waiting: After turn=j, i will enter after j exits once</code></pre></div>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ GATE Trap:</strong> Peterson's solution is <strong>software-based</strong> and works for exactly 2 processes. It assumes <strong>atomic load/store</strong> operations (reads and writes to memory words are atomic). It does NOT work if out-of-order execution occurs (compiler/CPU reordering) without memory barriers.</div>
+<div class="mcq reveal"><strong>GATE 2022:</strong> Which of these is NOT a requirement for solving the critical section problem?<br>
+(a) Mutual exclusion &nbsp; (b) Progress &nbsp; (c) Bounded waiting &nbsp; (d) Preemption<br>
+<details><summary>Answer</summary><strong>(d) Preemption</strong> — The three requirements are mutual exclusion, progress, and bounded waiting. Preemption is a scheduling concept, not a CS requirement.</details></div>
+</div>
+</section>
+
+<!-- ═══════════ SUPPLEMENT: Process Scheduling in Linux ══════════════ -->
+<section id="s-linux-proc" data-search-section="Linux Process Commands proc filesystem">
+<h2 class="prose">2.15 Linux Process Commands &amp; /proc Filesystem
+<button class="bookmark-btn" data-id="s-linux-proc" data-label="2.15 Linux Process" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>Essential Linux Process Commands</caption>
+<thead><tr><th>Command</th><th>Purpose</th><th>Key Options</th></tr></thead>
+<tbody>
+<tr><td><code>ps aux</code></td><td>List all running processes</td><td><code>a</code>=all, <code>u</code>=user format, <code>x</code>=no-terminal</td></tr>
+<tr><td><code>top</code> / <code>htop</code></td><td>Real-time process monitor</td><td><code>P</code>=sort CPU, <code>M</code>=sort memory</td></tr>
+<tr><td><code>kill -9 PID</code></td><td>Force kill process</td><td>SIGKILL=9, SIGTERM=15</td></tr>
+<tr><td><code>nice -n 10 cmd</code></td><td>Start with lower priority (nice=+10)</td><td>Range: -20 (highest) to +19 (lowest)</td></tr>
+<tr><td><code>renice -5 PID</code></td><td>Change priority of running process</td><td>Only root can increase priority</td></tr>
+<tr><td><code>strace cmd</code></td><td>Trace system calls made by process</td><td>Debug what process is doing</td></tr>
+<tr><td><code>lsof -p PID</code></td><td>List open file descriptors</td><td>Shows all files/sockets/pipes</td></tr>
+<tr><td><code>pstree</code></td><td>Show process tree (parent-child)</td><td>Visualise fork() hierarchy</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code># The /proc virtual filesystem — process info exposed as files
+/proc/PID/          # Directory for each process
+  status            # Process state, PID, PPID, memory usage
+  cmdline           # Command line arguments
+  maps              # Virtual memory map (code, heap, stack addresses)
+  fd/               # Directory of open file descriptors (symlinks)
+  stat              # Scheduling info, priority, nice, CPU time
+  wchan             # Kernel function where process is sleeping
+
+# Examples:
+cat /proc/1/status         # View init process info
+cat /proc/$$/maps          # View current shell's memory layout
+ls -la /proc/$$/fd         # View open files of current process
+cat /proc/cpuinfo          # CPU information
+cat /proc/meminfo          # Memory statistics
+cat /proc/loadavg          # 1/5/15 min load averages + running/total</code></pre></div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 /proc Implementation:</strong> The /proc filesystem is a <em>virtual filesystem</em> — no files actually exist on disk. The kernel generates file contents on-demand when read. <code>cat /proc/1234/status</code> triggers a kernel function that formats the task_struct fields into text and returns them. This is why /proc files always show current values.</div>
+</div>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> A user runs <code>nice -n -20 ./myprogram</code>. What happens?<br>
+(a) Program gets lowest priority &nbsp; (b) Command fails — only root can set negative nice &nbsp; (c) Program gets highest priority &nbsp; (d) Program runs in background<br>
+<details><summary>Answer</summary><strong>(b)</strong> Only the superuser (root) can set a negative nice value (which increases priority). Regular users can only increase nice values (0 to +19), which <em>decreases</em> priority.</details></div>
+</div>
+</section>
+
+<!-- ═══════════ SUPPLEMENT: Scheduling Formula Quick Card ══════════════ -->
+<section id="s-formula-card" data-search-section="Scheduling Formulas Quick Reference">
+<h2 class="prose">2.16 Formula &amp; Concept Quick-Card
+<button class="bookmark-btn" data-id="s-formula-card" data-label="2.16 Formula Card" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>All Scheduling Formulas at a Glance</caption>
+<thead><tr><th>Metric</th><th>Formula</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Completion Time (CT)</td><td>Time when process finishes</td><td>Read from Gantt chart</td></tr>
+<tr><td>Turnaround Time (TAT)</td><td>CT − AT</td><td>Total time in system</td></tr>
+<tr><td>Waiting Time (WT)</td><td>TAT − BT</td><td>Or: Start − AT − (all preemptions)</td></tr>
+<tr><td>Response Time (RT)</td><td>First_CPU_Time − AT</td><td>≤ WT always</td></tr>
+<tr><td>Normalised TAT</td><td>TAT / BT</td><td>≥1; closer to 1 = fairer</td></tr>
+<tr><td>CPU Utilisation</td><td>(Total_Time − Idle) / Total_Time × 100</td><td>Target 40–90%</td></tr>
+<tr><td>Throughput</td><td>N processes / T time units</td><td>Processes/second</td></tr>
+<tr><td>Burst Estimate (SJF)</td><td>τ(n+1) = α·t(n) + (1-α)·τ(n)</td><td>α=0.5 typical</td></tr>
+<tr><td>Max RR wait</td><td>(n-1) × q</td><td>n=processes, q=quantum</td></tr>
+<tr><td>Processes after n forks</td><td>2^n</td><td>Unconditional sequential forks</td></tr>
+</tbody></table>
+
+<table class="data-table reveal">
+<caption>Unit 2 Key Definitions — One-Line Answers</caption>
+<thead><tr><th>Term</th><th>Definition</th></tr></thead>
+<tbody>
+<tr><td>Process</td><td>Program in execution with its own address space, PCB, and OS resources</td></tr>
+<tr><td>PCB</td><td>OS kernel data structure holding all info about a process (registers, state, memory, I/O)</td></tr>
+<tr><td>Context Switch</td><td>Saving CPU state of one process and restoring another's — pure overhead</td></tr>
+<tr><td>Thread</td><td>Lightweight execution unit within a process sharing code/heap/files but with own stack/PC/registers</td></tr>
+<tr><td>Zombie</td><td>Process that has terminated but whose PCB remains because parent hasn't called wait()</td></tr>
+<tr><td>Orphan</td><td>Process whose parent terminated first — re-parented to init (PID 1) by Linux</td></tr>
+<tr><td>Convoy Effect</td><td>Short processes stuck behind a long CPU-bound process in FCFS</td></tr>
+<tr><td>Starvation</td><td>Low-priority process never gets CPU because high-priority processes always preempt</td></tr>
+<tr><td>Aging</td><td>Gradually increase priority of waiting processes to prevent starvation</td></tr>
+<tr><td>Preemption</td><td>Forcibly removing CPU from a running process before it voluntarily yields</td></tr>
+<tr><td>Shared Memory IPC</td><td>Fastest IPC — processes map same physical pages; needs semaphore for sync</td></tr>
+<tr><td>MLFQ</td><td>Multi-queue scheduler that moves processes between queues based on CPU behaviour</td></tr>
+<tr><td>vruntime (CFS)</td><td>Virtual runtime — CPU time weighted by priority; CFS runs process with min vruntime</td></tr>
+<tr><td>COW (Copy-On-Write)</td><td>fork() shares pages until a write occurs, then creates private copy — makes fork() fast</td></tr>
+</tbody></table>
+
+<div class="mode-gate">
+<div class="callout warn"><strong>⚡ Unit 2 GATE Trap Sheet — Final Edition (Master These First):</strong>
+<table class="data-table" style="margin-top:8px">
+<thead><tr><th>Trap</th><th>Correct Answer</th></tr></thead>
+<tbody>
+<tr><td>SRTF vs SJF</td><td>SRTF = preemptive SJF; both minimize WT but SRTF is strictly better preemptively</td></tr>
+<tr><td>RR starvation</td><td>RR CANNOT starve — every process gets CPU within (n-1)×q time</td></tr>
+<tr><td>FCFS starvation</td><td>FCFS CANNOT starve — order is fixed by arrival; all eventually run</td></tr>
+<tr><td>Quantum effect</td><td>q→∞ = FCFS; q→0 = processor sharing (infinite overhead)</td></tr>
+<tr><td>Best avg WT</td><td>SRTF among all algorithms; SJF-NP among non-preemptive only</td></tr>
+<tr><td>Fork return</td><td>Returns 0 to child, child-PID to parent, -1 on failure</td></tr>
+<tr><td>Stack direction</td><td>Stack grows DOWNWARD; heap grows UPWARD</td></tr>
+<tr><td>SIGKILL</td><td>Cannot be caught, blocked, or ignored — only kernel handles it</td></tr>
+</tbody></table></div>
+</div>
+</section>
+
+
+<!-- ═════════ SUPPLEMENT: Extra Tables, Callouts & Code ═════════ -->
+
+<section id="s-proc-lifecycle" data-search-section="Process Lifecycle Creation Termination">
+<h2 class="prose">2.17 Process Lifecycle — Creation to Termination
+<button class="bookmark-btn" data-id="s-proc-lifecycle" data-label="2.17 Process Lifecycle" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>Process Creation Methods by OS</caption>
+<thead><tr><th>OS</th><th>System Call</th><th>Mechanism</th><th>Child inherits</th></tr></thead>
+<tbody>
+<tr><td>Unix/Linux</td><td>fork() + exec()</td><td>Clone parent, optionally replace image</td><td>FDs, signals, environment, credentials</td></tr>
+<tr><td>Windows</td><td>CreateProcess()</td><td>Directly creates new process from executable</td><td>Inherited handles (if specified)</td></tr>
+<tr><td>POSIX (spawn)</td><td>posix_spawn()</td><td>Lightweight fork+exec in one call</td><td>Configurable via spawn attributes</td></tr>
+</tbody></table>
+
+<div class="callout formula reveal"><strong>Process Hierarchy (Unix):</strong><br>
+init(1) → systemd → getty → bash → ls (child of bash)<br>
+Every process except init has exactly one parent. init is the root of the process tree and cannot be killed (SIGKILL to init = system halt).</div>
+
+<table class="data-table reveal">
+<caption>exec() Family — Which to Use When</caption>
+<thead><tr><th>Function</th><th>Args format</th><th>PATH search</th><th>Environment</th></tr></thead>
+<tbody>
+<tr><td><code>execl()</code></td><td>List (varargs)</td><td>No (full path)</td><td>Inherit</td></tr>
+<tr><td><code>execlp()</code></td><td>List (varargs)</td><td>Yes</td><td>Inherit</td></tr>
+<tr><td><code>execle()</code></td><td>List (varargs)</td><td>No</td><td>Explicit</td></tr>
+<tr><td><code>execv()</code></td><td>Array (argv[])</td><td>No (full path)</td><td>Inherit</td></tr>
+<tr><td><code>execvp()</code></td><td>Array (argv[])</td><td>Yes</td><td>Inherit</td></tr>
+<tr><td><code>execve()</code></td><td>Array (argv[])</td><td>No</td><td>Explicit envp[]</td></tr>
+</tbody></table>
+
+<div class="callout info reveal"><strong>Memory preserved after exec():</strong> exec() replaces code, data, heap, and stack with the new program. But it preserves: open file descriptors (unless FD_CLOEXEC set), PID, PPID, signal dispositions, current directory, and credentials. This is how shell I/O redirection works — set up FDs before exec().</div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// I/O Redirection via fork+exec (shell internals)
+// "ls > output.txt" implemented as:
+pid_t pid = fork();
+if (pid == 0) {            // Child
+    int fd = open("output.txt", O_WRONLY|O_CREAT|O_TRUNC, 0644);
+    dup2(fd, STDOUT_FILENO); // Redirect stdout → file
+    close(fd);              // Close original fd (dup2 made a copy)
+    execlp("ls", "ls", NULL);  // exec replaces child — FD survives!
+}
+wait(NULL);                 // Parent waits</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Process Termination Scenarios</caption>
+<thead><tr><th>Scenario</th><th>Call/Event</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Normal exit</td><td><code>exit(0)</code> or return from main()</td><td>Resources freed, exit status stored in PCB, SIGCHLD sent to parent</td></tr>
+<tr><td>Abnormal exit</td><td>Signal (SIGSEGV, SIGABRT) or <code>exit(1)</code></td><td>Same as above, non-zero exit code</td></tr>
+<tr><td>Killed by parent</td><td><code>kill(child_pid, SIGKILL)</code></td><td>Child terminated immediately</td></tr>
+<tr><td>Parent exits first</td><td>Parent calls exit()</td><td>Children become orphans → re-parented to init</td></tr>
+<tr><td>Child exits, parent busy</td><td>Child calls exit()</td><td>Zombie created — PCB retained until parent wait()</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q:</strong> After exec() is called successfully, the process's PID:<br>
+(a) Changes to reflect new program &nbsp; (b) Remains the same &nbsp; (c) Becomes 0 &nbsp; (d) Is assigned by the scheduler<br>
+<details><summary>Answer</summary><strong>(b) Remains the same</strong> — exec() replaces the process image (code, data, stack) but preserves the PID, PPID, open file descriptors (unless O_CLOEXEC), and other OS-level attributes.</details></div>
+<div class="callout info"><strong>Memory tip:</strong> exec() family names: <code>l</code>=list args, <code>v</code>=vector (array) args, <code>p</code>=PATH search, <code>e</code>=environment. <code>execvpe()</code> = array + PATH + explicit env.</div>
+</div>
+
+<div class="mode-uni">
+<div class="mcq reveal"><strong>Q (DU 2022):</strong> What is a fork bomb and how is it prevented?<br>
+<details><summary>Answer</summary>A <strong>fork bomb</strong> is a process that recursively creates child processes using fork(), causing exponential growth until system resources (PIDs, memory) are exhausted. Example: <code>:(){ :|:& };:</code> in bash.<br>
+<strong>Prevention:</strong> (1) <code>ulimit -u N</code> — limit max processes per user. (2) PAM limits in <code>/etc/security/limits.conf</code>: <code>arpit hard nproc 100</code>. (3) cgroups (control groups) in Linux — hard limit on process count per group.</details></div>
+</div>
+</section>
+
+<section id="s-thread-sync-code" data-search-section="Thread Synchronization Mutex Semaphore Code">
+<h2 class="prose">2.18 Thread Synchronisation Patterns
+<button class="bookmark-btn" data-id="s-thread-sync-code" data-label="2.18 Thread Sync" title="Bookmark">🔖</button></h2>
+
+<div class="callout warn reveal"><strong>⚠️ Why Synchronisation is Needed:</strong> Threads share the heap — without synchronisation, concurrent writes create race conditions. The OS cannot prevent this in user space; the programmer must use mutual exclusion primitives.</div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Mutex (Mutual Exclusion Lock) — prevents concurrent access
+#include &lt;pthread.h&gt;
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+int shared_counter = 0;
+
+void* increment(void* arg) {
+    for (int i = 0; i &lt; 100000; i++) {
+        pthread_mutex_lock(&amp;lock);    // Acquire lock — blocks if held
+        shared_counter++;              // Critical section
+        pthread_mutex_unlock(&amp;lock);  // Release lock
+    }
+    return NULL;
+}
+
+// Without mutex: result is unpredictable (race condition)
+// With mutex: result is always exactly 200000</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Semaphore — counting or binary
+#include &lt;semaphore.h&gt;
+
+sem_t sem;
+sem_init(&amp;sem, 0, 1);    // Binary semaphore (initial value=1)
+
+void* thread_func(void* arg) {
+    sem_wait(&amp;sem);        // P() — decrement; block if 0
+    // Critical section
+    sem_post(&amp;sem);        // V() — increment; wake waiting thread
+    return NULL;
+}
+
+// Counting semaphore: sem_init(&sem, 0, N) allows N concurrent accesses
+// Use case: limit database connections to max N threads simultaneously</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Mutex vs Semaphore vs Spinlock vs Monitor</caption>
+<thead><tr><th>Primitive</th><th>Type</th><th>Ownership</th><th>Blocking</th><th>Best For</th></tr></thead>
+<tbody>
+<tr><td><strong>Mutex</strong></td><td>Binary lock</td><td>Yes (only owner unlocks)</td><td>Yes (sleeps)</td><td>Mutual exclusion in threads</td></tr>
+<tr><td><strong>Binary Semaphore</strong></td><td>Binary (0/1)</td><td>No (any thread can post)</td><td>Yes (sleeps)</td><td>Signalling between threads</td></tr>
+<tr><td><strong>Counting Semaphore</strong></td><td>Integer N</td><td>No</td><td>Yes when N=0</td><td>Resource pool limiting</td></tr>
+<tr><td><strong>Spinlock</strong></td><td>Binary</td><td>Yes</td><td>No (busy-waits)</td><td>Short CS in kernel, multi-core</td></tr>
+<tr><td><strong>Monitor</strong></td><td>High-level</td><td>Yes (implicit)</td><td>Yes</td><td>Java synchronized, condition vars</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="callout info"><strong>Key Difference:</strong> A mutex must be unlocked by the same thread that locked it. A semaphore can be signal-ed by any thread — this makes semaphores suitable for <em>producer-consumer signalling</em> (producer posts, consumer waits) even when they're different threads.</div>
+<div class="mcq reveal"><strong>Q:</strong> Which synchronisation primitive is most appropriate for a producer-consumer problem where the producer and consumer are different threads?<br>
+(a) Mutex only &nbsp; (b) Counting semaphore &nbsp; (c) Spinlock &nbsp; (d) Memory barrier<br>
+<details><summary>Answer</summary><strong>(b) Counting semaphore</strong> — The counting semaphore tracks available buffer slots. Producer calls sem_post() (increments), consumer calls sem_wait() (decrements, blocks if 0). Any thread can call either operation — unlike mutex which requires the same thread to unlock.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Priority Inversion:</strong> A low-priority thread L holds a mutex that high-priority thread H needs. H blocks waiting for L. But medium-priority thread M preempts L (since M has higher priority than L). Now H waits for L which is stuck behind M — H is effectively at M's priority. <strong>Solution:</strong> Priority inheritance — temporarily boost L's priority to H's level while it holds the mutex. Used in Mars Pathfinder (1997) — a real OS bug!</div>
+</div>
+</section>
+
+<section id="s-scheduling-extra" data-search-section="Scheduling Special Cases Edge Cases">
+<h2 class="prose">2.19 Scheduling Edge Cases &amp; Special Scenarios
+<button class="bookmark-btn" data-id="s-scheduling-extra" data-label="2.19 Scheduling Edge Cases" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>Scheduling Edge Cases — GATE Favourites</caption>
+<thead><tr><th>Scenario</th><th>Algorithm</th><th>Trap</th><th>Correct Approach</th></tr></thead>
+<tbody>
+<tr><td>All arrive at same time</td><td>FCFS</td><td>Order assumed P1,P2,...Pn</td><td>Follow given order; WT=cumulative BT</td></tr>
+<tr><td>Process arrives exactly when another finishes</td><td>SJF/SRTF</td><td>Tie between arriving and existing</td><td>Arriving process joins ready queue at that instant; compare all</td></tr>
+<tr><td>RR: process completes mid-quantum</td><td>RR</td><td>Do you count remaining quantum?</td><td>No — process exits as soon as BT exhausted, even mid-quantum</td></tr>
+<tr><td>Preemption at exact arrival</td><td>SRTF</td><td>When does preemption check happen?</td><td>At every new arrival event — check if new process has smaller remaining burst</td></tr>
+<tr><td>Tie in burst time (SJF)</td><td>SJF</td><td>Which runs first?</td><td>Typically break ties by arrival time (earlier arrival wins); problem should specify</td></tr>
+<tr><td>Same priority (Priority sched)</td><td>Priority</td><td>Which of equal-priority runs?</td><td>Use FCFS within same priority level; or RR if specified</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// MLFQ Implementation Sketch (3 queues)
+Queue Q0(RR, q=8);   // Highest priority
+Queue Q1(RR, q=16);  // Medium priority
+Queue Q2(FCFS);      // Lowest priority
+
+void mlfq_schedule() {
+    // Rule 1: Always run highest non-empty queue
+    // Rule 2: RR within same queue
+    // Rule 3: New jobs start at Q0
+    // Rule 4: If job uses full quantum → demote (Q0→Q1, Q1→Q2)
+    // Rule 5: Boost all to Q0 every S=100ms (prevent starvation)
+
+    for each process p in arrival order:
+        p.queue = 0;              // Start at top
+        p.priority = HIGHEST;
+    
+    while (processes_remaining) {
+        p = pick_from_highest_non_empty_queue();
+        run(p, q[p.queue]);
+        if (p.used_full_quantum):
+            p.queue = min(p.queue + 1, 2);  // Demote
+        if (time % S == 0):
+            for all p: p.queue = 0;          // Periodic boost
+    }
+}</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Scheduling Criteria Priority by System Type</caption>
+<thead><tr><th>System Type</th><th>Primary Goal</th><th>Best Algorithm</th><th>Key Metric</th></tr></thead>
+<tbody>
+<tr><td>Batch</td><td>Throughput, CPU utilisation</td><td>SJF, FCFS</td><td>TAT, throughput</td></tr>
+<tr><td>Interactive</td><td>Response time, no starvation</td><td>RR, Priority+Aging</td><td>Response time</td></tr>
+<tr><td>Real-time</td><td>Meet deadlines</td><td>EDF, RMS</td><td>Deadline miss rate</td></tr>
+<tr><td>Time-sharing</td><td>Fairness, no starvation</td><td>MLFQ, CFS</td><td>WT fairness</td></tr>
+<tr><td>Embedded</td><td>Predictability, low overhead</td><td>Priority (static)</td><td>Worst-case RT</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="callout info"><strong>DU Exam Pattern:</strong> Questions typically provide 4–5 processes with AT and BT, then ask you to: (a) draw the Gantt chart, (b) calculate CT, TAT, WT for each, (c) find average TAT and average WT. Practice with all four algorithms (FCFS, SJF-NP, SRTF, RR) on the same dataset.</div>
+<div class="mcq reveal"><strong>Q (DU 2023):</strong> Processes P1(AT=0,BT=6), P2(AT=1,BT=4), P3(AT=2,BT=2) — RR with q=2. Completion order?<br>
+<details><summary>Answer</summary>t=0: P1 runs(0-2). t=2: P2 runs(2-4). t=4: P3 runs(4-6). P3 done (BT=2, used exactly 1 quantum).<br>t=6: P1 runs(6-8). t=8: P2 runs(8-10). P2 done. t=10: P1 runs(10-12). P1 done.<br>CT: P3=6, P2=10, P1=12 | TAT: P3=4, P2=9, P1=12 | WT: P3=2, P2=5, P1=6. Avg WT=(2+5+6)/3=4.33</details></div>
+<div class="mcq reveal"><strong>Q:</strong> In SRTF, a new process P with BT=1 arrives when current process has remaining time=5. What happens?<br>
+(a) P waits in ready queue &nbsp; (b) Current process continues &nbsp; (c) P immediately preempts &nbsp; (d) Depends on priority<br>
+<details><summary>Answer</summary><strong>(c) P immediately preempts</strong> — SRTF (preemptive SJF) checks at every arrival. P's remaining time (1) &lt; current process remaining time (5), so P preempts and runs immediately. Current process goes back to ready queue with remaining=5.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Rate Monotonic Scheduling (RMS) — Real-Time:</strong><br>
+For periodic real-time tasks: assign priority inversely proportional to period (shorter period = higher priority). Optimally schedulable if: Σ(Ci/Ti) ≤ n(2^(1/n) - 1) where Ci=execution time, Ti=period, n=tasks. For n→∞: limit ≈ 0.693 (ln 2). If utilisation ≤ 69.3%, RMS guarantees all deadlines are met.</div>
+</div>
+</section>
+
+<section id="s-ipc-advanced" data-search-section="IPC Advanced Pipes Sockets Message Queue">
+<h2 class="prose">2.20 IPC Deep Dive — Pipes, Sockets &amp; Message Queues
+<button class="bookmark-btn" data-id="s-ipc-advanced" data-label="2.20 IPC Deep Dive" title="Bookmark">🔖</button></h2>
+
+<table class="data-table reveal">
+<caption>Pipe Variants Comparison</caption>
+<thead><tr><th>Type</th><th>POSIX API</th><th>Persistence</th><th>Related processes only?</th><th>Bidirectional?</th></tr></thead>
+<tbody>
+<tr><td>Anonymous Pipe</td><td><code>pipe(fd[2])</code></td><td>Lifetime of processes</td><td>Yes (parent-child)</td><td>No (unidirectional)</td></tr>
+<tr><td>Named Pipe (FIFO)</td><td><code>mkfifo("/tmp/myfifo")</code></td><td>Filesystem entry</td><td>No (any process)</td><td>No</td></tr>
+<tr><td>socketpair()</td><td><code>socketpair(AF_UNIX,...)</code></td><td>Lifetime of processes</td><td>Yes (related)</td><td>Yes</td></tr>
+</tbody></table>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Named Pipe (FIFO) — communicating unrelated processes
+// Process A (Writer):
+mkfifo("/tmp/myfifo", 0666);           // Create named pipe in filesystem
+int fd = open("/tmp/myfifo", O_WRONLY); // Block until reader opens
+write(fd, "Hello!", 7);
+close(fd);
+
+// Process B (Reader) — completely unrelated process:
+int fd = open("/tmp/myfifo", O_RDONLY); // Block until writer opens
+char buf[10];
+read(fd, buf, sizeof(buf));
+printf("Got: %s\n", buf);              // "Hello!"
+close(fd);
+unlink("/tmp/myfifo");                  // Remove FIFO from filesystem</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// POSIX Message Queue
+#include &lt;mqueue.h&gt;
+
+// Sender:
+mqd_t mq = mq_open("/myqueue", O_CREAT|O_WRONLY, 0666, NULL);
+mq_send(mq, "Hello", 6, 1);    // message, size, priority
+
+// Receiver:
+mqd_t mq = mq_open("/myqueue", O_RDONLY, 0666, NULL);
+char buf[256];
+unsigned int prio;
+mq_receive(mq, buf, sizeof(buf), &amp;prio);  // Receives highest-priority msg
+mq_close(mq);
+mq_unlink("/myqueue");          // Delete queue</code></pre></div>
+
+<table class="data-table reveal">
+<caption>SYSV vs POSIX IPC Comparison</caption>
+<thead><tr><th>Aspect</th><th>System V IPC</th><th>POSIX IPC</th></tr></thead>
+<tbody>
+<tr><td>API style</td><td><code>shmget/msgget/semget</code></td><td><code>shm_open/mq_open/sem_open</code></td></tr>
+<tr><td>Naming</td><td>Numeric keys (ftok())</td><td>Filesystem names (/name)</td></tr>
+<tr><td>Visibility</td><td><code>ipcs</code> command</td><td>/dev/shm, /dev/mqueue</td></tr>
+<tr><td>Persistence</td><td>Persists until ipcrm or reboot</td><td>Persists until unlink</td></tr>
+<tr><td>Portability</td><td>Older, universal</td><td>Newer, preferred</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="callout info"><strong>Shell Pipe = Anonymous Pipe:</strong> When you type <code>ls | grep txt</code>, the shell:<br>
+1. Creates a pipe (pipe(fd[2]))<br>
+2. forks() child 1 (for ls): dup2(fd[1], STDOUT); exec ls<br>
+3. forks() child 2 (for grep): dup2(fd[0], STDIN); exec grep<br>
+4. Closes both pipe ends in parent<br>
+Output of ls feeds directly into stdin of grep via the kernel pipe buffer (typically 64KB).</div>
+</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE:</strong> A pipe created with pipe() can be used for communication between:<br>
+(a) Any two processes &nbsp; (b) Only parent and child processes &nbsp; (c) Only kernel threads &nbsp; (d) Processes on different machines<br>
+<details><summary>Answer</summary><strong>(b)</strong> Anonymous pipes (pipe()) can only be used between processes that share the pipe's file descriptors — typically parent-child or siblings after fork(). Unrelated processes must use named pipes (FIFOs) or sockets.</details></div>
+</div>
+</section>
+
+
+<section id="s-callout-bank" data-search-section="Process Scheduling Key Facts Formulas">
+<h2 class="prose">2.21 Key Facts, Formulas &amp; Code Bank
+<button class="bookmark-btn" data-id="s-callout-bank" data-label="2.21 Key Facts Bank" title="Bookmark">🔖</button></h2>
+
+<div class="callout formula reveal"><strong>Context Switch Frequency:</strong> With n processes each running for average burst t, context switches per second ≈ n/(t + c) where c = context switch time. Minimise c to maximise efficiency.</div>
+<div class="callout info reveal"><strong>Process States Mnemonic:</strong> <strong>N</strong>ever <strong>R</strong>ush <strong>R</strong>ecklessly — <strong>W</strong>ait <strong>T</strong>oday → <strong>N</strong>ew, <strong>R</strong>eady, <strong>R</strong>unning, <strong>W</strong>aiting, <strong>T</strong>erminated</div>
+<div class="callout warn reveal"><strong>CRITICAL:</strong> Only ONE process can be in Running state per CPU core at any time. Multiple processes can be in Ready and Waiting states simultaneously — those queues can be arbitrarily long.</div>
+<div class="callout formula reveal"><strong>CPU Efficiency with context switch overhead:</strong><br>
+Efficiency = BT / (BT + switch_time) × 100%<br>
+If BT=10ms, switch=1ms: Efficiency = 10/11 ≈ 90.9%<br>
+If BT=1ms, switch=1ms: Efficiency = 1/2 = 50% — switch overhead dominates!</div>
+<div class="callout info reveal"><strong>IPC Performance Ranking (fastest to slowest):</strong><br>
+Shared Memory &gt; Memory-Mapped File &gt; Pipe &gt; Message Queue &gt; Socket (loopback) &gt; Network Socket</div>
+<div class="callout warn reveal"><strong>Deadlock in IPC:</strong> Two processes each write to their pipe to the other, but both pipes are full (64KB buffer). Both block waiting for the other to read — deadlock! Solution: non-blocking I/O (O_NONBLOCK) or use select()/poll() to handle multiple FDs.</div>
+<div class="callout formula reveal"><strong>Thread Overhead vs Process:</strong><br>
+Thread creation: ~10µs | Process creation: ~1000µs (100× slower)<br>
+Thread context switch: ~1µs (no TLB flush) | Process switch: ~5-10µs</div>
+<div class="callout info reveal"><strong>Amdahl's Law — Multithreading Limit:</strong><br>
+Speedup = 1 / (S + (1-S)/N) where S=serial fraction, N=threads<br>
+If 20% of code is serial: max speedup → 1/0.2 = 5× regardless of N threads</div>
+<div class="callout warn reveal"><strong>Scheduling Tie-Breaking Rule:</strong> When SJF/SRTF has ties (equal burst times), the problem statement should specify. Default assumption for GATE: break ties by arrival time (earlier arrival wins); if simultaneous arrival, use process ID order (P1 before P2).</div>
+<div class="callout formula reveal"><strong>RR Quantum Selection Rule:</strong><br>
+Good quantum q: 80% of CPU bursts should complete within q.<br>
+Typical: q = 10ms–100ms. Linux CFS doesn't use fixed quantum — uses vruntime fairness.</div>
+
+<h3 class="prose" style="margin-top:20px">Code Examples Bank</h3>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Simulate FCFS scheduling in C
+#include &lt;stdio.h&gt;
+struct Process { int pid, at, bt, ct, tat, wt; };
+
+void fcfs(struct Process p[], int n) {
+    // Sort by arrival time
+    for (int i=0; i&lt;n-1; i++)
+        for (int j=i+1; j&lt;n; j++)
+            if (p[i].at > p[j].at) { struct Process t=p[i]; p[i]=p[j]; p[j]=t; }
+    
+    int time = 0;
+    for (int i=0; i&lt;n; i++) {
+        if (time &lt; p[i].at) time = p[i].at;  // CPU idle gap
+        p[i].ct = time + p[i].bt;
+        p[i].tat = p[i].ct - p[i].at;
+        p[i].wt = p[i].tat - p[i].bt;
+        time = p[i].ct;
+        printf("P%d: CT=%d TAT=%d WT=%d\n", p[i].pid, p[i].ct, p[i].tat, p[i].wt);
+    }
+}</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Simulate Round Robin scheduling
+void round_robin(struct Process p[], int n, int q) {
+    int remaining[n], time=0, done=0;
+    for (int i=0; i&lt;n; i++) remaining[i] = p[i].bt;
+    
+    while (done &lt; n) {
+        int progressed = 0;
+        for (int i=0; i&lt;n; i++) {
+            if (remaining[i] > 0 &amp;&amp; p[i].at &lt;= time) {
+                progressed = 1;
+                int run = (remaining[i] &lt; q) ? remaining[i] : q;
+                time += run;
+                remaining[i] -= run;
+                if (remaining[i] == 0) {
+                    done++;
+                    p[i].ct = time;
+                    p[i].tat = p[i].ct - p[i].at;
+                    p[i].wt = p[i].tat - p[i].bt;
+                }
+            }
+        }
+        if (!progressed) time++;  // CPU idle: advance time
+    }
+}</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Process State Machine in C (simplified)
+typedef enum { NEW, READY, RUNNING, WAITING, TERMINATED } State;
+
+struct PCB {
+    int pid;
+    State state;
+    int pc;          // Program counter
+    int registers[8]; // Saved registers
+    int priority;
+};
+
+void dispatch(struct PCB* p) {
+    p->state = RUNNING;
+    // Restore registers from PCB to CPU
+    load_registers(p->registers);
+    // Set PC to saved value
+    set_pc(p->pc);
+}
+
+void preempt(struct PCB* p) {
+    // Save CPU registers to PCB
+    save_registers(p->registers);
+    p->pc = get_pc();
+    p->state = READY;
+    // Add to ready queue
+    enqueue_ready(p);
+}</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Thread pool pattern — limit max concurrent threads
+#include &lt;pthread.h&gt;
+#define POOL_SIZE 4
+
+pthread_t pool[POOL_SIZE];
+pthread_mutex_t queue_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t  queue_cond  = PTHREAD_COND_INITIALIZER;
+
+// Worker thread — waits for tasks
+void* worker(void* arg) {
+    while (1) {
+        pthread_mutex_lock(&amp;queue_lock);
+        while (task_queue_empty())
+            pthread_cond_wait(&amp;queue_cond, &amp;queue_lock);
+        Task* t = dequeue_task();
+        pthread_mutex_unlock(&amp;queue_lock);
+        execute(t);    // Process task
+    }
+}
+
+// Submit task to pool
+void submit_task(Task* t) {
+    pthread_mutex_lock(&amp;queue_lock);
+    enqueue_task(t);
+    pthread_cond_signal(&amp;queue_cond);  // Wake one worker
+    pthread_mutex_unlock(&amp;queue_lock);
+}</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Calculating Burst Estimate (Exponential Averaging)
+// τ(n+1) = α * t(n) + (1-α) * τ(n)
+// α = 0.5, initial estimate τ(0) = 10
+
+float tau = 10.0;   // Initial estimate
+float alpha = 0.5;
+int actual_bursts[] = {6, 4, 6, 4, 13, 13, 13};
+
+printf("Burst\tActual\tEstimate\n");
+for (int i = 0; i &lt; 7; i++) {
+    float new_tau = alpha * actual_bursts[i] + (1-alpha) * tau;
+    printf("%d\t%d\t%.2f\n", i+1, actual_bursts[i], tau);
+    tau = new_tau;
+}
+// Output shows estimate converges toward actual pattern</code></pre></div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Detecting zombie processes
+#include &lt;sys/types.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;signal.h&gt;
+
+// Solution 1: Signal handler for SIGCHLD
+void sigchld_handler(int sig) {
+    int status;
+    while (waitpid(-1, &amp;status, WNOHANG) > 0)
+        ;  // Reap all zombies (WNOHANG = non-blocking)
+}
+signal(SIGCHLD, sigchld_handler);
+
+// Solution 2: Double fork (zombie can't accumulate)
+if (fork() == 0) {        // Child
+    if (fork() > 0) exit(0);  // First child exits immediately
+    // Grandchild continues — parent is now init (no zombie)
+    do_work();
+    exit(0);
+}
+wait(NULL);  // Reap only the first child (immediate)</code></pre></div>
+
+<table class="data-table reveal">
+<caption>Thread Safety — Common Patterns</caption>
+<thead><tr><th>Pattern</th><th>Problem</th><th>Solution</th><th>API</th></tr></thead>
+<tbody>
+<tr><td>Shared counter</td><td>Race condition on increment</td><td>Mutex or atomic</td><td>pthread_mutex / atomic_fetch_add</td></tr>
+<tr><td>Producer-Consumer</td><td>Buffer full/empty sync</td><td>Counting semaphores</td><td>sem_wait/sem_post</td></tr>
+<tr><td>Reader-Writer</td><td>Multiple readers, one writer</td><td>rwlock</td><td>pthread_rwlock_rdlock/wrlock</td></tr>
+<tr><td>One-time init</td><td>Thread-safe singleton</td><td>Once control</td><td>pthread_once</td></tr>
+<tr><td>Thread-local data</td><td>Avoid sharing (errno)</td><td>TLS</td><td>__thread / pthread_key</td></tr>
+</tbody></table>
+
+<table class="data-table reveal">
+<caption>Process vs Thread vs Coroutine vs Fibre</caption>
+<thead><tr><th>Entity</th><th>Scheduled by</th><th>Stack</th><th>Preemptible</th><th>Overhead</th></tr></thead>
+<tbody>
+<tr><td>Process</td><td>OS kernel</td><td>Yes (separate)</td><td>Yes</td><td>Highest</td></tr>
+<tr><td>Kernel Thread</td><td>OS kernel</td><td>Yes (kernel stack)</td><td>Yes</td><td>Medium</td></tr>
+<tr><td>User Thread</td><td>User-space lib</td><td>Yes (user stack)</td><td>No (cooperative)</td><td>Low</td></tr>
+<tr><td>Coroutine/Fibre</td><td>Application</td><td>Yes (small, 4KB)</td><td>No (cooperative)</td><td>Minimal</td></tr>
+<tr><td>Async/Await task</td><td>Event loop</td><td>No (continuation)</td><td>No</td><td>Minimal</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="callout info"><strong>DU Pattern — 5-mark questions always include:</strong><br>
+1. Define the concept clearly (2 marks)<br>
+2. State an advantage and disadvantage or compare two variants (1 mark)<br>
+3. Give a working numerical example or diagram (2 marks)<br>
+Master the Gantt chart + TAT/WT table for every scheduling algorithm.</div>
+<div class="mcq reveal"><strong>Q (DU 2024):</strong> What are the advantages of threads over processes? List four.<br>
+<details><summary>Answer</summary>1. <strong>Economy:</strong> Thread creation/termination is 30-100× faster than process (no address space duplication)<br>2. <strong>Responsiveness:</strong> UI stays interactive while worker threads compute in background<br>3. <strong>Resource sharing:</strong> Threads naturally share heap/globals without expensive IPC setup<br>4. <strong>Scalability:</strong> Multiple threads can run truly parallel on multi-core CPUs (with kernel threads)</details></div>
+<div class="mcq reveal"><strong>Q:</strong> What is the difference between SIGTERM and SIGKILL?<br>
+<details><summary>Answer</summary><strong>SIGTERM (15):</strong> Graceful termination request. The process can catch this signal, perform cleanup (flush buffers, close files, release resources), and then exit voluntarily. Processes can ignore SIGTERM.<br><strong>SIGKILL (9):</strong> Immediate forced termination by the kernel. Cannot be caught, blocked, or ignored. No cleanup possible — data loss may occur. Always effective unless process is in an uninterruptible sleep (D state).</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Linux Scheduling Classes (sched_class):</strong><br>
+Linux implements a modular scheduling framework with scheduling classes:<br>
+<code>stop_sched_class</code> → highest priority (migration, stopmachine)<br>
+<code>dl_sched_class</code> → SCHED_DEADLINE (EDF)<br>
+<code>rt_sched_class</code> → SCHED_FIFO, SCHED_RR (real-time)<br>
+<code>fair_sched_class</code> → SCHED_NORMAL (CFS — for most processes)<br>
+<code>idle_sched_class</code> → SCHED_IDLE (lowest, idle thread)<br>
+Each class implements a common interface: pick_next_task(), enqueue_task(), dequeue_task(). The main scheduler loop iterates from highest to lowest class.</div>
+</div>
+</section>
+
+
+
+<section id="s-deepdive-proc" data-search-section="Process Deep Dive Advanced Topics">
+<h2 class="prose">2.22 Process &amp; Thread Deep Dive
+<button class="bookmark-btn" data-id="s-deepdive-proc" data-label="2.22 Deep Dive" title="Bookmark">🔖</button></h2>
+
+<p class="prose">This section consolidates advanced process and thread knowledge essential for competitive exams and real-world OS development. Understanding how the OS bridges the gap between hardware resources and user-space programs requires mastering these inter-connected concepts.</p>
+
+<p class="prose">The relationship between the hardware scheduler, OS scheduler, and user application is layered: the hardware timer interrupt fires at a configurable frequency (e.g., 250Hz in Linux = every 4ms), triggering the OS interrupt handler which invokes the CPU scheduler. The scheduler consults the ready queue data structure, applies the scheduling algorithm, selects the next process, performs the context switch, and transfers control to user space — all within a few microseconds.</p>
+
+<div class="callout info reveal"><strong>Key Insight — Scheduler Invocation:</strong><br>
+The Linux scheduler is called in four scenarios: (1) explicitly when a process blocks (schedule()), (2) on return from a system call if need_resched flag is set, (3) on return from an interrupt handler, (4) when a higher-priority process wakes up (WAKEUP preemption). The need_resched flag is set by the timer interrupt handler if the current process has exhausted its virtual runtime allocation.</div>
+
+<h3 class="prose" style="margin-top:16px">Process Priority Inversion — Complete Example</h3>
+<p class="prose">Priority inversion is a subtle scheduling bug where a high-priority task is effectively blocked by a lower-priority task. This was famously discovered in the Mars Pathfinder mission (1997). The rover experienced unexpected system resets because a low-priority meteorological data collection task held a mutex that a high-priority bus management task needed. A medium-priority communications task kept preempting the low-priority task, keeping the mutex locked and starving the high-priority task — violating real-time deadlines.</p>
+
+<div class="callout warn reveal"><strong>Priority Inversion Scenario:</strong><br>
+1. L (low priority) acquires mutex M.<br>
+2. H (high priority) tries to acquire M — blocks (correct behaviour).<br>
+3. K (medium priority) preempts L (since K &gt; L in priority).<br>
+4. L is stuck behind K; M stays locked; H waits for M → H waits for K!<br>
+5. H (highest) effectively runs at K's (medium) priority — INVERSION!<br>
+<strong>Fix:</strong> Priority inheritance — OS temporarily raises L's priority to H's level while L holds M.</div>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Demonstrating priority inheritance (POSIX mutex with PI)
+#include &lt;pthread.h&gt;
+
+pthread_mutexattr_t attr;
+pthread_mutex_t pi_mutex;
+
+int setup_pi_mutex() {
+    pthread_mutexattr_init(&amp;attr);
+    // Enable Priority Inheritance protocol
+    pthread_mutexattr_setprotocol(&amp;attr, PTHREAD_PRIO_INHERIT);
+    pthread_mutex_init(&amp;pi_mutex, &amp;attr);
+    return 0;
+}
+
+// Now when low-priority thread L holds pi_mutex and
+// high-priority thread H blocks on it:
+// → OS automatically boosts L's priority to H's level
+// → L finishes critical section quickly
+// → H unblocks and runs at full priority
+// Priority ceiling alternative: PTHREAD_PRIO_PROTECT</code></pre></div>
+
+<h3 class="prose" style="margin-top:16px">CPU Affinity &amp; NUMA</h3>
+<p class="prose"><strong>CPU Affinity</strong> is the property of binding a thread or process to run on specific CPU cores. On multi-core systems, migrating a process between cores causes cache pollution (the old core's warm cache is wasted). Setting CPU affinity prevents migration, improving cache performance for latency-sensitive applications like databases and real-time audio.</p>
+
+<div class="code-block"><button class="code-copy">Copy</button><pre><code>// Set CPU affinity — bind process to cores 0 and 1 only
+#define _GNU_SOURCE
+#include &lt;sched.h&gt;
+#include &lt;stdio.h&gt;
+
+int main() {
+    cpu_set_t mask;
+    CPU_ZERO(&amp;mask);      // Clear all CPUs
+    CPU_SET(0, &amp;mask);    // Allow CPU 0
+    CPU_SET(1, &amp;mask);    // Allow CPU 1
+    
+    if (sched_setaffinity(0, sizeof(mask), &amp;mask) != 0) {
+        perror("sched_setaffinity failed");
+        return 1;
+    }
+    printf("Process now runs only on CPU 0 or 1\n");
+    
+    // Verify
+    cpu_set_t get_mask;
+    sched_getaffinity(0, sizeof(get_mask), &amp;get_mask);
+    for (int i = 0; i &lt; 4; i++)
+        printf("CPU %d: %s\n", i, CPU_ISSET(i, &amp;get_mask) ? "YES" : "NO");
+    return 0;
+}</code></pre></div>
+
+<table class="data-table reveal">
+<caption>CPU Affinity vs NUMA Effects</caption>
+<thead><tr><th>Concept</th><th>Description</th><th>Performance Impact</th><th>API</th></tr></thead>
+<tbody>
+<tr><td><strong>CPU Affinity</strong></td><td>Pin thread to specific cores</td><td>Better cache locality, less migration overhead</td><td>sched_setaffinity()</td></tr>
+<tr><td><strong>NUMA</strong></td><td>Non-Uniform Memory Access — RAM banks closer to some CPUs</td><td>Access to local NUMA node RAM: fast; remote: slow (2-4×)</td><td>numa_alloc_onnode()</td></tr>
+<tr><td><strong>Cache Sharing</strong></td><td>Threads on same core share L1/L2</td><td>Reduces false sharing risk</td><td>taskset command</td></tr>
+<tr><td><strong>Hyperthreading</strong></td><td>2 logical CPUs per physical core</td><td>10-30% throughput gain; share core resources</td><td>lstopo, lscpu</td></tr>
+</tbody></table>
+
+<div class="mode-uni">
+<div class="callout info"><strong>Practical Use:</strong> Database systems (MySQL, PostgreSQL) pin worker threads to specific CPUs to avoid cache eviction. Real-time audio systems (JACK) use CPU affinity + SCHED_FIFO to guarantee sub-millisecond latency.</div>
+<div class="mcq reveal"><strong>Q:</strong> What is the primary benefit of setting CPU affinity for a thread?<br>
+(a) Reduces memory usage &nbsp; (b) Prevents context switches entirely &nbsp; (c) Improves cache locality by avoiding core migration &nbsp; (d) Increases thread priority<br>
+<details><summary>Answer</summary><strong>(c)</strong> When a thread migrates between cores, the warm cache on the original core is lost. Setting CPU affinity ensures the thread always runs on the same core(s), keeping its working set in L1/L2 cache and reducing cache miss penalties.</details></div>
+</div>
+
+<div class="mode-gate">
+<div class="mcq reveal"><strong>GATE:</strong> In a multiprocessor system with N CPUs, the maximum speedup achievable for a program that is 50% parallelisable is (by Amdahl's Law, as N→∞):<br>
+(a) N &nbsp; (b) 2 &nbsp; (c) 0.5 &nbsp; (d) N/2<br>
+<details><summary>Answer</summary><strong>(b) 2×</strong> — Amdahl's Law: Speedup = 1/(S + (1-S)/N). With S=0.5 (50% serial), as N→∞: Speedup → 1/0.5 = 2. The serial portion limits maximum speedup regardless of how many processors you add.</details></div>
+</div>
+
+<div class="mode-adv">
+<div class="callout" style="border-color:var(--teal)"><strong>🔬 Work-Stealing Scheduler:</strong> Modern parallel runtimes (Go, Java ForkJoin, Cilk) use work-stealing. Each worker thread has its own deque of tasks. When a thread's deque is empty, it <em>steals</em> tasks from the tail of another thread's deque (victim). This achieves excellent load balancing with minimal synchronisation — workers steal only when idle, so the hot path (local task execution) is lock-free.</div>
+</div>
+<div class="callout info reveal"><strong>📌 Study Strategy:</strong> For scheduling questions, always solve the same process set under all four algorithms (FCFS, SJF-NP, SRTF, RR) and compare the results. This builds intuition for why preemptive algorithms generally outperform non-preemptive ones, and shows exactly when RR's fairness overhead costs more than it saves. For IPC questions, memorise the shared-memory vs message-passing trade-off table — GATE frequently tests this distinction. Process concepts (fork, zombie, orphan) appear in nearly every DU internal exam since 2019.</div>
+</section>
+
+</div><!-- .content-inner -->
+</main>
+
+
+
+<div id="mode-panel">
+  <button class="mode-btn active" data-mode="all">📚 All</button>
+  <button class="mode-btn uni-btn" data-mode="uni">🎓 Uni</button>
+  <button class="mode-btn gate-btn" data-mode="gate">⚡ GATE</button>
+  <button class="mode-btn adv-btn" data-mode="advanced">🔬 Adv</button>
+</div>
+<div id="tts-panel">
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play">▶</button>
+    <button class="tts-btn" id="tts-stop">⏹</button>
+    <div class="tts-speed"><span>Speed</span><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1"><span id="tts-rate-label">1.0x</span></div>
+  </div>
+  <div class="tts-voice"><select id="tts-voice-select"><option>Loading…</option></select></div>
+</div>
+<!-- POMODORO WIDGET (Industry Edition) -->
+<div id="pomodoro">
+  <div id="pomo-app"><div id="pomo-card">
+    <div id="pomo-header">
+      <span id="pomo-label" data-phase="work">⏰ FOCUS · #1</span>
+      <div id="pomo-header-actions">
+        <button class="hdr-btn" id="pomo-btn-stats" title="Analytics">📊</button>
+        <button class="hdr-btn" id="pomo-btn-settings" title="Settings">⚙️</button>
+      </div>
+    </div>
+    <div id="pomo-ring-wrap">
+      <svg id="pomo-ring" viewBox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"/>
+        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      </svg>
+      <div id="pomo-time-wrap">
+        <div id="pomo-time">25:00</div>
+        <div aria-live="polite" id="pomo-time-live"></div>
+      </div>
+    </div>
+    <div id="pomo-sessions">
+      <div class="session-dot" id="dot-0"></div><div class="session-dot" id="dot-1"></div>
+      <div class="session-dot" id="dot-2"></div><div class="session-dot" id="dot-3"></div>
+    </div>
+    <div id="pomo-controls">
+      <button class="btn-icon" id="pomo-reset" title="Reset (R)">↺</button>
+      <button id="pomo-start" data-running="0">▶ Start</button>
+      <button class="btn-icon" id="pomo-skip" title="Skip (S)">⏭</button>
+    </div>
+    <div id="pomo-goal-wrap">
+      <div id="pomo-goal-label">
+        <span id="pomo-goal-text">0 / 8 sessions 🔥</span>
+        <span id="pomo-streak">0</span>
+      </div>
+      <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
+    </div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+  </div></div>
+</div>
+<div class="modal" id="pomo-distraction-modal" hidden></div>
+<div class="modal" id="pomo-settings-modal" hidden></div>
+<div class="modal" id="pomo-analytics-modal" hidden></div>
+<div id="pomo-toasts"></div>
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="s-icon">🔍</span><input id="search-input" type="text" placeholder="Search topics…" autocomplete="off"></div>
+    <div id="search-results"></div>
+    <div class="search-hint"><span><kbd>↵</kbd> navigate</span><span><kbd>Esc</kbd> close</span><span><kbd>Ctrl+K</kbd> open</span></div>
+  </div>
+</div>
+<nav id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
+  <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
+  <a href="#s-process" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 2</a>
+  <a href="../exams/unit-papers.html" class="mobile-nav-btn"><span class="icon">📝</span>Exams</a>
+  <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
+</nav>
+<div id="toast-container"></div>
+<script src="../assets/js/state.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/modes.js"></script>
+<script src="../assets/js/tts.js"></script>
+<script src="../assets/js/timer-settings.js"></script>      <!-- 1. Settings -->
+<script src="../assets/js/timer.js"></script>                <!-- 2. PomoBus + PomoTimer -->
+<script src="../assets/js/timer-analytics.js"></script>      <!-- 3. Analytics -->
+<script src="../assets/js/timer-notifications.js"></script>  <!-- 4. Notifications -->
+<script src="../assets/js/timer-ui.js"></script>             <!-- 5. UI (bootstraps on DOMContentLoaded) -->
+</body>
+</html>

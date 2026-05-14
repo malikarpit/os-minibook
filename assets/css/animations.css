@@ -1,0 +1,190 @@
+/* ⚡ Arpit | animations.css */
+
+/* Shared animation tokens */
+:root {
+  --anim-enter: 220ms;
+  --anim-exit: 180ms;
+}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeIn      { from { opacity:0; }                        to { opacity:1; } }
+@keyframes slideUp     { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideDown   { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideInLeft { from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); } }
+@keyframes pulse       { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+@keyframes shimmer     { from { background-position:-200% 0; } to { background-position:200% 0; } }
+@keyframes glow-pulse  { 0%,100% { box-shadow:0 0 12px rgba(124,58,237,0.3); } 50% { box-shadow:0 0 28px rgba(124,58,237,0.6); } }
+@keyframes spin        { to { transform:rotate(360deg); } }
+@keyframes float       { 0%,100% { transform:translateY(0px); } 50% { transform:translateY(-6px); } }
+@keyframes gradient-x  {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes progress-fill { from { width:0%; } to { width:var(--target-w,100%); } }
+@keyframes count-up { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes tab-slide-in { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
+
+/* ── ENTRANCE ANIMATIONS ── */
+.anim-fade      { animation: fadeIn    var(--t-base) ease forwards; }
+.anim-slide-up  { animation: slideUp   var(--t-slow) ease forwards; }
+.anim-slide-in  { animation: slideInLeft var(--t-slow) ease forwards; }
+.anim-float     { animation: float 3s ease-in-out infinite; }
+.anim-glow      { animation: glow-pulse 2s ease-in-out infinite; }
+.anim-spin      { animation: spin 1s linear infinite; }
+.anim-enter     { animation-duration: var(--anim-enter); }
+.anim-exit      { animation-duration: var(--anim-exit); }
+
+/* Staggered children */
+.stagger-children > * { opacity: 0; animation: slideUp var(--t-slow) ease forwards; }
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 480ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 560ms; }
+
+/* ── HERO GRADIENT ANIMATION ── */
+.hero-gradient {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, #1a0a3a 50%, var(--bg-surface) 100%);
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
+}
+
+/* ── SHIMMER (Loading Skeleton) ── */
+.shimmer {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-md);
+}
+
+/* ── PAGE TRANSITION ── */
+.page-enter { animation: slideUp 300ms ease forwards; }
+
+/* ── MODE SWITCH TRANSITION ── */
+.mode-uni, .mode-gate, .mode-adv {
+  transition: opacity var(--t-base), transform var(--t-base), max-height var(--t-slow);
+}
+.mode-uni.mode-hiding, .mode-gate.mode-hiding, .mode-adv.mode-hiding {
+  opacity: 0; transform: translateX(-8px);
+}
+
+/* ── GANTT BAR ANIMATION ── */
+.gantt-bar {
+  transition: width var(--t-slow); overflow: hidden;
+  animation: progress-fill 0.6s ease forwards;
+}
+
+/* ── SIDEBAR LINK HOVER ── */
+.sidebar-link::after {
+  content: ''; position: absolute; right: var(--sp-3);
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); opacity: 0;
+  transition: opacity var(--t-fast);
+}
+.sidebar-link.active::after { opacity: 1; }
+
+/* ── HERO PARTICLE DOTS ── */
+.hero-dots {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-dot {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  animation: float var(--d, 4s) ease-in-out infinite;
+  animation-delay: var(--dl, 0s);
+  opacity: 0.12;
+}
+
+/* ── SMOOTH SCROLL REVEAL ── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── ACTIVE NAV INDICATOR ── */
+.nav-indicator {
+  position: absolute; left: 0; width: 3px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-light) 100%);
+  border-radius: 0 2px 2px 0;
+  transition: top var(--t-base), height var(--t-base);
+  pointer-events: none;
+}
+
+/* ── TOAST NOTIFICATIONS ── */
+#toast-container {
+  position: fixed; bottom: var(--sp-10); right: var(--sp-6);
+  z-index: var(--z-toast); display: flex; flex-direction: column; gap: var(--sp-2);
+}
+.toast {
+  background: var(--bg-elevated); border: 1px solid var(--bd-strong);
+  border-radius: var(--r-lg); padding: var(--sp-3) var(--sp-4);
+  font-size: var(--text-sm); color: var(--tx-primary);
+  box-shadow: var(--sh-lg); animation: slideInLeft var(--t-bounce) forwards;
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-width: 200px; max-width: 320px;
+}
+.toast.success { border-color: rgba(16,185,129,0.4); }
+.toast.info    { border-color: var(--accent-border); }
+
+/* ── SECTION NUMBER BADGE ── */
+.section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: var(--r-md);
+  background: var(--accent-soft); color: var(--accent-light);
+  font-size: var(--text-xs); font-weight: 700;
+  border: 1px solid var(--accent-border); flex-shrink: 0;
+}
+
+/* ── CHECKLIST PROGRESS ── */
+.chapter-checklist label {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md);
+  cursor: pointer; font-size: var(--text-sm); color: var(--tx-secondary);
+  transition: all var(--t-fast);
+}
+.chapter-checklist label:hover { background: var(--accent-soft); color: var(--tx-primary); }
+.chapter-checklist input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; }
+.chapter-checklist label.done { text-decoration: line-through; color: var(--tx-muted); }
+
+/* ── ACCESSIBILITY / REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .anim-fade,
+  .anim-slide-up,
+  .anim-slide-in,
+  .anim-float,
+  .anim-glow,
+  .anim-spin,
+  .hero-gradient,
+  .shimmer,
+  .page-enter,
+  .gantt-bar,
+  .sidebar-link::after,
+  .hero-dot,
+  .reveal,
+  .nav-indicator,
+  .toast,
+  .chapter-checklist label,
+  .mode-uni,
+  .mode-gate,
+  .mode-adv {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .reveal,
+  .reveal.visible,
+  .mode-uni.mode-hiding,
+  .mode-gate.mode-hiding,
+  .mode-adv.mode-hiding {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

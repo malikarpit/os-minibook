@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="Unit-wise Question Papers — OS MiniBook DU B.Tech CSE Sem IV">
+<meta name="application-name" content="OS MiniBook">
+<meta name="theme-color" content="#7c3aed">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OS MiniBook">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Unit-wise Question Papers | OS MiniBook ⚡ Arpit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/animations.css">
+<style>
+.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
+.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
+.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
+.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
+.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
+.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
+.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
+.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
+.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
+.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
+.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
+.mem-os{background:#4f46e5;color:#fff}
+.mem-p1{background:#059669;color:#fff}
+.mem-p2{background:#d97706;color:#fff}
+.mem-p3{background:#dc2626;color:#fff}
+.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
+.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
+.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
+.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="tts-toggle" class="icon-btn" title="Read Aloud">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+    </button>
+    
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
+      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Unit 5 — Sections</div>
+      <a href="#s-up-u1" class="sidebar-link active"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="#s-up-u2" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="#s-up-u3" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Synchronization</a>
+      <a href="#s-up-u4" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="#s-up-u5" class="sidebar-link"><span class="link-icon">🧠</span>Unit 5 — Memory</a>
+      <a href="#s-up-u6" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">All Units</div>
+      <a href="../chapters/unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="../chapters/unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="../chapters/unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
+      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Bookmarks</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">My Notes</div>
+      <div id="notes-sidebar-list"></div>
+    </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+<main id="main-content">
+<div class="content-inner">
+  <div class="chapter-hero">
+    <div class="chapter-breadcrumb">
+      <a href="../index.html">Home</a><span>›</span><span>Exams</span><span>›</span><span style="color:var(--tx-primary)">Unit Papers</span>
+    </div>
+    <div class="chapter-num">📝 Past Papers · DSC-10</div>
+    <h1 class="chapter-title">Unit-Wise Practice Papers</h1>
+    <div class="chapter-meta">
+      <span class="meta-tag">🎓 University</span>
+      <span class="meta-tag">⚡ GATE Ready</span>
+      <span class="meta-tag">11 Sections</span>
+      <span class="meta-tag">Unit 1–6 · Previous Year Questions · With Answers</span>
+    </div>
+  </div>
+
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-up-u1" class="toc-item"><span class="toc-num">U1</span>OS Intro &amp; Linux Kernel</a>
+      <a href="#s-up-u2" class="toc-item"><span class="toc-num">U2</span>Process Management &amp; Scheduling</a>
+      <a href="#s-up-u3" class="toc-item"><span class="toc-num">U3</span>Concurrency &amp; Synchronization</a>
+      <a href="#s-up-u4" class="toc-item"><span class="toc-num">U4</span>Deadlocks</a>
+      <a href="#s-up-u5" class="toc-item"><span class="toc-num">U5</span>Memory Management</a>
+      <a href="#s-up-u6" class="toc-item"><span class="toc-num">U6</span>File Systems &amp; Storage</a>
+    </div>
+  </div>
+
+  <!-- SECTION U1 -->
+  <section id="s-up-u1" data-search-section="unit 1 OS introduction kernel system calls process states questions university exam">
+    <div class="section-heading">
+      <h2 class="prose">Unit 1 — OS Intro &amp; Linux Kernel</h2>
+      <button class="bookmark-btn" data-id="s-up-u1" data-label="Unit 1 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks each)</h3>
+        <details class="qa-item"><summary>Q1. Define an Operating System. List its four main functions.</summary>
+          <div class="qa-content">An OS is system software that manages computer hardware/software resources and provides common services for programs. Main functions: (1) Process management — create/schedule/terminate processes. (2) Memory management — allocate/deallocate RAM. (3) File system management — organize, store, retrieve data. (4) I/O management — control hardware devices.</div></details>
+        <details class="qa-item"><summary>Q2. Differentiate between Monolithic and Microkernel architectures.</summary>
+          <div class="qa-content"><strong>Monolithic:</strong> Entire OS runs in kernel space as one large program. All services (FS, drivers, scheduling) in kernel. Fast (no IPC overhead) but large, less reliable (any bug crashes system). Example: Linux, Unix. <strong>Microkernel:</strong> Only core functions in kernel (IPC, basic scheduling). Everything else runs as user-space servers. Slow (IPC overhead) but more reliable/secure. Example: Mach, QNX, MINIX.</div></details>
+        <details class="qa-item"><summary>Q3. What is a system call? Give three examples.</summary>
+          <div class="qa-content">A system call is the programmatic interface between a user process and the OS kernel. When a program needs a privileged operation (disk I/O, creating a process), it invokes a system call, which causes a trap to kernel mode. Examples: (1) <code>fork()</code> — create a child process. (2) <code>read()</code> — read data from a file descriptor. (3) <code>exit()</code> — terminate the current process.</div></details>
+        <details class="qa-item"><summary>Q4. What is the difference between a process and a program?</summary>
+          <div class="qa-content">A <strong>program</strong> is a passive entity — a set of instructions stored in a file on disk. A <strong>process</strong> is an active entity — a program in execution with its own PCB, memory space (stack, heap, code, data), and OS resources. One program can spawn multiple processes (e.g., running two instances of Firefox).</div></details>
+        <h3>Medium Answer (5 Marks each)</h3>
+        <details class="qa-item"><summary>Q5. Explain the five-state process model with a state transition diagram.</summary>
+          <div class="qa-content">States: <strong>New</strong> (process being created) → <strong>Ready</strong> (waiting in ready queue for CPU) → <strong>Running</strong> (executing on CPU) → <strong>Waiting/Blocked</strong> (waiting for I/O or event) → <strong>Terminated</strong> (finished). Transitions: New→Ready (admitted), Ready→Running (dispatcher), Running→Ready (preemption/time quantum), Running→Waiting (I/O request), Waiting→Ready (I/O complete), Running→Terminated (exit). Note: process can never go directly from Waiting to Running — must go through Ready first.</div></details>
+        <details class="qa-item"><summary>Q6. What is the Process Control Block (PCB)? What information does it store?</summary>
+          <div class="qa-content">PCB is a data structure in the OS kernel that represents a process. Contains: Process ID (PID), parent PID (PPID), process state (new/ready/running etc.), Program Counter (address of next instruction), CPU registers (saved on context switch), memory maps (page table, base/limit registers), open file table, scheduling info (priority, queue pointers), I/O status info (devices allocated, pending I/O list). The PCB is the OS's complete record of a process — context switch saves one PCB and restores another.</div></details>
+        <details class="qa-item"><summary>Q7. Describe the boot process of a Linux system from power-on to login prompt.</summary>
+          <div class="qa-content">1. <strong>BIOS/UEFI POST:</strong> Hardware self-test, detect devices. 2. <strong>Bootloader (GRUB):</strong> Loaded from MBR/EFI partition, presents OS menu, loads kernel image. 3. <strong>Kernel init:</strong> Kernel decompresses itself, initializes hardware drivers, mounts root filesystem. 4. <strong>systemd (PID 1):</strong> First user-space process, reads units, starts services in dependency order. 5. <strong>getty/login:</strong> systemd starts getty on terminals, presents login prompt. 6. <strong>Shell:</strong> After authentication, user's shell starts.</div></details>
+        <h3>Long Answer (10 Marks each)</h3>
+        <details class="qa-item"><summary>Q8. Compare Batch, Multiprogramming, Time-sharing, and Real-time OS with examples.</summary>
+          <div class="qa-content"><strong>Batch OS:</strong> Jobs submitted as decks, executed without interaction. No user-OS interaction during execution. Efficient CPU use, no interactivity. Examples: IBM mainframes (1960s). <strong>Multiprogramming:</strong> Multiple jobs in RAM simultaneously. When one does I/O, CPU switches to another. Goal: maximize CPU utilization. No time limits per job. Example: IBM OS/360. <strong>Time-sharing (Multitasking):</strong> Each user gets small CPU time slices (quantum). Appears interactive — multiple users use simultaneously. Goal: minimize response time. Example: UNIX, Linux. <strong>Real-time OS:</strong> Strict time constraints. Hard RTOS: deadline miss = system failure (aircraft control). Soft RTOS: deadline miss = degraded quality (video streaming). Examples: VxWorks, FreeRTOS.</div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. Which of the following is NOT part of a PCB?</strong><br>A. Program Counter  B. Stack Pointer  C. Source code of program  D. Open file list</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>C.</strong> Source code is part of the program (stored on disk), not the process's runtime state. PCB stores runtime information: PC, registers, memory maps, open files, scheduling info.</div></details></div>
+        <div class="mcq-card"><div class="mcq-q"><strong>G2. A process in the "Waiting" state can transition directly to which state?</strong><br>A. Running  B. Terminated  C. Ready  D. New</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>C. Ready.</strong> When the I/O or event a process was waiting for completes, it moves to the Ready queue. It cannot go directly to Running — the CPU scheduler must pick it from the ready queue.</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION U2 -->
+  <section id="s-up-u2" data-search-section="unit 2 process scheduling CPU FCFS SJF round robin priority Gantt chart TAT WT questions">
+    <div class="section-heading">
+      <h2 class="prose">Unit 2 — Process Management &amp; Scheduling</h2>
+      <button class="bookmark-btn" data-id="s-up-u2" data-label="Unit 2 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks)</h3>
+        <details class="qa-item"><summary>Q1. Define TAT, WT, and Response Time in CPU scheduling.</summary>
+          <div class="qa-content"><strong>TAT (Turnaround Time):</strong> Time from process submission to completion. TAT = Completion Time − Arrival Time. <strong>WT (Waiting Time):</strong> Time a process spends in the ready queue. WT = TAT − Burst Time. <strong>Response Time:</strong> Time from submission until the process first gets CPU. Response Time = First CPU start − Arrival Time. Response time important for interactive systems.</div></details>
+        <details class="qa-item"><summary>Q2. What is the convoy effect in FCFS scheduling?</summary>
+          <div class="qa-content">Convoy effect occurs when one long CPU-bound process holds the CPU and many short I/O-bound processes queue behind it. The short processes wait a long time for the CPU even though they need very little CPU time. This leads to poor CPU and I/O device utilization. Solution: Use SJF or SRTF which prioritizes shorter bursts.</div></details>
+        <details class="qa-item"><summary>Q3. Differentiate between preemptive and non-preemptive scheduling.</summary>
+          <div class="qa-content"><strong>Non-preemptive:</strong> Once CPU is allocated, process runs until it terminates or voluntarily gives up CPU (I/O wait). Simple, no context switch overhead. Examples: FCFS, SJF. <strong>Preemptive:</strong> OS can forcibly remove CPU from running process (on timer, higher priority arrival). Better responsiveness. Examples: SRTF, Round Robin, Priority (preemptive). Context switch overhead but better for interactive systems.</div></details>
+        <h3>Numericals (5–10 Marks)</h3>
+        <details class="qa-item"><summary>Q4. [10 marks] Processes: P1(AT=0,BT=10), P2(AT=1,BT=3), P3(AT=2,BT=2), P4(AT=3,BT=5). Compute avg TAT and WT for: (a) FCFS (b) SJF (c) SRTF (d) Round Robin (Q=2).</summary>
+          <div class="qa-content">
+            <div class="code-block"><div class="code-header"><span class="code-lang">Solution</span><button class="code-copy">Copy</button></div>
+<pre><code>(a) FCFS (non-preemptive, in arrival order):
+Gantt: P1[0-10] P2[10-13] P3[13-15] P4[15-20]
+CT: P1=10, P2=13, P3=15, P4=20
+TAT: P1=10, P2=12, P3=13, P4=17  → Avg TAT = 52/4 = 13
+WT:  P1=0,  P2=9,  P3=11, P4=12  → Avg WT  = 32/4 = 8
+
+(b) SJF (non-preemptive):
+At t=0: only P1 → run P1[0-10]
+At t=10: P2(3),P3(2),P4(5) → shortest is P3
+Gantt: P1[0-10] P3[10-12] P2[12-15] P4[15-20]
+CT: P1=10, P2=15, P3=12, P4=20
+TAT: P1=10, P2=14, P3=10, P4=17  → Avg TAT = 51/4 = 12.75
+WT:  P1=0,  P2=11, P3=8,  P4=12  → Avg WT  = 31/4 = 7.75
+
+(c) SRTF (preemptive SJF):
+t=0: P1 runs (only one). t=1: P2(3) < P1_rem(9) → preempt P1, run P2
+t=2: P3(2) < P2_rem(2)? Equal → continue P2. t=3: P2(1) < P3(2) → P2
+t=4: P2 done. P1_rem(9),P3(2),P4(5) → P3 shortest
+t=6: P3 done. P1_rem(9),P4(5) → P4. t=11: P4 done → P1
+t=20: P1 done.
+Gantt: P2[1-4] P3[4-6] P4[6-11] P1[0-1,11-20]
+CT: P1=20,P2=4,P3=6,P4=11
+TAT: P1=20,P2=3,P3=4,P4=8   → Avg TAT = 35/4 = 8.75
+WT: P1=10,P2=0,P3=2,P4=3   → Avg WT  = 15/4 = 3.75 ← best!
+
+(d) Round Robin Q=2:
+Ready queue trace at each quantum...
+Gantt: P1[0-2]P2[2-4]P3[4-6]P4[6-8]P1[8-10]P2[10-11]P4[11-13]P1[13-15]P4[15-17]P1[17-19]P1[19-20]
+CT: P1=20,P2=11,P3=6,P4=17
+TAT: P1=20,P2=10,P3=4,P4=14  → Avg TAT = 48/4 = 12
+WT:  P1=10,P2=7, P3=2,P4=9   → Avg WT  = 28/4 = 7</code></pre></div>
+          </div></details>
+        <details class="qa-item"><summary>Q5. What is the difference between a thread and a process? What are user-level vs kernel-level threads?</summary>
+          <div class="qa-content">A <strong>process</strong> has its own address space, file descriptors, and resources. <strong>Threads</strong> within a process share the same code, data, heap, and files but have separate stacks, registers, and program counters. Threads are lighter (cheaper to create/switch). <strong>User-level threads:</strong> Managed by user-space library (e.g., GNU Pth, old Java green threads). Kernel sees only one process. Fast context switch but if one thread blocks on I/O, all threads block. <strong>Kernel-level threads:</strong> OS knows about each thread. True parallelism on multi-core. Slightly more expensive to create/switch. Linux uses 1:1 model (each user thread = one kernel thread via NPTL). <strong>Note:</strong> POSIX pthreads is an API specification, not inherently user-level. On modern Linux, pthreads = 1:1 kernel-scheduled threads.</div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. SJF is optimal in terms of which criterion?</strong><br>A. Maximum throughput  B. Minimum average waiting time  C. Minimum response time  D. Maximum CPU utilization</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>B. Minimum average waiting time</strong> (under standard assumptions: known deterministic bursts, single-CPU, no I/O). SJF (non-preemptive) minimizes average WT among all non-preemptive algorithms when burst times are known in advance. SRTF (preemptive SJF) minimizes average WT among ALL algorithms under the same assumptions. Note: In practice, burst times are unpredictable, limiting SJF applicability.</div></details></div>
+        <div class="mcq-card"><div class="mcq-q"><strong>G2. Processes P1(AT=0,BT=5), P2(AT=1,BT=3), P3(AT=2,BT=1). Using SRTF, completion time of P1 = ?</strong><br>A. 5  B. 9  C. 7  D. 6</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>B. 9.</strong> t=0:P1 runs. t=1:P2(3)&lt;P1_rem(4)→preempt P1. t=2:P3(1)&lt;P2_rem(2)→preempt P2. t=3:P3 done,P2_rem=2,P1_rem=4→P2. t=5:P2 done,P1_rem=4→P1. t=9:P1 done. CT(P1)=9.</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION U3 -->
+  <section id="s-up-u3" data-search-section="unit 3 synchronization semaphore mutex monitor Peterson producer consumer readers writers dining philosophers questions">
+    <div class="section-heading">
+      <h2 class="prose">Unit 3 — Concurrency &amp; Synchronization</h2>
+      <button class="bookmark-btn" data-id="s-up-u3" data-label="Unit 3 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks)</h3>
+        <details class="qa-item"><summary>Q1. State the three requirements of the critical section problem.</summary>
+          <div class="qa-content"><strong>1. Mutual Exclusion:</strong> At most one process can be in its critical section at any time. <strong>2. Progress:</strong> If no process is in its CS and some want to enter, only those not in their remainder section can participate in the decision — decision cannot be postponed indefinitely. <strong>3. Bounded Waiting:</strong> After a process requests entry to its CS, there is a bound on how many times other processes can enter before this one is granted access (prevents starvation).</div></details>
+        <details class="qa-item"><summary>Q2. What is a race condition? Give an example.</summary>
+          <div class="qa-content">A race condition is a situation where the outcome of a computation depends on the relative timing/interleaving of multiple processes/threads accessing shared data. Example: Two threads both read counter=5, both execute counter++, both write back 6. Result is 6 instead of 7 — one increment is lost. This is a race condition on the counter variable — proper synchronization (mutex/semaphore) prevents it.</div></details>
+        <h3>Medium Answer (5 Marks)</h3>
+        <details class="qa-item"><summary>Q3. Explain Peterson's solution. Does it satisfy all three critical section requirements?</summary>
+          <div class="qa-content">Peterson's solution uses two shared variables: <code>flag[2]</code> (intent to enter) and <code>turn</code> (whose turn to enter). Process Pi: set flag[i]=true, turn=j, then wait while(flag[j]==true AND turn==j). On exit: flag[i]=false. <strong>Mutual exclusion:</strong> Both cannot enter simultaneously — if both try, turn decides one winner. <strong>Progress:</strong> If only one wants CS, it enters immediately (other's flag is false). <strong>Bounded waiting:</strong> After Pi sets turn=j, Pj gets one chance, then Pi enters. All three satisfied! But: Peterson's requires atomic load/store, which modern CPUs may not guarantee without memory barriers.</div></details>
+        <details class="qa-item"><summary>Q4. Solve the Producer-Consumer problem using semaphores. Show the pseudocode.</summary>
+          <div class="qa-content"><div class="code-block"><div class="code-header"><span class="code-lang">Producer-Consumer Pseudocode</span><button class="code-copy">Copy</button></div>
+<pre><code>// Shared semaphores:
+semaphore mutex = 1;   // mutual exclusion for buffer access
+semaphore empty = N;   // number of empty slots (initially N)
+semaphore full  = 0;   // number of filled slots (initially 0)
+
+// Producer:
+do {
+    produce_item(item);
+    wait(empty);        // wait for an empty slot
+    wait(mutex);        // lock buffer
+    buffer[in] = item;  // insert item
+    in = (in + 1) % N;
+    signal(mutex);      // unlock buffer
+    signal(full);       // signal one more full slot
+} while(true);
+
+// Consumer:
+do {
+    wait(full);         // wait for a filled slot
+    wait(mutex);        // lock buffer
+    item = buffer[out]; // remove item
+    out = (out + 1) % N;
+    signal(mutex);      // unlock buffer
+    signal(empty);      // signal one more empty slot
+    consume_item(item);
+} while(true);
+
+// CRITICAL: wait(mutex) MUST come AFTER wait(empty/full)
+// Reversing them causes DEADLOCK!</code></pre></div></div></details>
+        <h3>Long Answer (10 Marks)</h3>
+        <details class="qa-item"><summary>Q5. Explain the Dining Philosophers problem. What is the deadlock scenario and how is it solved?</summary>
+          <div class="qa-content">Five philosophers sit at a round table. Each needs 2 chopsticks to eat. There is one chopstick between each pair of philosophers. <strong>Problem:</strong> If all philosophers simultaneously pick up their left chopstick, all hold one chopstick and wait for the right one — circular wait = deadlock. <strong>Solutions:</strong> (1) Allow at most 4 philosophers to be seated (asymmetry breaks circular wait). (2) Allow a philosopher to pick up chopsticks only if both are available (atomic pickup). (3) Odd philosophers pick left then right; even pick right then left (breaks symmetry). (4) Use a semaphore/monitor to enforce that only N-1 philosophers can attempt to eat simultaneously. The dining philosophers illustrates deadlock and the need for deadlock avoidance in resource allocation.</div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. In the bounded buffer problem, if a producer calls wait(mutex) before wait(empty), what happens when buffer is full?</strong><br>A. Deadlock  B. Busy waiting  C. Starvation  D. No problem</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>A. Deadlock.</strong> If the buffer is full and producer holds mutex then waits on empty (which is 0), it blocks. Consumer tries to wait(mutex) but mutex=0 (producer holds it), so consumer blocks too. Neither can proceed — deadlock. Correct order: wait(empty) THEN wait(mutex).</div></details></div>
+        <div class="mcq-card"><div class="mcq-q"><strong>G2. A semaphore S is initialized to 5. After 3 wait() and 1 signal() operations, the value of S is:</strong><br>A. 3  B. 2  C. 4  D. 1</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>A. 3.</strong> Starting at 5: wait()→4, wait()→3, wait()→2, signal()→3. Final value = 3.</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION U4 -->
+  <section id="s-up-u4" data-search-section="unit 4 deadlocks Banker's algorithm RAG Coffman conditions prevention avoidance detection questions">
+    <div class="section-heading">
+      <h2 class="prose">Unit 4 — Deadlocks</h2>
+      <button class="bookmark-btn" data-id="s-up-u4" data-label="Unit 4 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks)</h3>
+        <details class="qa-item"><summary>Q1. State the four Coffman conditions for deadlock.</summary>
+          <div class="qa-content"><strong>1. Mutual Exclusion:</strong> At least one resource must be held in a non-sharable mode — only one process at a time can use it. <strong>2. Hold and Wait:</strong> A process holds at least one resource and is waiting to acquire additional resources held by other processes. <strong>3. No Preemption:</strong> Resources cannot be forcibly taken away — a process can only release resources voluntarily. <strong>4. Circular Wait:</strong> There must be a circular chain of processes {P0,P1,...,Pn} where each Pi is waiting for a resource held by P(i+1), and Pn is waiting for P0. ALL four conditions must hold simultaneously for deadlock.</div></details>
+        <details class="qa-item"><summary>Q2. Distinguish between deadlock prevention and deadlock avoidance.</summary>
+          <div class="qa-content"><strong>Prevention:</strong> Proactively break at least one Coffman condition so deadlock is structurally impossible. Methods: (1) Deny mutual exclusion — use sharable resources. (2) Deny hold-and-wait — request all resources at once. (3) Allow preemption — OS can preempt resources. (4) Deny circular wait — impose total resource ordering. Cons: low resource utilization. <strong>Avoidance:</strong> Use runtime information (Max matrix) to check if granting a request leaves system in a safe state. Banker's algorithm is the example. Pros: more flexible than prevention. Cons: requires advance declaration of maximum needs.</div></details>
+        <h3>Numerical (10 Marks)</h3>
+        <details class="qa-item"><summary>Q3. [10 marks] 4 processes, 3 resource types (A=9, B=3, C=6). Current state shown. Find: (a) Need matrix, (b) Available, (c) Safe sequence, (d) Can P1 request (1,0,0)?</summary>
+          <div class="qa-content"><div class="code-block"><div class="code-header"><span class="code-lang">Banker's Solution</span><button class="code-copy">Copy</button></div>
+<pre><code>Given:
+         Alloc    Max        Need=Max-Alloc    Available?
+         A B C    A B C      A B C
+P0       0 1 0    7 5 3      7 4 3
+P1       2 0 0    3 2 2      1 2 2
+P2       3 0 2    9 0 2      6 0 0
+P3       2 1 1    4 2 2      2 1 1
+
+(a) Need matrix computed above ✅
+
+(b) Available = Total − Σ Allocation
+    A: 9−(0+2+3+2)=2, B:3−(1+0+0+1)=1, C:6−(0+0+2+1)=3
+    Available = (2,1,3)
+
+(c) Safety Algorithm, Work=(2,1,3):
+    P1: Need=(1,2,2) ≤ (2,1,3)? B:2>1 ✗ — skip
+    P3: Need=(2,1,1) ≤ (2,1,3)? ✅ → Work=(2+2,1+1,3+1)=(4,2,4)
+    P1: Need=(1,2,2) ≤ (4,2,4)? ✅ → Work=(4+2,2+0,4+0)=(6,2,4)
+    P0: Need=(7,4,3) ≤ (6,2,4)? A:7>6 ✗ — skip
+    P2: Need=(6,0,0) ≤ (6,2,4)? ✅ → Work=(9,2,6)
+    P0: Need=(7,4,3) ≤ (9,2,6)? B:4>2 ✗ — skip!
+    
+    All remaining allocated? P0 not finished — no safe sequence including P0?
+    Re-check: P0 Need=(7,4,3). After P2: Work=(9,2,6). 4>2 still fails.
+    No safe sequence exists — the system is in an UNSAFE state!
+    (Note: unsafe ≠ deadlocked. Unsafe means deadlock MAY occur
+     in some future sequence. The system is not necessarily deadlocked yet.)
+
+(d) P1 requests (1,0,0):
+    Check: (1,0,0) ≤ Need[P1]=(1,2,2) ✅
+    Check: (1,0,0) ≤ Available=(2,1,3) ✅
+    Tentatively grant: Available=(1,1,3), Alloc[P1]=(3,0,0), Need[P1]=(0,2,2)
+    Run safety → if already unsafe, deny. Answer: DENY (state already unsafe)</code></pre></div></div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. For multi-instance resources, a cycle in RAG:</strong><br>A. Is sufficient for deadlock  B. Is necessary but not sufficient for deadlock  C. Is necessary and sufficient  D. Has no relation to deadlock</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>B.</strong> For single-instance resources: cycle ↔ deadlock (necessary and sufficient). For multi-instance: cycle is necessary but NOT sufficient. Multiple instances mean a cycle can exist without deadlock if processes can complete without the cycled resources.</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION U5 -->
+  <section id="s-up-u5" data-search-section="unit 5 memory management paging segmentation TLB EAT virtual memory page fault replacement FIFO LRU optimal thrashing questions">
+    <div class="section-heading">
+      <h2 class="prose">Unit 5 — Memory Management</h2>
+      <button class="bookmark-btn" data-id="s-up-u5" data-label="Unit 5 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks)</h3>
+        <details class="qa-item"><summary>Q1. Distinguish internal and external fragmentation.</summary>
+          <div class="qa-content"><strong>Internal fragmentation:</strong> Wasted space INSIDE an allocated block. Occurs when allocation is in fixed-size units larger than the request (e.g., paging — last page may be partially used). <strong>External fragmentation:</strong> Enough total free memory exists but it's scattered in non-contiguous holes. No single contiguous block is large enough. Occurs in variable-size allocation (contiguous memory schemes). Paging eliminates external fragmentation but causes internal. Segmentation eliminates internal but causes external.</div></details>
+        <details class="qa-item"><summary>Q2. What is Bélády's Anomaly? Which algorithm suffers from it?</summary>
+          <div class="qa-content">Bélády's Anomaly: increasing the number of page frames causes MORE page faults (counter-intuitive). Only <strong>FIFO</strong> page replacement algorithm exhibits this. LRU and Optimal algorithms are "stack algorithms" — they are immune to Bélády's anomaly because the set of pages in memory with n frames is always a subset of the set with n+1 frames (stack property). FIFO violates this property.</div></details>
+        <h3>Numerical (5–10 Marks)</h3>
+        <details class="qa-item"><summary>Q3. TLB hit rate = 90%, TLB access time = 10ns, Memory access time = 100ns. Calculate EAT.</summary>
+          <div class="qa-content">EAT = α(t + m) + (1−α)(t + 2m) where α=0.9, t=10ns, m=100ns<br>
+          EAT = 0.9(10+100) + 0.1(10+200) = 0.9(110) + 0.1(210) = 99 + 21 = <strong>120 ns</strong><br>
+          Without TLB: 2m = 200ns. With TLB: 120ns → 40% speedup.</div></details>
+        <details class="qa-item"><summary>Q4. Reference string: 1,2,3,4,1,2,5,1,2,3,4,5 with 3 frames. Find page faults using LRU and FIFO.</summary>
+          <div class="qa-content"><div class="code-block"><div class="code-header"><span class="code-lang">Page Fault Trace</span><button class="code-copy">Copy</button></div>
+<pre><code>Ref:  1  2  3  4  1  2  5  1  2  3  4  5
+
+FIFO (evict oldest): Faults = 9
+Frame state at each reference:
+[1]→[1,2]→[1,2,3]→[4,2,3]→[4,1,3]→[4,1,2]→[5,1,2]→hit→hit→[5,3,2]→[5,3,4]→[5,3,4] wait re-trace:
+Fault?F   F    F     F     F     F     F    -   -    F     F     F  = 9 faults
+
+LRU (evict least recently used): Faults = 10
+Ref:  1  2  3  4  1  2  5  1  2  3  4  5
+Fault?F  F  F  F  F  F  F  -  -  F  F  F = 10 faults
+(At ref=4: LRU=1, replace; at ref=1: LRU=2, replace; etc.)
+
+Optimal = 7 faults (minimum possible)</code></pre></div></div></details>
+        <details class="qa-item"><summary>Q5. What is thrashing? How does the working set model prevent it?</summary>
+          <div class="qa-content">Thrashing occurs when a process spends more time servicing page faults than executing (CPU utilization drops sharply despite high multiprogramming). Cause: too many processes competing for too few frames — each process's working set exceeds its allocated frames. <strong>Working Set Model:</strong> Track the set of pages a process has used in the last Δ time units (working set). Sum of all working sets = total frames needed. If sum > available frames, suspend some processes (reduce multiprogramming) until enough frames are available. This prevents thrashing by ensuring each process has enough frames for its current locality.</div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. A virtual address space of 32 bits with 4KB pages. Page table entry = 4 bytes. Size of page table = ?</strong><br>A. 4 MB  B. 1 MB  C. 16 MB  D. 4 KB</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>A. 4 MB.</strong> Number of pages = 2³²/2¹² = 2²⁰ = 1M entries. Size = 1M × 4 bytes = 4 MB. This is why hierarchical page tables exist — 4MB per process is too expensive.</div></details></div>
+        <div class="mcq-card"><div class="mcq-q"><strong>G2. Page fault rate p=0.001, memory access = 200ns, page fault service = 8ms. EAT = ?</strong><br>A. 200.2 ns  B. 8.2 µs  C. 8.2 ms  D. 8199.8 ns</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>D. 8199.8 ns.</strong> EAT = (1-p)×m + p×s = (0.999)(200ns) + (0.001)(8,000,000ns) = 199.8 + 8000 = 8199.8 ns ≈ 8.2 µs. Even 0.1% fault rate causes 41× slowdown vs no faults (200ns)!</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION U6 -->
+  <section id="s-up-u6" data-search-section="unit 6 file systems disk scheduling RAID inode allocation free space VFS questions university GATE">
+    <div class="section-heading">
+      <h2 class="prose">Unit 6 — File Systems &amp; Storage</h2>
+      <button class="bookmark-btn" data-id="s-up-u6" data-label="Unit 6 Questions" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-uni">
+      <div class="mode-badge uni">🎓 University</div>
+      <div class="prose">
+        <h3>Short Answer (2 Marks)</h3>
+        <details class="qa-item"><summary>Q1. What information is stored in an inode? What is NOT stored?</summary>
+          <div class="qa-content"><strong>Stored in inode:</strong> File type, permissions (rwxrwxrwx), owner (uid/gid), file size, timestamps (atime/mtime/ctime), hard link count, block pointers (12 direct + 1 single + 1 double + 1 triple indirect). <strong>NOT stored in inode:</strong> File name! The file name is stored in the directory entry, which maps (name → inode number). This allows hard links — multiple directory entries pointing to the same inode.</div></details>
+        <details class="qa-item"><summary>Q2. Compare hard links and symbolic (soft) links.</summary>
+          <div class="qa-content"><strong>Hard link:</strong> Another directory entry pointing to the same inode. Both names point to same data. Deleting one doesn't delete the other (inode remains until link count = 0). Cannot cross filesystem boundaries. Cannot link directories. <strong>Symbolic link:</strong> A file whose content is the path to the target. Acts like a shortcut. Can cross filesystems. Can link directories. If target is deleted, symlink becomes dangling (broken).</div></details>
+        <h3>Numerical (5–10 Marks)</h3>
+        <details class="qa-item"><summary>Q3. Disk requests: 98,183,37,122,14,124,65,67. Head at 53. Calculate total head movement for FCFS, SSTF, and SCAN (moving toward higher).</summary>
+          <div class="qa-content"><div class="code-block"><div class="code-header"><span class="code-lang">Disk Scheduling Solution</span><button class="code-copy">Copy</button></div>
+<pre><code>FCFS: 53→98→183→37→122→14→124→65→67
+Movement: 45+85+146+85+108+110+59+2 = 640 cylinders
+
+SSTF (always nearest):
+From 53: nearest=65(12)→67(2)→37(30)→14(23)→98(84)→122(24)→124(2)→183(59)
+Total = 12+2+30+23+84+24+2+59 = 236 cylinders
+
+SCAN (moving right, toward higher):
+Service right of 53: 65,67,98,122,124,183 then reverse to 37,14
+53→65(12)→67(2)→98(31)→122(24)→124(2)→183(59)→199(16)→37(162)→14(23)
+Total = 12+2+31+24+2+59+16+162+23 = 331 cylinders
+(Formula: (199-53) + (199-14) = 146+185 = 331)</code></pre></div></div></details>
+        <details class="qa-item"><summary>Q4. Inode has 12 direct, 1 single-indirect pointer. Block size = 1 KB, pointer = 4 bytes. What is the max file size?</summary>
+          <div class="qa-content">Pointers per block = 1024/4 = 256. Direct blocks = 12 × 1KB = 12 KB. Single indirect = 256 × 1KB = 256 KB. Max file size = 12 + 256 = <strong>268 KB</strong>. With double indirect: 268 + 256² × 1KB = 268 + 64MB ≈ 64 MB. With triple: ≈ 16 GB.</div></details>
+        <details class="qa-item"><summary>Q5. [10 marks] Explain RAID 0, 1, and 5. A server needs 200 GB usable storage with fault tolerance for 1 disk failure. Using 100 GB disks, how many are needed for RAID 5?</summary>
+          <div class="qa-content">RAID 5 usable = (N−1) × disk_size. Need 200 GB: (N−1) × 100 = 200 → N−1 = 2 → N = <strong>3 disks</strong>. Total = 300 GB physical, 200 GB usable, 100 GB for distributed parity. Survives 1 disk failure. For 2-disk failure tolerance, use RAID 6: need (N−2) × 100 = 200 → N = 4 disks (400 GB total, 200 GB usable).</div></details>
+      </div>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE-Style</div>
+      <div class="prose">
+        <div class="mcq-card"><div class="mcq-q"><strong>G1. Which file allocation method supports direct access in O(1) and has no external fragmentation?</strong><br>A. Contiguous  B. Linked  C. Indexed  D. Both A and C</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>C. Indexed allocation only.</strong> Contiguous allocation gives O(1) direct access (start+i) but suffers from external fragmentation. Linked allocation avoids external fragmentation but does NOT support O(1) direct access (must traverse chain). Indexed allocation (inode) supports direct access via index block AND has no external fragmentation. Only C satisfies both constraints.</div></details></div>
+        <div class="mcq-card"><div class="mcq-q"><strong>G2. A bitmap for free space management of a 1 GB disk with 512-byte blocks needs how much space?</strong><br>A. 256 KB  B. 512 KB  C. 1 MB  D. 128 KB</div>
+          <details class="mcq-ans"><summary>Answer</summary><div><strong>A. 256 KB.</strong> Number of blocks = 1 GB / 512 B = 2³⁰/2⁹ = 2²¹ = 2M blocks. Bitmap size = 2M bits = 2M/8 bytes = 256 KB.</div></details></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREV/NEXT NAV -->
+  <div class="prev-next">
+    <a href="../chapters/unit4.html" class="nav-btn">← Unit 4 — Deadlocks</a>
+    <a href="../chapters/gate-extra.html" class="nav-btn primary">⚡ GATE Extra →</a>
+  </div>
+</div>
+</main>
+<div id="mode-panel">
+  <button class="mode-btn active" data-mode="all">📚 All</button>
+  <button class="mode-btn uni-btn" data-mode="uni">🎓 Uni</button>
+  <button class="mode-btn gate-btn" data-mode="gate">⚡ GATE</button>
+  <button class="mode-btn adv-btn" data-mode="advanced">🔬 Adv</button>
+</div>
+<div id="tts-panel">
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play">▶</button>
+    <button class="tts-btn" id="tts-stop">⏹</button>
+    <div class="tts-speed"><span>Speed</span><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1"><span id="tts-rate-label">1.0x</span></div>
+  </div>
+  <div class="tts-voice"><select id="tts-voice-select"><option>Loading…</option></select></div>
+</div>
+<div id="pomodoro">
+  <div class="pomo-time" id="pomo-time">25:00</div>
+  <div class="pomo-label" id="pomo-label">⏰ WORK · #1</div>
+  <div class="pomo-controls">
+    <button class="pomo-btn" id="pomo-start">▶ Start</button>
+    <button class="pomo-btn" id="pomo-reset">↺</button>
+  </div>
+</div>
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="s-icon">🔍</span><input id="search-input" type="text" placeholder="Search topics…" autocomplete="off"></div>
+    <div id="search-results"></div>
+    <div class="search-hint"><span><kbd>↵</kbd> navigate</span><span><kbd>Esc</kbd> close</span><span><kbd>Ctrl+K</kbd> open</span></div>
+  </div>
+</div>
+<nav id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
+  <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
+  <a href="#s-up-u1" class="mobile-nav-btn active"><span class="icon">📝</span>Papers</a>
+  <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
+</nav>
+<div id="toast-container"></div>
+<script src="../assets/js/state.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/modes.js"></script>
+<script src="../assets/js/tts.js"></script>
+<script src="../assets/js/timer.js"></script>
+<script src="../assets/js/print.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/glossary.js"></script>
+</body>
+</html>

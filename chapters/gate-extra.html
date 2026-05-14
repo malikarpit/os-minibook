@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ⚡ Arpit | OS MiniBook 2026 -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Arpit">
+<meta name="description" content="GATE Extra Topics — OS MiniBook DU B.Tech CSE Sem IV">
+<title>GATE Extra Topics | OS MiniBook ⚡ Arpit</title>
+<link rel="manifest" href="../manifest.json">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/animations.css">
+<link rel="stylesheet" href="../assets/css/timer.css">
+<style>
+.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
+.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
+.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
+.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
+.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
+.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
+.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
+.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
+.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
+.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
+.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
+.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
+.mem-os{background:#4f46e5;color:#fff}
+.mem-p1{background:#059669;color:#fff}
+.mem-p2{background:#d97706;color:#fff}
+.mem-p3{background:#dc2626;color:#fff}
+.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
+.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
+.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
+.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
+</style>
+</head>
+<body>
+<!-- ⚡ Arpit -->
+<div id="progress-bar"></div>
+<header id="main-header">
+  <div class="header-left">
+    <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="brand-logo">
+      <div class="brand-icon">A⚡</div>
+      <div class="brand-text"><span class="main">OS MiniBook</span><span class="sub">DU B.Tech CSE Sem IV</span></div>
+    </div>
+  </div>
+  <span class="header-chapter-title"></span>
+  <div class="header-right">
+    <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button id="tts-toggle" class="icon-btn" title="Read Aloud">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+    </button>
+    
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
+    <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
+  </div>
+</header>
+<div id="sidebar-overlay"></div>
+<aside id="sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Navigation</div>
+      <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
+      <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">GATE Extra — Sections</div>
+      <a href="#s-gate-formulas" class="sidebar-link active"><span class="link-icon">📐</span>G.1 Formula Sheet</a>
+      <a href="#s-gate-cpu" class="sidebar-link"><span class="link-icon">⚙️</span>G.2 CPU Scheduling Adv</a>
+      <a href="#s-gate-mem" class="sidebar-link"><span class="link-icon">🧠</span>G.3 Memory Advanced</a>
+      <a href="#s-gate-sync" class="sidebar-link"><span class="link-icon">🔒</span>G.4 Sync Traps & Priority</a>
+      <a href="#s-gate-bankers" class="sidebar-link"><span class="link-icon">🏦</span>G.5 Banker's Fast-Track</a>
+      <a href="#s-gate-pagerep" class="sidebar-link"><span class="link-icon">📄</span>G.6 Page Replacement Nums</a>
+      <a href="#s-gate-disk" class="sidebar-link"><span class="link-icon">💿</span>G.7 Disk Scheduling Nums</a>
+      <a href="#s-gate-io" class="sidebar-link"><span class="link-icon">🔌</span>G.8 I/O & Device Mgmt</a>
+      <a href="#s-gate-security" class="sidebar-link"><span class="link-icon">🛡️</span>G.9 Protection & Security</a>
+      <a href="#s-gate-pyqs" class="sidebar-link"><span class="link-icon">📋</span>G.10 GATE Solved PYQs</a>
+      <a href="#s-gate-cheat" class="sidebar-link"><span class="link-icon">⚡</span>G.★ Cheat Sheets</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">All Units</div>
+      <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
+      <a href="unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
+      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+    
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Bookmarks</div>
+      <div id="bookmarks-list"></div>
+    </div>
+  </nav>
+  
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">My Notes</div>
+      <div id="notes-sidebar-list"></div>
+    </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-brand-mark"><div class="mark">A⚡</div><span>Arpit · OS MiniBook 2026</span></div>
+  </div>
+</aside>
+<main id="main-content">
+<div class="content-inner">
+  <div class="chapter-hero">
+    <div class="chapter-breadcrumb">
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">GATE Extra</span>
+    </div>
+    <div class="chapter-num">⚡ GATE Extra · DSC-10</div>
+    <h1 class="chapter-title">GATE Extra Topics</h1>
+    <div class="chapter-meta">
+      <span class="meta-tag">🎓 University</span>
+      <span class="meta-tag">⚡ GATE Ready</span>
+      <span class="meta-tag">11 Sections</span>
+      <span class="meta-tag">Formulas · Traps · Advanced Topics · Solved PYQs</span>
+    </div>
+  </div>
+
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-gate-formulas" class="toc-item"><span class="toc-num">G.1</span>Master Formula Sheet</a>
+      <a href="#s-gate-cpu" class="toc-item"><span class="toc-num">G.2</span>CPU Scheduling — Advanced</a>
+      <a href="#s-gate-mem" class="toc-item"><span class="toc-num">G.3</span>Memory — Advanced Topics</a>
+      <a href="#s-gate-sync" class="toc-item"><span class="toc-num">G.4</span>Sync Traps &amp; Priority Inversion</a>
+      <a href="#s-gate-bankers" class="toc-item"><span class="toc-num">G.5</span>Banker's Algorithm Fast-Track</a>
+      <a href="#s-gate-pagerep" class="toc-item"><span class="toc-num">G.6</span>Page Replacement Numericals</a>
+      <a href="#s-gate-disk" class="toc-item"><span class="toc-num">G.7</span>Disk Scheduling Numericals</a>
+      <a href="#s-gate-io" class="toc-item"><span class="toc-num">G.8</span>I/O Systems &amp; Device Management</a>
+      <a href="#s-gate-security" class="toc-item"><span class="toc-num">G.9</span>Protection &amp; Security</a>
+      <a href="#s-gate-pyqs" class="toc-item"><span class="toc-num">G.10</span>GATE 2019–2024 Solved PYQs</a>
+      <a href="#s-gate-cheat" class="toc-item"><span class="toc-num">★</span>Unit Cheat Sheets</a>
+    </div>
+  </div>
+
+  <!-- SECTION G.1 -->
+  <section id="s-gate-formulas" data-search-section="formula sheet EAT TLB Banker's CPU scheduling wait time turnaround GATE key formulas">
+    <div class="section-heading">
+      <h2 class="prose">G.1 Master Formula Sheet</h2>
+      <button class="bookmark-btn" data-id="s-gate-formulas" data-label="G.1 Formula Sheet" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="callout info"><span class="callout-icon">📌</span><div>All critical formulas in one place. Memorize these — GATE tests them directly in numericals.</div></div>
+        <h3>CPU Scheduling</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">CPU Scheduling Formulas</span><button class="code-copy">Copy</button></div>
+          <pre><code>Completion Time (CT) = time process finishes
+Turnaround Time (TAT) = CT − Arrival Time
+Waiting Time (WT) = TAT − Burst Time
+Response Time = First CPU time − Arrival Time
+
+Average TAT = Σ TAT / n
+Average WT  = Σ WT  / n
+
+CPU Utilization = (CPU busy time) / (Total time) × 100%
+Throughput = Processes completed / Total time
+
+For Round Robin:
+  Context switches: count from Gantt chart (count transitions between
+  different processes). Do not count initial dispatch or final exit
+  unless the question explicitly asks.
+  Approximate: ≈ (total_time / quantum) − 1 ONLY when all processes
+  are ready at t=0, each quantum expires fully, and no idle gaps.
+  Time quantum tradeoff: small Q → more preemptions, better response time
+                          large Q → degenerates to FCFS</code></pre>
+        </div>
+        <h3>Memory Management</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Memory Formulas</span><button class="code-copy">Copy</button></div>
+          <pre><code>── PAGING ──────────────────────────────────────────────────────
+Page size = 2^n bytes → offset = n bits
+Page number bits = m − n  (where m = address space bits)
+Number of pages = 2^m / 2^n = 2^(m−n)
+Physical addr = PageTable[p] × page_size + d
+Max internal fragmentation per process = page_size − 1
+
+── TLB / EAT ────────────────────────────────────────────────────
+EAT (with TLB) = α(t + m) + (1−α)(t + 2m)
+   α = hit rate, t = TLB time, m = memory access time
+   Simplified (t≈0): EAT = (2 − α) × m
+
+── VIRTUAL MEMORY ───────────────────────────────────────────────
+EAT (page faults) = (1−p) × m + p × (page_fault_service_time)
+   p = fault rate; keep p < 10^−6 for acceptable perf
+
+── INODE / INDEXED ALLOC ────────────────────────────────────────
+Let B = block size, P = pointer size (use problem's value; often 4)
+N = B / P = pointers per indirect block
+Max file size = D×B + N×B + N²×B + N³×B
+   (D = number of direct pointers; classic UNIX uses D=12)
+Disk accesses for double-indirect block i = 3 (1+1+1)
+
+── SEGMENTATION ─────────────────────────────────────────────────
+Physical = Base[s] + d    (if d < Limit[s], else TRAP)
+
+── FREE SPACE BITMAP ────────────────────────────────────────────
+Bitmap size = ⌈n_blocks / (8 × block_size)⌉ blocks</code></pre>
+        </div>
+        <h3>Deadlocks — Banker's Algorithm</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Banker's Formulas</span><button class="code-copy">Copy</button></div>
+          <pre><code>Need[i][j]      = Max[i][j] − Allocation[i][j]
+Available[j]    = Total[j]  − Σ Allocation[i][j]
+
+Safety check: Find process Pi where Need[i] ≤ Available
+   → "grant" it: Available += Allocation[i] → mark safe
+   → Repeat until all marked safe OR deadlock
+
+Request check: Grant if Request[i] ≤ Need[i] AND Request[i] ≤ Available
+   → Tentatively allocate → run safety algorithm
+   → If safe: grant. If not: rollback.
+
+Coffman conditions (ALL 4 must hold for deadlock):
+   Mutual Exclusion · Hold & Wait · No Preemption · Circular Wait</code></pre>
+        </div>
+        <h3>Disk Scheduling</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Disk Scheduling Formulas</span><button class="code-copy">Copy</button></div>
+          <pre><code>Total head movement = Σ |cylinder[i+1] − cylinder[i]|
+
+Rotational Latency (avg) = (1 / (2 × RPM)) × 60,000 ms
+Disk Access Time = Seek Time + Rotational Latency + Transfer Time
+
+RAID usable space:
+   RAID 0: N × D (no redundancy)
+   RAID 1: N/2 × D (mirroring)
+   RAID 5: (N−1) × D (distributed parity, 1 disk tolerance)
+   RAID 6: (N−2) × D (2 parity, 2 disk tolerance)
+
+RAID 5 write I/Os = 4 (read old data + read old parity + write new data + write new parity)</code></pre>
+        </div>
+        <h3>Synchronization</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Sync Key Points</span><button class="code-copy">Copy</button></div>
+          <pre><code>Semaphore operations:
+   wait(S): if S > 0 → S-- else BLOCK
+   signal(S): if waiters → UNBLOCK one else S++
+
+Producer-Consumer: mutex=1, empty=N, full=0
+   Producer: wait(empty) → wait(mutex) → [produce] → signal(mutex) → signal(full)
+   Consumer: wait(full)  → wait(mutex) → [consume] → signal(mutex) → signal(empty)
+
+Readers-Writers:
+   read_count=0, mutex=1, wrt=1
+   Reader: wait(mutex)→read_count++→if first: wait(wrt)→signal(mutex)→[read]
+           →wait(mutex)→read_count--→if last: signal(wrt)→signal(mutex)</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.2 -->
+  <section id="s-gate-cpu" data-search-section="CPU scheduling advanced multilevel queue feedback aging priority starvation real-time preemptive">
+    <div class="section-heading">
+      <h2 class="prose">G.2 CPU Scheduling — Advanced Topics</h2>
+      <button class="bookmark-btn" data-id="s-gate-cpu" data-label="G.2 Advanced CPU Scheduling" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Multilevel Queue Scheduling</h3>
+        <p>Processes permanently divided into groups, each with its own queue and algorithm. Queues have strict priority over each other.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Multilevel Queue Structure</span><button class="code-copy">Copy</button></div>
+          <pre><code>Queue 1 (Highest Priority): Interactive/Foreground — RR, Q=8ms
+Queue 2: Interactive editing — RR, Q=16ms
+Queue 3: Batch processes — FCFS
+Queue 4 (Lowest Priority): Background, student jobs — FCFS
+
+Rule: Q2 runs ONLY when Q1 is empty.
+      Q3 runs ONLY when Q1 and Q2 are empty.
+→ Starvation possible for lower queues!</code></pre>
+        </div>
+        <h3>Multilevel Feedback Queue (MLFQ)</h3>
+        <p>Unlike MLQ, processes can move between queues. Designed to approximate SJF without needing burst time predictions.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">MLFQ Rules</span><button class="code-copy">Copy</button></div>
+          <pre><code>Q0: RR, Q=8ms    (highest priority)
+Q1: RR, Q=16ms
+Q2: FCFS         (lowest priority)
+
+Rules:
+1. New process enters Q0
+2. If process uses full quantum without finishing → demote to next queue
+3. If process yields CPU before quantum → stays in same queue
+4. After timeout T, all processes promoted to Q0 (AGING — prevents starvation)
+
+Example:
+   Process needs 100ms CPU:
+   Q0: runs 8ms → not done → demote to Q1
+   Q1: runs 16ms → not done → demote to Q2
+   Q2: runs remaining 76ms to completion (FCFS)</code></pre>
+        </div>
+        <h3>Priority Scheduling — Starvation &amp; Aging</h3>
+        <table>
+          <thead><tr><th>Problem</th><th>Cause</th><th>Solution</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Starvation</strong></td><td>Low-priority process never gets CPU — high-priority processes always present</td><td><strong>Aging:</strong> Gradually increase priority of waiting processes over time</td></tr>
+            <tr><td><strong>Convoy Effect</strong></td><td>FCFS: short processes stuck behind one long process</td><td>Use SJF or SRTF instead</td></tr>
+            <tr><td><strong>Priority Inversion</strong></td><td>High-priority task blocked by low-priority task holding a resource</td><td>Priority inheritance / Priority ceiling</td></tr>
+          </tbody>
+        </table>
+        <h3>Scheduling Criteria Summary</h3>
+        <table>
+          <thead><tr><th>Algorithm</th><th>Preemptive?</th><th>Optimal for</th><th>Problem</th></tr></thead>
+          <tbody>
+            <tr><td>FCFS</td><td>❌</td><td>Simple batch</td><td>Convoy effect, high WT</td></tr>
+            <tr><td>SJF</td><td>❌</td><td>Minimum avg WT (provable)</td><td>Starvation, burst prediction needed</td></tr>
+            <tr><td>SRTF</td><td>✅</td><td>Minimum avg WT (preemptive)</td><td>Starvation, heavy context switch</td></tr>
+            <tr><td>RR</td><td>✅</td><td>Fair, interactive</td><td>High TAT if Q too small</td></tr>
+            <tr><td>Priority</td><td>Both</td><td>Real-time, urgent tasks</td><td>Starvation without aging</td></tr>
+            <tr><td>MLFQ</td><td>✅</td><td>General purpose (adaptive)</td><td>Complex to tune</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>GATE Tip — SJF/SRTF optimality:</strong> Under standard assumptions (known burst times, single CPU, zero context-switch overhead, and all jobs available), SJF gives minimum average waiting time among non-preemptive algorithms. SRTF is its preemptive counterpart. <strong>Note:</strong> Linux CFS is NOT an MLFQ; CFS uses vruntime + red-black tree, not feedback queues. Do not conflate them on GATE.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.3 -->
+  <section id="s-gate-mem" data-search-section="advanced memory multilevel page table inverted page table hashed page table shared pages copy-on-write">
+    <div class="section-heading">
+      <h2 class="prose">G.3 Memory — Advanced Topics</h2>
+      <button class="bookmark-btn" data-id="s-gate-mem" data-label="G.3 Memory Advanced" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Problem with Single-Level Page Tables</h3>
+        <p>For a 32-bit address space with 4KB pages: 2²⁰ = 1M entries × 4 bytes = <strong>4 MB per process</strong> page table. With 100 processes → 400 MB just for page tables. Most pages are unused (sparse address space)!</p>
+        <h3>1. Two-Level (Hierarchical) Page Tables</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Two-Level Paging — Address Split</span><button class="code-copy">Copy</button></div>
+          <pre><code>32-bit address, 4KB pages, 1K entries per page table:
+  [10 bits | 10 bits | 12 bits]
+   p1        p2        offset
+
+p1 → outer page table (1K entries) — ALWAYS in RAM
+p2 → inner page table (1K entries) — only allocated if p1 entry is valid
+offset → within page
+
+Savings: If process uses only 100 pages out of 1M possible,
+only ~1 outer table (4KB) + a few inner tables needed
+vs. 4MB monolithic table!</code></pre>
+        </div>
+        <h3>2. Inverted Page Table</h3>
+        <div class="def-box">
+          <div class="def-term">Inverted Page Table</div>
+          Instead of one page table per process (indexed by logical page), have ONE global table indexed by <strong>physical frame number</strong>. Each entry = (PID, logical_page_number). Used in IBM PowerPC, some RISC chips.
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Inverted PT — Lookup</span><button class="code-copy">Copy</button></div>
+          <pre><code>Logical address: (pid, p, d)
+Search inverted table for entry = (pid, p)
+   → found at row i → physical frame = i
+   → Physical address = (i, d)
+
+Size: 1 entry per physical frame → much smaller!
+Problem: search is O(n) over all frames → slow!
+Solution: Hash table on (pid, p) → O(1) lookup</code></pre>
+        </div>
+        <h3>3. Shared Pages</h3>
+        <p>Paging allows efficient sharing. If two processes both run <code>vi</code> (the editor), the read-only code pages can be shared — both processes' page tables point to the same physical frames.</p>
+        <table>
+          <thead><tr><th>Concept</th><th>How</th><th>Benefit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Shared code pages</strong></td><td>Page tables of both processes point to same read-only frame</td><td>One copy of code in RAM regardless of how many processes run it</td></tr>
+            <tr><td><strong>Copy-on-Write (COW)</strong></td><td>fork() marks all pages shared+read-only. Write → kernel copies only that page</td><td>fork() is O(1) — pages copied lazily on first write</td></tr>
+            <tr><td><strong>Memory-mapped files</strong></td><td>mmap() maps file pages directly into virtual address space</td><td>File I/O via memory operations; shared between processes</td></tr>
+          </tbody>
+        </table>
+        <h3>GATE Key Traps</h3>
+        <table>
+          <thead><tr><th>Trap Question</th><th>Correct Answer</th></tr></thead>
+          <tbody>
+            <tr><td>"Does paging cause external fragmentation?"</td><td>❌ NO — paging eliminates external fragmentation entirely</td></tr>
+            <tr><td>"Does paging cause internal fragmentation?"</td><td>✅ YES — last page of a process may be partially filled</td></tr>
+            <tr><td>"Can logical address space > physical memory?"</td><td>✅ YES — this is the entire point of virtual memory</td></tr>
+            <tr><td>"Is page table stored in RAM or CPU registers?"</td><td>RAM (pointed to by PTBR). Only TLB is in CPU.</td></tr>
+            <tr><td>"How many memory accesses with 2-level PT, no TLB?"</td><td>3: outer PT + inner PT + data</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.4 -->
+  <section id="s-gate-sync" data-search-section="synchronization traps priority inversion priority inheritance ceiling protocol bounded buffer classical problems common mistakes">
+    <div class="section-heading">
+      <h2 class="prose">G.4 Sync Traps &amp; Priority Inversion</h2>
+      <button class="bookmark-btn" data-id="s-gate-sync" data-label="G.4 Sync Traps" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Common GATE Traps in Synchronization</h3>
+        <table>
+          <thead><tr><th>Trap</th><th>Wrong Assumption</th><th>Correct Answer</th></tr></thead>
+          <tbody>
+            <tr><td>Binary semaphore vs mutex</td><td>They're the same</td><td>Binary semaphore can be signaled by ANY process. Mutex can only be released by the process that locked it (ownership).</td></tr>
+            <tr><td>Counting semaphore initial value</td><td>Always 0 or 1</td><td>Can be any N — used for resource counting (e.g., N buffer slots: initialized to N)</td></tr>
+            <tr><td>wait() order in Producer-Consumer</td><td>Order doesn't matter</td><td>Always wait(mutex) AFTER wait(full/empty). Reversing causes <strong>deadlock</strong>!</td></tr>
+            <tr><td>Peterson's algorithm for N > 2</td><td>Works for N processes</td><td>Original Peterson's is for exactly 2 processes only. N-process version is different.</td></tr>
+            <tr><td>Monitors guarantee mutual exclusion</td><td>Only for explicit lock calls</td><td>Monitor body: only ONE process active at a time — mutex is implicit, not explicit.</td></tr>
+          </tbody>
+        </table>
+        <h3>Priority Inversion — The Real Problem</h3>
+        <div class="def-box">
+          <div class="def-term">Priority Inversion</div>
+          A high-priority process H is blocked waiting for a resource held by low-priority process L. A medium-priority process M (which doesn't need the resource) preempts L and runs — effectively blocking H even though H has higher priority than M.
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Priority Inversion Scenario</span><button class="code-copy">Copy</button></div>
+          <pre><code>Processes: H (high priority), M (medium), L (low)
+Resource: mutex R
+
+Timeline:
+1. L acquires R
+2. H runs, tries to acquire R → BLOCKED (L holds it)
+3. M preempts L (M has higher priority than L)
+4. M runs to completion
+5. L resumes, finishes, releases R
+6. H finally gets R
+
+Result: H waited for M to finish, even though H > M priority!
+This is priority inversion — "effective priority" of H dropped to L's level.
+
+Famous example: Mars Pathfinder (1997) — spacecraft reset due to priority inversion!</code></pre>
+        </div>
+        <h3>Solutions</h3>
+        <table>
+          <thead><tr><th>Solution</th><th>How It Works</th><th>Used in</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Priority Inheritance</strong></td><td>When H blocks on L's resource, L temporarily inherits H's priority. M can no longer preempt L. L finishes quickly, releases R, H runs.</td><td>POSIX mutexes (PTHREAD_PRIO_INHERIT), VxWorks</td></tr>
+            <tr><td><strong>Priority Ceiling Protocol</strong></td><td>Each resource has a ceiling = highest priority that will ever request it. Process acquiring resource runs at max(its priority, ceiling). Prevents deadlock AND inversion.</td><td>Real-time systems, POSIX</td></tr>
+            <tr><td><strong>Disable Interrupts</strong></td><td>Prevent preemption while holding resource</td><td>OS kernels (short critical sections only)</td></tr>
+          </tbody>
+        </table>
+        <h3>Deadlock vs Livelock vs Starvation</h3>
+        <table>
+          <thead><tr><th>Condition</th><th>Processes doing?</th><th>CPU usage</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Deadlock</strong></td><td>Blocked, waiting forever</td><td>0% (all blocked)</td><td>Circular wait on resources</td></tr>
+            <tr><td><strong>Livelock</strong></td><td>Actively running but making no progress</td><td>High (busy loop)</td><td>Two people in hallway each stepping aside simultaneously forever</td></tr>
+            <tr><td><strong>Starvation</strong></td><td>Some make progress, one does not</td><td>Normal</td><td>High-priority processes always jump queue</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.5 -->
+  <section id="s-gate-bankers" data-search-section="Banker's algorithm fast track safety algorithm resource request multiple instances worked examples GATE numericals">
+    <div class="section-heading">
+      <h2 class="prose">G.5 Banker's Algorithm — Fast Track</h2>
+      <button class="bookmark-btn" data-id="s-gate-bankers" data-label="G.5 Banker's Fast-Track" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Full Worked Example (3 processes, 3 resource types)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Banker's Algorithm — Complete GATE-Style Problem</span><button class="code-copy">Copy</button></div>
+          <pre><code>Resources: A=10, B=5, C=7 (total instances)
+
+         Allocation    Maximum       Need (= Max − Alloc)   Available
+         A  B  C       A  B  C       A  B  C
+P0       0  1  0       7  5  3       7  4  3
+P1       2  0  0       3  2  2       1  2  2               A=3
+P2       3  0  2       9  0  2       6  0  0               B=3
+P3       2  1  1       2  2  2       0  1  1               C=2
+P4       0  0  2       4  3  3       4  3  1
+
+STEP 1: Calculate Available
+   Available = Total − Σ Allocation
+   A: 10 − (0+2+3+2+0) = 3
+   B:  5 − (1+0+0+1+0) = 3
+   C:  7 − (0+0+2+1+2) = 2
+   Available = (3, 3, 2) ✅
+
+STEP 2: Safety Algorithm
+   Work = (3,3,2), Finish = [F,F,F,F,F]
+
+   Round 1: Find Pi where Need[i] ≤ Work AND Finish[i]=False
+   P1: Need=(1,2,2) ≤ (3,3,2)? ✅ → Run P1
+       Work = (3,3,2) + (2,0,0) = (5,3,2), Finish[P1]=True
+   P3: Need=(0,1,1) ≤ (5,3,2)? ✅ → Run P3
+       Work = (5,3,2) + (2,1,1) = (7,4,3), Finish[P3]=True
+   P0: Need=(7,4,3) ≤ (7,4,3)? ✅ → Run P0
+       Work = (7,4,3) + (0,1,0) = (7,5,3), Finish[P0]=True
+   P2: Need=(6,0,0) ≤ (7,5,3)? ✅ → Run P2
+       Work = (7,5,3) + (3,0,2) = (10,5,5), Finish[P2]=True
+   P4: Need=(4,3,1) ≤ (10,5,5)? ✅ → Run P4
+
+   Safe Sequence: P1 → P3 → P0 → P2 → P4 ✅ SAFE STATE
+
+STEP 3: Resource Request
+   P1 requests (1,0,2). Can it be granted?
+   Check 1: Request ≤ Need? (1,0,2) ≤ (1,2,2)? ✅
+   Check 2: Request ≤ Available? (1,0,2) ≤ (3,3,2)? ✅
+   Tentatively allocate:
+     Available = (3,3,2) − (1,0,2) = (2,3,0)
+     Alloc[P1] = (2,0,0) + (1,0,2) = (3,0,2)
+     Need[P1]  = (1,2,2) − (1,0,2) = (0,2,0)
+    Run safety algorithm with new state → if safe: GRANT. If not: DENY.
+
+    Safety trace after granting P1's request (1,0,2):
+    Available = (2,3,0)
+    P1: Need=(0,2,0) ≤ (2,3,0)? ✅ → Work=(2,3,0)+(3,0,2)=(5,3,2)
+    P3: Need=(0,1,1) ≤ (5,3,2)? ✅ → Work=(5,3,2)+(2,1,1)=(7,4,3)
+    P4: Need=(4,3,1) ≤ (7,4,3)? ✅ → Work=(7,4,3)+(0,0,2)=(7,4,5)
+    P0: Need=(7,4,3) ≤ (7,4,5)? ✅ → Work=(7,4,5)+(0,1,0)=(7,5,5)
+    P2: Need=(6,0,0) ≤ (7,5,5)? ✅ → Work=(7,5,5)+(3,0,2)=(10,5,7)
+    Safe sequence: P1→P3→P4→P0→P2 ✅ Request GRANTED.</code></pre>
+        </div>
+        <h3>GATE Shortcuts</h3>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div>
+            <strong>Speed tricks for GATE Banker's questions:</strong>
+            <ul style="margin:8px 0 0 16px">
+              <li>Always compute Need = Max − Allocation <em>first</em> as a matrix</li>
+              <li>Start safety scan with process that has <strong>smallest Need</strong> relative to Available</li>
+              <li>After granting a process: add its entire Allocation back to Work</li>
+              <li>If a process's Need is (0,0,0) — it can always run (needs nothing more)</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Single-Instance Deadlock Detection (RAG)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Resource Allocation Graph Rules</span><button class="code-copy">Copy</button></div>
+          <pre><code>Request edge:  Pi → Rj  (Pi is waiting for an instance of Rj)
+Assignment edge: Rj → Pi  (an instance of Rj is held by Pi)
+
+DEADLOCK ⟺ RAG has a CYCLE (for single-instance resources)
+For multi-instance: cycle is NECESSARY but not SUFFICIENT.
+Use Banker's/detection algorithm for multi-instance.
+
+Claim edge (in Banker's RAG): Pi --→ Rj (dashed)
+  = Pi MAY request Rj in future (shown in Max matrix)</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.6 -->
+  <section id="s-gate-pagerep" data-search-section="page replacement numericals FIFO LRU optimal clock reference string frames fault count GATE problems">
+    <div class="section-heading">
+      <h2 class="prose">G.6 Page Replacement — Numericals Workshop</h2>
+      <button class="bookmark-btn" data-id="s-gate-pagerep" data-label="G.6 Page Replacement Nums" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Problem 1 — FIFO, LRU, Optimal (3 Frames)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Reference String: 1,2,3,4,1,2,5,1,2,3,4,5 — 3 Frames</span><button class="code-copy">Copy</button></div>
+          <pre><code>Ref:  1   2   3   4   1   2   5   1   2   3   4   5
+
+── FIFO (Queue: oldest → newest) ────────────────────────────
+Frames    1   2   3   4   1   2   5   1   2   3   4   5
+          1   1   1   4*  4   4   5*  5   5   5   4*  4
+              2   2   2   1*  1   1   1   2*  2   2   5*
+                  3   3   3   2*  2   2   2   3*  3   3
+Fault?    F   F   F   F   F   F   F   -   -   F   F   F
+Total FIFO faults = 9
+
+── LRU (Replace Least Recently Used) ──────────────────────
+Ref:  1   2   3   4   1   2   5   1   2   3   4   5
+       1   1   1   4   4   4   5   5   5   3   3   3
+           2   2   2   1   1   1   1   1   1   4   4
+               3   3   3   2   2   2   2   2   2   5
+Fault? F   F   F   F   F   F   F   -   -   F   F   F
+Total LRU faults = 10
+
+Trace: At ref=4, frames={1,2,3}, LRU=1 → replace 1.
+       At ref=1, frames={4,2,3}, LRU=2 → replace 2.
+       At ref=2, frames={4,1,3}, LRU=3 → replace 3.
+       At ref=5, frames={4,1,2}, LRU=4 → replace 4.
+       At ref=3, frames={5,1,2}, LRU=5 → replace 5. (was used at pos 7)
+       At ref=4, frames={3,1,2}, LRU=1 → replace 1.
+       At ref=5, frames={3,4,2}, 5 is NOT in frames but LRU=2 → replace 2.
+       Total: 10 faults.
+
+── OPTIMAL (Replace furthest future use) ──────────────────
+Ref:  1   2   3   4   1   2   5   1   2   3   4   5
+       1   1   1   1   1   1   1   1   1   1   4   4
+           2   2   2   2   2   2   2   2   2   2   5
+               3   4   4   4   5   5   5   3   3   3
+Fault? F   F   F   F   -   -   F   -   -   F   F   F
+Total Optimal faults = 7
+
+Trace: At ref=4, frames={1,2,3}. Next use: 1→pos4, 2→pos5, 3→pos9.
+       Replace 3 (farthest). At ref=5, frames={1,2,4}. Next: 1→pos7, 2→pos8, 4→pos10.
+       Replace 4. At ref=3, frames={1,2,5}. Next: 1→never, 2→never, 5→pos11.
+       Replace 1. At ref=4, frames={3,2,5}. Next: 2→never, 5→pos11, 3→never.
+       Replace 2 (or 3, both never; pick first). Total: 7 faults.</code></pre>
+        </div>
+        <h3>Problem 2 — Bélády's Anomaly (FIFO only)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Reference String: 1,2,3,4,1,2,5,1,2,3,4,5</span><button class="code-copy">Copy</button></div>
+          <pre><code>With 3 frames: FIFO → 9 faults
+With 4 frames: FIFO → 10 faults  ← MORE faults with more frames!
+
+This is Bélády's Anomaly — unique to FIFO.
+LRU and Optimal NEVER exhibit this (they are "stack algorithms"):
+  Stack property: set of pages with n frames ⊆ set with n+1 frames
+  FIFO violates this property → anomaly possible.</code></pre>
+        </div>
+        <h3>Problem 3 — LRU with Stack Trace</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Reference String: 7,0,1,2,0,3,0,4 — 4 Frames (LRU)</span><button class="code-copy">Copy</button></div>
+          <pre><code>Ref:   7    0    1    2    0    3    0    4
+Stack (top=MRU, bottom=LRU):
+       [7]  [0   [1   [2   [0   [3   [0   [4
+            7]   0    1    2    0    3    0
+                 7]   0    1    2    0    3
+                      7]   7]   1    2    2
+
+Fault? F    F    F    F    -    F    -    F
+                                          Replace LRU=7(not in top 4)
+
+Total LRU faults = 6
+Evicted at ref 4: bottom of stack = 7 (LRU victim)</code></pre>
+        </div>
+        <h3>GATE Approach: Step-by-Step Page Fault Counting</h3>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div>
+            <ol style="margin:0 0 0 16px">
+              <li>Draw a table: rows = frames, columns = each reference</li>
+              <li>Mark <strong>F</strong> when the referenced page is NOT in any current frame</li>
+              <li>When fault occurs: apply replacement rule (FIFO/LRU/OPT)</li>
+              <li>Count all F marks = total page faults</li>
+              <li>Quick check: first k references (k = frame count) are always faults</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.7 -->
+  <section id="s-gate-disk" data-search-section="disk scheduling numericals FCFS SSTF SCAN C-SCAN LOOK total head movement worked GATE problems">
+    <div class="section-heading">
+      <h2 class="prose">G.7 Disk Scheduling — Numericals Workshop</h2>
+      <button class="bookmark-btn" data-id="s-gate-disk" data-label="G.7 Disk Numericals" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Problem — All Algorithms (Standard GATE Problem)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Queue: 176, 79, 34, 60, 92, 11, 41, 114 | Head=50 | Max cylinder=199</span><button class="code-copy">Copy</button></div>
+          <pre><code>── FCFS ───────────────────────────────────────────────────────────────
+Order: 50→176→79→34→60→92→11→41→114
+Movement: |176-50|+|79-176|+|34-79|+|60-34|+|92-60|+|11-92|+|41-11|+|114-41|
+        =  126   +  97    +  45   +  26   +  32   +  81   +  30   +  73
+        = 510 cylinders
+
+── SSTF ───────────────────────────────────────────────────────────────
+From 50, always pick nearest:
+50→41(9)→34(7)→11(23)→60(49)→79(19)→92(13)→114(22)→176(62)
+Total = 9+7+23+49+19+13+22+62 = 204 cylinders
+
+── SCAN (moving right, toward higher cylinders) ─────────────────────
+Sorted right of 50: 60,79,92,114,176  → go to 199 (end)
+Then sweep left: 41,34,11
+50→60→79→92→114→176→199→41→34→11
+Movement:
+  50→199 = 149 (right sweep through 60,79,92,114,176)
+  199→11 = 188 (left sweep through 41,34)
+Total = 149 + 188 = 337 cylinders
+
+WAIT — SCAN goes to end (199) then reverses. But we only service
+requests in each direction, not every cylinder:
+50→60(10)→79(19)→92(13)→114(22)→176(62)→199(23)→41(158)→34(7)→11(23)
+= 10+19+13+22+62+23+158+7+23 = 337 ✅
+
+── C-SCAN (one direction only, jump to 0 after end) ─────────────────
+50→60→79→92→114→176→[jump 0]→11→34→41
+Right: 50→60(10)→79(19)→92(13)→114(22)→176(62) → reach 199(23)
+Jump: 199→0 (not counted as service, but head moves)
+Left to right: 0→11(11)→34(23)→41(7)
+Total SERVICE movement = 10+19+13+22+62 + 23 + [jump] + 11+23+7
+Typically: 389 cylinders total (jump included) or 190 (jump excluded, without counting 199→0 idle movement)
+
+── LOOK (like SCAN but go only to last request, not disk end) ────────
+50→60→79→92→114→176→41→34→11
+= 10+19+13+22+62+135+7+23 = 291 cylinders
+(No wasted movement to cylinder 199)</code></pre>
+        </div>
+        <h3>Summary Table</h3>
+        <table>
+          <thead><tr><th>Algorithm</th><th>Total Movement</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>FCFS</td><td>510</td><td>Worst — no optimization</td></tr>
+            <tr><td>SSTF</td><td>204</td><td>Good but starvation risk</td></tr>
+            <tr><td>SCAN</td><td>337</td><td>Goes to disk end (199), then reverses</td></tr>
+            <tr><td>LOOK</td><td>291</td><td>Only to last request (176) — better than SCAN</td></tr>
+            <tr><td>C-SCAN</td><td>389 (with jump) / 190 (without jump)</td><td>Convention: state whether 199→0 jump is counted</td></tr>
+            <tr><td>C-LOOK</td><td>321 (with jump) / 156 (without jump)</td><td>One-direction LOOK; jump from 176→11</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>GATE Exam Tip:</strong> For SCAN/LOOK, always sort pending requests first. Split into: those <em>in the direction of travel</em> (service first) and those <em>behind head</em> (service on return). Draw a number line and trace the head movement visually.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.8 -->
+  <section id="s-gate-io" data-search-section="I/O systems device management DMA polling interrupts device driver kernel buffering spooling">
+    <div class="section-heading">
+      <h2 class="prose">G.8 I/O Systems &amp; Device Management</h2>
+      <button class="bookmark-btn" data-id="s-gate-io" data-label="G.8 I/O Systems" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>I/O Hardware Basics</h3>
+        <table>
+          <thead><tr><th>Component</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Port</strong></td><td>Connection point for device (USB port, serial port)</td></tr>
+            <tr><td><strong>Bus</strong></td><td>Shared communication channel (PCIe, SATA, USB)</td></tr>
+            <tr><td><strong>Controller</strong></td><td>Electronic component that operates the device (disk controller, USB controller)</td></tr>
+            <tr><td><strong>Registers</strong></td><td>Data, status, command registers in each device controller — CPU reads/writes these</td></tr>
+          </tbody>
+        </table>
+        <h3>Three I/O Methods</h3>
+        <table>
+          <thead><tr><th>Method</th><th>How</th><th>CPU usage</th><th>Use case</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Polling (Busy Wait)</strong></td><td>CPU constantly checks device status register in a loop until done</td><td>100% (wasted)</td><td>Simple, low-latency devices (game controllers)</td></tr>
+            <tr><td><strong>Interrupt-Driven I/O</strong></td><td>CPU issues I/O request and continues other work. Device interrupts CPU when done.</td><td>Low (CPU free during I/O)</td><td>General purpose — keyboards, disk, network</td></tr>
+            <tr><td><strong>DMA (Direct Memory Access)</strong></td><td>CPU programs DMA controller with source, destination, count. DMA transfers data directly to/from RAM. Interrupts CPU when transfer or block completes.</td><td>Very low (one interrupt per block transfer)</td><td>High-speed bulk transfer: disks, network, GPU</td></tr>
+          </tbody>
+        </table>
+        <h3>DMA — How It Works</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">DMA Transfer Sequence</span><button class="code-copy">Copy</button></div>
+          <pre><code>1. CPU sets up DMA: source=disk_sector, dest=RAM[0x1000], count=512 bytes
+2. CPU triggers DMA transfer and returns to other work
+3. DMA controller takes over bus, transfers data block-by-block
+   (CPU cannot use bus during DMA transfer — "cycle stealing")
+4. DMA completes → sends interrupt to CPU
+5. CPU handles interrupt: data is ready in RAM at 0x1000
+6. CPU processes data normally
+
+DMA reduces interrupts from frequent CPU intervention (programmed I/O)
+to one interrupt per block transfer → major speedup!</code></pre>
+        </div>
+        <h3>Kernel I/O Subsystem</h3>
+        <table>
+          <thead><tr><th>Feature</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>I/O Scheduling</strong></td><td>OS queues I/O requests and reorders them (like disk scheduling) for efficiency</td></tr>
+            <tr><td><strong>Buffering</strong></td><td>Store data in buffer while transferring between devices of different speeds. Types: Single, Double, Circular buffer.</td></tr>
+            <tr><td><strong>Caching</strong></td><td>Keep copy of frequently used data in faster storage (RAM). I/O cache = page cache.</td></tr>
+            <tr><td><strong>Spooling</strong></td><td>Hold output for device that cannot accept interleaved data streams (e.g., printer). Each job queued as a file, printed sequentially.</td></tr>
+            <tr><td><strong>Error Handling</strong></td><td>Retry transient errors, report permanent errors (ECC, bad block remapping)</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>GATE Key Points:</strong> DMA reduces CPU overhead for bulk transfers. Interrupts are more efficient than polling for slow devices. Spooling uses disk as buffer for printer — enables multiprogramming with a single printer. Double buffering: one buffer fills while other is processed — eliminates wait at producer/consumer speed mismatch.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.9 -->
+  <section id="s-gate-security" data-search-section="protection security access matrix ACL capability list access control principle least privilege authentication threats">
+    <div class="section-heading">
+      <h2 class="prose">G.9 Protection &amp; Security</h2>
+      <button class="bookmark-btn" data-id="s-gate-security" data-label="G.9 Protection & Security" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <h3>Protection vs Security</h3>
+        <table>
+          <thead><tr><th>Concept</th><th>Definition</th><th>Enforced by</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Protection</strong></td><td>Mechanisms controlling access of processes/users to resources defined by the OS</td><td>Access matrix, file permissions, privilege rings</td></tr>
+            <tr><td><strong>Security</strong></td><td>Defense against external/internal attacks — ensure authenticity, integrity, confidentiality</td><td>Authentication, encryption, auditing</td></tr>
+          </tbody>
+        </table>
+        <h3>Access Matrix</h3>
+        <div class="def-box">
+          <div class="def-term">Access Matrix</div>
+          A 2D matrix where rows = subjects (users/processes) and columns = objects (files, devices, processes). Each cell lists allowed operations (read, write, execute, delete, etc.).
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Access Matrix Example</span><button class="code-copy">Copy</button></div>
+          <pre><code>           File F1    File F2    Printer P   Process P1
+User A     read,write  read       print        —
+User B     read        read,write  —           send signal
+User C      —          read        print       receive signal
+
+Implementation:
+  ACL (Access Control List): Store by COLUMN → for each object, list users+rights
+    F1: { A: r,w;  B: r }
+    F2: { A: r;    B: r,w;  C: r }
+  
+  Capability List: Store by ROW → for each user, list objects+rights
+    User A: { F1:r,w;  F2:r;  P:print }
+    
+  ACL → easy to revoke all access to one file (just delete its column)
+  Capabilities → easy to list all a user's rights (just their row)</code></pre>
+        </div>
+        <h3>Principles of Security</h3>
+        <table>
+          <thead><tr><th>Principle</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Least Privilege</strong></td><td>Every process/user gets minimum rights needed for their task</td></tr>
+            <tr><td><strong>Separation of Privilege</strong></td><td>Require multiple conditions (e.g., 2-factor auth) before granting access</td></tr>
+            <tr><td><strong>Economy of Mechanism</strong></td><td>Keep security mechanisms simple — complexity breeds bugs</td></tr>
+            <tr><td><strong>Complete Mediation</strong></td><td>Every access to every object must be checked — no bypass</td></tr>
+            <tr><td><strong>Fail-Safe Defaults</strong></td><td>Default = deny access. Explicitly grant, never explicitly deny.</td></tr>
+          </tbody>
+        </table>
+        <h3>Common Threats &amp; Attacks</h3>
+        <table>
+          <thead><tr><th>Attack</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Trojan Horse</strong></td><td>Malicious code hidden inside a legitimate program</td></tr>
+            <tr><td><strong>Trap Door / Backdoor</strong></td><td>Secret entry point into a system inserted by developer, bypasses normal authentication</td></tr>
+            <tr><td><strong>Buffer Overflow</strong></td><td>Writing past end of buffer into adjacent memory — can overwrite return address to execute arbitrary code</td></tr>
+            <tr><td><strong>Denial of Service (DoS)</strong></td><td>Overwhelm system resources so legitimate users can't access service</td></tr>
+            <tr><td><strong>Man-in-the-Middle</strong></td><td>Attacker intercepts and possibly alters communication between two parties</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.10 -->
+  <section id="s-gate-pyqs" data-search-section="GATE previous year questions 2019 2020 2021 2022 2023 2024 solved OS operating systems MCQ">
+    <div class="section-heading">
+      <h2 class="prose">G.10 GATE-Style / PYQ-Inspired Solved Problems</h2>
+      <button class="bookmark-btn" data-id="s-gate-pyqs" data-label="G.10 GATE Problems" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>[GATE-Style] Consider processes P1(AT=0, BT=8), P2(AT=1, BT=4), P3(AT=2, BT=2) using SRTF. Average TAT = ?</strong></div>
+          <details class="mcq-ans">
+            <summary>View Solution</summary>
+            <div>
+              <strong>Gantt Chart (SRTF — preempt on shorter arrival):</strong>
+              <div class="code-block" style="margin:8px 0"><div class="code-header"><span class="code-lang">SRTF Simulation</span><button class="code-copy">Copy</button></div>
+              <pre><code>t=0: P1 arrives, runs (BT=8)
+t=1: P2 arrives (BT=4), P1 remaining=7 → P2 shorter → preempt P1, run P2
+t=2: P3 arrives (BT=2), P2 remaining=3 → P3 shorter → preempt P2, run P3
+t=4: P3 done. P2 remaining=3, P1 remaining=7 → run P2
+t=7: P2 done. P1 remaining=7 → run P1
+t=14: P1 done.
+
+CT: P1=14, P2=7, P3=4
+TAT: P1=14-0=14, P2=7-1=6, P3=4-2=2
+Avg TAT = (14+6+2)/3 = 22/3 ≈ 7.33</code></pre></div>
+            </div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>[GATE 2022] A system has 3 page frames. Reference string: 1,2,3,4,2,1,5,6,2,1,2,3,7,6,3,2,1,2,3,6. Number of page faults using FIFO?</strong></div>
+          <details class="mcq-ans">
+            <summary>View Solution</summary>
+            <div><strong>Answer: 16 page faults</strong><br>Trace carefully through all 20 references with FIFO eviction. First 3 references (1,2,3) always miss. Reference 4 → evict 1 (oldest). Reference 2 → hit. Reference 1 → MISS (was evicted) → evict 2. And so on. For this classic string, FIFO gives 16 total faults over 20 accesses = 80% miss rate. Full trace in 5 minutes on paper using the frame-table method.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>[GATE 2021] A disk has 200 cylinders (0–199). Requests: 55, 58, 39, 18, 90, 160, 150, 38, 184. Head at 64, moving toward lower. Algorithm: LOOK. Total head movement?</strong></div>
+          <details class="mcq-ans">
+            <summary>View Solution</summary>
+            <div>
+              <strong>LOOK — moving left first (toward lower):</strong>
+              <div class="code-block" style="margin:8px 0"><div class="code-header"><span class="code-lang">LOOK Trace</span><button class="code-copy">Copy</button></div>
+              <pre><code>Sort all requests: 18, 38, 39, 55, 58, 90, 150, 160, 184
+Head at 64, moving LEFT:
+  Left side (≤ 64, descending): 58, 55, 39, 38, 18
+  Right side (> 64, ascending): 90, 150, 160, 184
+
+Service order: 64→58(6)→55(3)→39(16)→38(1)→18(20)→[reverse]→90(72)→150(60)→160(10)→184(24)
+Total = 6+3+16+1+20+72+60+10+24 = 212 cylinders</code></pre></div>
+              <strong>Answer: 212 cylinders</strong>
+            </div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>[GATE 2020] Which of the following is TRUE about semaphores?</strong><br>
+            A. A binary semaphore is the same as a mutex<br>
+            B. The wait() operation on a semaphore may block the calling process<br>
+            C. The signal() operation never unblocks a process<br>
+            D. Semaphores can only be initialized to 0 or 1</div>
+          <details class="mcq-ans">
+            <summary>View Solution</summary>
+            <div><strong>Answer: B</strong><br>wait(S): if S ≤ 0, the calling process is added to the semaphore's waiting queue and blocks. A is false — binary semaphore has no ownership; mutex does. C is false — signal() unblocks waiting processes when S was ≤ 0. D is false — counting semaphores can be initialized to any non-negative integer.</div>
+          </details>
+        </div>
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>[GATE 2019] A system uses 2-level page table. Virtual address: 12-bit page number (split 6+6), 12-bit offset. Page size = 4KB, PTE size = 4 bytes. Memory required for page table of process using 1 MB virtual space = ?</strong></div>
+          <details class="mcq-ans">
+            <summary>View Solution</summary>
+            <div>
+              <strong>Answer: 1280 bytes = 1.25 KB (counting only used entries)</strong>
+              <div class="code-block" style="margin:8px 0"><div class="code-header"><span class="code-lang">2-Level PT Memory Calculation</span><button class="code-copy">Copy</button></div>
+              <pre><code>Virtual space used: 1 MB = 2^20 bytes
+Page size: 4 KB = 2^12 bytes
+Pages needed: 2^20 / 2^12 = 2^8 = 256 pages
+
+Outer page table: 2^6 = 64 entries × 4 bytes = 256 bytes (always allocated)
+Inner page tables needed: 256 pages / 2^6 entries per inner table = 4 inner tables
+Each inner table: 2^6 = 64 entries × 4 bytes = 256 bytes
+Total inner: 4 × 256 = 1024 bytes = 1 KB
+
+Total = 256 + 1024 = 1280 bytes = 1.25 KB
+
+Convention note:
+  If page tables must occupy full 4 KB frames:
+    1 outer frame + 4 inner frames = 5 × 4 KB = 20 KB
+  If only entry bytes are counted: 1280 bytes
+  State your assumption. GATE usually expects entry-only count.
+(vs 16 MB for flat page table of full 24-bit virtual space!)</code></pre></div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.★ -->
+  <section id="s-gate-cheat" data-search-section="cheat sheet quick revision one page summary all units OS exam last minute">
+    <div class="section-heading">
+      <h2 class="prose">G.★ Unit Cheat Sheets — Last-Minute Revision</h2>
+      <button class="bookmark-btn" data-id="s-gate-cheat" data-label="G.★ Cheat Sheets" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE</div>
+      <div class="prose">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 1 — OS Intro Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>OS Types: Batch→Multiprogramming→Time-sharing→Real-time→Distributed
+Kernel Types: Monolithic(Linux) | Microkernel(Mach) | Hybrid(Windows) | Exokernel
+System calls: trap → kernel mode → execute → return user mode
+Interrupt: hardware async. Trap: software sync (int 0x80 / syscall)
+Process states: New→Ready→Running→Waiting→Terminated
+PCB stores: PID, state, PC, registers, memory maps, open files, priority</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 2 — Scheduling Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>TAT = CT − AT | WT = TAT − BT | Response = first_cpu − AT
+SJF: optimal avg WT (non-preemptive). SRTF: optimal avg WT (preemptive).
+RR with quantum Q: good response time; avg TAT > SJF
+Priority: aging prevents starvation. MLFQ: demote on full quantum.
+Convoy effect: FCFS problem — long job blocks short jobs
+Thread vs Process: threads share heap/code/data/files; own stack/registers/PC</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 3 — Synchronization Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>Critical section: Mutual Exclusion + Progress + Bounded Waiting
+Peterson's: turn + flag[] → software, for 2 processes only
+Semaphore: wait()=P=down | signal()=V=up
+Binary semaphore ≠ mutex (ownership difference)
+P-C: mutex=1, empty=N, full=0. Order: wait(empty/full) THEN wait(mutex)!
+Monitors: implicit mutex; condition variables: wait(), notify(), notifyAll()
+Deadlock in sync: wrong wait() order in bounded buffer</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 4 — Deadlocks Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>Coffman: ME + H&W + No-Preemption + Circular Wait (ALL 4 needed)
+RAG: cycle = deadlock (1-instance). Cycle ≠ deadlock (multi-instance).
+Prevention: break one Coffman condition (e.g., force resource ordering)
+Avoidance: Banker's — only grant if resulting state is safe
+Need = Max − Allocation | Available = Total − ΣAllocation
+Safety: find process with Need ≤ Work; add Allocation to Work; repeat
+Recovery: terminate process OR preempt resource (rollback)</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 5 — Memory Management Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>Address binding: Compile < Load < Execution time (modern OS = execution)
+Physical = Base + Logical | Check: Logical < Limit
+Paging: no external frag. Segmentation: no internal frag.
+Page bits: p = addr/pgsize, d = addr%pgsize; Physical = PT[p]*pgsize + d
+TLB EAT = α(t+m) + (1-α)(t+2m)   [α=hit rate]
+Page fault EAT = (1-p)m + p*s    [p=fault rate, s=service time]
+Replacement: OPT<LRU<FIFO(faults). Only FIFO has Bélády's anomaly.
+Thrashing: process spends more time paging than executing. Fix: working set / PFF.
+(No fixed % threshold; it means useful work is overwhelmed by paging I/O.)</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Unit 6 — File Systems Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <pre><code>FCB/inode: stores all metadata EXCEPT file name (name in directory)
+Allocation: Contiguous(ext+direct O(1)) | Linked(FAT32, no direct) | Indexed(inode, best)
+Inode: 12 direct + 1 single + 1 double + 1 triple indirect
+Max size = D×B + N×B + N²×B + N³×B   (N=B/P, P=ptr size; use problem's value)
+Free space: bitmap (fast+contiguous) > linked list (space-efficient)
+Disk scheduling (no universal ranking; depends on workload):
+  FCFS: simplest | SSTF: good seek, starvation risk | SCAN/C-SCAN: fairer
+  LOOK/C-LOOK: avoids travel to disk ends. State jump-count convention!
+RAID: 0=speed, 1=mirror, 5=(N-1)/N+parity, 6=(N-2)/N+2parity
+VFS: unified interface; inode/dentry/file/superblock objects</code></pre>
+        </div>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>Exam Day Strategy:</strong> (1) Read all questions first — 2 minutes. (2) Solve MCQs you're confident about first. (3) For numericals: write given, formula, substitute — show work. (4) For scheduling: always draw Gantt chart. (5) For Banker's: always compute Need matrix first. (6) Flag uncertain answers and revisit. (7) Never leave any MCQ blank — eliminate and guess if needed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
+
+  <!-- SECTION G.★★ — LAST NIGHT REVISION CARD -->
+  <section id="s-gate-revision" data-search-section="last night revision cheat sheet formula quick reference all formulas GATE summary one page">
+    <div class="section-heading">
+      <h2 class="prose">G.★★ Last-Night Revision Card — All Formulas</h2>
+      <button class="bookmark-btn" data-id="s-gate-revision" data-label="G.★★ Revision Card" title="Bookmark">🔖</button>
+    </div>
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE — Print This Page!</div>
+      <div class="prose">
+        <h3>🔢 CPU Scheduling Formulas</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">CPU Scheduling — Quick Reference</span><button class="code-copy">Copy</button></div>
+          <pre><code>TAT = CT - AT        (Turnaround = Completion - Arrival)
+WT  = TAT - BT       (Waiting = Turnaround - Burst)
+RT  = First_CPU - AT  (Response = First execution - Arrival)
+
+Throughput = Total_Processes / Total_Time
+CPU Utilization = 1 - (Idle_Time / Total_Time)
+
+RR: Max wait = (n-1) × q   [n=processes, q=quantum]
+    CPU efficiency = q/(q+s)  [s=context switch time]
+
+fork(): n sequential forks → 2ⁿ processes
+SRTF: Optimal avg WT (preemptive), may starve long processes
+SJF/SRTF: Starvation possible. Solution: Aging.
+FCFS: Convoy effect (short jobs stuck behind long one)</code></pre>
+        </div>
+
+        <h3>🧠 Memory Management Formulas</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Memory — Quick Reference</span><button class="code-copy">Copy</button></div>
+          <pre><code>Physical Addr = Base + Logical (contiguous)
+Paging: p = addr/page_size, d = addr%page_size
+Physical = PageTable[p] × page_size + d
+
+Page table entries = 2^(addr_bits) / 2^(offset_bits)
+Page table size = entries × entry_size
+
+EAT (single-level + TLB):
+  = α(t+m) + (1-α)(t+2m)     [α=hit rate, t=TLB, m=memory]
+
+EAT (n-level + TLB):
+  = α(t+m) + (1-α)(t+(n+1)m)  [n=paging levels]
+
+EAT with page faults:
+  = (1-p)×m + p×fault_time    [p=page fault rate]
+
+Internal frag (paging): avg = page_size/2, max = page_size-1
+Frames saved by sharing = (N-1) × code_pages
+
+Inverted PT size = physical_frames × entry_size
+Multi-level: entries_per_page = page_size / PTE_size
+Levels needed = ⌈page_number_bits / bits_per_level⌉</code></pre>
+        </div>
+
+        <h3>🔒 Synchronization &amp; Deadlock Formulas</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Sync & Deadlock — Quick Reference</span><button class="code-copy">Copy</button></div>
+          <pre><code>Semaphore: wait(S) → S--; if S<0 block.  signal(S) → S++; wake one.
+Binary semaphore: 0 or 1. Counting: 0 to N.
+Mutex ≈ binary semaphore + ownership (only locker can unlock).
+Semaphore conventions:
+  Abstract (Dijkstra): S can go negative (counts waiters).
+  API-level (POSIX): S is non-negative; waiters stored in queue.
+  For GATE: follow the convention used in the question.
+Bounded buffer: empty + full = N (always)
+
+Deadlock: 4 conditions (ALL must hold):
+  1. Mutual Exclusion  2. Hold & Wait
+  3. No Preemption     4. Circular Wait
+
+Min resources to prevent deadlock (single type):
+  R ≥ P × (N-1) + 1    [P=processes, N=max need each]
+
+Banker's: Need = Max - Allocation
+  Safety: Work=Available, find Need[i]≤Work, Work+=Alloc[i]
+
+RAG: Single instance → cycle = deadlock
+     Multi-instance → cycle ≠ guaranteed deadlock</code></pre>
+        </div>
+
+        <h3>💾 File System &amp; Disk Formulas</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">File & Disk — Quick Reference</span><button class="code-copy">Copy</button></div>
+          <pre><code>Disk Access = Seek Time + Rotational Latency + Transfer Time
+Avg Rotational Latency = 60/(2×RPM) seconds
+Total Head Movement = Σ |pos[i+1] - pos[i]|
+
+Inode direct blocks: 12 × block_size
+Single indirect: (block_size/ptr_size) × block_size
+Double indirect: (block_size/ptr_size)² × block_size
+Triple indirect: (block_size/ptr_size)³ × block_size
+Max file size = sum of all above
+
+RAID 5: Usable = (N-1)/N, tolerates 1 disk failure
+RAID 6: Usable = (N-2)/N, tolerates 2 disk failures</code></pre>
+        </div>
+
+        <h3>📋 Top 20 GATE OS Facts</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Must-Know Facts for GATE</span><button class="code-copy">Copy</button></div>
+          <pre><code> 1. Paging eliminates EXTERNAL frag; introduces INTERNAL frag
+ 2. Segmentation eliminates INTERNAL frag; introduces EXTERNAL frag
+ 3. LRU & Optimal: NO Bélády's Anomaly. FIFO: YES.
+ 4. Optimal page replacement needs FUTURE knowledge → benchmark only
+ 5. Timer interrupt → CPU protection (prevents infinite loops)
+ 6. All I/O instructions are PRIVILEGED (kernel mode only)
+ 7. fork() returns 0 to child, child PID to parent
+ 8. Trap is SYNCHRONOUS; Hardware interrupt is ASYNCHRONOUS
+ 9. Context switch time is PURE OVERHEAD (no useful work done)
+10. Mutex ≈ binary semaphore + ownership (locker must unlock)
+11. Monitor signal() with no waiters → NOTHING happens (lost)
+12. Semaphore signal() with no waiters → value INCREMENTED (saved)
+13. Mesa monitors: use WHILE, not IF (re-check condition)
+14. Banker's complexity: O(n² × m)
+15. Working set prevents thrashing; PFF controls frame allocation
+16. TLB must be flushed on context switch (or use ASID tagging)
+17. DMA: one interrupt per block; programmed I/O: frequent CPU involvement
+18. Spooling: disk as buffer for dedicated devices (printer)
+19. Copy-on-Write: fork() is O(1) until first write
+20. Linux uses: CFS scheduler, demand paging, ext4 FS, multi-level PT (4 or 5 levels on x86-64)</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREV/NEXT NAV -->
+  <div class="prev-next">
+    <a href="unit6.html" class="nav-btn">← Unit 6 — Files</a>
+    <a href="../index.html" class="nav-btn primary">🏠 Back to Home</a>
+  </div>
+</div>
+</main>
+<div id="mode-panel">
+  <button class="mode-btn active" data-mode="all">📚 All</button>
+  <button class="mode-btn uni-btn" data-mode="uni">🎓 Uni</button>
+  <button class="mode-btn gate-btn" data-mode="gate">⚡ GATE</button>
+  <button class="mode-btn adv-btn" data-mode="advanced">🔬 Adv</button>
+</div>
+<div id="tts-panel">
+  <div class="tts-controls">
+    <button class="tts-btn" id="tts-play">▶</button>
+    <button class="tts-btn" id="tts-stop">⏹</button>
+    <div class="tts-speed"><span>Speed</span><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1"><span id="tts-rate-label">1.0x</span></div>
+  </div>
+  <div class="tts-voice"><select id="tts-voice-select"><option>Loading…</option></select></div>
+</div>
+<!-- POMODORO WIDGET (Industry Edition) -->
+<div id="pomodoro">
+  <div id="pomo-app"><div id="pomo-card">
+    <div id="pomo-header">
+      <span id="pomo-label" data-phase="work">⏰ FOCUS · #1</span>
+      <div id="pomo-header-actions">
+        <button class="hdr-btn" id="pomo-btn-stats" title="Analytics">📊</button>
+        <button class="hdr-btn" id="pomo-btn-settings" title="Settings">⚙️</button>
+      </div>
+    </div>
+    <div id="pomo-ring-wrap">
+      <svg id="pomo-ring" viewBox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"/>
+        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      </svg>
+      <div id="pomo-time-wrap">
+        <div id="pomo-time">25:00</div>
+        <div aria-live="polite" id="pomo-time-live"></div>
+      </div>
+    </div>
+    <div id="pomo-sessions">
+      <div class="session-dot" id="dot-0"></div><div class="session-dot" id="dot-1"></div>
+      <div class="session-dot" id="dot-2"></div><div class="session-dot" id="dot-3"></div>
+    </div>
+    <div id="pomo-controls">
+      <button class="btn-icon" id="pomo-reset" title="Reset (R)">↺</button>
+      <button id="pomo-start" data-running="0">▶ Start</button>
+      <button class="btn-icon" id="pomo-skip" title="Skip (S)">⏭</button>
+    </div>
+    <div id="pomo-goal-wrap">
+      <div id="pomo-goal-label">
+        <span id="pomo-goal-text">0 / 8 sessions 🔥</span>
+        <span id="pomo-streak">0</span>
+      </div>
+      <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
+    </div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+  </div></div>
+</div>
+<div class="modal" id="pomo-distraction-modal" hidden></div>
+<div class="modal" id="pomo-settings-modal" hidden></div>
+<div class="modal" id="pomo-analytics-modal" hidden></div>
+<div id="pomo-toasts"></div>
+<div id="search-modal">
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="s-icon">🔍</span><input id="search-input" type="text" placeholder="Search topics…" autocomplete="off"></div>
+    <div id="search-results"></div>
+    <div class="search-hint"><span><kbd>↵</kbd> navigate</span><span><kbd>Esc</kbd> close</span><span><kbd>Ctrl+K</kbd> open</span></div>
+  </div>
+</div>
+<nav id="mobile-nav">
+  <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
+  <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
+  <a href="#s-gate-formulas" class="mobile-nav-btn active"><span class="icon">⚡</span>GATE Extra</a>
+  <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
+</nav>
+<div id="toast-container"></div>
+<script src="../assets/js/state.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/modes.js"></script>
+<script src="../assets/js/tts.js"></script>
+<script src="../assets/js/timer-settings.js"></script>      <!-- 1. Settings -->
+<script src="../assets/js/timer.js"></script>                <!-- 2. PomoBus + PomoTimer -->
+<script src="../assets/js/timer-analytics.js"></script>      <!-- 3. Analytics -->
+<script src="../assets/js/timer-notifications.js"></script>  <!-- 4. Notifications -->
+<script src="../assets/js/timer-ui.js"></script>             <!-- 5. UI (bootstraps on DOMContentLoaded) -->
+<script src="../assets/js/print.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/glossary.js"></script>
+</body>
+</html>
