@@ -16,11 +16,11 @@ An interactive, comprehensive study companion for OS covering your **complete un
 | Unit | Topics |
 |---|---|
 | Unit 1 | OS Intro, Types, Kernel Architectures, System Calls, Linux Boot, LKMs, Virtualization, Shell |
-| Unit 2 | Processes, PCB, Threads, IPC, CPU Scheduling (FCFS/SJF/SRTF/RR/Priority) |
-| Unit 3 | Critical Section, Peterson's, TSL & CAS, Semaphores, Monitors, Classical Problems |
-| Unit 4 | Deadlocks, Coffman Conditions, RAG, Wait-For Graph, Banker's Algorithm, Detection & Recovery |
-| Unit 5 | Address Binding, Contiguous Allocation, Swapping, Paging, TLB, Segmentation, Segmented Paging, Virtual Memory, Page Replacement (FIFO/LRU/Optimal/Clock), Thrashing |
-| Unit 6 | File Concepts, Allocation Methods (Contiguous/Linked/Indexed), Free Space, Inodes, Disk Scheduling, RAID, VFS |
+| Unit 2A | Processes, PCB, Threads, IPC, CPU Scheduling (FCFS/SJF/SRTF/RR/Priority) |
+| Unit 2B | Critical Section, Peterson's, TSL & CAS, Semaphores, Monitors, Classical Problems |
+| Unit 2C | Deadlocks, Coffman Conditions, RAG, Wait-For Graph, Banker's Algorithm, Detection & Recovery |
+| Unit 3 | Address Binding, Contiguous Allocation, Swapping, Paging, TLB, Segmentation, Segmented Paging, Virtual Memory, Page Replacement (FIFO/LRU/Optimal/Clock), Thrashing |
+| Unit 4 | File Concepts, Allocation Methods (Contiguous/Linked/Indexed), Free Space, Inodes, Disk Scheduling, RAID, VFS |
 | GATE Extra | Formula Sheet, Advanced Scheduling, Memory, Sync Traps, Numericals, I/O Systems, Protection, PYQs 2019–2024 |
 | Exams | Unit-wise Question Banks, Full-length Mock Papers (University + GATE) |
 

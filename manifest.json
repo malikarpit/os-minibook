@@ -34,27 +34,27 @@
       "description": "OS evolution, kernel types, system calls"
     },
     {
-      "name": "Unit 2 — Processes",
+      "name": "Unit 2A — Processes",
       "url": "./chapters/unit2.html",
       "description": "Process management and CPU scheduling"
     },
     {
-      "name": "Unit 3 — Concurrency",
+      "name": "Unit 2B — Concurrency",
       "url": "./chapters/unit3.html",
       "description": "Threads, synchronization, and concurrency"
     },
     {
-      "name": "Unit 4 — Deadlocks",
+      "name": "Unit 2C — Deadlocks",
       "url": "./chapters/unit4.html",
       "description": "Deadlock prevention, avoidance, and recovery"
     },
     {
-      "name": "Unit 5 — Memory",
+      "name": "Unit 3 — Memory",
       "url": "./chapters/unit5.html",
       "description": "Paging, segmentation, and virtual memory"
     },
     {
-      "name": "Unit 6 — File Systems",
+      "name": "Unit 4 — File Systems",
       "url": "./chapters/unit6.html",
       "description": "File system layout, allocation, and security"
     },

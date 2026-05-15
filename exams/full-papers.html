@@ -77,19 +77,19 @@
       <div class="sidebar-section-label">Navigation</div>
       <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
       <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
-      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 2C — Deadlocks</a>
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-section-label">Unit 5 — Sections</div>
+      <div class="sidebar-section-label">Unit 3 — Sections</div>
       <a href="#s-fp-p1" class="sidebar-link active"><span class="link-icon">📄</span>Paper 1 — University Style</a>
       <a href="#s-fp-p2" class="sidebar-link"><span class="link-icon">⚡</span>Paper 2 — GATE Style</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
       <a href="../chapters/unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
-      <a href="../chapters/unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
-      <a href="../chapters/unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
-      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="../chapters/unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2A — Processes</a>
+      <a href="../chapters/unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 2B — Sync</a>
+      <a href="../chapters/unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 2C — Deadlocks</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -197,7 +197,7 @@ WT:  P1=15, P2=11, P3=15, P4=13  → Avg WT  = 54/4 = 13.5</code></pre></div></d
         <details class="qa-item">
           <summary><strong>Q3.</strong> (a) Explain Peterson's solution to the critical section problem. Prove it satisfies mutual exclusion and bounded waiting. [6] &nbsp; (b) What is priority inversion? How does priority inheritance solve it? [4]</summary>
           <div class="qa-content">
-            <p><strong>(a)</strong> See Unit 3 → Peterson's solution. For mutual exclusion proof: Assume both P0 and P1 are in CS. Then flag[0]=flag[1]=true. P0 in CS means: either flag[1]=false (contradiction) or turn=0 (so P1 was waiting). But P1 also in CS means turn=1. Contradiction — only one can be in CS. Bounded waiting: if Pi wants CS, it sets turn=j. Then Pj enters CS at most once before Pi gets CS (turn changes). ✅</p>
+            <p><strong>(a)</strong> See Unit 2B → Peterson's solution. For mutual exclusion proof: Assume both P0 and P1 are in CS. Then flag[0]=flag[1]=true. P0 in CS means: either flag[1]=false (contradiction) or turn=0 (so P1 was waiting). But P1 also in CS means turn=1. Contradiction — only one can be in CS. Bounded waiting: if Pi wants CS, it sets turn=j. Then Pj enters CS at most once before Pi gets CS (turn changes). ✅</p>
             <p><strong>(b)</strong> Priority inversion: High-priority H blocks waiting for resource held by Low-priority L. Medium-priority M preempts L, running before H effectively. Fix — Priority Inheritance: When H blocks on L's mutex, L temporarily gets H's priority. M cannot preempt L. L finishes, releases resource, H runs. Famous example: Mars Pathfinder (1997) reset loops until priority inheritance was enabled remotely.</p>
           </div>
         </details>
@@ -355,7 +355,7 @@ To survive 2 failures: RAID 6 → N-2=4 → N=6 disks needed.</code></pre></div>
 
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
-    <a href="../chapters/unit4.html" class="nav-btn">← Unit 4 — Deadlocks</a>
+    <a href="../chapters/unit4.html" class="nav-btn">← Unit 2C — Deadlocks</a>
     <a href="../chapters/gate-extra.html" class="nav-btn primary">⚡ GATE Extra →</a>
   </div>
 </div>

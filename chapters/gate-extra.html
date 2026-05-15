@@ -70,9 +70,9 @@
       <div class="sidebar-section-label">Navigation</div>
       <a href="../index.html" class="sidebar-link"><span class="link-icon">🏠</span>Home</a>
       <a href="../progress.html" class="sidebar-link"><span class="link-icon">📊</span>Dashboard</a>
-      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
-      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
-      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 2C — Deadlocks</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 3 — Memory</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 4 — File Systems</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">GATE Extra — Sections</div>
@@ -91,12 +91,12 @@
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
       <a href="unit1.html" class="sidebar-link"><span class="link-icon">🖥️</span>Unit 1 — OS Intro</a>
-      <a href="unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2 — Processes</a>
-      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 3 — Sync</a>
-      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 4 — Deadlocks</a>
+      <a href="unit2.html" class="sidebar-link"><span class="link-icon">⚙️</span>Unit 2A — Processes</a>
+      <a href="unit3.html" class="sidebar-link"><span class="link-icon">🔒</span>Unit 2B — Sync</a>
+      <a href="unit4.html" class="sidebar-link"><span class="link-icon">💀</span>Unit 2C — Deadlocks</a>
     
-      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 5 — Memory</a>
-      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 6 — File Systems</a>
+      <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 3 — Memory</a>
+      <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 4 — File Systems</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -989,7 +989,7 @@ Process states: New→Ready→Running→Waiting→Terminated
 PCB stores: PID, state, PC, registers, memory maps, open files, priority</code></pre>
         </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">Unit 2 — Scheduling Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">Unit 2A — Scheduling Cheat Sheet</span><button class="code-copy">Copy</button></div>
           <pre><code>TAT = CT − AT | WT = TAT − BT | Response = first_cpu − AT
 SJF: optimal avg WT (non-preemptive). SRTF: optimal avg WT (preemptive).
 RR with quantum Q: good response time; avg TAT > SJF
@@ -998,7 +998,7 @@ Convoy effect: FCFS problem — long job blocks short jobs
 Thread vs Process: threads share heap/code/data/files; own stack/registers/PC</code></pre>
         </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">Unit 3 — Synchronization Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">Unit 2B — Synchronization Cheat Sheet</span><button class="code-copy">Copy</button></div>
           <pre><code>Critical section: Mutual Exclusion + Progress + Bounded Waiting
 Peterson's: turn + flag[] → software, for 2 processes only
 Semaphore: wait()=P=down | signal()=V=up
@@ -1008,7 +1008,7 @@ Monitors: implicit mutex; condition variables: wait(), notify(), notifyAll()
 Deadlock in sync: wrong wait() order in bounded buffer</code></pre>
         </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">Unit 4 — Deadlocks Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">Unit 2C — Deadlocks Cheat Sheet</span><button class="code-copy">Copy</button></div>
           <pre><code>Coffman: ME + H&W + No-Preemption + Circular Wait (ALL 4 needed)
 RAG: cycle = deadlock (1-instance). Cycle ≠ deadlock (multi-instance).
 Prevention: break one Coffman condition (e.g., force resource ordering)
@@ -1018,7 +1018,7 @@ Safety: find process with Need ≤ Work; add Allocation to Work; repeat
 Recovery: terminate process OR preempt resource (rollback)</code></pre>
         </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">Unit 5 — Memory Management Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">Unit 3 — Memory Management Cheat Sheet</span><button class="code-copy">Copy</button></div>
           <pre><code>Address binding: Compile < Load < Execution time (modern OS = execution)
 Physical = Base + Logical | Check: Logical < Limit
 Paging: no external frag. Segmentation: no internal frag.
@@ -1030,7 +1030,7 @@ Thrashing: process spends more time paging than executing. Fix: working set / PF
 (No fixed % threshold; it means useful work is overwhelmed by paging I/O.)</code></pre>
         </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">Unit 6 — File Systems Cheat Sheet</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">Unit 4 — File Systems Cheat Sheet</span><button class="code-copy">Copy</button></div>
           <pre><code>FCB/inode: stores all metadata EXCEPT file name (name in directory)
 Allocation: Contiguous(ext+direct O(1)) | Linked(FAT32, no direct) | Indexed(inode, best)
 Inode: 12 direct + 1 single + 1 double + 1 triple indirect
@@ -1180,7 +1180,7 @@ RAID 6: Usable = (N-2)/N, tolerates 2 disk failures</code></pre>
 
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
-    <a href="unit6.html" class="nav-btn">← Unit 6 — Files</a>
+    <a href="unit6.html" class="nav-btn">← Unit 4 — Files</a>
     <a href="../index.html" class="nav-btn primary">🏠 Back to Home</a>
   </div>
 </div>
