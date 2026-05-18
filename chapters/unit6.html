@@ -11,30 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
-.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
-.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
-.mem-os{background:#4f46e5;color:#fff}
-.mem-p1{background:#059669;color:#fff}
-.mem-p2{background:#d97706;color:#fff}
-.mem-p3{background:#dc2626;color:#fff}
-.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
-.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
-.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
-.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit -->
@@ -42,7 +20,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -52,13 +30,13 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
     
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -76,19 +54,19 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 4 — Sections</div>
-      <a href="#s-fs-intro" class="sidebar-link active"><span class="link-icon">📁</span>6.1 File System Intro</a>
-      <a href="#s-fs-concepts" class="sidebar-link"><span class="link-icon">📄</span>6.2 File Concepts</a>
-      <a href="#s-fs-ops" class="sidebar-link"><span class="link-icon">⚙️</span>6.3 File Operations</a>
-      <a href="#s-fs-dir" class="sidebar-link"><span class="link-icon">📂</span>6.4 Directory Structure</a>
-      <a href="#s-fs-alloc" class="sidebar-link"><span class="link-icon">🗂️</span>6.5 Allocation Methods</a>
-      <a href="#s-fs-free" class="sidebar-link"><span class="link-icon">🆓</span>6.6 Free Space Mgmt</a>
-      <a href="#s-fs-impl" class="sidebar-link"><span class="link-icon">🔩</span>6.7 FS Implementation</a>
-      <a href="#s-fs-disk" class="sidebar-link"><span class="link-icon">💿</span>6.8 Disk Scheduling</a>
-      <a href="#s-fs-raid" class="sidebar-link"><span class="link-icon">🛡️</span>6.9 RAID Levels</a>
-      <a href="#s-fs-vfs" class="sidebar-link"><span class="link-icon">🌐</span>6.10 VFS & Modern FS</a>
-      <a href="#s-fs-sec" class="sidebar-link"><span class="link-icon">🔒</span>6.11 Security</a>
-      <a href="#s-fs-case" class="sidebar-link"><span class="link-icon">🖥️</span>6.12 Case Studies</a>
-      <a href="#s-fs-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ &amp; Q&amp;A</a>
+      <a href="#s-fs-intro" class="sidebar-link active"><span class="link-icon">📁</span>4.1 File System Intro</a>
+      <a href="#s-fs-concepts" class="sidebar-link"><span class="link-icon">📄</span>4.2 File Concepts</a>
+      <a href="#s-fs-ops" class="sidebar-link"><span class="link-icon">⚙️</span>4.3 File Operations</a>
+      <a href="#s-fs-dir" class="sidebar-link"><span class="link-icon">📂</span>4.4 Directory Structure</a>
+      <a href="#s-fs-alloc" class="sidebar-link"><span class="link-icon">🗂️</span>4.5 Allocation Methods</a>
+      <a href="#s-fs-free" class="sidebar-link"><span class="link-icon">🆓</span>4.6 Free Space Mgmt</a>
+      <a href="#s-fs-impl" class="sidebar-link"><span class="link-icon">🔩</span>4.7 FS Implementation</a>
+      <a href="#s-fs-disk" class="sidebar-link"><span class="link-icon">💿</span>4.8 Disk Scheduling</a>
+      <a href="#s-fs-raid" class="sidebar-link"><span class="link-icon">🛡️</span>4.9 RAID Levels</a>
+      <a href="#s-fs-vfs" class="sidebar-link"><span class="link-icon">🌐</span>4.10 VFS & Modern FS</a>
+      <a href="#s-fs-sec" class="sidebar-link"><span class="link-icon">🔒</span>4.11 Security</a>
+      <a href="#s-fs-case" class="sidebar-link"><span class="link-icon">🖥️</span>4.12 Case Studies</a>
+      <a href="#s-fs-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ & Q&A</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
@@ -99,6 +77,12 @@
     
       <a href="unit5.html" class="sidebar-link"><span class="link-icon">💾</span>Unit 3 — Memory</a>
       <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Related Units</div>
+      <a href="unit5.html#s-mem-paging" class="sidebar-link"><span class="link-icon">🔗</span>Paging / Virtual Memory (Unit 3)</a>
+      <a href="unit1.html#s-interrupts" class="sidebar-link"><span class="link-icon">🔗</span>DMA &amp; I/O Hardware (Unit 1)</a>
+      <a href="unit4.html#s-dl-detect" class="sidebar-link"><span class="link-icon">🔗</span>Deadlock Detection (Unit 2C)</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -118,9 +102,9 @@
 <div class="content-inner">
   <div class="chapter-hero">
     <div class="chapter-breadcrumb">
-      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 6</span>
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 4</span>
     </div>
-    <div class="chapter-num">📁 Unit 6 · DSC-10</div>
+    <div class="chapter-num">📁 Unit 4 · DSC-10</div>
     <h1 class="chapter-title">File Systems</h1>
     <div class="chapter-meta">
       <span class="meta-tag">🎓 University</span>
@@ -129,30 +113,45 @@
       <span class="meta-tag">Inodes · Disk Scheduling · RAID · VFS</span>
     </div>
   </div>
-  <div class="toc-card">
-    <h3>📋 Table of Contents</h3>
-    <div class="toc-list">
-      <a href="#s-fs-intro" class="toc-item"><span class="toc-num">6.1</span>Introduction to File Systems</a>
-      <a href="#s-fs-concepts" class="toc-item"><span class="toc-num">6.2</span>File Concepts &amp; Attributes</a>
-      <a href="#s-fs-ops" class="toc-item"><span class="toc-num">6.3</span>File Operations &amp; Access Methods</a>
-      <a href="#s-fs-dir" class="toc-item"><span class="toc-num">6.4</span>Directory Structure</a>
-      <a href="#s-fs-alloc" class="toc-item"><span class="toc-num">6.5</span>File Allocation Methods</a>
-      <a href="#s-fs-free" class="toc-item"><span class="toc-num">6.6</span>Free Space Management</a>
-      <a href="#s-fs-impl" class="toc-item"><span class="toc-num">6.7</span>File System Implementation &amp; Inodes</a>
-      <a href="#s-fs-disk" class="toc-item"><span class="toc-num">6.8</span>Disk Scheduling Algorithms</a>
-      <a href="#s-fs-raid" class="toc-item"><span class="toc-num">6.9</span>RAID Levels</a>
-      <a href="#s-fs-vfs" class="toc-item"><span class="toc-num">6.10</span>VFS &amp; Modern File Systems</a>
-      <a href="#s-fs-sec" class="toc-item"><span class="toc-num">6.11</span>Protection &amp; Security</a>
-      <a href="#s-fs-case" class="toc-item"><span class="toc-num">6.12</span>Case Studies: Linux vs Windows</a>
-      <a href="#s-fs-pyq" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+  
+  <div class="callout info" style="margin-bottom:var(--sp-6);border-left:4px solid var(--gate-b)">
+    <span class="callout-icon">🎯</span>
+    <div><strong>After studying this unit you will be able to:</strong>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li>Compare contiguous, linked, and indexed (inode) file allocation — access methods and disk access counts</li>
+        <li>Calculate disk accesses for direct, single, double, triple indirect inode blocks</li>
+        <li>Run all disk scheduling algorithms (FCFS, SSTF, SCAN, LOOK, C-SCAN, C-LOOK) and compute total head movement</li>
+        <li>Compare RAID 0, 1, 5, 6 — capacity ratio, fault tolerance, and write penalty formulas</li>
+        <li>Explain single, double, and circular buffering strategies with use-case comparison</li>
+        <li>Describe the VFS layer architecture and how it enables OS-agnostic file system support</li>
+      </ul>
     </div>
   </div>
 
-  <!-- SECTION 6.1 -->
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-fs-intro" class="toc-item"><span class="toc-num">4.1</span>Introduction to File Systems</a>
+      <a href="#s-fs-concepts" class="toc-item"><span class="toc-num">4.2</span>File Concepts & Attributes</a>
+      <a href="#s-fs-ops" class="toc-item"><span class="toc-num">4.3</span>File Operations & Access Methods</a>
+      <a href="#s-fs-dir" class="toc-item"><span class="toc-num">4.4</span>Directory Structure</a>
+      <a href="#s-fs-alloc" class="toc-item"><span class="toc-num">4.5</span>File Allocation Methods</a>
+      <a href="#s-fs-free" class="toc-item"><span class="toc-num">4.6</span>Free Space Management</a>
+      <a href="#s-fs-impl" class="toc-item"><span class="toc-num">4.7</span>File System Implementation & Inodes</a>
+      <a href="#s-fs-disk" class="toc-item"><span class="toc-num">4.8</span>Disk Scheduling Algorithms</a>
+      <a href="#s-fs-raid" class="toc-item"><span class="toc-num">4.9</span>RAID Levels</a>
+      <a href="#s-fs-vfs" class="toc-item"><span class="toc-num">4.10</span>VFS & Modern File Systems</a>
+      <a href="#s-fs-sec" class="toc-item"><span class="toc-num">4.11</span>Protection & Security</a>
+      <a href="#s-fs-case" class="toc-item"><span class="toc-num">4.12</span>Case Studies: Linux vs Windows</a>
+      <a href="#s-fs-pyq" class="toc-item"><span class="toc-num">★</span>PYQ & Exam Prep</a>
+    </div>
+  </div>
+
+  <!-- SECTION 4.1 -->
   <section id="s-fs-intro" data-search-section="file system introduction purpose structure storage disk block sector">
     <div class="section-heading">
-      <h2 class="prose">6.1 Introduction to File Systems</h2>
-      <button class="bookmark-btn" data-id="s-fs-intro" data-label="6.1 File System Intro" title="Bookmark">🔖</button>
+      <h2 class="prose">4.1 Introduction to File Systems</h2>
+      <button class="bookmark-btn" data-id="s-fs-intro" data-label="4.1 File System Intro" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -176,7 +175,7 @@
           <thead><tr><th>Layer</th><th>Responsibility</th></tr></thead>
           <tbody>
             <tr><td>Application Layer</td><td>open(), read(), write(), close() system calls</td></tr>
-            <tr><td>Logical File System</td><td>File metadata (FCB/inode), directory management, protection</td></tr>
+            <tr><td>Logical File System</td><td>File metadata (FCB/<a href="unit6.html#s-fs-alloc" class="glossary-term" title="Jump to definition">inode</a>), directory management, protection</td></tr>
             <tr><td>File Organization Module</td><td>Translates logical blocks → physical blocks, manages free space</td></tr>
             <tr><td>Basic File System</td><td>Issues read/write commands to device driver for specific blocks</td></tr>
             <tr><td>I/O Control</td><td>Device drivers, interrupt handlers — communicate with hardware</td></tr>
@@ -213,11 +212,11 @@
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.2 -->
+  <!-- SECTION 4.2 -->
   <section id="s-fs-concepts" data-search-section="file concept attributes name type size owner permissions timestamps FCB inode file types">
     <div class="section-heading">
-      <h2 class="prose">6.2 File Concepts &amp; Attributes</h2>
-      <button class="bookmark-btn" data-id="s-fs-concepts" data-label="6.2 File Concepts" title="Bookmark">🔖</button>
+      <h2 class="prose">4.2 File Concepts & Attributes</h2>
+      <button class="bookmark-btn" data-id="s-fs-concepts" data-label="4.2 File Concepts" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -280,11 +279,11 @@
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.3 -->
+  <!-- SECTION 4.3 -->
   <section id="s-fs-ops" data-search-section="file operations open close read write seek truncate sequential random access methods direct indexed">
     <div class="section-heading">
-      <h2 class="prose">6.3 File Operations &amp; Access Methods</h2>
-      <button class="bookmark-btn" data-id="s-fs-ops" data-label="6.3 File Operations" title="Bookmark">🔖</button>
+      <h2 class="prose">4.3 File Operations & Access Methods</h2>
+      <button class="bookmark-btn" data-id="s-fs-ops" data-label="4.3 File Operations" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -362,11 +361,11 @@ Later: read(3, buf, 512)
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.4 -->
+  <!-- SECTION 4.4 -->
   <section id="s-fs-dir" data-search-section="directory structure single level two level tree structured acyclic graph general graph hard link symbolic link path">
     <div class="section-heading">
-      <h2 class="prose">6.4 Directory Structure</h2>
-      <button class="bookmark-btn" data-id="s-fs-dir" data-label="6.4 Directory Structure" title="Bookmark">🔖</button>
+      <h2 class="prose">4.4 Directory Structure</h2>
+      <button class="bookmark-btn" data-id="s-fs-dir" data-label="4.4 Directory Structure" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -379,7 +378,7 @@ Later: read(3, buf, 512)
             <tr><td><strong>Single-Level</strong></td><td>One directory for all files, all users. Flat list.</td><td>Name collisions; no organization for multi-user systems</td></tr>
             <tr><td><strong>Two-Level</strong></td><td>Master directory → per-user directory → files</td><td>No sharing between users; no subdirectories</td></tr>
             <tr><td><strong>Tree-Structured</strong></td><td>Hierarchical tree. Each dir can contain files and subdirs. Absolute/relative paths.</td><td>No sharing of files between dirs (copying needed)</td></tr>
-            <tr><td><strong>Acyclic Graph</strong></td><td>Allow sharing via links — directories can share files. Hard links &amp; symbolic links.</td><td>Dangling pointers with symbolic links; cycles must be prevented</td></tr>
+            <tr><td><strong>Acyclic Graph</strong></td><td>Allow sharing via links — directories can share files. Hard links & symbolic links.</td><td>Dangling pointers with symbolic links; cycles must be prevented</td></tr>
             <tr><td><strong>General Graph</strong></td><td>Allow cycles in directory graph</td><td>Garbage collection needed; traversal may loop infinitely</td></tr>
           </tbody>
         </table>
@@ -390,7 +389,7 @@ Later: read(3, buf, 512)
             <tr><td>Points to</td><td>Inode directly</td><td>Path string (name)</td></tr>
             <tr><td>Inode sharing</td><td>✅ Same inode</td><td>❌ New inode for the link itself</td></tr>
             <tr><td>Cross-filesystem?</td><td>❌ Same FS only</td><td>✅ Can cross file systems</td></tr>
-            <tr><td>If target deleted?</td><td>File survives (ref count &gt; 0)</td><td>Dangling link — broken!</td></tr>
+            <tr><td>If target deleted?</td><td>File survives (ref count > 0)</td><td>Dangling link — broken!</td></tr>
             <tr><td>Can link to directory?</td><td>❌ Not allowed (prevents cycles)</td><td>✅ Yes (carefully)</td></tr>
             <tr><td>Unix command</td><td>ln file link</td><td>ln -s target link</td></tr>
           </tbody>
@@ -434,11 +433,11 @@ For deep paths, many I/Os needed → mitigated by directory cache (dcache)</code
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.5 -->
+  <!-- SECTION 4.5 -->
   <section id="s-fs-alloc" data-search-section="file allocation methods contiguous linked indexed FAT inode direct indirect blocks">
     <div class="section-heading">
-      <h2 class="prose">6.5 File Allocation Methods</h2>
-      <button class="bookmark-btn" data-id="s-fs-alloc" data-label="6.5 Allocation Methods" title="Bookmark">🔖</button>
+      <h2 class="prose">4.5 File Allocation Methods</h2>
+      <button class="bookmark-btn" data-id="s-fs-alloc" data-label="4.5 Allocation Methods" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -530,21 +529,93 @@ For large files: multi-level indexing (indirect blocks)
       <div class="prose">
         <ul>
           <li>Contiguous: sequential + direct access both O(1). Linked: sequential O(1) per step but direct O(n). Indexed: both O(1).</li>
-          <li>GATE formula for inode max file size: if block=B bytes, ptrs per block=B/4, then max = 12B + (B/4)B + (B/4)²B + (B/4)³B.</li>
           <li>FAT = linked allocation with index in RAM. FAT32 supports 4GB max file size (32-bit cluster numbers).</li>
           <li>For indexed allocation, number of disk accesses to read block i: 1 (index) + 1 (data) = 2. For double indirect: 1+1+1=3.</li>
         </ul>
+
+        <h3>inode Max File Size — Complete Formula & Worked Numerical</h3>
+        <div class="formula-box">
+        <div class="formula-label">inode Max File Size Formula (GATE Direct Numerical)</div>
+        Given: Block size = B bytes, Pointer size = 4 bytes (32-bit) or 8 bytes (64-bit)<br>
+        Pointers per block (P) = B / pointer_size<br><br>
+        <strong>Max file size = (12 + P + P² + P³) × B bytes</strong><br><br>
+        Where:<br>
+        → 12 direct pointers: 12 × B<br>
+        → 1 single indirect: P × B<br>
+        → 1 double indirect: P² × B<br>
+        → 1 triple indirect: P³ × B
+        </div>
+
+        <div class="code-block"><div class="code-header"><span class="code-lang">Worked Numerical — inode Max File Size (GATE Level)</span><button class="code-copy">Copy</button></div>
+        <pre><code>Given: Block size = 1 KB = 1024 B, Pointer size = 4 bytes
+
+Step 1: P = B/ptr = 1024/4 = 256 pointers per block
+
+Step 2: Max file size =
+  Direct:         12 × 1 KB = 12 KB
+  Single indirect: 256 × 1 KB = 256 KB
+  Double indirect: 256² × 1 KB = 65,536 KB = 64 MB
+  Triple indirect: 256³ × 1 KB = 16,777,216 KB = 16 GB
+
+  Total ≈ 12 KB + 256 KB + 64 MB + 16 GB ≈ 16 GB ✅
+
+────────────────────────────────────────────────────
+Another common variant: Block = 4 KB, Pointer = 4B
+  P = 4096/4 = 1024 pointers per block
+  Max = (12 + 1024 + 1024² + 1024³) × 4 KB
+      ≈ 4 TB (approximately — triple indirect dominates)
+
+────────────────────────────────────────────────────
+GATE trap: "How many disk accesses to read the 13th block?"
+  Block 0–11: direct (1 access)
+  Block 12 (13th): single indirect → 2 disk accesses
+    (1 to read index block + 1 to read data block)
+  Block 12+P: double indirect → 3 accesses
+  Block 12+P+P²: triple indirect → 4 accesses</code></pre></div>
+
+        <div class="callout warn reveal">
+          <strong>⚠️ Number of Disk Accesses to Reach Block Number n (with no caching):</strong><br>
+          n ∈ [0, 11]: 1 access (direct — pointer in inode itself)<br>
+          n ∈ [12, 12+P−1]: 2 accesses (inode→single-indirect-block→data)<br>
+          n ∈ [12+P, 12+P+P²−1]: 3 accesses (inode→2 levels→data)<br>
+          n ≥ 12+P+P²: 4 accesses (inode→3 levels→data)<br>
+          <em>Note: GATE usually assumes inode is in memory (cached), so subtract 1 access in such questions.</em>
+        </div>
       </div>
     </div>
+    
+
+    <div class="section-summary">
+      <div class="section-summary-label">📌 Section 4.4–4.5 File Allocation — Key Takeaways</div>
+      <ul>
+        <li><strong>Contiguous:</strong> Best seek time, supports direct + sequential access. Suffers external fragmentation; growing files need relocation</li>
+        <li><strong>Linked:</strong> No external frag. Sequential access only (O(n) to reach block n). FAT = linked allocation with table in RAM for speed</li>
+        <li><strong>Indexed (inode):</strong> Direct + random access. inode IS indexed allocation — Unix/Linux inodes use 12 direct + 1 single + 1 double + 1 triple indirect pointers</li>
+        <li><strong>Max file size:</strong> With block size B and pointer size P: Max = 12B + (B/P)B + (B/P)²B + (B/P)³B. For B=4KB, P=4B → Max ≈ 4 GB</li>
+        <li><strong>Disk access count:</strong> Direct block = 1. Single indirect = 2. Double = 3. Triple = 4. Subtract 1 if inode cached in memory</li>
+      </ul>
+    </div>
+
+    <details class="active-recall">
+      <summary>Active Recall: File Allocation Methods</summary>
+      <div class="recall-content">
+        <strong>1. Why is Contiguous Allocation bad for dynamic files?</strong><br>
+        It suffers from external fragmentation, and if a file needs to grow beyond its allocated contiguous space, the entire file must be relocated.<br><br>
+        <strong>2. How many disk accesses are required to read a block using a single indirect pointer?</strong><br>
+        Two accesses: one to read the index block containing the pointers, and one to read the actual data block.<br><br>
+        <strong>3. What is the relationship between indexed allocation and inodes?</strong><br>
+        An inode IS the implementation of indexed allocation in Unix/Linux. The inode stores 12 direct block pointers plus single, double, and triple indirect pointers — exactly the indexed allocation structure.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.6 -->
+  <!-- SECTION 4.6 -->
   <section id="s-fs-free" data-search-section="free space management bit vector bitmap linked list grouping counting free blocks disk">
     <div class="section-heading">
-      <h2 class="prose">6.6 Free Space Management</h2>
-      <button class="bookmark-btn" data-id="s-fs-free" data-label="6.6 Free Space" title="Bookmark">🔖</button>
+      <h2 class="prose">4.6 Free Space Management</h2>
+      <button class="bookmark-btn" data-id="s-fs-free" data-label="4.6 Free Space" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -609,11 +680,11 @@ Hardware word operations (CPU bitwise ops) make this fast!</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.7 -->
+  <!-- SECTION 4.7 -->
   <section id="s-fs-impl" data-search-section="file system implementation inode structure superblock boot block disk layout ext4 NTFS buffer cache">
     <div class="section-heading">
-      <h2 class="prose">6.7 File System Implementation &amp; Inodes</h2>
-      <button class="bookmark-btn" data-id="s-fs-impl" data-label="6.7 FS Implementation" title="Bookmark">🔖</button>
+      <h2 class="prose">4.7 File System Implementation & Inodes</h2>
+      <button class="bookmark-btn" data-id="s-fs-impl" data-label="4.7 FS Implementation" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -670,13 +741,36 @@ Hardware word operations (CPU bitwise ops) make this fast!</code></pre>
           <span class="callout-icon">📌</span>
           <div><strong>sync() / fsync():</strong> Buffer cache means writes may stay in RAM for seconds before hitting disk. sync() flushes ALL dirty buffers to disk. fsync(fd) flushes only one file's buffers. Without fsync, a crash after write() may lose data!</div>
         </div>
-        <h3>Consistency &amp; Journaling</h3>
+        <h3>Consistency & Journaling</h3>
         <p>If the system crashes mid-write, the file system may become inconsistent (e.g., inode updated but bitmap not). Solutions:</p>
         <ul>
           <li><strong>fsck (File System Check):</strong> Scan entire disk at boot to repair inconsistencies. Slow — takes minutes for large disks.</li>
           <li><strong>Journaling (ext3/ext4, NTFS):</strong> Log operations to a journal before applying. On crash, replay journal. Fast recovery — seconds not minutes.</li>
           <li><strong>Copy-on-Write FS (ZFS, Btrfs):</strong> Never overwrite data in place. Write to new location, then update pointer atomically. Always consistent by design.</li>
         </ul>
+
+        <h3 style="margin-top:20px">Journaling Modes (ext4) & Recovery Trace</h3>
+        <p>A file write involves three disk updates: (1) Data block, (2) Inode (metadata), (3) Free bitmap (metadata). Journaling decides the order these are written.</p>
+        <table class="data-table reveal">
+          <thead><tr><th>Mode</th><th>Writing Sequence</th><th>Crash Recovery Result</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>data=writeback</strong></td>
+              <td>1. Log metadata to journal<br>2. Write metadata to FS<br>3. Write data blocks to FS (anytime)</td>
+              <td><strong>Unsafe.</strong> Metadata is consistent, but data blocks might contain old garbage (if data write didn't finish before crash).</td>
+            </tr>
+            <tr>
+              <td><strong>data=ordered</strong><br>(Linux Default)</td>
+              <td>1. Write data blocks to FS<br>2. Log metadata to journal<br>3. Write metadata to FS</td>
+              <td><strong>Safe & Fast.</strong> Ensures data is written <em>before</em> metadata points to it. On crash, metadata is rolled back; no garbage data is exposed.</td>
+            </tr>
+            <tr>
+              <td><strong>data=journal</strong></td>
+              <td>1. Log BOTH data + metadata to journal<br>2. Write BOTH to FS</td>
+              <td><strong>Safest but Slow.</strong> Data is written twice (once to journal, once to disk). Total protection against tearing.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="mode-gate">
@@ -694,11 +788,11 @@ Hardware word operations (CPU bitwise ops) make this fast!</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.8 -->
+  <!-- SECTION 4.8 -->
   <section id="s-fs-disk" data-search-section="disk scheduling FCFS SSTF SCAN C-SCAN LOOK C-LOOK seek time rotational latency seek head movement">
     <div class="section-heading">
-      <h2 class="prose">6.8 Disk Scheduling Algorithms</h2>
-      <button class="bookmark-btn" data-id="s-fs-disk" data-label="6.8 Disk Scheduling" title="Bookmark">🔖</button>
+      <h2 class="prose">4.8 Disk Scheduling Algorithms</h2>
+      <button class="bookmark-btn" data-id="s-fs-disk" data-label="4.8 Disk Scheduling" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -719,8 +813,56 @@ Hardware word operations (CPU bitwise ops) make this fast!</code></pre>
         <p>Seek time dominates → scheduling minimizes head movement = cylinder movements.</p>
         <p><strong>Example queue</strong> (used for all algorithms): Requests at cylinders <strong>98, 183, 37, 122, 14, 124, 65, 67</strong>. Head starts at cylinder <strong>53</strong>.</p>
         <h3>1. FCFS (First-Come First-Served)</h3>
+        
+        <style>
+        .disk-diagram { margin:var(--sp-4) 0; padding:var(--sp-4); background:var(--bg-card); border:1px solid var(--bd-subtle); border-radius:8px; overflow-x:auto; }
+        .disk-diagram svg { min-width:600px; max-width:100%; height:auto; display:block; }
+        .disk-line { stroke:var(--tx-muted); stroke-width:2; }
+        .disk-tick { stroke:var(--tx-muted); stroke-width:2; }
+        .disk-text { fill:var(--tx-muted); font-size:12px; font-family:var(--font-mono); text-anchor:middle; }
+        .disk-path { fill:none; stroke:var(--accent); stroke-width:2; }
+        .disk-dot { fill:var(--bg-main); stroke:var(--accent); stroke-width:3; }
+        .disk-dot.start { fill:var(--accent); }
+        .disk-path-arr { fill:var(--accent); }
+        </style>
+        
+        <div class="disk-diagram">
+          <svg width="600" height="180" viewbox="0 0 600 180">
+            <!-- Axis -->
+            <line x1="20" y1="20" x2="580" y2="20" class="disk-line"></line>
+            <!-- Ticks & Labels -->
+            <!-- 0, 14, 37, 53(start), 65, 67, 98, 122, 124, 183, 199 -->
+            <!-- We map x = 20 + (val/199)*560 -->
+            <g class="disk-tick-group">
+              <line x1="20" y1="15" x2="20" y2="25" class="disk-tick"></line><text x="20" y="10" class="disk-text">0</text>
+              <line x1="59" y1="15" x2="59" y2="25" class="disk-tick"></line><text x="59" y="10" class="disk-text">14</text>
+              <line x1="124" y1="15" x2="124" y2="25" class="disk-tick"></line><text x="124" y="10" class="disk-text">37</text>
+              <line x1="169" y1="15" x2="169" y2="25" class="disk-tick"></line><text x="169" y="10" class="disk-text" style="fill:var(--accent);font-weight:bold">53</text>
+              <line x1="203" y1="15" x2="203" y2="25" class="disk-tick"></line><text x="203" y="10" class="disk-text">65</text>
+              <line x1="209" y1="15" x2="209" y2="25" class="disk-tick"></line><text x="209" y="35" class="disk-text">67</text>
+              <line x1="296" y1="15" x2="296" y2="25" class="disk-tick"></line><text x="296" y="10" class="disk-text">98</text>
+              <line x1="363" y1="15" x2="363" y2="25" class="disk-tick"></line><text x="363" y="10" class="disk-text">122</text>
+              <line x1="369" y1="15" x2="369" y2="25" class="disk-tick"></line><text x="369" y="35" class="disk-text">124</text>
+              <line x1="535" y1="15" x2="535" y2="25" class="disk-tick"></line><text x="535" y="10" class="disk-text">183</text>
+              <line x1="580" y1="15" x2="580" y2="25" class="disk-tick"></line><text x="580" y="10" class="disk-text">199</text>
+            </g>
+            <!-- FCFS Path: 53 -> 98 -> 183 -> 37 -> 122 -> 14 -> 124 -> 65 -> 67 -->
+            <polyline points="169,20 296,40 535,60 124,80 363,100 59,120 369,140 203,160 209,170" class="disk-path"></polyline>
+            
+            <circle cx="169" cy="20" r="4" class="disk-dot start"></circle>
+            <circle cx="296" cy="40" r="4" class="disk-dot"></circle>
+            <circle cx="535" cy="60" r="4" class="disk-dot"></circle>
+            <circle cx="124" cy="80" r="4" class="disk-dot"></circle>
+            <circle cx="363" cy="100" r="4" class="disk-dot"></circle>
+            <circle cx="59" cy="120" r="4" class="disk-dot"></circle>
+            <circle cx="369" cy="140" r="4" class="disk-dot"></circle>
+            <circle cx="203" cy="160" r="4" class="disk-dot"></circle>
+            <circle cx="209" cy="170" r="4" class="disk-dot"></circle>
+          </svg>
+        </div>
+
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">FCFS Trace</span><button class="code-copy">Copy</button></div>
+          <div class="code-header"><span class="code-lang">FCFS Trace Calculation</span><button class="code-copy">Copy</button></div>
           <pre><code>Order: 53→98→183→37→122→14→124→65→67
 Movements: 45+85+146+85+108+110+59+2 = 640 cylinders
 Simple but poor performance — no optimization.</code></pre>
@@ -763,7 +905,7 @@ Total (counting jump): (199−53) + 199 + 37 = 146+199+37 = 382 cylinders.</code
             <tr><td>SSTF</td><td>236</td><td>✅ Yes</td><td>❌ Poor</td><td>Not recommended</td></tr>
             <tr><td>SCAN</td><td>331</td><td>❌ No</td><td>⚠️ Good</td><td>Elevators, HDDs</td></tr>
             <tr><td>C-SCAN</td><td>382</td><td>❌ No</td><td>✅ Uniform</td><td>HDD scheduling</td></tr>
-            <tr><td>C-LOOK</td><td>&lt;C-SCAN</td><td>❌ No</td><td>✅ Good</td><td>Historically used; modern Linux uses mq-deadline, BFQ, etc.</td></tr>
+            <tr><td>C-LOOK</td><td><C-SCAN</td><td>❌ No</td><td>✅ Good</td><td>Historically used; modern Linux uses mq-deadline, BFQ, etc.</td></tr>
           </tbody>
         </table>
         <h3>SSD & NVMe Architecture</h3>
@@ -790,15 +932,38 @@ Total (counting jump): (199−53) + 199 + 37 = 146+199+37 = 382 cylinders.</code
         </ul>
       </div>
     </div>
+
+    <div class="section-summary">
+      <div class="section-summary-label">📌 Section 4.8 Disk Scheduling — Key Takeaways</div>
+      <ul>
+        <li><strong>Total head movement:</strong> Sum of |next − current| for all transitions. GATE numericals require this calculation</li>
+        <li><strong>FCFS:</strong> No starvation. Worst throughput — head zigzags. SSTF: Best average seek time but causes starvation for far requests</li>
+        <li><strong>SCAN vs LOOK:</strong> SCAN goes to disk edge then reverses. LOOK only goes to last request in that direction. LOOK is more efficient</li>
+        <li><strong>C-SCAN vs C-LOOK:</strong> Circular versions — return to start without servicing on the way back. More uniform wait time distribution</li>
+        <li><strong>Optimal order:</strong> C-LOOK ≈ LOOK &gt; C-SCAN ≈ SCAN &gt; SSTF (throughput). For SSDs: use NOOP scheduler — no seek time, scheduling irrelevant</li>
+      </ul>
+    </div>
+
+    <details class="active-recall">
+      <summary>Active Recall: Disk Scheduling</summary>
+      <div class="recall-content">
+        <strong>1. What is the difference between SCAN and LOOK algorithms?</strong><br>
+        SCAN forces the disk head to travel all the way to the very edge of the disk (cylinder 0 or max) before reversing. LOOK is smarter; it only travels as far as the last pending request before reversing — more efficient.<br><br>
+        <strong>2. Why are C-SCAN and C-LOOK considered fairer than SCAN/LOOK?</strong><br>
+        They provide more uniform wait times. The head returns to start without servicing on the return trip, so cylinders near the edges aren't starved compared to those in the middle.<br><br>
+        <strong>3. Why does SSTF cause starvation and how can it be mitigated?</strong><br>
+        SSTF always picks the nearest pending request. If new near requests keep arriving, far requests never get serviced — starvation. Mitigation: aging (increase priority of waiting requests over time).
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.8b — DISK SCHEDULING GATE NUMERICALS -->
+  <!-- SECTION 4.8b — DISK SCHEDULING GATE NUMERICALS -->
   <section id="s-fs-disk-nums" data-search-section="disk scheduling numerical GATE worked example FCFS SSTF SCAN C-SCAN LOOK C-LOOK head movement calculation">
     <div class="section-heading">
-      <h2 class="prose">6.8b Disk Scheduling — GATE Worked Numericals</h2>
-      <button class="bookmark-btn" data-id="s-fs-disk-nums" data-label="6.8b Disk Numericals" title="Bookmark">🔖</button>
+      <h2 class="prose">4.8b Disk Scheduling — GATE Worked Numericals</h2>
+      <button class="bookmark-btn" data-id="s-fs-disk-nums" data-label="4.8b Disk Numericals" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
       <div class="mode-badge gate">⚡ GATE</div>
@@ -875,11 +1040,11 @@ Summary:
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.8c — I/O SUBSYSTEM -->
+  <!-- SECTION 4.8c — I/O SUBSYSTEM -->
   <section id="s-fs-io" data-search-section="I/O subsystem buffering single double circular spooling caching DMA interrupt driven programmed I/O device driver">
     <div class="section-heading">
-      <h2 class="prose">6.8c I/O Subsystem</h2>
-      <button class="bookmark-btn" data-id="s-fs-io" data-label="6.8c I/O Subsystem" title="Bookmark">🔖</button>
+      <h2 class="prose">4.8c I/O Subsystem</h2>
+      <button class="bookmark-btn" data-id="s-fs-io" data-label="4.8c I/O Subsystem" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -918,7 +1083,7 @@ Summary:
           <tbody>
             <tr><td><strong>Purpose</strong></td><td>Speed up repeated access to same data</td><td>Smooth out speed differences between producer/consumer</td></tr>
             <tr><td><strong>Copy?</strong></td><td>Creates a <strong>copy</strong> of data in faster storage</td><td>May be the <strong>only copy</strong> in transit</td></tr>
-            <tr><td><strong>Example</strong></td><td>Page cache, TLB, disk cache</td><td>Kernel I/O buffer, double buffering</td></tr>
+            <tr><td><strong>Example</strong></td><td>Page cache, <a href="unit5.html#s-mem-tlb" class="glossary-term" title="Jump to definition">TLB</a>, disk cache</td><td>Kernel I/O buffer, double buffering</td></tr>
           </tbody>
         </table>
       </div>
@@ -938,11 +1103,11 @@ Summary:
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.9 -->
+  <!-- SECTION 4.9 -->
   <section id="s-fs-raid" data-search-section="RAID levels redundant array independent disks RAID 0 1 5 6 mirroring striping parity fault tolerance">
     <div class="section-heading">
-      <h2 class="prose">6.9 RAID Levels</h2>
-      <button class="bookmark-btn" data-id="s-fs-raid" data-label="6.9 RAID" title="Bookmark">🔖</button>
+      <h2 class="prose">4.9 RAID Levels</h2>
+      <button class="bookmark-btn" data-id="s-fs-raid" data-label="4.9 RAID" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1008,15 +1173,27 @@ Write: must update data block + recalculate parity (2 reads + 2 writes per logic
         </ul>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: RAID</summary>
+      <div class="recall-content">
+        <strong>1. Does RAID 0 provide any fault tolerance?</strong><br>
+        No. RAID 0 is pure striping for performance. If one disk fails, all data is lost.<br><br>
+        <strong>2. What is the "Write Penalty" in RAID 5?</strong><br>
+        To write a single logical block, RAID 5 must perform 4 disk I/O operations: Read old data, read old parity, write new data, write new parity.<br><br>
+        <strong>3. With N=6 disks and D=100 GB each, what is the usable capacity for RAID 5 and RAID 6?</strong><br>
+        RAID 5: (N−1)×D = 5×100 = 500 GB (1 disk for parity). RAID 6: (N−2)×D = 4×100 = 400 GB (2 disks for double parity, tolerates 2 simultaneous disk failures).
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.10 -->
+  <!-- SECTION 4.10 -->
   <section id="s-fs-vfs" data-search-section="VFS virtual file system modern file systems ext4 NTFS APFS ZFS Btrfs NFS network file system mount namespace">
     <div class="section-heading">
-      <h2 class="prose">6.10 VFS &amp; Modern File Systems</h2>
-      <button class="bookmark-btn" data-id="s-fs-vfs" data-label="6.10 VFS" title="Bookmark">🔖</button>
+      <h2 class="prose">4.10 VFS & Modern File Systems</h2>
+      <button class="bookmark-btn" data-id="s-fs-vfs" data-label="4.10 VFS" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1098,11 +1275,11 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.11 -->
+  <!-- SECTION 4.11 -->
   <section id="s-fs-sec" data-search-section="protection security access matrix ACL capabilities authentication encryption firewall malware">
     <div class="section-heading">
-      <h2 class="prose">6.11 Protection &amp; Security</h2>
-      <button class="bookmark-btn" data-id="s-fs-sec" data-label="6.11 Security" title="Bookmark">🔖</button>
+      <h2 class="prose">4.11 Protection & Security</h2>
+      <button class="bookmark-btn" data-id="s-fs-sec" data-label="4.11 Security" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1155,11 +1332,11 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 6.12 -->
+  <!-- SECTION 4.12 -->
   <section id="s-fs-case" data-search-section="case studies linux windows ntfs ext4 scheduling comparison">
     <div class="section-heading">
-      <h2 class="prose">6.12 Case Studies: Linux vs Windows</h2>
-      <button class="bookmark-btn" data-id="s-fs-case" data-label="6.12 Case Studies" title="Bookmark">🔖</button>
+      <h2 class="prose">4.12 Case Studies: Linux vs Windows</h2>
+      <button class="bookmark-btn" data-id="s-fs-case" data-label="4.12 Case Studies" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1203,7 +1380,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
   <!-- SECTION ★ PYQ -->
   <section id="s-fs-pyq" data-search-section="PYQ previous year GATE MCQ university file systems disk scheduling RAID inode allocation">
     <div class="section-heading">
-      <h2 class="prose">★ Unit 6 PYQ &amp; Exam Prep</h2>
+      <h2 class="prose">★ Unit 4 PYQ & Exam Prep</h2>
       <button class="bookmark-btn" data-id="s-fs-pyq" data-label="Unit 6 PYQ" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
@@ -1246,7 +1423,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
       </div>
     </div>
     <div class="mode-gate">
-      <div class="mode-badge gate">⚡ GATE &amp; Competitive</div>
+      <div class="mode-badge gate">⚡ GATE & Competitive</div>
       <div class="prose">
         <h3>GATE Master MCQs</h3>
         <div class="mcq-card">
@@ -1258,7 +1435,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>399</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: A (332)</strong><br>SCAN (disk end = 199, moving right from 50): service 82→140→170→190→[end 199]→reverse→43→24→16. Movement = (199 − 50) + (199 − 16) = 149 + 183 = <strong>332</strong>. Step-by-step check: 50→82(32) →140(58) →170(30) →190(20) →199(9) →43(156) →24(19) →16(8) = <strong>332</strong>.</div>
           </details>
         </div>
@@ -1271,7 +1448,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>66048 bytes</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (66560 bytes)</strong><br>Pointers per block = 512/4 = 128. Direct blocks = 2 × 512 = 1024 bytes. Single indirect = 128 × 512 = 65536 bytes. Total = 1024 + 65536 = <strong>66560 bytes</strong>.</div>
           </details>
         </div>
@@ -1284,7 +1461,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>Both B and C</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: D (Both B and C)</strong><br>Contiguous: sequential O(1) (blocks adjacent), direct O(1) (start + offset). Indexed: sequential O(1) (read index sequentially), direct O(1) (index[i] directly). Linked allocation only supports sequential efficiently — direct access requires O(n) pointer traversal.</div>
           </details>
         </div>
@@ -1297,7 +1474,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>300 GB</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (400 GB)</strong><br>RAID 5 usable capacity = (N−1) × disk_size = (5−1) × 100 = 400 GB. One disk's worth of space is used for distributed parity. The parity is not on one dedicated disk but spread across all 5 disks, so reads are still parallelized.</div>
           </details>
         </div>
@@ -1310,7 +1487,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>64 blocks</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: A (32 blocks)</strong><br>Bitmap size = 2^20 bits = 2^20 / 8 = 131072 bytes = 128 KB. Each block = 4 KB. Blocks needed = 128 KB / 4 KB = <strong>32 blocks</strong>. Formula: ⌈n / (8 × block_size)⌉.</div>
           </details>
         </div>
@@ -1323,7 +1500,7 @@ umount /mnt/usb             # Unmount — fails if any file open</code></pre>
             <li>RAID parity</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Journaling)</strong><br>Journaling (used in ext3/ext4, NTFS) writes metadata changes to a journal/log before applying them to the actual FS structures. On crash, the journal is replayed for fast recovery. fsck scans the entire disk (slow). Copy-on-Write never overwrites in place (used by ZFS, Btrfs). RAID parity handles disk failures, not crash consistency.</div>
           </details>
         </div>
@@ -1547,7 +1724,7 @@ Modern Alternatives:
   <!-- GATE TRAP SHEET -->
   <section id="s-fs-traps" data-search-section="GATE trap sheet file system disk scheduling inode common mistakes">
     <div class="section-heading">
-      <h2 class="prose">⚡ Unit 6 GATE Trap Sheet</h2>
+      <h2 class="prose">⚡ Unit 4 GATE Trap Sheet</h2>
       <button class="bookmark-btn" data-id="s-fs-traps" data-label="Unit 6 Traps" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
@@ -1593,9 +1770,64 @@ Modern Alternatives:
     </div>
   </section>
 
+  <!-- MSQ/NAT/10-MARK GATE PRACTICE -->
+  <section id="s-fs-gate-practice" data-search-section="GATE practice MSQ NAT file system disk inode RAID">
+    <div class="section-heading">
+      <h2 class="prose">★ GATE Format Practice — File Systems</h2>
+      <button class="bookmark-btn" data-id="s-fs-gate-practice" data-label="GATE Practice" title="Bookmark">🔖</button>
+    </div>
+
+    <div class="mode-gate">
+    <div class="mode-badge gate">⚡ GATE Format Practice</div>
+    <div class="prose" style="margin-top:var(--sp-4)">
+
+    <div class="msq-card">
+      <div class="msq-header">MSQ — File Systems & Disk (Select ALL correct statements)</div>
+      <div class="msq-options">
+        <div class="msq-option">(A) Contiguous file allocation supports both sequential and direct (random) access efficiently</div>
+        <div class="msq-option">(B) Linked allocation supports efficient direct access to the n-th block of a file</div>
+        <div class="msq-option">(C) SSTF disk scheduling minimizes total head movement globally</div>
+        <div class="msq-option">(D) An inode in Unix uses indexed file allocation with direct and indirect pointer blocks</div>
+      </div>
+      <details class="msq-answer"><summary>Show Answer</summary>
+        <div><strong>✅ A, D</strong><br>
+        <strong>A:</strong> Contiguous allocation = both sequential and direct access (like an array).<br>
+        <strong>B WRONG:</strong> Linked allocation requires O(n) traversal to reach block n — no direct access.<br>
+        <strong>C WRONG:</strong> SSTF is locally greedy — minimizes current seek, NOT global total. Can starve far requests.<br>
+        <strong>D:</strong> Unix inodes = indexed allocation: 12 direct + single/double/triple indirect pointer blocks.</div>
+      </details>
+    </div>
+
+    <div class="nat-card">
+      <div class="nat-header">NAT — Disk Access Count</div>
+      <div class="nat-problem">A file system uses inodes with 12 direct pointers, 1 single indirect, and 1 double indirect pointer. Block size = 4KB, pointer size = 4 bytes. How many disk accesses are needed to read the <strong>300th data block</strong> of a file? Assume the inode is already in memory.</div>
+      <details class="nat-answer"><summary>Show Solution</summary>
+        <div><strong>Answer: 3 disk accesses</strong><br>
+        Pointers per block = 4KB / 4B = 1024<br>
+        Direct blocks: 0–11 (12 blocks)<br>
+        Single indirect: blocks 12 to 12+1024-1 = 12–1035<br>
+        Double indirect: starts at block 1036. Block 300 is in range 12–1035 (single indirect).<br>
+        Wait — block 300: 300 ≥ 12, so it's beyond direct. In single indirect range (12 to 1035).<br>
+        Accesses (inode in memory): 1 read single-indirect block + 1 read data block = <strong>2 accesses</strong>.<br>
+        <em>If inode NOT in memory: add 1 more = 3 total.</em></div>
+      </details>
+    </div>
+
+    <h3>📝 10-Mark Answer Guide — File Allocation Methods</h3>
+    <div class="callout tip"><strong>University 10-mark template:</strong> "Explain file allocation methods in OS with advantages and disadvantages."<br>
+    <strong>[2]</strong> Contiguous Allocation: best seek time, supports sequential + direct access. Problem: external fragmentation, file growth requires relocation.<br>
+    <strong>[2]</strong> Linked Allocation: no external frag, files can grow dynamically. Problem: sequential access only O(n), one bad pointer = lose rest of file. FAT = improvement (table in RAM).<br>
+    <strong>[3]</strong> Indexed Allocation (inode): direct + random access, no external frag. Structure: 12 direct + single + double + triple indirect. Max file size = 12B + N·B + N²·B + N³·B.<br>
+    <strong>[2]</strong> Disk access count table: direct=1, single indirect=2, double=3, triple=4 (minus 1 if inode cached).<br>
+    <strong>[1]</strong> Comparison table + conclusion: Unix/Linux use inode (indexed) as best trade-off.</div>
+
+    </div>
+    </div>
+  </section>
+
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
-    <a href="unit5.html" class="nav-btn">← Unit 5</a>
+    <a href="unit5.html" class="nav-btn">← Unit 3 — Memory</a>
     <a href="../chapters/gate-extra.html" class="nav-btn primary">⚡ GATE Extra Topics →</a>
   </div>
 </div>
@@ -1625,9 +1857,9 @@ Modern Alternatives:
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -1650,7 +1882,7 @@ Modern Alternatives:
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>
@@ -1667,7 +1899,7 @@ Modern Alternatives:
 <nav id="mobile-nav">
   <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
   <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
-  <a href="#s-fs-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 6</a>
+  <a href="#s-fs-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 4</a>
   <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
 </nav>
 <div id="toast-container"></div>

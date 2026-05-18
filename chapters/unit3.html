@@ -11,105 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-/* ── TOC Card ── */
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast);text-decoration:none}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light);transform:translateX(2px)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:28px;font-weight:700}
-/* ── Nav Buttons ── */
-.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card);text-decoration:none}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.nav-btn.primary:hover{background:var(--accent-light);box-shadow:0 4px 20px rgba(124,58,237,.5)}
-/* ── Def Boxes ── */
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-left:4px solid var(--accent);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.def-box.danger{border-color:rgba(244,63,94,.4);border-left-color:#f43f5e}
-.def-box.danger .def-term{color:#f43f5e}
-/* ── Section HR ── */
-.section-hr{border:none;border-top:1px solid var(--bd-subtle);margin:var(--sp-10) 0}
-/* ── Section heading ── */
-.section-heading{display:flex;align-items:baseline;gap:var(--sp-3);margin-bottom:var(--sp-2)}
-/* ── Race Demo ── */
-.race-demo{display:flex;gap:var(--sp-4);flex-wrap:wrap;margin:var(--sp-4) 0}
-.thread-box{flex:1;min-width:200px;background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4)}
-.thread-box h5{color:var(--accent-light);font-size:var(--text-sm);margin-bottom:var(--sp-2);font-weight:700}
-.thread-box pre{font-size:11px;line-height:1.6;color:var(--tx-secondary);margin:0}
-/* ── Req Cards ── */
-.req-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0}
-.req-card{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4);transition:all var(--t-base)}
-.req-card:hover{border-color:var(--accent-border);box-shadow:var(--sh-glow)}
-.req-num{font-size:2rem;font-weight:900;color:var(--accent-light);opacity:.3;line-height:1}
-.req-title{font-weight:700;color:var(--tx-primary);margin:var(--sp-2) 0 var(--sp-1)}
-.req-desc{font-size:var(--text-xs);color:var(--tx-muted);line-height:1.5}
-/* ── Formula Box ── */
-.formula-box{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-3) 0;font-family:var(--font-mono);font-size:var(--text-sm);line-height:1.8;color:var(--tx-primary);position:relative}
-.formula-box::before{content:"∑";position:absolute;top:var(--sp-3);right:var(--sp-3);font-size:1.2rem;color:var(--accent);opacity:.4}
-.formula-label{font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-light);margin-bottom:var(--sp-2);font-family:var(--font-sans)}
-/* ── Trap Table ── */
-.trap-table{width:100%;border-collapse:collapse;margin:var(--sp-4) 0;font-size:var(--text-xs)}
-.trap-table th{background:rgba(251,191,36,.12);color:#fbbf24;padding:var(--sp-2) var(--sp-3);text-align:left;font-weight:700;border-bottom:1px solid rgba(251,191,36,.25)}
-.trap-table td{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--bd-subtle);color:var(--tx-secondary);vertical-align:top}
-.trap-table td:first-child{color:var(--tx-primary);font-weight:600;white-space:nowrap}
-.trap-table tr:hover td{background:var(--bg-elevated)}
-/* ── Simulator ── */
-.sim-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin:var(--sp-6) 0}
-.sim-title{font-weight:700;font-size:var(--text-base);color:var(--tx-primary);margin-bottom:var(--sp-4)}
-.sim-controls{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin-bottom:var(--sp-4);align-items:center}
-.sim-input{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-3);color:var(--tx-primary);font-family:var(--font-mono);font-size:var(--text-sm);outline:none;transition:border-color var(--t-fast)}
-.sim-input:focus{border-color:var(--accent-border)}
-.sim-btn{padding:var(--sp-2) var(--sp-5);border-radius:var(--r-md);background:var(--accent);color:#fff;font-weight:600;font-size:var(--text-sm);transition:all var(--t-fast);cursor:pointer;border:none}
-.sim-btn:hover{background:var(--accent-light);transform:translateY(-1px)}
-.sim-btn.secondary{background:var(--bg-elevated);color:var(--tx-secondary);border:1px solid var(--bd-default)}
-.sim-btn.secondary:hover{border-color:var(--accent-border);color:var(--accent-light)}
-.sem-display{display:flex;gap:var(--sp-4);flex-wrap:wrap;margin:var(--sp-4) 0}
-.sem-box{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-4);text-align:center;min-width:120px;transition:all var(--t-base)}
-.sem-box.blocked{border-color:#f43f5e;background:rgba(244,63,94,.08)}
-.sem-box.free{border-color:#10b981;background:rgba(16,185,129,.08)}
-.sem-name{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);text-transform:uppercase;margin-bottom:4px}
-.sem-value{font-size:2rem;font-weight:900;font-family:var(--font-mono);color:var(--tx-primary);line-height:1}
-.sem-value.negative{color:#f43f5e}
-.sem-value.positive{color:#10b981}
-.sem-queue{font-size:var(--text-xs);color:var(--tx-muted);margin-top:4px}
-.sim-log{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4);min-height:80px;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-secondary);line-height:1.8;max-height:200px;overflow-y:auto}
-.log-wait{color:#f97316}
-.log-signal{color:#10b981}
-.log-block{color:#f43f5e}
-.log-wake{color:#06b6d4}
-/* ── QA Items ── */
-.qa-item{border:1px solid var(--bd-default);border-radius:var(--r-lg);margin:var(--sp-3) 0;overflow:hidden;transition:border-color var(--t-fast)}
-.qa-item:hover{border-color:var(--accent-border)}
-.qa-item summary{padding:var(--sp-3) var(--sp-4);cursor:pointer;font-weight:600;color:var(--tx-primary);list-style:none;display:flex;align-items:center;gap:var(--sp-2)}
-.qa-item summary::before{content:"▶";font-size:10px;color:var(--accent);transition:transform var(--t-fast)}
-.qa-item[open] summary::before{transform:rotate(90deg)}
-.qa-content{padding:var(--sp-4);background:var(--bg-elevated);border-top:1px solid var(--bd-subtle);line-height:1.75;color:var(--tx-secondary)}
-/* ── MCQ Card ── */
-.mcq-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-5);margin:var(--sp-4) 0}
-.mcq-card:hover{border-color:var(--accent-border)}
-.mcq-q{font-weight:600;color:var(--tx-primary);margin-bottom:var(--sp-3);line-height:1.6}
-.mcq-options{color:var(--tx-secondary);padding-left:var(--sp-6);margin:var(--sp-2) 0;line-height:2}
-.mcq-ans{margin-top:var(--sp-3)}
-.mcq-ans summary{cursor:pointer;color:var(--accent-light);font-weight:600;font-size:var(--text-sm);padding:var(--sp-2) 0}
-.mcq-ans div{background:var(--bg-elevated);border-radius:var(--r-md);padding:var(--sp-3);margin-top:var(--sp-2);font-size:var(--text-sm);line-height:1.75;color:var(--tx-secondary);border-left:3px solid var(--accent)}
-/* ── Inline MCQ ── */
-.mcq.reveal{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4);margin:var(--sp-3) 0;font-size:var(--text-sm);line-height:1.7}
-/* ── Mode badges ── */
-.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--r-full);font-size:var(--text-xs);font-weight:700;margin-bottom:var(--sp-3)}
-.mode-badge.uni{background:rgba(99,102,241,.15);color:#818cf8;border:1px solid rgba(99,102,241,.3)}
-.mode-badge.gate{background:rgba(6,182,212,.12);color:#22d3ee;border:1px solid rgba(6,182,212,.25)}
-.mode-badge.adv{background:rgba(20,184,166,.12);color:#2dd4bf;border:1px solid rgba(20,184,166,.25)}
-/* ── Quick-card grid ── */
-.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-4);margin:var(--sp-5) 0}
-.concept-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-4);transition:all var(--t-base)}
-.concept-card:hover{border-color:var(--accent-border);transform:translateY(-2px)}
-.concept-icon{font-size:1.4rem;margin-bottom:var(--sp-2)}
-.concept-title{font-weight:700;color:var(--tx-primary);font-size:var(--text-sm);margin-bottom:4px}
-.concept-body{font-size:var(--text-xs);color:var(--tx-muted);line-height:1.6}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit | Unit 3 FINAL -->
@@ -118,7 +21,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -128,12 +31,12 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -150,28 +53,28 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 2B — Core</div>
-      <a href="#s-concurrency" class="sidebar-link active"><span class="link-icon">🔄</span>3.1 Concurrency &amp; Race Conditions</a>
-      <a href="#s-critical" class="sidebar-link"><span class="link-icon">🚦</span>3.2 Critical Section Problem</a>
-      <a href="#s-peterson" class="sidebar-link"><span class="link-icon">🧮</span>3.3 Peterson's Solution</a>
-      <a href="#s-hardware" class="sidebar-link"><span class="link-icon">⚙️</span>3.4 Sync Hardware (TSL &amp; CAS)</a>
-      <a href="#s-mutex" class="sidebar-link"><span class="link-icon">🔐</span>3.5 Mutex &amp; Spinlocks</a>
-      <a href="#s-semaphore" class="sidebar-link"><span class="link-icon">🚦</span>3.6 Semaphores — Binary &amp; Counting</a>
+      <a href="#s-concurrency" class="sidebar-link active"><span class="link-icon">🔄</span>2B.1 Concurrency & Race Conditions</a>
+      <a href="#s-critical" class="sidebar-link"><span class="link-icon">🚦</span>2B.2 Critical Section Problem</a>
+      <a href="#s-peterson" class="sidebar-link"><span class="link-icon">🧮</span>2B.3 Peterson's Solution</a>
+      <a href="#s-hardware" class="sidebar-link"><span class="link-icon">⚙️</span>2B.4 Sync Hardware (TSL & CAS)</a>
+      <a href="#s-mutex" class="sidebar-link"><span class="link-icon">🔐</span>2B.5 Mutex & Spinlocks</a>
+      <a href="#s-semaphore" class="sidebar-link"><span class="link-icon">🚦</span>2B.6 Semaphores — Binary & Counting</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 2B — Classical Problems</div>
-      <a href="#s-producer" class="sidebar-link"><span class="link-icon">🏭</span>3.7 Producer–Consumer</a>
-      <a href="#s-readers" class="sidebar-link"><span class="link-icon">📖</span>3.8 Readers–Writers</a>
-      <a href="#s-dining" class="sidebar-link"><span class="link-icon">🍽️</span>3.9 Dining Philosophers</a>
-      <a href="#s-barber" class="sidebar-link"><span class="link-icon">💈</span>3.10 Sleeping Barber</a>
-      <a href="#s-monitors" class="sidebar-link"><span class="link-icon">📺</span>3.11 Monitors &amp; Condition Vars</a>
+      <a href="#s-producer" class="sidebar-link"><span class="link-icon">🏭</span>2B.7 Producer–Consumer</a>
+      <a href="#s-readers" class="sidebar-link"><span class="link-icon">📖</span>2B.8 Readers–Writers</a>
+      <a href="#s-dining" class="sidebar-link"><span class="link-icon">🍽️</span>2B.9 Dining Philosophers</a>
+      <a href="#s-barber" class="sidebar-link"><span class="link-icon">💈</span>2B.10 Sleeping Barber</a>
+      <a href="#s-monitors" class="sidebar-link"><span class="link-icon">📺</span>2B.11 Monitors & Condition Vars</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 2B — Deep Dives</div>
-      <a href="#s-simulator" class="sidebar-link"><span class="link-icon">🎮</span>3.12 Semaphore Simulator</a>
-      <a href="#s-formula" class="sidebar-link"><span class="link-icon">🔢</span>3.13 Formula &amp; Quick-Card</a>
-      <a href="#s-advanced-sync"  class="sidebar-link"><span class="link-icon">🔬</span>3.14 Barrier &amp; RCU</a>
-      <a href="#s-monitor-vs-sem" class="sidebar-link"><span class="link-icon">⚖️</span>3.15 Monitor vs Sem</a>
-      <a href="#s-pyq3" class="sidebar-link"><span class="link-icon">📝</span>★ PYQ &amp; Exam Prep</a>
+      <a href="#s-simulator" class="sidebar-link"><span class="link-icon">🎮</span>2B.12 Semaphore Simulator</a>
+      <a href="#s-formula" class="sidebar-link"><span class="link-icon">🔢</span>2B.13 Formula & Quick-Card</a>
+      <a href="#s-advanced-sync" class="sidebar-link"><span class="link-icon">🔬</span>2B.14 Barrier & RCU</a>
+      <a href="#s-monitor-vs-sem" class="sidebar-link"><span class="link-icon">⚖️</span>2B.15 Monitor vs Sem</a>
+      <a href="#s-pyq3" class="sidebar-link"><span class="link-icon">📝</span>★ PYQ & Exam Prep</a>
       <a href="#s-trap3" class="sidebar-link"><span class="link-icon">⚡</span>GATE Trap Sheet</a>
     </div>
     <div class="sidebar-section">
@@ -182,6 +85,12 @@
       <a href="unit5.html" class="sidebar-link"><span class="link-icon">🧠</span>Unit 3 — Memory</a>
       <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 4 — Files</a>
       <a href="gate-extra.html" class="sidebar-link" style="color:var(--gate-c)"><span class="link-icon">⚡</span>GATE Extra</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Related Units</div>
+      <a href="unit2.html#s-process" class="sidebar-link"><span class="link-icon">🔗</span>Processes &amp; Context Switch (Unit 2A)</a>
+      <a href="unit4.html#s-dl-intro" class="sidebar-link"><span class="link-icon">🔗</span>Deadlocks (Unit 2C)</a>
+      <a href="unit2.html#s-ipc" class="sidebar-link"><span class="link-icon">🔗</span>IPC Mechanisms (Unit 2A)</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -201,40 +110,58 @@
 <div class="content-inner">
 
 <div class="chapter-hero">
-  <div class="chapter-num">🔒 Unit 3 · DSC-10</div>
-  <h1 class="chapter-title">Process Synchronization &amp; Concurrency</h1>
-  <p class="chapter-desc">Race conditions, critical sections, semaphores, monitors, and all classical synchronization problems — with GATE numericals, worked traces, and an interactive semaphore simulator.</p>
+  <div class="chapter-num">🔒 Unit 2B · DSC-10</div>
+  <h1 class="chapter-title">Process Synchronization & Concurrency</h1>
+  <p class="chapter-desc">Race conditions, critical sections, semaphores, monitors, and all classical synchronization problems — with GATE numericals, worked traces, and an interactive <a href="unit3.html#s-semaphore" class="glossary-term" title="Jump to definition">semaphore</a> simulator.</p>
+  <div class="callout info" style="margin:var(--sp-4) 0 var(--sp-6);border-left:4px solid var(--gate-b)">
+    <span class="callout-icon">🎯</span>
+    <div><strong>After studying this unit you will be able to:</strong>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li>State and verify all 3 critical section requirements (ME, Progress, Bounded Waiting) for any solution</li>
+        <li>Trace Peterson's Solution and prove it satisfies ME, Progress, and BW with bound = 1</li>
+        <li>Implement semaphore-based solutions for Producer-Consumer, Readers-Writers, and Dining Philosophers</li>
+        <li>Compare reader-priority vs writer-priority Readers-Writers solutions and identify which party starves</li>
+        <li>Distinguish monitors from semaphores: mutual exclusion guarantee, Hoare vs Mesa signal semantics</li>
+        <li>Identify deadlock in synchronization scenarios and apply the fix (asymmetric, limiting, monitor-based)</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <!-- TOC CARD -->
 <div class="toc-card">
   <h3>📋 Table of Contents</h3>
   <div class="toc-grid">
-    <a href="#s-concurrency" class="toc-item"><span class="toc-num">3.1</span>Concurrency &amp; Race Conditions</a>
-    <a href="#s-critical" class="toc-item"><span class="toc-num">3.2</span>The Critical Section Problem</a>
-    <a href="#s-peterson" class="toc-item"><span class="toc-num">3.3</span>Peterson's Solution</a>
-    <a href="#s-hardware" class="toc-item"><span class="toc-num">3.4</span>Sync Hardware — TSL &amp; CAS</a>
-    <a href="#s-mutex" class="toc-item"><span class="toc-num">3.5</span>Mutex Locks &amp; Spinlocks</a>
-    <a href="#s-semaphore" class="toc-item"><span class="toc-num">3.6</span>Semaphores — Binary &amp; Counting</a>
-    <a href="#s-producer" class="toc-item"><span class="toc-num">3.7</span>Classical: Producer–Consumer</a>
-    <a href="#s-readers" class="toc-item"><span class="toc-num">3.8</span>Classical: Readers–Writers</a>
-    <a href="#s-dining" class="toc-item"><span class="toc-num">3.9</span>Classical: Dining Philosophers</a>
-    <a href="#s-barber" class="toc-item"><span class="toc-num">3.10</span>Classical: Sleeping Barber</a>
-    <a href="#s-monitors" class="toc-item"><span class="toc-num">3.11</span>Monitors &amp; Condition Variables</a>
-    <a href="#s-simulator" class="toc-item"><span class="toc-num">3.12</span>🎮 Semaphore Simulator</a>
-    <a href="#s-formula" class="toc-item"><span class="toc-num">3.13</span>Formula &amp; Quick-Card</a>
-        <a href="#s-advanced-sync" class="toc-item"><span class="toc-num">3.14</span>Barrier, RCU &amp; Futex</a>
-        <a href="#s-monitor-vs-sem" class="toc-item"><span class="toc-num">3.15</span>Monitor vs Semaphore</a>
-    <a href="#s-pyq3" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+    <a href="#s-concurrency" class="toc-item"><span class="toc-num">2B.1</span>Concurrency & Race Conditions</a>
+    <a href="#s-critical" class="toc-item"><span class="toc-num">2B.2</span>The Critical Section Problem</a>
+    <a href="#s-peterson" class="toc-item"><span class="toc-num">2B.3</span>Peterson's Solution</a>
+    <a href="#s-hardware" class="toc-item"><span class="toc-num">2B.4</span>Sync Hardware — TSL & CAS</a>
+    <a href="#s-mutex" class="toc-item"><span class="toc-num">2B.5</span>Mutex Locks & Spinlocks</a>
+    <a href="#s-semaphore" class="toc-item"><span class="toc-num">2B.6</span>Semaphores — Binary & Counting</a>
+    <a href="#s-producer" class="toc-item"><span class="toc-num">2B.7</span>Classical: Producer–Consumer</a>
+    <a href="#s-readers" class="toc-item"><span class="toc-num">2B.8</span>Classical: Readers–Writers</a>
+    <a href="#s-dining" class="toc-item"><span class="toc-num">2B.9</span>Classical: Dining Philosophers</a>
+    <a href="#s-barber" class="toc-item"><span class="toc-num">2B.10</span>Classical: Sleeping Barber</a>
+    <a href="#s-monitors" class="toc-item"><span class="toc-num">2B.11</span>Monitors & Condition Variables</a>
+    <a href="#s-simulator" class="toc-item"><span class="toc-num">2B.12</span>🎮 Semaphore Simulator</a>
+    <a href="#s-formula" class="toc-item"><span class="toc-num">2B.13</span>Formula & Quick-Card</a>
+        <a href="#s-advanced-sync" class="toc-item"><span class="toc-num">2B.14</span>Barrier, RCU & Futex</a>
+        <a href="#s-monitor-vs-sem" class="toc-item"><span class="toc-num">2B.15</span>Monitor vs Semaphore</a>
+    <a href="#s-pyq3" class="toc-item"><span class="toc-num">★</span>PYQ & Exam Prep</a>
     <a href="#s-trap3" class="toc-item"><span class="toc-num">⚡</span>GATE Trap Sheet</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ 3.1 ══ -->
+<div class="callout warn reveal" style="margin:var(--sp-6) 0">
+  <span class="callout-icon">🔗</span>
+  <div><strong>Critical Prerequisite — Unit 2:</strong> Before starting Synchronization, you must deeply understand <strong>Context Switching</strong> and <strong>Inter-Process Communication (IPC)</strong> from Unit 2A. If you don't understand how a process can be preempted in the middle of executing a statement, or how two processes share memory, the problems described in this unit will not make sense.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 2B.1 ══ -->
 <section id="s-concurrency" data-search-section="concurrency race condition parallel concurrent interleaving thread process shared memory atomic">
 <div class="section-heading">
-  <h2 class="prose">3.1 Concurrency &amp; Race Conditions
-  <button class="bookmark-btn" data-id="s-concurrency" data-label="3.1 Concurrency" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.1 Concurrency & Race Conditions
+  <button class="bookmark-btn" data-id="s-concurrency" data-label="2B.1 Concurrency" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -301,11 +228,11 @@ Answer: x ∈ {1, 2, 3}.
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.2 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.2 ══ -->
 <section id="s-critical" data-search-section="critical section problem mutual exclusion progress bounded waiting requirements solution lock">
 <div class="section-heading">
-  <h2 class="prose">3.2 The Critical Section Problem
-  <button class="bookmark-btn" data-id="s-critical" data-label="3.2 Critical Section" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.2 The Critical Section Problem
+  <button class="bookmark-btn" data-id="s-critical" data-label="2B.2 Critical Section" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -347,21 +274,45 @@ Answer: x ∈ {1, 2, 3}.
 <tbody>
 <tr><td>Lock variable only</td><td>❌</td><td>✅</td><td>✅</td><td>Both read lock=0 simultaneously → both enter CS</td></tr>
 <tr><td>Strict alternation (turn)</td><td>✅</td><td>❌</td><td>✅</td><td>P0 blocked even if P1 is in remainder section</td></tr>
-<tr><td>Flags only (no turn)</td><td>✅</td><td>❌</td><td>❌</td><td>Both set flag=true → both wait → deadlock</td></tr>
+<tr><td>Flags only (no turn)</td><td>✅</td><td>❌</td><td>❌</td><td>Both set flag=true → both wait → <a href="unit4.html#s-dl-intro" class="glossary-term" title="Jump to definition">deadlock</a></td></tr>
 <tr><td>Disable interrupts</td><td>✅</td><td>✅</td><td>✅</td><td>Single-core only; dangerous for user processes</td></tr>
 <tr><td><strong>Peterson's</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅ Correct for 2 processes (needs memory fences on modern HW)</td></tr>
 </tbody></table>
 <div class="callout tip"><strong>GATE Trap:</strong> Strict alternation satisfies ME and Bounded Waiting but <strong>FAILS Progress</strong>. This is the most common trick question on CS requirements.</div>
 </div>
+    
+
+<div class="section-summary">
+  <div class="section-summary-label">📌 Section 3.1–3.3 Critical Section — Key Takeaways</div>
+  <ul>
+    <li><strong>3 requirements (all must hold):</strong> Mutual Exclusion | Progress | Bounded Waiting</li>
+    <li><strong>Strict alternation (turn only):</strong> Satisfies ME + BW, FAILS Progress — P0 done but never re-enters → P1 waits forever</li>
+    <li><strong>Peterson's:</strong> flag[] + turn — satisfies all 3. BW bound = 1. Unsafe on modern CPUs without memory barriers</li>
+    <li><strong>TSL/XCHG:</strong> Satisfies ME + Progress, NOT Bounded Waiting — needs waiting[] array for full BW</li>
+    <li><strong>Semaphore wait/signal:</strong> wait() = DECREMENT (block if &lt; 0). signal() = INCREMENT (wake). Common trap: students reverse these operations</li>
+  </ul>
+</div>
+
+<details class="active-recall">
+  <summary>Active Recall: Critical Section Problem</summary>
+  <div class="recall-content">
+    <strong>1. What does the "Progress" requirement mean?</strong><br>
+    If no process is in the critical section, and some processes wish to enter, only those not in their remainder sections can participate in the decision, and the decision cannot be postponed indefinitely.<br><br>
+    <strong>2. Why does strict alternation (turn variable only) fail Progress?</strong><br>
+    If P0 finishes its CS but never wants to re-enter, P1 waits forever even though the CS is free.<br><br>
+    <strong>3. What is the key difference between a semaphore and a mutex?</strong><br>
+    A mutex has ownership — only the locking thread can unlock it. A semaphore has no ownership — any thread can call signal().
+  </div>
+</details>
 </section>
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.3 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.3 ══ -->
 <section id="s-peterson" data-search-section="Peterson solution software mutual exclusion two process flag turn algorithm Lamport Bakery N processes">
 <div class="section-heading">
-  <h2 class="prose">3.3 Peterson's Solution
-  <button class="bookmark-btn" data-id="s-peterson" data-label="3.3 Peterson's Solution" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.3 Peterson's Solution
+  <button class="bookmark-btn" data-id="s-peterson" data-label="2B.3 Peterson's Solution" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -387,16 +338,44 @@ flag[i] = false;    // "I'm done, others may enter"
 /* REMAINDER SECTION */
 // ... non-critical code ...</code></pre></div>
 
-<h3 class="prose">Proof — Why All 3 Requirements Are Satisfied</h3>
+<h3 class="prose">Proof — All 3 Requirements Satisfied (University-Exam Level)</h3>
+<div class="callout info reveal" style="margin-bottom:10px">
+  <strong>💡 P/V Mnemonic for Semaphores (RET-002 fix):</strong><br>
+  <strong>P</strong> = <em>Probeer</em> (Dutch: "try to take") = <code>wait()</code> — decrements semaphore, waits if 0<br>
+  <strong>V</strong> = <em>Verhoog</em> (Dutch: "increment") = <code>signal()</code> — increments semaphore, wakes waiters<br>
+  Memory hook: "Please wait" (P) → "Vacancy available" (V)
+</div>
+
+<div class="mode-uni">
+<div class="mode-badge uni">🎓 University — Complete Proof (10-mark exam format)</div>
+
+<strong>Proof 1: Mutual Exclusion</strong><br>
+<em>Claim:</em> At most one process (Pi or Pj) can be in the CS at any time.<br>
+<em>Proof:</em> For Pi to enter CS, the while loop condition must be false: <code>flag[j]==false OR turn==i</code>.<br>
+For Pj to simultaneously be in CS, the same condition must hold for Pj: <code>flag[i]==false OR turn==j</code>.<br>
+Assume both are in CS simultaneously. Then both conditions hold. The only way both can be true simultaneously would require <code>turn==i</code> AND <code>turn==j</code>. But <code>turn</code> is a single integer — it cannot hold two values simultaneously. <strong>Contradiction. ∴ Mutual Exclusion holds. ✅</strong><br><br>
+
+<strong>Proof 2: Progress</strong><br>
+<em>Claim:</em> If no process is in the CS, a process wishing to enter can do so in a finite number of steps.<br>
+<em>Proof (Case 1 — only Pi wants to enter):</em> flag[j]=false (Pj is in remainder section). Pi's while condition: <code>flag[j]&&turn==j</code> = <code>false&&...</code> = false. Pi exits the while loop immediately and enters CS. ✅<br>
+<em>Proof (Case 2 — both want to enter):</em> Both set their flags to true, then each sets <code>turn=j</code> / <code>turn=i</code>. Exactly one of these assignments will be the last, say turn=j. Then Pi's while condition: <code>flag[j]==true && turn==j</code> = true → Pi waits. Pj's while condition: <code>flag[i]==true && turn==i</code> = <code>true && false</code> = false → Pj enters CS. So the other process always gets in. <strong>No indefinite postponement. ∴ Progress holds. ✅</strong><br><br>
+
+<strong>Proof 3: Bounded Waiting</strong><br>
+<em>Claim:</em> If Pi requests to enter CS, the wait is bounded by at most 1 entry by any other process Pj.<br>
+<em>Proof:</em> Pi is spinning in while loop — it set <code>turn=j</code>. Pj is in or entering CS. Once Pj exits CS, it sets <code>flag[j]=false</code>. Pi's while condition: <code>flag[j]==true&&turn==j</code> = <code>false&&...</code> = false. Pi exits the loop and enters CS. Pi waits for <strong>at most 1</strong> complete execution of Pj's CS before entering. <strong>Wait bound = 1. ∴ Bounded Waiting holds. ✅</strong>
+</div>
+
 <table class="data-table reveal">
-<thead><tr><th>Requirement</th><th>Proof</th></tr></thead>
+<thead><tr><th>Requirement</th><th>Satisfied?</th><th>Key variable responsible</th></tr></thead>
 <tbody>
-<tr><td><strong>Mutual Exclusion</strong></td><td>For both Pi and Pj to be in CS, we'd need <code>turn==i</code> AND <code>turn==j</code> simultaneously — impossible since turn is a single integer. Contradiction. ✅</td></tr>
-<tr><td><strong>Progress</strong></td><td>If Pj is not ready (<code>flag[j]==false</code>), Pi exits the while loop immediately. No indefinite postponement. ✅</td></tr>
-<tr><td><strong>Bounded Waiting</strong></td><td>After Pi sets <code>turn=j</code> and Pj finishes, Pj sets <code>flag[j]=false</code>, freeing Pi. Pi enters on its very next attempt. Wait bound = 1. ✅</td></tr>
+<tr><td><strong>Mutual Exclusion</strong></td><td>✅</td><td><code>turn</code> — cannot be both i and j simultaneously</td></tr>
+<tr><td><strong>Progress</strong></td><td>✅</td><td><code>flag[]</code> — Pj not interested → Pi enters immediately</td></tr>
+<tr><td><strong>Bounded Waiting</strong></td><td>✅</td><td><code>turn=j</code> in Pi → Pj can enter once before Pi (bound=1)</td></tr>
 </tbody></table>
 
-<div class="callout warn"><span class="callout-icon">⚠️</span><div><strong>Modern Hardware Caveat:</strong> Peterson's solution is correct in theory but may fail on modern CPUs that reorder memory operations (out-of-order execution). It requires <strong>memory barriers / fences</strong> to work correctly on real hardware.</div></div>
+<div class="callout warn">
+<span class="callout-icon">⚠️</span>
+<div><strong>Modern Hardware Caveat:</strong> Peterson's solution is correct in theory but may fail on modern CPUs that reorder memory operations (out-of-order execution). It requires <strong>memory barriers / fences</strong> to work correctly on real hardware.</div>
 </div>
 
 <div class="mode-gate">
@@ -438,7 +417,7 @@ number[i] = 0;  // "done" — give up ticket
 // Satisfies all 3 requirements for N processes
 // Based on real bakery number machines — First Come First Served</code></pre></div>
 
-<h3 class="prose">Memory Ordering &amp; Why Peterson Fails on Modern CPUs</h3>
+<h3 class="prose">Memory Ordering & Why Peterson Fails on Modern CPUs</h3>
 <div class="code-block"><div class="code-header"><span class="code-lang">Memory Barriers — Practical Guide</span><button class="code-copy">Copy</button></div>
 <pre><code>Problem: Modern CPUs + compilers REORDER memory operations.
   // Compiler may move flag=1 AFTER the critical section!
@@ -465,17 +444,24 @@ GATE Rule: Peterson's and Bakery assume Sequential Consistency.
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.4 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.4 ══ -->
 <section id="s-hardware" data-search-section="synchronization hardware test and set compare swap atomic instruction CAS TSL ABA problem xchg cmpxchg">
 <div class="section-heading">
-  <h2 class="prose">3.4 Synchronization Hardware — TSL &amp; CAS
-  <button class="bookmark-btn" data-id="s-hardware" data-label="3.4 Sync Hardware" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.4 Synchronization Hardware — TSL & CAS
+  <button class="bookmark-btn" data-id="s-hardware" data-label="2B.4 Sync Hardware" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
 <div class="mode-badge uni">🎓 University</div>
 <p class="prose">Modern CPUs provide special <strong>atomic hardware instructions</strong> that read and modify memory in a single, uninterruptible operation. These are the foundation of all practical synchronization primitives.</p>
 
+<div class="callout warn reveal" style="margin-bottom:12px">
+  <span style="font-size:1.1em">⚠️</span> <strong>Critical Exam Distinction — Read Before Code:</strong>
+  Simple TSL (Test-and-Set Lock) satisfies <strong>only ME and Progress</strong>.
+  It does <strong class="text-danger">NOT</strong> satisfy <strong>Bounded Waiting</strong> — a process may spin forever if other processes repeatedly "win" the TSL race.
+  To satisfy all 3 CS requirements, TSL must be augmented with a <strong>waiting array</strong> (see TSL-BW below).
+  <br><strong>GATE rule:</strong> "Which hardware solution satisfies all 3 CS requirements?" → TSL with waiting array (NOT simple TSL). Peterson's solution is the software answer.
+</div>
 <h3 class="prose">1. Test-and-Set (TSL)</h3>
 <div class="code-block"><div class="code-header"><span class="code-lang">C — TestAndSet (atomic hardware equivalent)</span><button class="code-copy">Copy</button></div>
 <pre><code>/* Executes ATOMICALLY — no interrupt possible between read and set */
@@ -535,18 +521,91 @@ lock = 0;  // release
   <li><strong>ABA Problem:</strong> Value changes A→B→A; CAS sees A and assumes no change — but it changed! Fix: use a version counter (stamped reference) alongside the value.</li>
 </ul>
 <div class="mcq reveal"><strong>GATE Q:</strong> TestAndSet-based lock satisfies which requirements?<br>
-(a) ME only &nbsp; (b) ME + Progress &nbsp; (c) ME + Progress + BW &nbsp; (d) None<br>
+(a) ME only   (b) ME + Progress   (c) ME + Progress + BW   (d) None<br>
 <details><summary>Answer</summary><strong>(b) ME + Progress.</strong> ME is guaranteed by the atomic read-modify. Progress is guaranteed — if lock is free, some process will acquire it. But Bounded Waiting is NOT guaranteed without a waiting array — a process could be unlucky indefinitely.</details></div>
+</div>
+    
+<details class="active-recall">
+  <summary>Active Recall: Hardware Synchronization</summary>
+  <div class="recall-content">
+    <strong>1. How does the Test-And-Set (TSL) instruction work?</strong><br>
+    It is an atomic hardware instruction that reads the current value of a boolean variable (returning it) and simultaneously sets it to true.<br><br>
+    <strong>2. Does a basic Test-And-Set loop guarantee Bounded Waiting?</strong><br>
+    No. A process could technically be beaten to the lock every time by faster processes, starving it forever unless a waiting array is implemented.
+  </div>
+</details>
+</section>
+
+<hr class="section-hr">
+
+<!-- ══════════════════════════════════════════════════ 2B.4b TSL-BW ══ -->
+<section id="s-tsl-bw" data-search-section="TSL waiting array bounded waiting hardware CS GATE three requirements">
+<div class="section-heading">
+  <h2 class="prose">2B.4b TSL with Waiting Array — Complete CS Solution
+  <button class="bookmark-btn" data-id="s-tsl-bw" data-label="2B.4b TSL-BW" title="Bookmark">🔖</button></h2>
+</div>
+
+<div class="mode-gate">
+<div class="mode-badge gate">⚡ GATE — Direct Mark Question</div>
+<div class="callout warn reveal">
+  <strong>GATE Exam Critical:</strong> "Which hardware-based solution satisfies ALL 3 CS requirements (ME + Progress + Bounded Waiting)?"<br>
+  Answer: <strong>TSL with Waiting Array</strong>. Simple TSL fails BW. Peterson's is the <em>software</em> answer (2 processes only). TSL-BW is the <em>hardware</em> answer (N processes).
+</div>
+
+<div class="code-block"><div class="code-header"><span class="code-lang">C — TSL + Waiting Array (all 3 CS properties satisfied)</span><button class="code-copy">Copy</button></div>
+<pre><code>/* Shared state */
+boolean waiting[n] = {false};  /* waiting[i]=true → Pi wants to enter CS */
+boolean lock      = false;     /* shared TSL lock                         */
+
+/* ── Entry protocol for Pi ── */
+waiting[i] = true;             /* (1) signal intent                       */
+boolean key = true;
+while (waiting[i] && key)      /* (2) spin: stop when lock acquired OR    */
+    key = TestAndSet(&lock);   /*     someone passes lock directly to us  */
+waiting[i] = false;            /* (3) we own the lock now                 */
+/* ═══════ CRITICAL SECTION ═══════ */
+
+/* ── Exit protocol for Pi ── */
+int j = (i + 1) % n;          /* (4) find next waiting process           */
+while (j != i && !waiting[j])
+    j = (j + 1) % n;
+if (j == i)
+    lock = false;              /* (5a) nobody waiting → release lock       */
+else
+    waiting[j] = false;        /* (5b) hand lock DIRECTLY to Pj            */
+/* ═══════ REMAINDER SECTION ═══════ */</code></pre></div>
+
+<div class="formula-box">
+<div class="formula-label">Proof of All 3 CS Properties</div>
+<strong>Mutual Exclusion:</strong> lock=true inside CS; only one process clears it at exit. ✅<br>
+<strong>Progress:</strong> Exit always finds next waiting process OR releases lock → no deadlock. ✅<br>
+<strong>Bounded Waiting:</strong> Exit scans in circular order → Pj waits at most n−1 others. <strong>Bound = n−1</strong>. ✅
+</div>
+
+<table class="data-table reveal">
+<thead><tr><th>Property</th><th>Simple TSL</th><th>TSL + Waiting Array</th><th>Peterson's</th></tr></thead>
+<tbody>
+<tr><td>Mutual Exclusion</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Progress</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Bounded Waiting</td><td>❌ (can starve)</td><td>✅ bound=n−1</td><td>✅ bound=1</td></tr>
+<tr><td>Works for N processes</td><td>✅</td><td>✅</td><td>❌ (2 only)</td></tr>
+<tr><td>Hardware required</td><td>✅</td><td>✅</td><td>❌ software</td></tr>
+</tbody></table>
+</div>
+
+<div class="mode-uni">
+<div class="mode-badge uni">🎓 University</div>
+<p class="prose">The waiting array transforms TSL from a "best-effort" spinlock into a fair queue. When Pi exits the CS, it doesn't just release the lock (which any process could grab) — it <em>directly wakes the next waiter</em> in circular order by setting <code>waiting[j]=false</code>. This guarantees Pj will exit its spin loop on the next iteration, even if other processes are also spinning. The lock variable is never released to open competition — it stays <code>true</code> and is implicitly "transferred" to Pj.</p>
 </div>
 </section>
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.5 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.5 ══ -->
 <section id="s-mutex" data-search-section="mutex lock spinlock busy waiting blocking sleep wakeup priority inversion inheritance Mars Pathfinder">
 <div class="section-heading">
-  <h2 class="prose">3.5 Mutex Locks &amp; Spinlocks
-  <button class="bookmark-btn" data-id="s-mutex" data-label="3.5 Mutex & Spinlocks" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.5 Mutex Locks & Spinlocks
+  <button class="bookmark-btn" data-id="s-mutex" data-label="2B.5 Mutex & Spinlocks" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -557,13 +616,13 @@ lock = 0;  // release
 </div>
 
 <div class="code-block"><div class="code-header"><span class="code-lang">C — POSIX Mutex</span><button class="code-copy">Copy</button></div>
-<pre><code>#include &lt;pthread.h&gt;
+<pre><code>#include <pthread.h>
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 int shared_counter = 0;
 
 void *increment(void *arg) {
-    for (int i = 0; i &lt; 1000000; i++) {
+    for (int i = 0; i < 1000000; i++) {
         pthread_mutex_lock(&lock);     // ACQUIRE — blocks if held
         shared_counter++;              // CRITICAL SECTION (safe!)
         pthread_mutex_unlock(&lock);   // RELEASE
@@ -579,7 +638,7 @@ void *increment(void *arg) {
 <tbody>
 <tr><td>Waiting strategy</td><td>Busy-waits (spins in loop)</td><td>Blocks process — puts it to sleep</td></tr>
 <tr><td>CPU usage while waiting</td><td>100% (wastes CPU)</td><td>0% (process is descheduled)</td></tr>
-<tr><td>Wake-up latency</td><td>Immediate (no context switch)</td><td>Higher (context switch overhead)</td></tr>
+<tr><td>Wake-up latency</td><td>Immediate (no <a href="unit2.html#s-proc-concept" class="glossary-term" title="Jump to definition">context switch</a>)</td><td>Higher (context switch overhead)</td></tr>
 <tr><td>Best for</td><td>Short CS, multi-core, OS kernels</td><td>Long CS, user-space applications</td></tr>
 <tr><td>Example</td><td>Linux kernel <code>spinlock_t</code></td><td>POSIX <code>pthread_mutex_t</code></td></tr>
 </tbody></table>
@@ -615,11 +674,11 @@ High-priority task H blocks waiting for a mutex held by low-priority task L. Med
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.6 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.6 ══ -->
 <section id="s-semaphore" data-search-section="semaphore binary counting wait signal P V Dijkstra synchronization value negative blocked POSIX sem_t">
 <div class="section-heading">
-  <h2 class="prose">3.6 Semaphores — Binary &amp; Counting
-  <button class="bookmark-btn" data-id="s-semaphore" data-label="3.6 Semaphores" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.6 Semaphores — Binary & Counting
+  <button class="bookmark-btn" data-id="s-semaphore" data-label="2B.6 Semaphores" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -629,10 +688,10 @@ High-priority task H blocks waiting for a mutex held by low-priority task L. Med
   An integer variable accessed only through two atomic operations: <code>wait()</code> (P — <em>proberen</em>, "to test") and <code>signal()</code> (V — <em>verhogen</em>, "to increment"). Can be used for both mutual exclusion and ordering/signalling.
 </div>
 
-<div class="code-block"><div class="code-header"><span class="code-lang">Pseudocode — Semaphore P &amp; V (Textbook/Blocking version)</span><button class="code-copy">Copy</button></div>
+<div class="code-block"><div class="code-header"><span class="code-lang">Pseudocode — Semaphore P & V (Textbook/Blocking version)</span><button class="code-copy">Copy</button></div>
 <pre><code>wait(S) {           // P — Decrement; if negative, BLOCK
     S.value--;
-    if (S.value &lt; 0) {
+    if (S.value < 0) {
         add this process to S.list;
         block();    // put process to sleep
     }
@@ -640,19 +699,19 @@ High-priority task H blocks waiting for a mutex held by low-priority task L. Med
 
 signal(S) {         // V — Increment; if processes sleeping, WAKE one
     S.value++;
-    if (S.value &lt;= 0) {
+    if (S.value <= 0) {
         remove process P from S.list;
         wakeup(P);  // resume the sleeping process
     }
 }
 
-Key: When S.value &lt; 0, |S.value| = number of processes currently BLOCKED</code></pre></div>
+Key: When S.value < 0, |S.value| = number of processes currently BLOCKED</code></pre></div>
 
 <table class="data-table reveal">
 <thead><tr><th>Type</th><th>Initial Value</th><th>Use Case</th></tr></thead>
 <tbody>
 <tr><td><strong>Binary Semaphore</strong></td><td>1</td><td>Mutual exclusion (like a mutex but without ownership)</td></tr>
-<tr><td><strong>Counting Semaphore</strong></td><td>N &gt; 1</td><td>Control access to a pool of N identical resources</td></tr>
+<tr><td><strong>Counting Semaphore</strong></td><td>N > 1</td><td>Control access to a pool of N identical resources</td></tr>
 <tr><td><strong>Ordering Semaphore</strong></td><td>0</td><td>Thread A waits; Thread B signals when event occurs → ordering guarantee</td></tr>
 </tbody></table>
 
@@ -666,7 +725,7 @@ Key: When S.value &lt; 0, |S.value| = number of processes currently BLOCKED</cod
 <thead><tr><th>Property</th><th>Semaphore</th><th>Mutex</th></tr></thead>
 <tbody>
 <tr><td>Ownership</td><td>None — any thread can signal</td><td>Owned — only locker can unlock</td></tr>
-<tr><td>Value range</td><td>Any integer (can be &gt;1)</td><td>Binary (locked/unlocked)</td></tr>
+<tr><td>Value range</td><td>Any integer (can be >1)</td><td>Binary (locked/unlocked)</td></tr>
 <tr><td>Use case</td><td>Resource counting, ordering, signalling</td><td>Mutual exclusion only</td></tr>
 <tr><td>signal() with no waiter</td><td>Value incremented (remembered)</td><td>Does nothing (mutex stays unlocked)</td></tr>
 </tbody></table>
@@ -683,15 +742,25 @@ Key: When S.value &lt; 0, |S.value| = number of processes currently BLOCKED</cod
 <div class="mcq reveal"><strong>GATE Q:</strong> Semaphore S=3. Five processes execute wait(S) simultaneously. How many block?<br>
 <details><summary>Answer</summary>3 proceed (S: 3→2→1→0), then 2 block (S: 0−1=−1, −1−1=−2). Final S=−2. |−2|=2 processes blocked.</details></div>
 </div>
+
+<details class="active-recall">
+  <summary>Active Recall: Semaphores</summary>
+  <div class="recall-content">
+    <strong>1. If a counting semaphore has value -3, what does this mean?</strong><br>
+    It means there are exactly 3 processes blocked/waiting on this semaphore in the wait queue.<br><br>
+    <strong>2. Why is V(S) / signal() on a semaphore different from condition.signal() in a Monitor?</strong><br>
+    Semaphore V() always increments the integer value and "remembers" the signal, even if no one is waiting. Monitor signal() with no waiters is lost entirely.
+  </div>
+</details>
 </section>
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.7 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.7 ══ -->
 <section id="s-producer" data-search-section="producer consumer bounded buffer semaphore mutex full empty ordering deadlock circular buffer">
 <div class="section-heading">
-  <h2 class="prose">3.7 Classical Problem: Producer–Consumer
-  <button class="bookmark-btn" data-id="s-producer" data-label="3.7 Producer-Consumer" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.7 Classical Problem: Producer–Consumer
+  <button class="bookmark-btn" data-id="s-producer" data-label="2B.7 Producer-Consumer" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -699,6 +768,17 @@ Key: When S.value &lt; 0, |S.value| = number of processes currently BLOCKED</cod
 <div class="def-box">
   <div class="def-term">Bounded-Buffer (Producer–Consumer) Problem</div>
   A producer places data items into a fixed-size shared buffer. A consumer removes items. Challenge: producer must wait if buffer is <em>full</em>; consumer must wait if buffer is <em>empty</em>; both cannot access the buffer simultaneously.
+</div>
+
+<div class="callout warn reveal" style="margin-bottom:var(--sp-4)">
+  <strong>The Lost Wakeup Problem (Why we need Semaphores!):</strong><br>
+  If we try to solve this using a simple <code>count</code> variable and <code>sleep()/wakeup()</code> system calls without semaphores, a fatal race condition occurs:<br>
+  1. Consumer reads <code>count == 0</code>, prepares to sleep.<br>
+  2. Context switch! Producer runs, adds item, <code>count = 1</code>.<br>
+  3. Producer calls <code>wakeup(Consumer)</code>, but Consumer isn't technically asleep yet. The wakeup signal is LOST.<br>
+  4. Consumer resumes, executes <code>sleep()</code> (because it read 0 earlier).<br>
+  5. Producer fills buffer, goes to sleep. Both are asleep forever. <strong>DEADLOCK!</strong><br>
+  <em>Solution:</em> Semaphores "remember" the wakeup signal via their internal integer.
 </div>
 
 <table class="data-table reveal">
@@ -743,7 +823,7 @@ If swapped: Producer holds mutex when buffer is full, calls wait(empty) — but 
 <div class="mode-badge gate">⚡ GATE</div>
 <div class="formula-box">
 <div class="formula-label">Bounded Buffer Invariants</div>
-empty + full = N &nbsp;&nbsp;&nbsp; (always, in steady state)<br>
+empty + full = N     (always, in steady state)<br>
 empty = N − items_in_buffer<br>
 full  = items_in_buffer
 </div>
@@ -757,11 +837,11 @@ full  = items_in_buffer
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.8 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.8 ══ -->
 <section id="s-readers" data-search-section="readers writers problem first second fair solution semaphore database read write starvation rw_mutex read_count">
 <div class="section-heading">
-  <h2 class="prose">3.8 Classical Problem: Readers–Writers
-  <button class="bookmark-btn" data-id="s-readers" data-label="3.8 Readers-Writers" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.8 Classical Problem: Readers–Writers
+  <button class="bookmark-btn" data-id="s-readers" data-label="2B.8 Readers-Writers" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -819,15 +899,82 @@ signal(rw_mutex);</code></pre></div>
 <div class="mcq reveal"><strong>GATE Q:</strong> In First RW, 3 readers and 1 writer all arrive simultaneously. Which runs first and why?<br>
 <details><summary>Answer</summary>It depends on which reader executes first. Whichever reader gets mutex first will acquire rw_mutex (since read_count goes 0→1, first reader blocks the writer). The writer waits on rw_mutex until all 3 readers finish. Readers run concurrently; writer runs after all readers done.</details></div>
 </div>
+
+<div class="mode-adv">
+<div class="mode-badge adv">🔬 Advanced</div>
+<h3 class="prose">Second Readers-Writers — Writer Priority (X-007 Fix)</h3>
+<p class="prose">Writer priority means: once a writer is waiting, no new reader should be allowed to start. This prevents writer starvation but causes reader starvation instead.</p>
+
+<div class="code-block"><div class="code-header"><span class="code-lang">Pseudocode — Second RW (Writer Priority)</span><button class="code-copy">Copy</button></div>
+<pre><code>/* Shared variables */
+semaphore rw_mutex = 1;    // exclusive access for writers
+semaphore r_mutex  = 1;    // protect read_count
+semaphore w_mutex  = 1;    // protect write_count
+semaphore read_try = 1;    // NEW: "reader queue" — blocked when writer waiting
+
+int read_count  = 0;
+int write_count = 0;
+
+/* WRITER */
+wait(w_mutex);
+  write_count++;
+  if (write_count == 1)
+      wait(read_try);    // First writer blocks future readers from queueing
+signal(w_mutex);
+
+wait(rw_mutex);          // Get exclusive write access
+/* --- WRITE DATA --- */
+signal(rw_mutex);
+
+wait(w_mutex);
+  write_count--;
+  if (write_count == 0)
+      signal(read_try); // Last writer releases the reader queue
+signal(w_mutex);
+
+/* READER */
+wait(read_try);          // If writer waiting, reader blocks HERE
+wait(r_mutex);
+  read_count++;
+  if (read_count == 1)
+      wait(rw_mutex);    // First reader locks out writers
+signal(r_mutex);
+signal(read_try);        // Allow other readers OR writers to proceed
+
+/* --- READ DATA --- */
+
+wait(r_mutex);
+  read_count--;
+  if (read_count == 0)
+      signal(rw_mutex);  // Last reader frees writers
+signal(r_mutex);</code></pre></div>
+
+<div class="callout warn reveal">
+  <strong>Second RW — Key Behavioral Difference from First RW:</strong><br>
+  In First RW: Reader streams continuously; writers starve if readers never stop.<br>
+  In Second RW: Once first writer calls wait(read_try), new readers are blocked at <code>wait(read_try)</code>. The writers drain. Then readers proceed.<br>
+  <strong>GATE trap:</strong> In Second RW, readers may also experience starvation if writers keep arriving continuously — same problem, just reversed.
+</div>
+</div>
+    
+<details class="active-recall">
+  <summary>Active Recall: Classic Sync Problems</summary>
+  <div class="recall-content">
+    <strong>1. In the Producer-Consumer problem, what is the initial value of the <code>empty</code> and <code>full</code> semaphores?</strong><br>
+    <code>empty</code> is initialized to N (buffer size) and <code>full</code> is initialized to 0.<br><br>
+    <strong>2. In the First Readers-Writers problem, what is the role of <code>read_count</code>?</strong><br>
+    It tracks the number of active readers. The very first reader locks the writers out using <code>rw_mutex</code>, and the very last reader (when <code>read_count</code> hits 0) unlocks it.
+  </div>
+</details>
 </section>
 
 <hr class="section-hr">
 
-<!-- ═══════════════════════════════════════════════════════ 3.9 ══ -->
+<!-- ═══════════════════════════════════════════════════════ 2B.9 ══ -->
 <section id="s-dining" data-search-section="dining philosophers deadlock starvation semaphore chopsticks circular wait Coffman conditions room semaphore asymmetric monitor">
 <div class="section-heading">
-  <h2 class="prose">3.9 Classical Problem: Dining Philosophers
-  <button class="bookmark-btn" data-id="s-dining" data-label="3.9 Dining Philosophers" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.9 Classical Problem: Dining Philosophers
+  <button class="bookmark-btn" data-id="s-dining" data-label="2B.9 Dining Philosophers" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -906,11 +1053,11 @@ Philosopher i:
 <tbody>
 <tr><td>Room semaphore (max N−1)</td><td>Circular Wait</td><td>Pigeonhole guarantees at least one completes</td></tr>
 <tr><td>Asymmetric pickup order</td><td>Circular Wait</td><td>Not all request in same cyclic order</td></tr>
-<tr><td>Monitor all-or-nothing</td><td>Hold &amp; Wait</td><td>Philosopher acquires both atomically or waits with none</td></tr>
+<tr><td>Monitor all-or-nothing</td><td>Hold & Wait</td><td>Philosopher acquires both atomically or waits with none</td></tr>
 <tr><td>Resource hierarchy</td><td>Circular Wait</td><td>Total ordering on resources prevents circular chains</td></tr>
 </tbody></table>
 
-<h3 class="prose">Barrier Synchronization, RCU &amp; Futex</h3>
+<h3 class="prose">Barrier Synchronization, RCU & Futex</h3>
 <div class="code-block"><div class="code-header"><span class="code-lang">Advanced Sync Primitives</span><button class="code-copy">Copy</button></div>
 <pre><code>/* Barrier Synchronization */
 // All N threads must reach barrier before any proceed
@@ -935,15 +1082,20 @@ Philosopher i:
 
 <hr class="section-hr">
 
-<!-- ══════════════════════════════════════════════════════ 3.10 ══ -->
+<!-- ══════════════════════════════════════════════════════ 2B.10 ══ -->
 <section id="s-barber" data-search-section="sleeping barber problem synchronization semaphores customer wait chair cut hair Cigarette Smokers Patil">
 <div class="section-heading">
-  <h2 class="prose">3.10 Classical Problem: Sleeping Barber
-  <button class="bookmark-btn" data-id="s-barber" data-label="3.10 Sleeping Barber" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.10 Classical Problem: Sleeping Barber
+  <button class="bookmark-btn" data-id="s-barber" data-label="2B.10 Sleeping Barber" title="Bookmark">🔖</button></h2>
 </div>
 
-<div class="mode-uni">
-<div class="mode-badge uni">🎓 University</div>
+<div class="callout warn" style="margin-bottom:var(--sp-4)">
+  <span class="callout-icon">📡</span>
+  <div><strong>GATE Scope Warning:</strong> The Sleeping Barber problem is generally <strong>out-of-scope for GATE CS</strong> and standard DU exam questions. It is included here for completeness (Advanced mode). If you are revising for GATE, prioritize Producer-Consumer, Readers-Writers, and Dining Philosophers instead.</div>
+</div>
+
+<div class="mode-adv">
+<div class="mode-badge adv">🔬 Advanced</div>
 <div class="def-box">
   <div class="def-term">Sleeping Barber Problem (Dijkstra)</div>
   One barber, one barber chair, N waiting chairs. If no customers: barber sleeps. Customer arrives: if barber sleeping → wake barber; if barber busy and chair available → sit; if all chairs full → leave.
@@ -969,7 +1121,7 @@ while (true) {                         wait(mutex);
                                          leave_shop();  // shop full!
                                        }</code></pre></div>
 
-<div class="callout warn"><span class="callout-icon">⚠️</span><div><strong>Common Pitfall:</strong> The <code>waiting</code> counter MUST be protected by <code>mutex</code>. Without it, two customers could both check <code>waiting &lt; CHAIRS</code> simultaneously and both increment — exceeding the physical chair count.</div></div>
+<div class="callout warn"><span class="callout-icon">⚠️</span><div><strong>Common Pitfall:</strong> The <code>waiting</code> counter MUST be protected by <code>mutex</code>. Without it, two customers could both check <code>waiting < CHAIRS</code> simultaneously and both increment — exceeding the physical chair count.</div></div>
 <div class="callout tip"><span class="callout-icon">💡</span><div><strong>Key Insight:</strong> <code>customers</code> semaphore = waiting customers. When 0, barber sleeps on <code>wait(customers)</code>. New customer does <code>signal(customers)</code> to wake barber. <code>barbers</code> semaphore synchronises: customer <code>wait(barbers)</code> until barber is ready.</div></div>
 </div>
 
@@ -1020,11 +1172,11 @@ GATE Rule: Always use while() with Mesa semantics (Java/POSIX).
 
 <hr class="section-hr">
 
-<!-- ══════════════════════════════════════════════════════ 3.11 ══ -->
+<!-- ══════════════════════════════════════════════════════ 2B.11 ══ -->
 <section id="s-monitors" data-search-section="monitor condition variable wait signal Hoare Mesa Java synchronized high level synchronization bounded buffer">
 <div class="section-heading">
-  <h2 class="prose">3.11 Monitors &amp; Condition Variables
-  <button class="bookmark-btn" data-id="s-monitors" data-label="3.11 Monitors" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.11 Monitors & Condition Variables
+  <button class="bookmark-btn" data-id="s-monitors" data-label="2B.11 Monitors" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="mode-uni">
@@ -1091,6 +1243,43 @@ GATE Rule: Always use while() with Mesa semantics (Java/POSIX).
 // wait() releases the lock and sleeps; notifyAll() wakes all waiters
 // while() (not if!) because Mesa semantics: condition must be re-checked</code></pre></div>
 
+<h3 class="prose" style="margin-top:20px">Mesa vs Hoare Semantics</h3>
+<p class="prose">When process P executes <code>signal(x)</code> and wakes up waiting process Q, who gets the monitor lock next?</p>
+<table class="data-table reveal">
+<thead><tr><th>Property</th><th>Hoare Semantics (Signal and Wait)</th><th>Mesa Semantics (Signal and Continue)</th></tr></thead>
+<tbody>
+<tr><td><strong>Who runs next?</strong></td><td>P immediately gives lock to Q. Q runs immediately.</td><td>P keeps the lock and continues executing. Q is moved to ready queue.</td></tr>
+<tr><td><strong>Condition Check</strong></td><td>Can use <code>if</code> (Q runs immediately, state hasn't changed).</td><td>Must use <code>while</code> loop (state might change before Q finally runs).</td></tr>
+<tr><td><strong>Complexity</strong></td><td>Harder to implement, lots of context switches.</td><td>Easier to implement, used in Java/pthreads.</td></tr>
+</tbody></table>
+
+<div class="callout tip reveal" style="margin-top:var(--sp-5);">
+  <strong>Why Mesa Semantics require a <code>while</code> loop (The Stolen Lock Trace):</strong><br>
+  Under Mesa (Signal and Continue), the signaller does NOT immediately yield the lock. This creates a race condition where a 3rd thread can steal the resource before the woken thread gets to run.
+  <pre style="background:var(--bg-card); padding:var(--sp-3); border-radius:var(--r-sm); margin-top:var(--sp-2); font-size:12px; color:var(--tx-primary);">
+Time | Thread A (Consumer) | Thread B (Producer) | Thread C (Consumer)
+----------------------------------------------------------------------
+ T1  | checks count==0     |                     |
+ T2  | calls wait()        |                     |
+     | [A is sleeping]     |                     |
+ T3  |                     | adds item (count=1) |
+ T4  |                     | calls signal()      |
+     |                     | [A is moved to      |
+     |                     |  ready queue]       |
+ T5  |                     | releases lock       |
+ T6  |                     |                     | acquires lock
+ T7  |                     |                     | checks count==1
+ T8  |                     |                     | consumes item (count=0)
+ T9  |                     |                     | releases lock
+ T10 | acquires lock       |                     |
+     | [A resumes running] |                     |
+     | **IF NOT IN WHILE:**|                     |
+ T11 | consumes item       |                     |
+     | **CRASH!** Buffer is|                     |
+     | already empty!      |                     |</pre>
+  <em>Solution:</em> The <code>while(count == 0)</code> forces Thread A to re-check the condition at T10. Finding <code>count==0</code>, it goes back to sleep safely.
+</div>
+
 <table class="data-table reveal">
 <caption>Monitor vs Semaphore</caption>
 <thead><tr><th>Property</th><th>Semaphore</th><th>Monitor</th></tr></thead>
@@ -1113,18 +1302,18 @@ GATE Rule: Always use while() with Mesa semantics (Java/POSIX).
   <li>Hoare: signaller yields immediately to woken process. Mesa: signaller continues, woken process runs later.</li>
 </ul>
 <div class="mcq reveal"><strong>GATE Q:</strong> Monitor condition.signal() called with no waiting processes. What happens?<br>
-(a) Value incremented &nbsp; (b) Nothing happens &nbsp; (c) Error thrown &nbsp; (d) Process blocks<br>
+(a) Value incremented   (b) Nothing happens   (c) Error thrown   (d) Process blocks<br>
 <details><summary>Answer</summary><strong>(b) Nothing happens.</strong> Condition variable signal is LOST if no process is waiting. This is the #1 conceptual difference tested between semaphores (which remember) and monitors (which don't).</details></div>
 </div>
 </section>
 
 <hr class="section-hr">
 
-<!-- ══════════════════════════════════════════════════════ 3.12 ══ -->
+<!-- ══════════════════════════════════════════════════════ 2B.12 ══ -->
 <section id="s-simulator" data-search-section="semaphore simulator interactive wait signal value blocked queue">
 <div class="section-heading">
-  <h2 class="prose">3.12 🎮 Interactive Semaphore Simulator
-  <button class="bookmark-btn" data-id="s-simulator" data-label="3.12 Semaphore Simulator" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.12 🎮 Interactive Semaphore Simulator
+  <button class="bookmark-btn" data-id="s-simulator" data-label="2B.12 Semaphore Simulator" title="Bookmark">🔖</button></h2>
 </div>
 
 <p class="prose">Step through semaphore operations manually and watch the value and blocked-process queue update in real time. Perfect for verifying GATE numerical answers.</p>
@@ -1150,7 +1339,7 @@ GATE Rule: Always use while() with Mesa semantics (Java/POSIX).
   </div>
   <div class="sim-log" id="sem-log"><em style="color:var(--tx-muted)">Initialize semaphores above, then execute operations to see the trace here.</em></div>
   <div style="margin-top:var(--sp-3);font-size:var(--text-xs);color:var(--tx-muted)">
-    🟠 wait() blocks if value &lt; 0 &nbsp;|&nbsp; 🟢 signal() wakes one blocked process &nbsp;|&nbsp; |value| when negative = # blocked
+    🟠 wait() blocks if value < 0  |  🟢 signal() wakes one blocked process  |  |value| when negative = # blocked
   </div>
 </div>
 
@@ -1234,20 +1423,20 @@ GATE Rule: Always use while() with Mesa semantics (Java/POSIX).
 
 <hr class="section-hr">
 
-<!-- ══════════════════════════════════════════════════════ 3.13 ══ -->
+<!-- ══════════════════════════════════════════════════════ 2B.13 ══ -->
 <section id="s-formula" data-search-section="formula quick card synchronization concepts one-line definitions semaphore value calculation">
 <div class="section-heading">
-  <h2 class="prose">3.13 Formula &amp; Concept Quick-Card
-  <button class="bookmark-btn" data-id="s-formula" data-label="3.13 Formula Card" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.13 Formula & Concept Quick-Card
+  <button class="bookmark-btn" data-id="s-formula" data-label="2B.13 Formula Card" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="formula-box">
 <div class="formula-label">Core Semaphore Formulas</div>
 S.value after k waits + m signals = S_init − k + m<br>
-Blocked processes = |S.value| (when S.value &lt; 0) &nbsp;&nbsp; [textbook convention]<br>
+Blocked processes = |S.value| (when S.value < 0)    [textbook convention]<br>
 Max concurrent in CS = initial semaphore value (for counting semaphore)<br>
-empty + full = N &nbsp;&nbsp; [bounded buffer invariant]<br>
-Room semaphore = N − 1 &nbsp;&nbsp; [dining philosophers deadlock prevention]
+empty + full = N    [bounded buffer invariant]<br>
+Room semaphore = N − 1    [dining philosophers deadlock prevention]
 </div>
 
 <div class="concept-grid">
@@ -1264,7 +1453,7 @@ Room semaphore = N − 1 &nbsp;&nbsp; [dining philosophers deadlock prevention]
 </div>
 
 <table class="data-table reveal" style="margin-top:var(--sp-5)">
-<caption>One-Line Definitions — Unit 3</caption>
+<caption>One-Line Definitions — Unit 2B</caption>
 <thead><tr><th>Term</th><th>One-Line Definition</th></tr></thead>
 <tbody>
 <tr><td>Atomicity</td><td>Operation executes completely without interruption — indivisible from any observer's perspective</td></tr>
@@ -1283,11 +1472,11 @@ Room semaphore = N − 1 &nbsp;&nbsp; [dining philosophers deadlock prevention]
 
 <!-- ══════════════════════════════════════════════════════ PYQ ══ -->
 
-<!-- ═══════════════════════════════════════════════════════ 3.14 -->
+<!-- ═══════════════════════════════════════════════════════ 2B.14 -->
 <section id="s-advanced-sync" data-search-section="Advanced Synchronization Barrier RCU Futex Monitor vs Semaphore">
 <div class="section-heading">
-  <h2 class="prose">3.14 Advanced Synchronisation — Barrier, RCU &amp; Futex
-  <button class="bookmark-btn" data-id="s-advanced-sync" data-label="3.14 Advanced Sync" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.14 Advanced Synchronisation — Barrier, RCU & Futex
+  <button class="bookmark-btn" data-id="s-advanced-sync" data-label="2B.14 Advanced Sync" title="Bookmark">🔖</button></h2>
 </div>
 
 <p class="prose">Beyond the classical semaphores and monitors, modern systems require more specialised synchronisation primitives for high-performance concurrent programming. These are frequently covered in advanced GATE questions and form the backbone of real Linux kernel synchronisation.</p>
@@ -1405,7 +1594,7 @@ void futex_unlock(int* futex) {
 
 <div class="mode-uni">
 <div class="mcq reveal"><strong>Q:</strong> What is the key advantage of a Futex over a traditional mutex?<br>
-(a) It works across processes &nbsp; (b) It requires no kernel involvement at all &nbsp; (c) It avoids syscall overhead in the common uncontended case &nbsp; (d) It automatically handles priority inversion<br>
+(a) It works across processes   (b) It requires no kernel involvement at all   (c) It avoids syscall overhead in the common uncontended case   (d) It automatically handles priority inversion<br>
 <details><summary>Answer</summary><strong>(c)</strong> — A Futex performs a userspace CAS operation first. If the mutex is uncontended (common case), the lock is acquired without any system call. The kernel is only invoked on the slow path when a thread must actually block. Traditional mutexes always involve a syscall.</details></div>
 </div>
 
@@ -1421,11 +1610,11 @@ void futex_unlock(int* futex) {
 </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ 3.15 -->
+<!-- ═══════════════════════════════════════════════════════ 2B.15 -->
 <section id="s-monitor-vs-sem" data-search-section="Monitor vs Semaphore Comparison Condition Variables">
 <div class="section-heading">
-  <h2 class="prose">3.15 Monitor vs Semaphore — Deep Comparison
-  <button class="bookmark-btn" data-id="s-monitor-vs-sem" data-label="3.15 Monitor vs Semaphore" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2B.15 Monitor vs Semaphore — Deep Comparison
+  <button class="bookmark-btn" data-id="s-monitor-vs-sem" data-label="2B.15 Monitor vs Semaphore" title="Bookmark">🔖</button></h2>
 </div>
 
 <p class="prose">Both monitors and semaphores solve the critical section problem and enable process synchronisation — but they do so at very different levels of abstraction. Understanding their differences is critical for GATE questions that ask "why use a monitor instead of a semaphore?" or present code and ask which primitive is being used.</p>
@@ -1439,7 +1628,7 @@ void futex_unlock(int* futex) {
 <tr><td><strong>Error-prone?</strong></td><td>Yes — forgetting P() or V() causes deadlock/race</td><td>No — compiler enforces mutex; programmer only uses wait/signal</td></tr>
 <tr><td><strong>Signalling</strong></td><td>V() (signal) wakes waiting thread immediately</td><td>signal() wakes a waiting thread (semantics vary by type)</td></tr>
 <tr><td><strong>Condition variables</strong></td><td>Must simulate with extra semaphores (complex)</td><td>Built-in: wait(cond), signal(cond), broadcast(cond)</td></tr>
-<tr><td><strong>Spurious wakeups</strong></td><td>Not applicable (P blocks until count &gt; 0)</td><td>Yes — always use <code>while()</code> not <code>if()</code> with wait()</td></tr>
+<tr><td><strong>Spurious wakeups</strong></td><td>Not applicable (P blocks until count > 0)</td><td>Yes — always use <code>while()</code> not <code>if()</code> with wait()</td></tr>
 <tr><td><strong>Signal semantics</strong></td><td>V() always increments count — no "lost signals"</td><td>signal() is lost if no one waiting (vs semaphore's V which persists)</td></tr>
 <tr><td><strong>Hoare vs Mesa</strong></td><td>N/A</td><td>Hoare: signaller immediately gives up CPU. Mesa (pthreads): signaller continues, waiter re-checks condition.</td></tr>
 <tr><td><strong>In languages</strong></td><td>POSIX sem_wait/sem_post, Java Semaphore</td><td>Java synchronized, C# lock, Python threading.Condition</td></tr>
@@ -1511,7 +1700,7 @@ void consumer() {
 <!-- ═══════════════════════════════════ PYQ -->
 <section id="s-pyq3" data-search-section="PYQ previous year questions DU GATE university exam viva synchronization semaphore mutex monitor Peterson">
 <div class="section-heading">
-  <h2 class="prose">★ Unit 3 PYQ &amp; Exam Prep
+  <h2 class="prose">★ Unit 2B PYQ & Exam Prep
   <button class="bookmark-btn" data-id="s-pyq3" data-label="★ Unit 3 PYQ" title="Bookmark">🔖</button></h2>
 </div>
 
@@ -1541,7 +1730,7 @@ void consumer() {
 
 <details class="qa-item"><summary><strong>Q4:</strong> Explain Peterson's Solution and prove it satisfies Mutual Exclusion.</summary>
 <div class="qa-content">
-<p>Peterson's uses <code>flag[i]</code> (intent to enter) and <code>turn</code> (tie-breaker). Process i sets <code>flag[i]=true</code>, <code>turn=j</code>, then spins while <code>flag[j] &amp;&amp; turn==j</code>.</p>
+<p>Peterson's uses <code>flag[i]</code> (intent to enter) and <code>turn</code> (tie-breaker). Process i sets <code>flag[i]=true</code>, <code>turn=j</code>, then spins while <code>flag[j] && turn==j</code>.</p>
 <p><strong>ME proof:</strong> Suppose both Pi and Pj are in CS simultaneously. Pi in CS means <code>flag[j]==false</code> OR <code>turn==i</code>. Pj in CS means <code>flag[i]==false</code> OR <code>turn==j</code>. Since both entered CS, both flags were true. So we need <code>turn==i</code> AND <code>turn==j</code> — impossible. Contradiction. ∎</p>
 </div></details>
 
@@ -1581,7 +1770,7 @@ void consumer() {
 </div>
 
 <div class="mode-gate">
-<div class="mode-badge gate">⚡ GATE &amp; Competitive Exams</div>
+<div class="mode-badge gate">⚡ GATE & Competitive Exams</div>
 <h3 class="prose">GATE Master MCQs</h3>
 
 <div class="mcq-card">
@@ -1627,6 +1816,258 @@ void consumer() {
 <details class="mcq-ans"><summary>View Answer</summary>
 <div><strong>C</strong> — Only ONE process can be active inside a monitor at any time. (A) wrong — one at a time. (B) wrong — signal with no waiters does nothing (semaphore does increment). (D) wrong — monitors are high-level language constructs.</div></details>
 </div>
+
+<h3 class="prose" style="margin-top:var(--sp-5)">Additional GATE MCQs</h3>
+
+<div class="mcq-card">
+<div class="mcq-q"><strong>7. Which of the following synchronization mechanisms satisfies all three CS requirements (ME, Progress, Bounded Waiting)?</strong></div>
+<ol type="A" class="mcq-options"><li>Simple TSL (Test-and-Set Lock) without waiting array</li><li>Peterson's Solution</li><li>Strict Alternation</li><li>Disabling interrupts in user mode</li></ol>
+<details class="mcq-ans"><summary>View Answer & Explanation</summary>
+<div><strong>B (Peterson's Solution)</strong><br>Peterson's satisfies all 3: ME (proven by contradiction), Progress (not blocked in remainder), Bounded Waiting (bound=1, guaranteed by turn). Simple TSL satisfies ME+Progress but NOT BW. Strict alternation violates Progress. Disabling interrupts: not feasible in user mode (privileged instruction).</div></details>
+</div>
+
+<div class="mcq-card">
+<div class="mcq-q"><strong>8. A semaphore S is initialized to 5. After P1:wait(S), P2:wait(S), P3:wait(S), P3:signal(S), P4:wait(S). How many processes are blocked?</strong></div>
+<ol type="A" class="mcq-options"><li>0</li><li>1</li><li>2</li><li>3</li></ol>
+<details class="mcq-ans"><summary>View Answer & Explanation</summary>
+<div><strong>A (0 blocked)</strong><br>
+S: 5 → 4(wait P1) → 3(wait P2) → 2(wait P3) → 3(signal P3) → 2(wait P4)<br>
+Final S=2 > 0, so NO processes are blocked. All wait() operations went through without blocking (S never went negative).</div></details>
+</div>
+
+<div class="mcq-card">
+<div class="mcq-q"><strong>9. In the Producer-Consumer semaphore solution, what happens if the producer calls wait(mutex) BEFORE wait(empty)?</strong></div>
+<ol type="A" class="mcq-options"><li>No effect — both orderings are equivalent</li><li>Deadlock when buffer is full</li><li>Race condition on the buffer</li><li>Starvation of the consumer</li></ol>
+<details class="mcq-ans"><summary>View Answer & Explanation</summary>
+<div><strong>B (Deadlock when buffer is full)</strong><br>
+If producer calls wait(mutex) first when buffer is full:<br>
+1. Producer holds mutex, then calls wait(empty) → blocks (empty=0)<br>
+2. Consumer needs mutex to consume → also blocks<br>
+Circular wait = deadlock! Rule: ALWAYS acquire resource semaphore (empty/full) BEFORE mutex.</div></details>
+</div>
+
+</div>
+
+<div class="mode-gate">
+<div class="mode-badge gate">⚡ GATE PYQs — Synchronization</div>
+<div class="qa-section">
+
+<details class="qa-item">
+  <summary>[GATE 2024] Three processes P1, P2, P3 share a counting semaphore S initialized to 2. P1: wait(S), P2: wait(S), P3: wait(S). How many processes are blocked after all three wait() operations? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: 1 process (P3 is blocked)</strong></p>
+    <p>S trace: 2 → 1 (P1 waits, S=1≥0, proceeds) → 0 (P2 waits, S=0≥0, proceeds) → -1 (P3 waits, S=-1<0, <strong>BLOCKED</strong>)</p>
+    <p>Final state: S=-1, |S|=1 process blocked. P3 waits in the semaphore queue.</p>
+    <div class="formula-box" style="margin-top:8px">Blocked processes = |S.value| when S.value < 0    e.g., S=-3 → 3 blocked</div>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2023] The following code is executed concurrently by two processes. S1=0, S2=0. Which ordering of events A,B,C,D is guaranteed? P1: A; signal(S1); wait(S2); D. P2: wait(S1); B; signal(S2); C. <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: A→B and B→D are guaranteed. C can occur anytime after B.</strong></p>
+    <ul>
+      <li>S1=0: P2's wait(S1) blocks until P1 does signal(S1) → <strong>A must precede B</strong></li>
+      <li>S2=0: P1's wait(S2) blocks until P2 does signal(S2) → <strong>B must precede D</strong></li>
+      <li>C occurs after signal(S2) in P2, but P2 can continue running → C can be before or after D</li>
+    </ul>
+    <p><strong>Guaranteed order: A → B → D</strong>. C can interleave anywhere after B.</p>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2022] In Peterson's solution for two processes Pi and Pj, which variable prevents Pi from busy-waiting indefinitely if Pj is in its remainder section? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: flag[j]</strong></p>
+    <p>Pi's entry code: <code>flag[i]=true; turn=j; while(flag[j] && turn==j);</code></p>
+    <p>If Pj is in its <strong>remainder section</strong>: Pj has set <code>flag[j]=false</code>. So the condition <code>flag[j] && turn==j</code> is FALSE → Pi exits the while loop immediately and enters its CS.</p>
+    <p>This guarantees <strong>Progress</strong> — Pi is never blocked by a process in its remainder section.</p>
+    <table>
+      <thead><tr><th>Variable</th><th>Role</th><th>CS Property Ensured</th></tr></thead>
+      <tbody>
+        <tr><td>flag[i]</td><td>Signal intent to enter CS</td><td>Mutual Exclusion</td></tr>
+        <tr><td>turn</td><td>Tie-breaker when both want CS</td><td>Bounded Waiting (bound=1)</td></tr>
+        <tr><td>flag[j]</td><td>Check if other process wants CS</td><td>Progress</td></tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2021] A binary semaphore and a mutex both provide mutual exclusion. What is the key difference? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: Ownership. A mutex has ownership; a binary semaphore does not.</strong></p>
+    <table>
+      <thead><tr><th>Property</th><th>Binary Semaphore</th><th>Mutex</th></tr></thead>
+      <tbody>
+        <tr><td>Ownership</td><td>❌ None — any process can signal</td><td>✅ Only locker can unlock</td></tr>
+        <tr><td>Recursive locking</td><td>❌ Deadlocks itself</td><td>✅ With recursive mutex (POSIX)</td></tr>
+        <tr><td>Priority inheritance</td><td>❌ Not supported</td><td>✅ OS can implement PI</td></tr>
+        <tr><td>Use case</td><td>Signalling between processes</td><td>Mutual exclusion (unlock by same thread)</td></tr>
+      </tbody>
+    </table>
+    <p><strong>GATE trap:</strong> "A binary semaphore IS a mutex" — FALSE. They share mutual exclusion behaviour but differ critically in ownership semantics.</p>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2020] In the Dining Philosophers problem with N philosophers and N chopsticks. If all N philosophers pick up their left chopstick simultaneously, what happens? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: Deadlock — all four Coffman conditions are satisfied.</strong></p>
+    <ol>
+      <li><strong>Mutual Exclusion:</strong> Each chopstick can only be held by one philosopher</li>
+      <li><strong>Hold and Wait:</strong> Each holds left chopstick, waiting for right</li>
+      <li><strong>No Preemption:</strong> No one can steal a chopstick</li>
+      <li><strong>Circular Wait:</strong> P1 waits for P2's chopstick, P2 for P3's, ..., PN for P1's</li>
+    </ol>
+    <p><strong>All 4 Coffman conditions met → Deadlock.</strong> Fix: room semaphore=N-1 breaks circular wait by allowing at most N-1 philosophers to sit simultaneously.</p>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2019] A semaphore is used to solve the Readers-Writers problem (first version). Which of the following is true? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: Multiple readers can read simultaneously, but writers may starve.</strong></p>
+    <p>First RW solution (reader-priority):</p>
+    <ul>
+      <li>✅ Multiple readers can read concurrently — only the first reader acquires rw_mutex</li>
+      <li>✅ A writer gets exclusive access — waits on rw_mutex until all readers leave</li>
+      <li>❌ Writers can starve — if readers continuously arrive, read_count never reaches 0, so rw_mutex is never released for the writer</li>
+    </ul>
+    <p><strong>Second RW (writer-priority):</strong> Writers block new readers once a writer is waiting → Readers starve instead.</p>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2018] What is the minimum number of semaphores needed to solve the Producer-Consumer problem with a bounded buffer of size N? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: 3 semaphores minimum (mutex, empty, full)</strong></p>
+    <table>
+      <thead><tr><th>Semaphore</th><th>Init Value</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>mutex</code></td><td>1</td><td>Mutual exclusion on buffer access</td></tr>
+        <tr><td><code>empty</code></td><td>N</td><td>Count of empty buffer slots (producer waits when 0)</td></tr>
+        <tr><td><code>full</code></td><td>0</td><td>Count of full buffer slots (consumer waits when 0)</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Invariant:</strong> empty + full = N at all times. Can you do it with 2? No — you need both empty+full for correct blocking behaviour, AND mutex for race-free buffer access.</p>
+  </div>
+</details>
+
+<details class="qa-item">
+  <summary>[GATE 2017] In which of the following cases does the use of a spinlock make sense? <span class="qa-arrow">›</span></summary>
+  <div class="qa-answer">
+    <p><strong>Answer: Short critical sections on multi-core systems where the lock holder is running on another core.</strong></p>
+    <table>
+      <thead><tr><th>Scenario</th><th>Spinlock appropriate?</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Single-core system</td><td>❌ NEVER</td><td>Spinner prevents lock holder from running (same CPU)</td></tr>
+        <tr><td>Very long CS (I/O-bound)</td><td>❌ No</td><td>Spinning wastes CPU for a long time; blocking is better</td></tr>
+        <tr><td>Short CS, multi-core</td><td>✅ Yes</td><td>Lock holder on another core; spin time < context switch overhead</td></tr>
+        <tr><td>Kernel interrupt handler</td><td>✅ Yes</td><td>Cannot sleep in interrupt context; spinlock is only option</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Linux kernel rule:</strong> Spinlocks must not be held across sleep-able operations. Use mutex for long CS, spinlock for short ones.</p>
+  </div>
+</details>
+
+</div>
+</div>
+
+<!-- GATE POST-2020: MSQ + NAT FORMAT -->
+<div class="mode-gate">
+  <div class="mode-badge gate">⚡ GATE 2020+ — MSQ &amp; NAT</div>
+  <div class="prose">
+
+    <!-- MSQ 1 -->
+    <div class="msq-card">
+      <div class="msq-label">📋 MSQ — Multiple Select</div>
+      <div class="msq-q"><strong>MSQ-1 (Semaphores).</strong> Which of the following statements about semaphores are CORRECT? (Select ALL that apply)</div>
+      <ul class="msq-options">
+        <li>A) A binary semaphore can only take values 0 or 1</li>
+        <li>B) A counting semaphore initialized to N allows at most N threads in the critical section simultaneously</li>
+        <li>C) <code>wait(S)</code> increments S; <code>signal(S)</code> decrements S</li>
+        <li>D) A mutex is a binary semaphore with the added constraint that only the locking thread can unlock it</li>
+        <li>E) Blocking semaphores prevent busy-waiting by suspending the calling thread</li>
+      </ul>
+      <details class="msq-ans">
+        <summary>▶ View Answer &amp; Explanation</summary>
+        <div><strong>Correct answers: A, B, D, E</strong><br><br>
+          <strong>A ✓:</strong> Binary semaphore values ∈ {0, 1} only.<br>
+          <strong>B ✓:</strong> Counting semaphore init to N: (N+1)th wait() blocks → exactly N threads in CS simultaneously.<br>
+          <strong>C ✗:</strong> FALSE — wait() DECREMENTS S (P/proberen). signal() INCREMENTS S (V/verhogen). Classic trap!<br>
+          <strong>D ✓:</strong> Mutex has ownership semantics — only the acquiring thread may release. Semaphores have no ownership (any thread can call signal).<br>
+          <strong>E ✓:</strong> Blocking (non-busy) semaphores put waiting threads on a sleep queue, releasing the CPU. This prevents busy-waiting unlike spinlocks.
+        </div>
+      </details>
+    </div>
+
+    <!-- MSQ 2 -->
+    <div class="msq-card">
+      <div class="msq-label">📋 MSQ — Multiple Select</div>
+      <div class="msq-q"><strong>MSQ-2 (Peterson's Solution).</strong> Peterson's Solution for 2 processes guarantees which of the following properties? (Select ALL that apply)</div>
+      <ul class="msq-options">
+        <li>A) Mutual Exclusion — at most one process in the critical section at a time</li>
+        <li>B) Progress — if no process is in CS, the next entry cannot be postponed indefinitely</li>
+        <li>C) Bounded Waiting — a process waits at most 1 time before entering after another process exits</li>
+        <li>D) Works correctly on modern CPUs with out-of-order execution without memory barriers</li>
+        <li>E) Starvation-freedom for 2 processes</li>
+      </ul>
+      <details class="msq-ans">
+        <summary>▶ View Answer &amp; Explanation</summary>
+        <div><strong>Correct answers: A, B, C, E</strong><br><br>
+          <strong>A ✓:</strong> Peterson's proves ME via the flag[] and turn invariant.<br>
+          <strong>B ✓:</strong> Progress — a process not wanting entry (flag[i]=false) doesn't block others.<br>
+          <strong>C ✓:</strong> Bounded waiting bound = 1. The turn variable ensures the other process gets in at most once before you do.<br>
+          <strong>D ✗:</strong> FALSE — Peterson's assumes sequential memory consistency. Modern CPUs reorder instructions; memory barriers (mfence) are required for correct execution on real hardware.<br>
+          <strong>E ✓:</strong> Bounded waiting of 1 means no starvation for 2-process case.
+        </div>
+      </details>
+    </div>
+
+    <!-- NAT 1 -->
+    <div class="nat-card">
+      <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+      <div class="nat-q"><strong>NAT-1 (Semaphore Counting).</strong> In a Producer-Consumer with buffer size = <strong>6</strong>. Initial state: empty=6, full=0. Sequence: Producer produces 4 items → Consumer consumes 2 items → Producer produces 1 item. What is the value of <strong>full</strong> semaphore? Enter just the integer.</div>
+      <details class="nat-ans">
+        <summary>▶ View Answer &amp; Solution</summary>
+        <div><strong>Answer: 3</strong><br><br>
+          Initial: empty=6, full=0<br>
+          Producer produces 4: full=0+4=4, empty=6−4=2<br>
+          Consumer consumes 2: full=4−2=2, empty=2+2=4<br>
+          Producer produces 1: full=2+1=3, empty=4−1=3<br><br>
+          <strong>full = 3</strong>, empty = 3. Verify: full + empty = 6 = buffer_size ✓
+        </div>
+      </details>
+    </div>
+
+    <!-- NAT 2 -->
+    <div class="nat-card">
+      <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+      <div class="nat-q"><strong>NAT-2 (Minimum Semaphores).</strong> What is the minimum number of semaphores needed to correctly implement the Producer-Consumer problem with a bounded buffer of size N? Enter just the integer.</div>
+      <details class="nat-ans">
+        <summary>▶ View Answer &amp; Solution</summary>
+        <div><strong>Answer: 3</strong><br><br>
+          Required: <code>mutex</code> (init=1), <code>empty</code> (init=N), <code>full</code> (init=0).<br>
+          Cannot reduce to 2: both empty+full needed for blocking, AND mutex for race-free buffer access. Removing mutex allows two producers to corrupt the buffer simultaneously.
+        </div>
+      </details>
+    </div>
+
+    <!-- 10-mark guide -->
+    <div class="callout info" style="margin-top:1.5rem">
+      <span class="callout-icon">📝</span>
+      <div><strong>10-Mark Answer Guide — Unit 2B (DU Exams)</strong><br>
+      Structure: <strong>① Define problem + 3 CS requirements (ME, Progress, BW)</strong> (3M) → <strong>② Full pseudocode with semaphores</strong> (4M) → <strong>③ Trace + Starvation analysis</strong> (3M).<br><br>
+      <strong>Common 10-mark topics:</strong><br>
+      • Producer-Consumer: pseudocode with mutex/empty/full + buffer invariant proof<br>
+      • Readers-Writers: reader-priority vs writer-priority + starvation identification<br>
+      • Dining Philosophers: 5-thread deadlock scenario + asymmetric fix<br>
+      • Monitors vs Semaphores: mutual exclusion guarantee, signal() semantics difference<br>
+      • Peterson's Solution: full code + prove all 3 CS properties formally
+      </div>
+    </div>
+  </div>
 </div>
 </section>
 
@@ -1635,7 +2076,7 @@ void consumer() {
 <!-- ══════════════════════════════════════════════════════ TRAP ══ -->
 <section id="s-trap3" data-search-section="GATE trap sheet synchronization common mistakes exam facts semaphore monitor">
 <div class="section-heading">
-  <h2 class="prose">⚡ Unit 3 GATE Trap Sheet
+  <h2 class="prose">⚡ Unit 2B GATE Trap Sheet
   <button class="bookmark-btn" data-id="s-trap3" data-label="GATE Trap Sheet" title="Bookmark">🔖</button></h2>
 </div>
 
@@ -1665,19 +2106,19 @@ void consumer() {
 <h3 class="prose" style="margin-top:var(--sp-6)">Additional GATE Numericals</h3>
 
 <div class="mcq-card">
-<div class="mcq-q"><strong>G1. S=3. Operations: wait,wait,wait,wait,signal,signal. Final value of S?</strong><br>A. 1 &nbsp; B. 0 &nbsp; C. −1 &nbsp; D. 2</div>
+<div class="mcq-q"><strong>G1. S=3. Operations: wait,wait,wait,wait,signal,signal. Final value of S?</strong><br>A. 1   B. 0   C. −1   D. 2</div>
 <details class="mcq-ans"><summary>Answer</summary>
 <div><strong>A. 1.</strong> S: 3→2→1→0→−1(block). signal: −1+1=0(wake blocked). signal: 0+1=1. Final S=1.</div></details>
 </div>
 
 <div class="mcq-card">
-<div class="mcq-q"><strong>G2. Max simultaneous readers in First Readers-Writers solution?</strong><br>A. 1 &nbsp; B. N &nbsp; C. Unlimited &nbsp; D. read_count</div>
+<div class="mcq-q"><strong>G2. Max simultaneous readers in First Readers-Writers solution?</strong><br>A. 1   B. N   C. Unlimited   D. read_count</div>
 <details class="mcq-ans"><summary>Answer</summary>
 <div><strong>C. Unlimited</strong> — Any number of readers can be in CS as long as no writer holds rw_mutex. First reader acquires rw_mutex; subsequent readers only increment read_count (no blocking).</div></details>
 </div>
 
 <div class="mcq-card">
-<div class="mcq-q"><strong>G3. Which Coffman condition does the asymmetric Dining Philosophers solution break?</strong><br>A. Mutual Exclusion &nbsp; B. Hold &amp; Wait &nbsp; C. No Preemption &nbsp; D. Circular Wait</div>
+<div class="mcq-q"><strong>G3. Which Coffman condition does the asymmetric Dining Philosophers solution break?</strong><br>A. Mutual Exclusion   B. Hold & Wait   C. No Preemption   D. Circular Wait</div>
 <details class="mcq-ans"><summary>Answer</summary>
 <div><strong>D. Circular Wait</strong> — Asymmetric pickup order (odd pick left first, even pick right first) ensures not all philosophers request chopsticks in the same cyclic order, making a circular wait chain impossible.</div></details>
 </div>
@@ -1687,9 +2128,9 @@ void consumer() {
   <li>Dijkstra, "Cooperating Sequential Processes" (1965) — semaphores</li>
   <li>Peterson, "Myths About the Mutual Exclusion Problem" (1981)</li>
   <li>Lamport, "A New Solution of Dijkstra's Concurrent Programming Problem" (1974) — Bakery</li>
-  <li>Lampson &amp; Redell, "Experience with Processes and Monitors in Mesa" (1980)</li>
+  <li>Lampson & Redell, "Experience with Processes and Monitors in Mesa" (1980)</li>
   <li>Mars Pathfinder Priority Inversion (Mike Jones, 1997)</li>
-  <li>McKenney &amp; Slingwine, "Read-Copy Update" (1998) — RCU</li>
+  <li>McKenney & Slingwine, "Read-Copy Update" (1998) — RCU</li>
   <li>Franke, Russell, Kirkwood, "Fuss, Futexes and Furwocks" (2002) — Linux futexes</li>
 </ul></div></div>
 </div>
@@ -1729,9 +2170,9 @@ void consumer() {
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -1754,7 +2195,7 @@ void consumer() {
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>
@@ -1771,7 +2212,7 @@ void consumer() {
 <nav id="mobile-nav">
   <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
   <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
-  <a href="#s-concurrency" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 3</a>
+  <a href="#s-concurrency" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 2B</a>
   <a href="../exams/unit-papers.html" class="mobile-nav-btn"><span class="icon">📝</span>Exams</a>
   <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
 </nav>

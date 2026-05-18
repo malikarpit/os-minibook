@@ -11,29 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
-.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.cond-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-4);margin:var(--sp-4) 0}
-.cond-card{background:var(--bg-elevated);border:1px solid var(--bd-default);border-radius:var(--r-lg);padding:var(--sp-4);border-top:3px solid var(--accent)}
-.cond-card:nth-child(2){border-top-color:#06b6d4}
-.cond-card:nth-child(3){border-top-color:#10b981}
-.cond-card:nth-child(4){border-top-color:#f97316}
-.cond-num{font-size:1.8rem;font-weight:900;opacity:.25;line-height:1}
-.cond-title{font-weight:700;color:var(--tx-primary);margin:var(--sp-1) 0}
-.cond-desc{font-size:var(--text-xs);color:var(--tx-muted);line-height:1.5}
-.rag-box{background:var(--bg-elevated);border:1px solid var(--bd-subtle);border-radius:var(--r-lg);padding:var(--sp-5);font-family:var(--font-mono);font-size:var(--text-xs);line-height:2;margin:var(--sp-4) 0}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit -->
@@ -41,7 +20,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -51,13 +30,13 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
     
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -73,27 +52,27 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 2C — Sections</div>
-      <a href="#s-dl-intro" class="sidebar-link active"><span class="link-icon">💀</span>4.1 Deadlock Intro</a>
-      <a href="#s-dl-conditions" class="sidebar-link"><span class="link-icon">🔗</span>4.2 Four Conditions</a>
-      <a href="#s-dl-rag" class="sidebar-link"><span class="link-icon">🗺️</span>4.3 Resource Alloc Graph</a>
-      <a href="#s-dl-prevention" class="sidebar-link"><span class="link-icon">🛡️</span>4.4 Prevention</a>
-      <a href="#s-dl-avoidance" class="sidebar-link"><span class="link-icon">🔮</span>4.5 Avoidance & Safe State</a>
-      <a href="#s-dl-bankers1" class="sidebar-link"><span class="link-icon">🏦</span>4.6 Banker's (Single)</a>
-      <a href="#s-dl-bankers2" class="sidebar-link"><span class="link-icon">🏦</span>4.7 Banker's (Multiple)</a>
-      <a href="#s-dl-detect1" class="sidebar-link"><span class="link-icon">🔍</span>4.8 Detection (Single)</a>
-      <a href="#s-dl-detect2" class="sidebar-link"><span class="link-icon">🔍</span>4.9 Detection (Multiple)</a>
-      <a href="#s-dl-recovery" class="sidebar-link"><span class="link-icon">🔧</span>4.10 Recovery</a>
-      <a href="#s-dl-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ &amp; Q&amp;A</a>
+      <a href="#s-dl-intro" class="sidebar-link active"><span class="link-icon">💀</span>2C.1 Deadlock Intro</a>
+      <a href="#s-dl-conditions" class="sidebar-link"><span class="link-icon">🔗</span>2C.2 Four Conditions</a>
+      <a href="#s-dl-rag" class="sidebar-link"><span class="link-icon">🗺️</span>2C.3 Resource Alloc Graph</a>
+      <a href="#s-dl-prevention" class="sidebar-link"><span class="link-icon">🛡️</span>2C.4 Prevention</a>
+      <a href="#s-dl-avoidance" class="sidebar-link"><span class="link-icon">🔮</span>2C.5 Avoidance & Safe State</a>
+      <a href="#s-dl-bankers1" class="sidebar-link"><span class="link-icon">🏦</span>2C.6 Banker's (Single)</a>
+      <a href="#s-dl-bankers2" class="sidebar-link"><span class="link-icon">🏦</span>2C.7 Banker's (Multiple)</a>
+      <a href="#s-dl-detect1" class="sidebar-link"><span class="link-icon">🔍</span>2C.8 Detection (Single)</a>
+      <a href="#s-dl-detect2" class="sidebar-link"><span class="link-icon">🔍</span>2C.9 Detection (Multiple)</a>
+      <a href="#s-dl-recovery" class="sidebar-link"><span class="link-icon">🔧</span>2C.10 Recovery</a>
+      <a href="#s-dl-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ & Q&A</a>
     </div>
     <div class="sidebar-section">
-            <a href="#s-dl-compare"   class="sidebar-link"><span class="link-icon">⚖️</span>4.11 DL vs Starvation</a>
-      <a href="#s-dl-realworld" class="sidebar-link"><span class="link-icon">💻</span>4.12 Real-World Deadlocks</a>
-      <a href="#s-dl-formula"   class="sidebar-link"><span class="link-icon">📐</span>4.13 Formula Card</a>
-      <a href="#s-dl-examples"  class="sidebar-link"><span class="link-icon">🔢</span>4.14 Worked Examples</a>
-      <a href="#s-dl-bankers-adv" class="sidebar-link"><span class="link-icon">🏦</span>4.15 Banker's Advanced</a>
-      <a href="#s-dl-rag-adv"    class="sidebar-link"><span class="link-icon">🕸️</span>4.16 RAG Advanced</a>
-      <a href="#s-dl-mcq-extra"  class="sidebar-link"><span class="link-icon">📝</span>4.17 Extra MCQs</a>
-      <a href="#s-dl-summary"    class="sidebar-link"><span class="link-icon">📊</span>4.18 Summary</a>
+            <a href="#s-dl-compare" class="sidebar-link"><span class="link-icon">⚖️</span>2C.11 DL vs Starvation</a>
+      <a href="#s-dl-realworld" class="sidebar-link"><span class="link-icon">💻</span>2C.12 Real-World Deadlocks</a>
+      <a href="#s-dl-formula" class="sidebar-link"><span class="link-icon">📐</span>2C.13 Formula Card</a>
+      <a href="#s-dl-examples" class="sidebar-link"><span class="link-icon">🔢</span>2C.14 Worked Examples</a>
+      <a href="#s-dl-bankers-adv" class="sidebar-link"><span class="link-icon">🏦</span>2C.15 Banker's Advanced</a>
+      <a href="#s-dl-rag-adv" class="sidebar-link"><span class="link-icon">🕸️</span>2C.16 RAG Advanced</a>
+      <a href="#s-dl-mcq-extra" class="sidebar-link"><span class="link-icon">📝</span>2C.17 Extra MCQs</a>
+      <a href="#s-dl-summary" class="sidebar-link"><span class="link-icon">📊</span>2C.18 Summary</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
@@ -103,6 +82,12 @@
       <a href="unit5.html" class="sidebar-link"><span class="link-icon">🧠</span>Unit 3 — Memory</a>
       <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 4 — Files</a>
       <a href="gate-extra.html" class="sidebar-link" style="color:var(--gate-c)"><span class="link-icon">⚡</span>GATE Extra</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Related Units</div>
+      <a href="unit3.html#s-semaphore" class="sidebar-link"><span class="link-icon">🔗</span>Semaphores (Unit 2B)</a>
+      <a href="unit3.html#s-cs" class="sidebar-link"><span class="link-icon">🔗</span>Critical Section (Unit 2B)</a>
+      <a href="unit5.html#s-mem-paging" class="sidebar-link"><span class="link-icon">🔗</span>Paging &amp; Memory (Unit 3)</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -122,9 +107,9 @@
 <div class="content-inner">
   <div class="chapter-hero">
     <div class="chapter-breadcrumb">
-      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 4</span>
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 2C</span>
     </div>
-    <div class="chapter-num">💀 Unit 4 · DSC-10</div>
+    <div class="chapter-num">💀 Unit 2C · DSC-10</div>
     <h1 class="chapter-title">Deadlocks</h1>
     <div class="chapter-meta">
       <span class="meta-tag">🎓 University</span>
@@ -134,28 +119,48 @@
     </div>
   </div>
 
-  <div class="toc-card">
-    <h3>📋 Table of Contents</h3>
-    <div class="toc-list">
-      <a href="#s-dl-intro" class="toc-item"><span class="toc-num">4.1</span>Introduction to Deadlocks</a>
-      <a href="#s-dl-conditions" class="toc-item"><span class="toc-num">4.2</span>Four Necessary Conditions</a>
-      <a href="#s-dl-rag" class="toc-item"><span class="toc-num">4.3</span>Resource Allocation Graph (RAG)</a>
-      <a href="#s-dl-prevention" class="toc-item"><span class="toc-num">4.4</span>Deadlock Prevention</a>
-      <a href="#s-dl-avoidance" class="toc-item"><span class="toc-num">4.5</span>Deadlock Avoidance &amp; Safe State</a>
-      <a href="#s-dl-bankers1" class="toc-item"><span class="toc-num">4.6</span>Banker's Algorithm — Single Resource</a>
-      <a href="#s-dl-bankers2" class="toc-item"><span class="toc-num">4.7</span>Banker's Algorithm — Multiple Resources</a>
-      <a href="#s-dl-detect1" class="toc-item"><span class="toc-num">4.8</span>Deadlock Detection — Single Resource</a>
-      <a href="#s-dl-detect2" class="toc-item"><span class="toc-num">4.9</span>Deadlock Detection — Multiple Resources</a>
-      <a href="#s-dl-recovery" class="toc-item"><span class="toc-num">4.10</span>Deadlock Recovery</a>
-      <a href="#s-dl-pyq" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+  
+  <div class="callout info" style="margin-bottom:var(--sp-6);border-left:4px solid var(--gate-b)">
+    <span class="callout-icon">🎯</span>
+    <div><strong>After studying this unit you will be able to:</strong>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li>State all four Coffman conditions (HEMP mnemonic) and prove each is necessary for deadlock</li>
+        <li>Build and analyze Resource Allocation Graphs; detect deadlock in single and multi-instance systems</li>
+        <li>Run Banker's Algorithm: compute Need matrix, verify safety, enumerate all safe sequences</li>
+        <li>Apply the deadlock detection algorithm and distinguish Request vs Need matrix usage</li>
+        <li>Compare all 4 deadlock handling strategies: prevention, avoidance, detection+recovery, ostrich</li>
+        <li>Explain wait-die and wound-wait protocols used in database deadlock prevention</li>
+      </ul>
     </div>
   </div>
 
-  <!-- SECTION 4.1 -->
+  <div class="toc-card">
+    <h3>📋 Table of Contents</h3>
+    <div class="toc-list">
+      <a href="#s-dl-intro" class="toc-item"><span class="toc-num">2C.1</span>Introduction to Deadlocks</a>
+      <a href="#s-dl-conditions" class="toc-item"><span class="toc-num">2C.2</span>Four Necessary Conditions</a>
+      <a href="#s-dl-rag" class="toc-item"><span class="toc-num">2C.3</span>Resource Allocation Graph (RAG)</a>
+      <a href="#s-dl-prevention" class="toc-item"><span class="toc-num">2C.4</span>Deadlock Prevention</a>
+      <a href="#s-dl-avoidance" class="toc-item"><span class="toc-num">2C.5</span>Deadlock Avoidance & Safe State</a>
+      <a href="#s-dl-bankers1" class="toc-item"><span class="toc-num">2C.6</span>Banker's Algorithm — Single Resource</a>
+      <a href="#s-dl-bankers2" class="toc-item"><span class="toc-num">2C.7</span>Banker's Algorithm — Multiple Resources</a>
+      <a href="#s-dl-detect1" class="toc-item"><span class="toc-num">2C.8</span>Deadlock Detection — Single Resource</a>
+      <a href="#s-dl-detect2" class="toc-item"><span class="toc-num">2C.9</span>Deadlock Detection — Multiple Resources</a>
+      <a href="#s-dl-recovery" class="toc-item"><span class="toc-num">2C.10</span>Deadlock Recovery</a>
+      <a href="#s-dl-pyq" class="toc-item"><span class="toc-num">★</span>PYQ & Exam Prep</a>
+    </div>
+  </div>
+
+  <div class="callout warn reveal" style="margin:var(--sp-6) 0">
+    <span class="callout-icon">🔗</span>
+    <div><strong>Critical Prerequisite — Unit 2B:</strong> Deadlocks are a direct consequence of the synchronization mechanisms we learned in Unit 2B (Semaphores, Mutexes). Before proceeding, ensure you fully understand how a process <strong>blocks</strong> while waiting for a resource (e.g., <code>wait()</code> on a <a href="unit3.html#s-semaphore" class="glossary-term" title="Jump to definition">semaphore</a>). <a href="unit4.html#s-dl-intro" class="glossary-term" title="Jump to definition">Deadlock</a> is simply when multiple processes block each other in a circle, forever.</div>
+  </div>
+
+  <!-- SECTION 2C.1 -->
   <section id="s-dl-intro" data-search-section="deadlock definition system model resource hold wait necessary conditions">
     <div class="section-heading">
-      <h2 class="prose">4.1 Introduction to Deadlocks</h2>
-      <button class="bookmark-btn" data-id="s-dl-intro" data-label="4.1 Deadlock Intro" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.1 Introduction to Deadlocks</h2>
+      <button class="bookmark-btn" data-id="s-dl-intro" data-label="2C.1 Deadlock Intro" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -189,7 +194,7 @@
           <tbody>
             <tr><td><strong>Prevention</strong></td><td>Ensure at least one of the 4 conditions never holds</td><td>Low utilization, possible starvation</td><td>Special-purpose systems</td></tr>
             <tr><td><strong>Avoidance</strong></td><td>Dynamically grant resources only if safe state maintained</td><td>Requires advance resource info</td><td>Batch systems (Banker's)</td></tr>
-            <tr><td><strong>Detection &amp; Recovery</strong></td><td>Allow deadlock, detect it, then recover</td><td>Overhead of detection + recovery cost</td><td>Databases, general OS</td></tr>
+            <tr><td><strong>Detection & Recovery</strong></td><td>Allow deadlock, detect it, then recover</td><td>Overhead of detection + recovery cost</td><td>Databases, general OS</td></tr>
             <tr><td><strong>Ignore (Ostrich Algorithm)</strong></td><td>Pretend deadlocks never occur</td><td>None (until crash)</td><td>Most desktop OS (Windows, Linux)</td></tr>
           </tbody>
         </table>
@@ -263,11 +268,11 @@ Rule for GATE:
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.2 -->
+  <!-- SECTION 2C.2 -->
   <section id="s-dl-conditions" data-search-section="four necessary conditions deadlock mutual exclusion hold wait no preemption circular wait Coffman">
     <div class="section-heading">
-      <h2 class="prose">4.2 Four Necessary Conditions for Deadlock</h2>
-      <button class="bookmark-btn" data-id="s-dl-conditions" data-label="4.2 Four Conditions" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.2 Four Necessary Conditions for Deadlock</h2>
+      <button class="bookmark-btn" data-id="s-dl-conditions" data-label="2C.2 Four Conditions" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -313,15 +318,52 @@ lock(B);  ← waits for B          lock(A);  ← waits for A
 // Condition 3: No Preemption (OS won't force-release the lock)
 // Condition 4: Circular Wait (T1→B→T2→A→T1)</code></pre>
         </div>
+        
+
+        <div class="section-summary">
+          <div class="section-summary-label">📌 Section 4.1–4.3 Deadlock — Key Takeaways</div>
+          <ul>
+            <li><strong>HEMP mnemonic:</strong> <strong>H</strong>old &amp; Wait | <strong>E</strong>xclusion (Mutual) | <strong>M</strong>issing Preemption (No Preemption) | <strong>P</strong>ath (Circular Wait). ALL 4 needed simultaneously</li>
+            <li><strong>Preventing deadlock:</strong> Eliminate ANY ONE of the 4 conditions. Circular Wait (resource ordering) is the most practical</li>
+            <li><strong>RAG single-instance:</strong> Cycle ⟺ Deadlock (biconditional). Multi-instance: Cycle is necessary but NOT sufficient</li>
+            <li><strong>Safe vs Unsafe:</strong> Safe → no deadlock guaranteed. Unsafe → MAY deadlock (not certain). Deadlocked ⊂ Unsafe ⊂ All states</li>
+            <li><strong>Banker's formula:</strong> Need[i] = Max[i] − Allocation[i]. Grant only if resulting state is SAFE (safe sequence exists). O(m×n²)</li>
+          </ul>
+        </div>
+
+        <details class="active-recall">
+          <summary>Active Recall: Coffman Conditions</summary>
+          <div class="recall-content">
+            <strong>1. Without looking above, what are the four Coffman conditions?</strong><br>
+            <ul>
+              <li>Mutual Exclusion (non-sharable resources)</li>
+              <li>Hold and Wait (holding a resource while requesting another)</li>
+              <li>No Preemption (resources cannot be forcibly taken)</li>
+              <li>Circular Wait (closed chain of dependency)</li>
+            </ul>
+            <strong>2. Are all 4 required for a deadlock?</strong><br>
+            Yes, they are <em>necessary</em> conditions. If even one is broken, deadlock is impossible.<br><br>
+            <strong>3. A system is in an unsafe state. Is it deadlocked?</strong><br>
+            Not necessarily. Unsafe means there is no safe sequence — deadlock is possible, not guaranteed. A process may still finish without requesting max resources.
+          </div>
+        </details>
       </div>
+      
     </div>
     <div class="mode-gate">
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
+        <div class="callout info reveal" style="margin-bottom:10px">
+          <strong>🧠 HEMP Mnemonic — Remember All 4 Coffman Conditions:</strong><br>
+          <strong>H</strong>old and Wait  |  <strong>E</strong>xclusive Access (Mutual Exclusion)  |  <strong>M</strong>ake Circular (Circular Wait)  |  <strong>P</strong>reemption — None<br>
+          <em>OR alternate: <strong>H</strong>old-wait, <strong>E</strong>xclusive, <strong>M</strong>utual-wait-circle (circular), <strong>P</strong>reemption-free</em><br>
+          All 4 must be <strong>HEMP</strong>-resent at the same time for deadlock → break any one to prevent deadlock.
+        </div>
         <ul>
           <li>These are <strong>necessary but not sufficient</strong> conditions — all four together don't <em>guarantee</em> deadlock, but deadlock is impossible without all four.</li>
           <li><strong>Circular wait ⊇ Hold-and-Wait</strong> — Circular wait implies hold-and-wait, but not vice versa. If you prevent circular wait, you automatically prevent deadlock without needing to prevent hold-and-wait separately.</li>
           <li>GATE often asks: "Which condition is easiest to prevent in practice?" → <strong>Circular wait</strong> (via resource ordering).</li>
+          <li>GATE trap: "Deadlock requires 4 conditions" — True. "4 conditions guarantee deadlock" — <strong>False</strong> (they are necessary, not sufficient for multi-instance resources).</li>
         </ul>
       </div>
     </div>
@@ -329,11 +371,11 @@ lock(B);  ← waits for B          lock(A);  ← waits for A
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.3 -->
+  <!-- SECTION 2C.3 -->
   <section id="s-dl-rag" data-search-section="resource allocation graph RAG vertices edges cycle deadlock detection single instance">
     <div class="section-heading">
-      <h2 class="prose">4.3 Resource Allocation Graph (RAG)</h2>
-      <button class="bookmark-btn" data-id="s-dl-rag" data-label="4.3 RAG" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.3 Resource Allocation Graph (RAG)</h2>
+      <button class="bookmark-btn" data-id="s-dl-rag" data-label="2C.3 RAG" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -353,18 +395,69 @@ lock(B);  ← waits for B          lock(A);  ← waits for A
           </tbody>
         </table>
         <h3>Deadlock Detection Using RAG</h3>
-        <div class="rag-box">
-Example RAG — Deadlock Scenario (Single-Instance Resources):<br><br>
-P1 ──request──→ R1 ──assigned──→ P2<br>
-P2 ──request──→ R2 ──assigned──→ P1<br><br>
-→ Cycle: P1→R1→P2→R2→P1  ← DEADLOCK!<br><br>
-Example RAG — No Deadlock (Multi-Instance Resource):<br><br>
-R has 2 instances, S has 1 instance.<br>
-P1 holds R(1) and requests S; P2 holds S and requests R.<br>
-This forms a cycle: P1→S→P2→R→P1.<br>
-But one instance of R is still free, so P2 can get it, complete, and release S.<br>
-Then P1 gets S and completes.<br>
-→ Cycle exists but no deadlock (extra instance can break the wait).
+        
+        <style>
+        .rag-diagram { text-align:center; padding:var(--sp-4); background:var(--bg-card); border:1px solid var(--bd-subtle); border-radius:8px; margin-bottom:var(--sp-6); }
+        .rag-diagram svg { max-width:100%; height:auto; overflow:visible; }
+        .rag-node-p { fill:var(--bg-main); stroke:var(--tx-main); stroke-width:2; }
+        .rag-node-r { fill:var(--bg-main); stroke:var(--accent); stroke-width:2; }
+        .rag-text { fill:var(--tx-main); font-size:14px; font-family:var(--font-mono); font-weight:bold; }
+        .rag-edge { stroke:var(--tx-muted); stroke-width:2; fill:none; }
+        .rag-arrow { fill:var(--tx-muted); }
+        .rag-dot { fill:var(--accent); }
+        </style>
+        
+        <div class="rag-diagram">
+          <div style="margin-bottom:var(--sp-4);font-weight:600">Example 1: Deadlock Scenario (Single-Instance Resources)</div>
+          <svg width="400" height="200" viewbox="0 0 400 200">
+            <defs>
+              <marker id="arrow" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto" markerunits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" class="rag-arrow"></path>
+              </marker>
+            </defs>
+            <!-- P1 (top left) -->
+            <circle cx="100" cy="50" r="25" class="rag-node-p"></circle>
+            <text x="90" y="55" class="rag-text">P1</text>
+            <!-- R1 (top right) -->
+            <rect x="250" y="25" width="50" height="50" class="rag-node-r"></rect>
+            <text x="265" y="55" class="rag-text">R1</text>
+            <circle cx="275" cy="50" r="4" class="rag-dot"></circle>
+            
+            <!-- P2 (bottom right) -->
+            <circle cx="300" cy="150" r="25" class="rag-node-p"></circle>
+            <text x="290" y="155" class="rag-text">P2</text>
+            <!-- R2 (bottom left) -->
+            <rect x="50" y="125" width="50" height="50" class="rag-node-r"></rect>
+            <text x="65" y="155" class="rag-text">R2</text>
+            <circle cx="75" cy="150" r="4" class="rag-dot"></circle>
+
+            <!-- Edges -->
+            <path d="M 125 50 L 235 50" class="rag-edge" marker-end="url(#arrow)"></path> <!-- P1 -> R1 -->
+            <text x="160" y="40" class="rag-text" style="font-size:11px;fill:var(--tx-muted)">request</text>
+            
+            <path d="M 275 75 L 290 125" class="rag-edge" marker-end="url(#arrow)"></path> <!-- R1 -> P2 -->
+            <text x="290" y="105" class="rag-text" style="font-size:11px;fill:var(--tx-muted)">assigned</text>
+            
+            <path d="M 275 150 L 115 150" class="rag-edge" marker-end="url(#arrow)"></path> <!-- P2 -> R2 -->
+            <text x="175" y="140" class="rag-text" style="font-size:11px;fill:var(--tx-muted)">request</text>
+            
+            <path d="M 75 125 L 90 75" class="rag-edge" marker-end="url(#arrow)"></path> <!-- R2 -> P1 -->
+            <text x="35" y="105" class="rag-text" style="font-size:11px;fill:var(--tx-muted)">assigned</text>
+          </svg>
+          <div style="font-size:var(--text-sm);margin-top:var(--sp-2);color:#ef4444"><strong>Cycle: P1 → R1 → P2 → R2 → P1  (DEADLOCK!)</strong></div>
+        </div>
+
+        <div class="rag-diagram">
+          <div style="margin-bottom:var(--sp-4);font-weight:600">Example 2: No Deadlock (Multi-Instance Resource)</div>
+          <div class="prose" style="text-align:left;font-size:var(--text-sm)">
+            <ul>
+              <li><strong>R</strong> has 2 instances, <strong>S</strong> has 1 instance.</li>
+              <li>P1 holds R(1) and requests S; P2 holds S and requests R.</li>
+              <li>This forms a cycle: <strong>P1 → S → P2 → R → P1</strong>.</li>
+              <li>But one instance of R is still free, so another process (or P2) can get it, complete, and release S. Then P1 gets S and completes.</li>
+            </ul>
+            <div style="color:#10b981;font-weight:600;margin-top:var(--sp-2)">→ Cycle exists but no deadlock (extra instance breaks the wait).</div>
+          </div>
         </div>
         <h3>RAG Rules for Deadlock Detection</h3>
         <table>
@@ -378,7 +471,7 @@ Then P1 gets S and completes.<br>
         </table>
         <div class="callout info">
           <span class="callout-icon">📌</span>
-          <div><strong>Key Rule:</strong> For single-instance resources, RAG cycle detection is equivalent to deadlock detection. For multi-instance resources, you need the more complex <strong>Detection Algorithm</strong> (Section 4.9).</div>
+          <div><strong>Key Rule:</strong> For single-instance resources, RAG cycle detection is equivalent to deadlock detection. For multi-instance resources, you need the more complex <strong>Detection Algorithm</strong> (Section 2C.9).</div>
         </div>
         <div class="callout info reveal"><strong>WFG vs RAG:</strong> The Wait-For Graph is derived from the Resource Allocation Graph by <em>collapsing</em> resource nodes — if P→R→Q in RAG (P waits for a resource held by Q), then P→Q directly in WFG. WFG is simpler and only exists for single-instance resources.</div>
         <h3>Wait-For Graph (WFG)</h3>
@@ -396,21 +489,31 @@ Then P1 gets S and completes.<br>
         </ul>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: Resource Allocation Graphs (RAG)</summary>
+      <div class="recall-content">
+        <strong>1. If a Resource Allocation Graph has a cycle, is there definitely a deadlock?</strong><br>
+        If all resources have only a single instance, YES. If resources have multiple instances, NO — a cycle is necessary but not sufficient, because an outside process could release an instance to break the cycle.<br><br>
+        <strong>2. What is a Wait-For Graph (WFG)?</strong><br>
+        A simplified RAG where resource nodes are removed, leaving only processes. An edge P1 → P2 means P1 is waiting for a resource held by P2. It is only valid for single-instance resources.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.4 -->
+  <!-- SECTION 2C.4 -->
   <section id="s-dl-prevention" data-search-section="deadlock prevention mutual exclusion hold wait no preemption circular wait resource ordering">
     <div class="section-heading">
-      <h2 class="prose">4.4 Deadlock Prevention</h2>
-      <button class="bookmark-btn" data-id="s-dl-prevention" data-label="4.4 Prevention" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.4 Deadlock Prevention</h2>
+      <button class="bookmark-btn" data-id="s-dl-prevention" data-label="2C.4 Prevention" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
       <div class="prose">
         <p>Prevention works by ensuring that <strong>at least one of the four Coffman conditions can never hold</strong>. This is done statically — the system is designed so that deadlock is structurally impossible.</p>
-        <div class="callout formula reveal"><strong>Prevention Cheat — Break ANY ONE condition:</strong> Easiest to break: <strong>Circular Wait</strong> (impose resource ordering). Hardest: <strong>Mutual Exclusion</strong> (can't always share). Breaking Hold &amp; Wait hurts utilisation; breaking No-Preemption risks data loss.</div>
+        <div class="callout formula reveal"><strong>Prevention Cheat — Break ANY ONE condition:</strong> Easiest to break: <strong>Circular Wait</strong> (impose resource ordering). Hardest: <strong>Mutual Exclusion</strong> (can't always share). Breaking Hold & Wait hurts utilisation; breaking No-Preemption risks data loss.</div>
         <h3>1. Deny Mutual Exclusion</h3>
         <p>Make resources sharable. <em>Problem:</em> Many resources are inherently non-sharable (e.g., a printer, a mutex). You can't print two documents simultaneously on one printer. <strong>This condition generally cannot be denied.</strong></p>
         <h3>2. Deny Hold and Wait</h3>
@@ -438,15 +541,15 @@ If ALL processes follow this rule:
         </div>
         <div class="callout tip">
           <span class="callout-icon">💡</span>
-          <div><strong>Why ordering works (formal proof by contradiction):</strong> Assume circular wait exists: P0 holds R<sub>a</sub> and waits for R<sub>b</sub> (held by P1), P1 holds R<sub>b</sub> and waits for R<sub>c</sub> (held by P2), …, Pn holds R<sub>z</sub> and waits for R<sub>a</sub> (held by P0). By the ordering rule: a &lt; b &lt; c &lt; … &lt; z &lt; a. But a &lt; a is a contradiction! ∴ Circular wait cannot form under total resource ordering.</div>
+          <div><strong>Why ordering works (formal proof by contradiction):</strong> Assume circular wait exists: P0 holds R<sub>a</sub> and waits for R<sub>b</sub> (held by P1), P1 holds R<sub>b</sub> and waits for R<sub>c</sub> (held by P2), …, Pn holds R<sub>z</sub> and waits for R<sub>a</sub> (held by P0). By the ordering rule: a < b < c < … < z < a. But a < a is a contradiction! ∴ Circular wait cannot form under total resource ordering.</div>
         </div>
         <h3>Comparison of Prevention Strategies</h3>
         <table>
           <thead><tr><th>Strategy</th><th>Condition Denied</th><th>Drawback</th><th>Practical?</th></tr></thead>
           <tbody>
             <tr><td>Deny Mutual Exclusion</td><td>ME</td><td>Many resources inherently non-sharable</td><td>❌ Rarely</td></tr>
-            <tr><td>All-or-Nothing Request</td><td>Hold &amp; Wait</td><td>Low utilization, starvation possible</td><td>⚠️ Sometimes</td></tr>
-            <tr><td>Release before Request</td><td>Hold &amp; Wait</td><td>Starvation, inefficiency</td><td>⚠️ Sometimes</td></tr>
+            <tr><td>All-or-Nothing Request</td><td>Hold & Wait</td><td>Low utilization, starvation possible</td><td>⚠️ Sometimes</td></tr>
+            <tr><td>Release before Request</td><td>Hold & Wait</td><td>Starvation, inefficiency</td><td>⚠️ Sometimes</td></tr>
             <tr><td>Allow Preemption</td><td>No Preemption</td><td>Only for preemptable resources</td><td>⚠️ Limited</td></tr>
             <tr><td><strong>Resource Ordering</strong></td><td><strong>Circular Wait</strong></td><td>Difficult to rank all resources; may limit flexibility</td><td>✅ Most practical</td></tr>
           </tbody>
@@ -464,15 +567,27 @@ If ALL processes follow this rule:
         </ul>
       </div>
     </div>
+
+    <details class="active-recall">
+      <summary>Active Recall: Deadlock Prevention</summary>
+      <div class="recall-content">
+        <strong>1. Which Coffman condition does resource ordering (linear ordering) break?</strong><br>
+        Circular Wait. If all processes must acquire resources in a fixed global order (R1 before R2 before R3...), a circular chain is impossible — proved by contradiction (a &lt; b &lt; ... &lt; a is impossible).<br><br>
+        <strong>2. What is the side effect of "All-or-Nothing" (request all resources upfront)?</strong><br>
+        Low resource utilization and possible starvation — a process waits for all resources even when it only needs some currently. Resources held but not yet used are wasted.<br><br>
+        <strong>3. Why can't you prevent deadlock by denying Mutual Exclusion for all resources?</strong><br>
+        Some resources are inherently non-sharable by nature (e.g., printers, write access to a file). Mutual exclusion cannot be denied for these — it's a physical constraint, not a design choice.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.5 -->
+  <!-- SECTION 2C.5 -->
   <section id="s-dl-avoidance" data-search-section="deadlock avoidance safe state unsafe state safe sequence avoidance algorithm">
     <div class="section-heading">
-      <h2 class="prose">4.5 Deadlock Avoidance &amp; Safe State</h2>
-      <button class="bookmark-btn" data-id="s-dl-avoidance" data-label="4.5 Avoidance" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.5 Deadlock Avoidance & Safe State</h2>
+      <button class="bookmark-btn" data-id="s-dl-avoidance" data-label="2C.5 Avoidance" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -480,7 +595,7 @@ If ALL processes follow this rule:
         <p>Unlike prevention (which statically removes a condition), avoidance is <strong>dynamic</strong> — the OS makes resource allocation decisions at runtime using additional information: the <em>maximum future needs</em> of each process.</p>
         <div class="def-box">
           <div class="def-term">Safe State</div>
-          A state is <strong>safe</strong> if there exists a <strong>safe sequence</strong> — an ordering of all processes ⟨P1, P2, …, Pn⟩ such that for each Pi, the resources it still needs can be satisfied by the currently available resources plus the resources held by all Pj where j &lt; i (processes that execute before Pi).
+          A state is <strong>safe</strong> if there exists a <strong>safe sequence</strong> — an ordering of all processes ⟨P1, P2, …, Pn⟩ such that for each Pi, the resources it still needs can be satisfied by the currently available resources plus the resources held by all Pj where j < i (processes that execute before Pi).
         </div>
         <div class="callout warn reveal"><strong>⚠️ GATE Trap — Safe ≠ Not Deadlocked immediately:</strong> Unsafe means no guaranteed safe sequence exists. Processes <em>may still complete</em> without deadlock if they don't request their maximum. Every deadlocked state is unsafe, but not every unsafe state is deadlocked. The hierarchy is: Safe ⊂ Unsafe ⊂ All states; Deadlocked ⊂ Unsafe.</div>
         <h3>Safe vs Unsafe vs Deadlocked</h3>
@@ -533,11 +648,11 @@ If ALL processes follow this rule:
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.6 -->
+  <!-- SECTION 2C.6 -->
   <section id="s-dl-bankers1" data-search-section="banker's algorithm single resource type safe sequence avoidance Dijkstra">
     <div class="section-heading">
-      <h2 class="prose">4.6 Banker's Algorithm — Single Resource Type</h2>
-      <button class="bookmark-btn" data-id="s-dl-bankers1" data-label="4.6 Banker's (Single)" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.6 Banker's Algorithm — Single Resource Type</h2>
+      <button class="bookmark-btn" data-id="s-dl-bankers1" data-label="2C.6 Banker's (Single)" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -570,7 +685,7 @@ If ALL processes follow this rule:
 Finish[i] = false for all i
 
 Loop:
-    Find i such that: Finish[i] == false AND Need[i] &lt;= Work
+    Find i such that: Finish[i] == false AND Need[i] <= Work
     If found:
         Work += Allocated[i]  // simulate Pi finishing
         Finish[i] = true
@@ -614,17 +729,59 @@ Else → UNSAFE STATE</code></pre>
           <li>Multiple safe sequences may exist — GATE may ask if a specific sequence is valid, not for the unique one.</li>
           <li>Banker's is <strong>not used in practice</strong> (requires advance maximum declarations, processes must declare needs upfront — impractical for general systems). Used in specialized batch systems.</li>
         </ul>
+
+        <div class="callout info reveal">
+          <strong>🏦 Banker's Algorithm — Mental Model (Dijkstra's Original Analogy):</strong><br>
+          Think of the OS as a <strong>bank</strong> with a fixed amount of <strong>cash</strong> (resources). Processes are <strong>customers</strong> who have declared their maximum loan (Max). The bank will only grant a loan if, after granting it, it can still satisfy every customer's maximum possible future demand by recycling repaid loans. If granting would leave the bank unable to guarantee this → <strong>bank refuses</strong> (unsafe state). This is exactly Banker's Algorithm.
+          <br><br>
+          <strong>Variable mapping to the analogy:</strong><br>
+          Available = Cash in vault  |  Max = Maximum loan each customer declared<br>
+          Allocation = Loans currently outstanding  |  Need = Max − Allocation (more they might borrow)
+        </div>
+
+        <h3>Finding ALL Safe Sequences (GATE asks this!)</h3>
+        <div class="formula-box">
+        <div class="formula-label">G-004 Fix: Safe Sequence Enumeration Method</div>
+        At each step of the safety algorithm, there may be <strong>multiple eligible processes</strong> (multiple Pi where Need[i] ≤ Work). Each choice leads to a different valid safe sequence. To find ALL safe sequences:
+        <br><br>
+        <strong>Algorithm (recursive/backtracking):</strong><br>
+        1. Find all processes where Need[i] ≤ Work and Finish[i]=false<br>
+        2. For each such process Pi: tentatively "run" Pi, update Work, mark Finish[Pi]=true, recurse<br>
+        3. If all Finish[i]=true → record this sequence<br>
+        4. Backtrack and try the next candidate<br><br>
+        <strong>Example with the §2C.6 state (Available=1, 5 processes):</strong><br>
+        Step 1: Eligible processes (Need ≤ Work=1): P1 (Need=0), P3 (Need=0)<br>
+        → Branch 1: Pick P1 first → Work=4 → P3 runs → Work=6 → P4 → Work=6 → P0 → Work=8 → P2 ✅<br>
+          Sequence: ⟨P1, P3, P4, P0, P2⟩<br>
+        → Branch 2: Pick P3 first → Work=3 → P1 runs → Work=6 → same as above<br>
+          Sequence: ⟨P3, P1, P4, P0, P2⟩<br>
+        Both are valid safe sequences!
+        </div>
+
+        <div class="callout warn reveal">
+          <strong>⚠️ GATE Trap: "Which Coffman condition does Banker's Algorithm break?"</strong><br>
+          <strong>Answer: NONE!</strong> Banker's is an <em>avoidance</em> algorithm, not a <em>prevention</em> algorithm. It does not break any Coffman condition — all 4 conditions can still hold. Instead, it prevents the system from entering an <em>unsafe state</em> where deadlock might occur.<br><br>
+          <table>
+          <thead><tr><th>Technique</th><th>Coffman Condition Broken</th><th>Type</th></tr></thead>
+          <tbody>
+          <tr><td>Hold-and-wait prevention (all-or-nothing)</td><td>Hold and Wait</td><td>Prevention</td></tr>
+          <tr><td>Resource preemption</td><td>No Preemption</td><td>Prevention</td></tr>
+          <tr><td>Resource ordering (lock ordering)</td><td>Circular Wait</td><td>Prevention</td></tr>
+          <tr><td>Deny mutual exclusion (make sharable)</td><td>Mutual Exclusion</td><td>Prevention</td></tr>
+          <tr><td><strong>Banker's Algorithm</strong></td><td><strong>NONE</strong> — avoids unsafe states</td><td><strong>Avoidance</strong></td></tr>
+          </tbody></table>
+        </div>
       </div>
     </div>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.7 -->
+  <!-- SECTION 2C.7 -->
   <section id="s-dl-bankers2" data-search-section="banker's algorithm multiple resource types allocation need max available matrix safety">
     <div class="section-heading">
-      <h2 class="prose">4.7 Banker's Algorithm — Multiple Resource Types</h2>
-      <button class="bookmark-btn" data-id="s-dl-bankers2" data-label="4.7 Banker's (Multiple)" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.7 Banker's Algorithm — Multiple Resource Types</h2>
+      <button class="bookmark-btn" data-id="s-dl-bankers2" data-label="2C.7 Banker's (Multiple)" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -692,15 +849,25 @@ Else → UNSAFE STATE</code></pre>
         </ul>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: Banker's Algorithm</summary>
+      <div class="recall-content">
+        <strong>1. What is the fundamental difference between Deadlock Prevention and Deadlock Avoidance?</strong><br>
+        Prevention statically breaks one of the four Coffman conditions (e.g., ordering resources). Avoidance (like Banker's) dynamically assesses resource requests at runtime and only grants them if the resulting state is safe.<br><br>
+        <strong>2. How is the Need matrix calculated?</strong><br>
+        Need[i, j] = Max[i, j] - Allocation[i, j].
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.8 -->
+  <!-- SECTION 2C.8 -->
   <section id="s-dl-detect1" data-search-section="deadlock detection single instance wait-for graph cycle DFS">
     <div class="section-heading">
-      <h2 class="prose">4.8 Deadlock Detection — Single-Instance Resources</h2>
-      <button class="bookmark-btn" data-id="s-dl-detect1" data-label="4.8 Detection (Single)" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.8 Deadlock Detection — Single-Instance Resources</h2>
+      <button class="bookmark-btn" data-id="s-dl-detect1" data-label="2C.8 Detection (Single)" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -763,11 +930,11 @@ Cycle detected: P1 → P2 → P3 → P1
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.9 -->
+  <!-- SECTION 2C.9 -->
   <section id="s-dl-detect2" data-search-section="deadlock detection multiple instances algorithm allocation request available finish work">
     <div class="section-heading">
-      <h2 class="prose">4.9 Deadlock Detection — Multiple-Instance Resources</h2>
-      <button class="bookmark-btn" data-id="s-dl-detect2" data-label="4.9 Detection (Multiple)" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.9 Deadlock Detection — Multiple-Instance Resources</h2>
+      <button class="bookmark-btn" data-id="s-dl-detect2" data-label="2C.9 Detection (Multiple)" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -790,7 +957,7 @@ Cycle detected: P1 → P2 → P3 → P1
 Finish[i] = (Allocation[i] == 0) ? true : false  // processes with no resources can finish
 
 Loop:
-    Find i such that: Finish[i] == false AND Request[i] &lt;= Work
+    Find i such that: Finish[i] == false AND Request[i] <= Work
     If found:
         Work += Allocation[i]  // assume Pi will finish and release
         Finish[i] = true
@@ -842,11 +1009,11 @@ Processes with Finish[i] == false are DEADLOCKED</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 4.10 -->
+  <!-- SECTION 2C.10 -->
   <section id="s-dl-recovery" data-search-section="deadlock recovery process termination resource preemption rollback victim selection">
     <div class="section-heading">
-      <h2 class="prose">4.10 Deadlock Recovery</h2>
-      <button class="bookmark-btn" data-id="s-dl-recovery" data-label="4.10 Recovery" title="Bookmark">🔖</button>
+      <h2 class="prose">2C.10 Deadlock Recovery</h2>
+      <button class="bookmark-btn" data-id="s-dl-recovery" data-label="2C.10 Recovery" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1000,8 +1167,8 @@ Comparison:
   <!-- SECTION ★ PYQ -->
   <section id="s-dl-pyq" data-search-section="PYQ previous year questions GATE MCQ university deadlock banker safe state recovery">
     <div class="section-heading">
-      <h2 class="prose">★ Unit 4 PYQ &amp; Exam Prep</h2>
-      <button class="bookmark-btn" data-id="s-dl-pyq" data-label="Unit 4 PYQ" title="Bookmark">🔖</button>
+      <h2 class="prose">★ Unit 2C PYQ & Exam Prep</h2>
+      <button class="bookmark-btn" data-id="s-dl-pyq" data-label="Unit 2C PYQ" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University Exams</div>
@@ -1017,7 +1184,7 @@ Comparison:
         </details>
         <details class="qa-item">
           <summary><strong>Q3:</strong> What is a safe state? Give an example.</summary>
-          <div class="qa-content">A state is safe if there exists a safe sequence ⟨P1, P2, …, Pn⟩ such that each Pi's remaining resource needs can be satisfied by currently available resources plus resources released by all Pj (j &lt; i). Example: 12 tape drives, P0 needs 5 more (holds 5), P1 needs 2 (holds 2), P2 needs 7 (holds 2). Available=3. Safe sequence: ⟨P1, P0, P2⟩ → safe state, no deadlock possible.</div>
+          <div class="qa-content">A state is safe if there exists a safe sequence ⟨P1, P2, …, Pn⟩ such that each Pi's remaining resource needs can be satisfied by currently available resources plus resources released by all Pj (j < i). Example: 12 tape drives, P0 needs 5 more (holds 5), P1 needs 2 (holds 2), P2 needs 7 (holds 2). Available=3. Safe sequence: ⟨P1, P0, P2⟩ → safe state, no deadlock possible.</div>
         </details>
         <details class="qa-item">
           <summary><strong>Q4:</strong> What is a Wait-For Graph? How is it used for deadlock detection?</summary>
@@ -1034,16 +1201,16 @@ Comparison:
         <h3>Long Answer Questions (10 Marks)</h3>
         <details class="qa-item">
           <summary><strong>Q7:</strong> Explain Banker's Algorithm for multiple resource types with a numerical example.</summary>
-          <div class="qa-content">Banker's uses four data structures: Available[m], Max[n][m], Allocation[n][m], Need[n][m]. Need = Max − Allocation. On a request from Pi: (1) check Request ≤ Need, (2) check Request ≤ Available, (3) tentatively grant, (4) run safety algorithm. Safety: simulate processes completing using Work vector, find any process whose Need ≤ Work, run it, add its allocation to Work, mark finished. If all processes can finish → SAFE. [Students should demonstrate with the 5-process, 3-resource worked example from section 4.7].</div>
+          <div class="qa-content">Banker's uses four data structures: Available[m], Max[n][m], Allocation[n][m], Need[n][m]. Need = Max − Allocation. On a request from Pi: (1) check Request ≤ Need, (2) check Request ≤ Available, (3) tentatively grant, (4) run safety algorithm. Safety: simulate processes completing using Work vector, find any process whose Need ≤ Work, run it, add its allocation to Work, mark finished. If all processes can finish → SAFE. [Students should demonstrate with the 5-process, 3-resource worked example from section 2C.7].</div>
         </details>
         <details class="qa-item">
           <summary><strong>Q8:</strong> Compare all four deadlock handling strategies with their trade-offs.</summary>
-          <div class="qa-content"><strong>Prevention:</strong> Static — deny at least one Coffman condition. Resource ordering is most practical. Drawback: low utilization. <strong>Avoidance:</strong> Dynamic — Banker's checks safe state before granting. Requires max declarations — impractical for general OS. <strong>Detection &amp; Recovery:</strong> Allow deadlocks, detect via WFG or detection algorithm, recover via termination or preemption. Used in databases. <strong>Ignore (Ostrich):</strong> Assume deadlocks are rare. Used by Linux, Windows. No overhead but freezes require reboot.</div>
+          <div class="qa-content"><strong>Prevention:</strong> Static — deny at least one Coffman condition. Resource ordering is most practical. Drawback: low utilization. <strong>Avoidance:</strong> Dynamic — Banker's checks safe state before granting. Requires max declarations — impractical for general OS. <strong>Detection & Recovery:</strong> Allow deadlocks, detect via WFG or detection algorithm, recover via termination or preemption. Used in databases. <strong>Ignore (Ostrich):</strong> Assume deadlocks are rare. Used by Linux, Windows. No overhead but freezes require reboot.</div>
         </details>
       </div>
     </div>
     <div class="mode-gate">
-      <div class="mode-badge gate">⚡ GATE &amp; Competitive</div>
+      <div class="mode-badge gate">⚡ GATE & Competitive</div>
       <div class="prose">
         <h3>GATE Master MCQs</h3>
         <div class="mcq-card">
@@ -1055,7 +1222,7 @@ Comparison:
             <li>Hold and Wait</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Starvation)</strong><br>The four Coffman conditions are: Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait. Starvation is a different problem (indefinite postponement) — not a deadlock condition. A starved process is delayed indefinitely but not necessarily stuck in a circular dependency.</div>
           </details>
         </div>
@@ -1068,7 +1235,7 @@ Comparison:
             <li>Yes, because total resources are greater than any single process need</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Unsafe state)</strong><br>Available = 10−(3+2+3) = 2. P1 needs 2 ≤ 2 ✅ → Work = 2+2 = 4. Now: P0 needs 7 > 4 ✗. P2 needs 5 > 4 ✗. No more processes can run. <strong>UNSAFE</strong> — no safe sequence exists. (A process finishing first does not guarantee safety for all.)</div>
           </details>
         </div>
@@ -1081,7 +1248,7 @@ Comparison:
             <li>Is a sufficient but not necessary condition for deadlock</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C</strong><br>For multi-instance resources: a cycle in RAG is <em>necessary</em> (deadlock always implies a cycle) but NOT <em>sufficient</em> (a cycle can exist without deadlock, if spare instances can be allocated to break the cycle). For single-instance resources: cycle ⟺ deadlock (both necessary and sufficient).</div>
           </details>
         </div>
@@ -1094,7 +1261,7 @@ Comparison:
             <li>Ignore deadlocks (Ostrich Algorithm)</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: D (Ostrich Algorithm)</strong><br>Linux and Windows largely ignore deadlocks. The reasoning: deadlocks are rare in practice, and the overhead of prevention/avoidance would degrade performance for the common case. Users reboot when a system freezes. Only specialized systems (real-time OS, databases) use active deadlock handling.</div>
           </details>
         </div>
@@ -1107,7 +1274,7 @@ Comparison:
             <li>Available matrix</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B (Request matrix)</strong><br>The detection algorithm uses the <strong>Request</strong> matrix (current pending requests) instead of Need (maximum future claims used in Banker's). Detection is optimistic — it assumes any process whose current request can be satisfied will complete and release all resources.</div>
           </details>
         </div>
@@ -1120,9 +1287,113 @@ Comparison:
             <li>Preempt only non-preemptable resources</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>Including the "number of times rolled back" in the cost function ensures that a process victimized many times gets higher priority, eventually being allowed to finish. This prevents indefinite postponement (starvation).</div>
           </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- GATE POST-2020: MSQ + NAT FORMAT -->
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE 2020+ — MSQ &amp; NAT</div>
+      <div class="prose">
+        <!-- MSQ 1 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-1.</strong> Which of the following statements about Resource Allocation Graphs (RAG) are correct? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) A cycle in the RAG always implies deadlock, regardless of resource instance count</li>
+            <li>B) For single-instance resources, a cycle in the RAG is both necessary and sufficient for deadlock</li>
+            <li>C) For multi-instance resources, a cycle in the RAG is necessary but not sufficient for deadlock</li>
+            <li>D) A claim edge in the RAG (dashed) represents a potential future request</li>
+            <li>E) If no cycle exists in the RAG, the system is guaranteed to be deadlock-free</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: B, C, D, E</strong><br><br>
+              <strong>A ✗:</strong> FALSE — for multi-instance resources, a cycle does NOT always imply deadlock. There may be spare instances that can satisfy some process's requests.<br>
+              <strong>B ✓:</strong> Correct — single-instance: cycle ⟺ deadlock (biconditional).<br>
+              <strong>C ✓:</strong> Correct — multi-instance: cycle is necessary (deadlock → cycle exists) but not sufficient.<br>
+              <strong>D ✓:</strong> Correct — dashed claim edges (RAG avoidance algorithm) represent possible future requests from processes that declared their maximum needs.<br>
+              <strong>E ✓:</strong> Correct — no cycle in RAG ⟹ no deadlock (the contrapositive of "deadlock ⟹ cycle").
+            </div>
+          </details>
+        </div>
+
+        <!-- MSQ 2 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-2.</strong> In Banker's Algorithm, which of the following changes to the state could make a currently SAFE state become UNSAFE? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) A process requests additional resources (tentatively granted)</li>
+            <li>B) A process finishes and releases all its resources</li>
+            <li>C) A new process is added to the system claiming it needs max resources = total system resources</li>
+            <li>D) Total system resources increase (new resource added)</li>
+            <li>E) Available resources decrease (e.g., OS allocates some for itself)</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: A, C, E</strong><br><br>
+              <strong>A ✓:</strong> Granting a request decreases Available — may make the safety test fail.<br>
+              <strong>B ✗:</strong> Process finishing releases resources → Available increases → state becomes MORE safe, never less.<br>
+              <strong>C ✓:</strong> Adding a process with large max claims reduces the system's ability to satisfy all needs — could push into unsafe state.<br>
+              <strong>D ✗:</strong> Adding resources increases Available → state becomes more safe or stays the same.<br>
+              <strong>E ✓:</strong> If OS takes some available resources, Available decreases — a previously safe state may become unsafe.
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 1 -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-1.</strong> A system has <strong>6 processes</strong>, each needing at most <strong>4 instances</strong> of a single resource type. What is the <em>minimum</em> number of resource instances required to guarantee that the system will never deadlock? (Enter just the integer)</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: 19</strong><br><br>
+              Formula: R ≥ n × (k − 1) + 1<br>
+              n = 6 processes, k = 4 (max need per process)<br>
+              R ≥ 6 × (4 − 1) + 1 = 6 × 3 + 1 = 18 + 1 = <strong>19</strong><br><br>
+              <strong>Intuition:</strong> Give each of the 6 processes (k−1) = 3 instances → all 6 hold 3, total 18 allocated. All are 1 short of completing. Adding just 1 more instance guarantees at least 1 process can complete, release its 3, chain completes.
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 2 (Banker's Available) -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-2 (Banker's).</strong> System has 3 processes and 2 resource types A and B. Total = A(5), B(4). Allocation: P0=(1,1), P1=(2,0), P2=(0,2). Max: P0=(3,2), P1=(3,1), P2=(1,3). Process P1 now requests (1,0). After tentatively granting this request, what is the Available vector? Enter as "a,b" (e.g., "2,1").</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: 1,1</strong><br><br>
+              Step 1 — Compute current Available:<br>
+              Available = Total − ΣAllocation<br>
+              = (5,4) − (1+2+0, 1+0+2) = (5,4) − (3,3) = <strong>(2,1)</strong><br><br>
+              Step 2 — Check P1's request (1,0):<br>
+              Need[P1] = Max[P1] − Alloc[P1] = (3,1) − (2,0) = (1,1)<br>
+              Request (1,0) ≤ Need[P1] (1,1)? ✓<br>
+              Request (1,0) ≤ Available (2,1)? ✓<br><br>
+              Step 3 — Tentatively grant:<br>
+              Available_new = (2,1) − (1,0) = <strong>(1,1)</strong><br>
+              Alloc[P1]_new = (2,0) + (1,0) = (3,0)<br>
+              Need[P1]_new = (1,1) − (1,0) = (0,1)<br><br>
+              Type <strong>1,1</strong> in the answer box.
+            </div>
+          </details>
+        </div>
+
+        <!-- 10-mark guide -->
+        <div class="callout info" style="margin-top:1.5rem">
+          <span class="callout-icon">📝</span>
+          <div><strong>10-Mark Answer Guide — Unit 2C (DU Exams)</strong><br>
+          Structure: <strong>① State the 4 Coffman conditions</strong> (2 marks) → <strong>② Define safe/unsafe/deadlocked states</strong> (2 marks) → <strong>③ Explain Banker's Algorithm with table</strong> (4 marks) → <strong>④ Compare all 4 strategies</strong> (2 marks).<br><br>
+          <strong>Common 10-mark topics:</strong><br>
+          • Explain Banker's Algorithm with 5-process 3-resource worked example (safe sequence)<br>
+          • Compare deadlock prevention vs avoidance vs detection+recovery vs ignore (table)<br>
+          • Deadlock vs Starvation vs Livelock (comparison table + real examples)<br>
+          • RAG: explain edges, deadlock detection in single vs multi-instance with example<br>
+          • Resource preemption vs process termination for deadlock recovery (criteria + trade-offs)
+          </div>
         </div>
       </div>
     </div>
@@ -1133,8 +1404,8 @@ Comparison:
   <!-- GATE TRAP SHEET -->
   <section id="s-dl-traps" data-search-section="GATE trap sheet deadlock common mistakes exam facts summary">
     <div class="section-heading">
-      <h2 class="prose">⚡ Unit 4 GATE Trap Sheet</h2>
-      <button class="bookmark-btn" data-id="s-dl-traps" data-label="Unit 4 Traps" title="Bookmark">🔖</button>
+      <h2 class="prose">⚡ Unit 2C GATE Trap Sheet</h2>
+      <button class="bookmark-btn" data-id="s-dl-traps" data-label="Unit 2C Traps" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
       <div class="mode-badge gate">⚡ GATE</div>
@@ -1187,11 +1458,11 @@ Comparison:
     </div>
   </section>
 
-<!-- ══════════════ 4.11 DEADLOCK vs STARVATION vs LIVELOCK ══════════ -->
+<!-- ══════════════ 2C.11 DEADLOCK vs STARVATION vs LIVELOCK ══════════ -->
 <section id="s-dl-compare" data-search-section="Deadlock Starvation Livelock Comparison">
 <div class="section-heading">
-  <h2 class="prose">4.11 Deadlock vs Starvation vs Livelock
-  <button class="bookmark-btn" data-id="s-dl-compare" data-label="4.11 DL vs Starvation" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2C.11 Deadlock vs Starvation vs Livelock
+  <button class="bookmark-btn" data-id="s-dl-compare" data-label="2C.11 DL vs Starvation" title="Bookmark">🔖</button></h2>
 </div>
 
 <table class="data-table reveal">
@@ -1202,15 +1473,15 @@ Comparison:
 <tr><td><strong>Progress</strong></td><td>None — system is completely stuck</td><td>Others progress; starved process does not</td><td>None — processes are "busy" but accomplishing nothing</td></tr>
 <tr><td><strong>CPU usage</strong></td><td>Waiting processes use no CPU</td><td>Starved process uses no CPU; others do</td><td>CPU is consumed (busy-wait loops)</td></tr>
 <tr><td><strong>Cause</strong></td><td>Circular resource dependency + all 4 Coffman conditions hold</td><td>Biased scheduling (always picks others) or priority starvation</td><td>Each process politely yields to the other, creating infinite courtesy loops</td></tr>
-<tr><td><strong>Detection</strong></td><td>RAG cycle (single-instance) or matrix reduction (multi-instance)</td><td>Monitor wait times — process waiting &gt; threshold</td><td>State changes with no progress — harder to detect programmatically</td></tr>
+<tr><td><strong>Detection</strong></td><td>RAG cycle (single-instance) or matrix reduction (multi-instance)</td><td>Monitor wait times — process waiting > threshold</td><td>State changes with no progress — harder to detect programmatically</td></tr>
 <tr><td><strong>Fix</strong></td><td>Kill a process, preempt a resource, or rollback</td><td>Aging — increase priority over time</td><td>Introduce randomness (random backoff, random retry delay)</td></tr>
 <tr><td><strong>Real example</strong></td><td>Two transactions each holding a lock the other needs</td><td>Low-priority job never runs because high-priority jobs always arrive</td><td>Two people in a hallway each stepping left/right in sync forever</td></tr>
 <tr><td><strong>Frequency</strong></td><td>Rare in well-designed systems</td><td>Common with naive priority scheduling</td><td>Rare — usually in poorly designed mutual exclusion protocols</td></tr>
 </tbody></table>
 
 <div class="code-block"><button class="code-copy">Copy</button><pre><code>// LIVELOCK example — two threads politely yield, making no progress
-#include &lt;pthread.h&gt;
-#include &lt;stdbool.h&gt;
+#include <pthread.h>
+#include <stdbool.h>
 
 bool courtesy_flag = false;  // Who should go first?
 
@@ -1243,7 +1514,7 @@ void* thread_A_fixed(void* arg) {
 
 <div class="mode-uni">
 <div class="mcq reveal"><strong>Q (DU 2023):</strong> Which of the following correctly distinguishes livelock from deadlock?<br>
-(a) Livelock uses no CPU; deadlock wastes CPU cycles &nbsp; (b) Deadlock processes are blocked; livelock processes keep changing state but make no progress &nbsp; (c) Both are caused by circular wait &nbsp; (d) Livelock requires all 4 Coffman conditions<br>
+(a) Livelock uses no CPU; deadlock wastes CPU cycles   (b) Deadlock processes are blocked; livelock processes keep changing state but make no progress   (c) Both are caused by circular wait   (d) Livelock requires all 4 Coffman conditions<br>
 <details><summary>Answer</summary><strong>(b)</strong> — In deadlock, processes are permanently blocked (no state change, no CPU). In livelock, processes actively respond to each other (state changes, CPU consumed) but make zero forward progress. Livelock is caused by over-polite synchronisation, not necessarily circular wait.</details></div>
 </div>
 
@@ -1256,11 +1527,11 @@ void* thread_A_fixed(void* arg) {
 </div>
 </section>
 
-<!-- ══════════════ 4.12 REAL-WORLD DEADLOCK CODE ══════════════════════ -->
+<!-- ══════════════ 2C.12 REAL-WORLD DEADLOCK CODE ══════════════════════ -->
 <section id="s-dl-realworld" data-search-section="Real World Deadlock Code Lock Ordering Prevention">
 <div class="section-heading">
-  <h2 class="prose">4.12 Real-World Deadlock Patterns &amp; Code
-  <button class="bookmark-btn" data-id="s-dl-realworld" data-label="4.12 Real-World Deadlocks" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2C.12 Real-World Deadlock Patterns & Code
+  <button class="bookmark-btn" data-id="s-dl-realworld" data-label="2C.12 Real-World Deadlocks" title="Bookmark">🔖</button></h2>
 </div>
 
 <p class="prose">Deadlocks appear in production systems daily — databases, OS kernels, and networking code are all vulnerable. Recognising and preventing these patterns is what separates competent systems programmers from experienced ones.</p>
@@ -1338,8 +1609,8 @@ UPDATE accounts                     UPDATE accounts
 <thead><tr><th>Technique</th><th>Breaks Condition</th><th>Implementation</th><th>Cost</th><th>Use When</th></tr></thead>
 <tbody>
 <tr><td><strong>Lock Ordering</strong></td><td>Circular Wait</td><td>Assign global IDs to locks; always acquire in ID order</td><td>None (design-time)</td><td>Small number of known locks</td></tr>
-<tr><td><strong>Lock All Upfront</strong></td><td>Hold &amp; Wait</td><td>Acquire all needed locks at once or not at all</td><td>Reduces concurrency</td><td>Resources known in advance</td></tr>
-<tr><td><strong>trylock + Backoff</strong></td><td>Hold &amp; Wait</td><td>Non-blocking trylock; release and retry on failure</td><td>CPU overhead from retries</td><td>Dynamic lock sets, DB transactions</td></tr>
+<tr><td><strong>Lock All Upfront</strong></td><td>Hold & Wait</td><td>Acquire all needed locks at once or not at all</td><td>Reduces concurrency</td><td>Resources known in advance</td></tr>
+<tr><td><strong>trylock + Backoff</strong></td><td>Hold & Wait</td><td>Non-blocking trylock; release and retry on failure</td><td>CPU overhead from retries</td><td>Dynamic lock sets, DB transactions</td></tr>
 <tr><td><strong>Timeout</strong></td><td>No Preemption</td><td>pthread_mutex_timedlock — release if timeout</td><td>May cause livelock if timeout too short</td><td>Distributed systems</td></tr>
 <tr><td><strong>Banker's Algorithm</strong></td><td>Unsafe state</td><td>Runtime check before each allocation</td><td>O(m×n²) per request</td><td>Real-time systems with known max demand</td></tr>
 </tbody></table>
@@ -1349,11 +1620,11 @@ UPDATE accounts                     UPDATE accounts
 </div>
 </section>
 
-<!-- ══════════════ 4.13 FORMULA & CONCEPT CARD ════════════════════════ -->
+<!-- ══════════════ 2C.13 FORMULA & CONCEPT CARD ════════════════════════ -->
 <section id="s-dl-formula" data-search-section="Deadlock Formula Quick Reference">
 <div class="section-heading">
-  <h2 class="prose">4.13 Formula &amp; Concept Quick-Card
-  <button class="bookmark-btn" data-id="s-dl-formula" data-label="4.13 Formula Card" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2C.13 Formula & Concept Quick-Card
+  <button class="bookmark-btn" data-id="s-dl-formula" data-label="2C.13 Formula Card" title="Bookmark">🔖</button></h2>
 </div>
 
 <table class="data-table reveal">
@@ -1386,15 +1657,15 @@ If safety algorithm finds safe sequence → grant. Else → rollback all three.<
 <tr><td>Cycle in RAG</td><td>Single-instance: cycle ⟺ deadlock. Multi-instance: cycle ≠ necessarily deadlock.</td></tr>
 <tr><td>Detection vs Avoidance matrices</td><td>Detection uses Request[]; Avoidance uses Need[] = Max[] − Alloc[]</td></tr>
 <tr><td>Coffman conditions</td><td>ALL 4 must hold simultaneously for deadlock. Eliminating ANY ONE prevents it.</td></tr>
-<tr><td>Circular Wait ⊃ Hold &amp; Wait</td><td>If Circular Wait holds, Hold &amp; Wait automatically holds too.</td></tr>
+<tr><td>Circular Wait ⊃ Hold & Wait</td><td>If Circular Wait holds, Hold & Wait automatically holds too.</td></tr>
 </tbody></table></div>
 </section>
 
-<!-- ══════════════ 4.14 WORKED EXAMPLES BANK ═════════════════════════ -->
+<!-- ══════════════ 2C.14 WORKED EXAMPLES BANK ═════════════════════════ -->
 <section id="s-dl-examples" data-search-section="Deadlock Worked Examples Banker Numerical GATE">
 <div class="section-heading">
-  <h2 class="prose">4.14 Worked Examples Bank
-  <button class="bookmark-btn" data-id="s-dl-examples" data-label="4.14 Worked Examples" title="Bookmark">🔖</button></h2>
+  <h2 class="prose">2C.14 Worked Examples Bank
+  <button class="bookmark-btn" data-id="s-dl-examples" data-label="2C.14 Worked Examples" title="Bookmark">🔖</button></h2>
 </div>
 
 <div class="callout info reveal"><strong>📌 Banker's Algorithm — Complete 5-Process 3-Resource Trace</strong><br>
@@ -1461,10 +1732,10 @@ With 9 units: at least one process gets its 3rd unit, finishes, releases resourc
 
 <div class="mode-gate">
 <div class="mcq reveal"><strong>GATE 2014:</strong> A system has 4 processes and 5 identical resources. Each process can request at most 2 resources. The minimum number of resources that ensures no deadlock is:<br>
-(a) 4 &nbsp; (b) 5 &nbsp; (c) 6 &nbsp; (d) 7<br>
+(a) 4   (b) 5   (c) 6   (d) 7<br>
 <details><summary>Answer</summary><strong>(b) 5</strong> — Using formula: R ≥ n(k−1)+1 = 4(2−1)+1 = 4+1 = 5. With 5 resources: worst case — each process holds 1 (total 4 held), 1 free. That 1 free resource lets at least one process complete (needs at most 2, has 1, 1 more available). It finishes, releases 2, chain continues.</details></div>
 <div class="mcq reveal"><strong>GATE 2019:</strong> Consider a system with 3 resource types and 4 processes. Which is TRUE about a system in unsafe state?<br>
-(a) It is already deadlocked &nbsp; (b) Deadlock will definitely occur &nbsp; (c) Deadlock may or may not occur &nbsp; (d) The system has a cycle in the RAG<br>
+(a) It is already deadlocked   (b) Deadlock will definitely occur   (c) Deadlock may or may not occur   (d) The system has a cycle in the RAG<br>
 <details><summary>Answer</summary><strong>(c) Deadlock may or may not occur</strong> — Unsafe means there is NO guaranteed safe sequence, but processes may still complete without deadlock if they don't all request their maximum simultaneously. Safe state guarantees no deadlock; unsafe state only means the safety guarantee is lost.</details></div>
 </div>
 
@@ -1477,7 +1748,7 @@ With 9 units: at least one process gets its 3rd unit, finishes, releases resourc
 
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
-    <a href="unit3.html" class="nav-btn">← Unit 3</a>
+    <a href="unit3.html" class="nav-btn">← Unit 2B — Sync</a>
     <a href="unit5.html" class="nav-btn primary">Unit 3 — Memory →</a>
   </div>
 </div>
@@ -1507,9 +1778,9 @@ With 9 units: at least one process gets its 3rd unit, finishes, releases resourc
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -1532,7 +1803,7 @@ With 9 units: at least one process gets its 3rd unit, finishes, releases resourc
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>
@@ -1549,7 +1820,7 @@ With 9 units: at least one process gets its 3rd unit, finishes, releases resourc
 <nav id="mobile-nav">
   <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
   <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
-  <a href="#s-dl-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 4</a>
+  <a href="#s-dl-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 2C</a>
   <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
 </nav>
 <div id="toast-container"></div>

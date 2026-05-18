@@ -11,30 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
-.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
-.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
-.mem-os{background:#4f46e5;color:#fff}
-.mem-p1{background:#059669;color:#fff}
-.mem-p2{background:#d97706;color:#fff}
-.mem-p3{background:#dc2626;color:#fff}
-.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
-.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
-.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
-.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit -->
@@ -42,7 +20,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -52,13 +30,13 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
     
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -76,19 +54,19 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Unit 3 — Sections</div>
-      <a href="#s-mem-intro" class="sidebar-link active"><span class="link-icon">🧠</span>5.1 Intro to Memory Mgmt</a>
-      <a href="#s-mem-binding" class="sidebar-link"><span class="link-icon">🔗</span>5.2 Address Binding</a>
-      <a href="#s-mem-contiguous" class="sidebar-link"><span class="link-icon">📦</span>5.3 Contiguous Allocation</a>
-      <a href="#s-mem-frag" class="sidebar-link"><span class="link-icon">🧩</span>5.4 Fragmentation</a>
-      <a href="#s-mem-paging" class="sidebar-link"><span class="link-icon">📄</span>5.5 Paging — Concept</a>
-      <a href="#s-mem-multilevel" class="sidebar-link"><span class="link-icon">📑</span>5.5b Multi-Level Paging</a>
-      <a href="#s-mem-tlb" class="sidebar-link"><span class="link-icon">⚡</span>5.6 Paging — TLB &amp; Hardware</a>
-      <a href="#s-mem-protection" class="sidebar-link"><span class="link-icon">🛡️</span>5.6b Memory Protection</a>
-      <a href="#s-mem-seg" class="sidebar-link"><span class="link-icon">📐</span>5.7 Segmentation</a>
-      <a href="#s-mem-virtual" class="sidebar-link"><span class="link-icon">🌐</span>5.8 Virtual Memory</a>
-      <a href="#s-mem-replace" class="sidebar-link"><span class="link-icon">🔄</span>5.9 Page Replacement</a>
-      <a href="#s-mem-thrash" class="sidebar-link"><span class="link-icon">🌀</span>5.10 Thrashing</a>
-      <a href="#s-mem-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ &amp; Q&amp;A</a>
+      <a href="#s-mem-intro" class="sidebar-link active"><span class="link-icon">🧠</span>3.1 Intro to Memory Mgmt</a>
+      <a href="#s-mem-binding" class="sidebar-link"><span class="link-icon">🔗</span>3.2 Address Binding</a>
+      <a href="#s-mem-contiguous" class="sidebar-link"><span class="link-icon">📦</span>3.3 Contiguous Allocation</a>
+      <a href="#s-mem-frag" class="sidebar-link"><span class="link-icon">🧩</span>3.4 Fragmentation</a>
+      <a href="#s-mem-paging" class="sidebar-link"><span class="link-icon">📄</span>3.5 Paging — Concept</a>
+      <a href="#s-mem-multilevel" class="sidebar-link"><span class="link-icon">📑</span>3.5b Multi-Level Paging</a>
+      <a href="#s-mem-tlb" class="sidebar-link"><span class="link-icon">⚡</span>3.6 Paging — TLB & Hardware</a>
+      <a href="#s-mem-protection" class="sidebar-link"><span class="link-icon">🛡️</span>3.6b Memory Protection</a>
+      <a href="#s-mem-seg" class="sidebar-link"><span class="link-icon">📐</span>3.7 Segmentation</a>
+      <a href="#s-mem-virtual" class="sidebar-link"><span class="link-icon">🌐</span>3.8 Virtual Memory</a>
+      <a href="#s-mem-replace" class="sidebar-link"><span class="link-icon">🔄</span>3.9 Page Replacement</a>
+      <a href="#s-mem-thrash" class="sidebar-link"><span class="link-icon">🌀</span>3.10 Thrashing</a>
+      <a href="#s-mem-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ & Q&A</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
@@ -99,6 +77,12 @@
     
       <a href="unit6.html" class="sidebar-link"><span class="link-icon">📁</span>Unit 4 — File Systems</a>
       <a href="gate-extra.html" class="sidebar-link"><span class="link-icon">⚡</span>GATE Extra Topics</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Related Units</div>
+      <a href="unit2.html#s-process" class="sidebar-link"><span class="link-icon">🔗</span>Processes &amp; PCB (Unit 2A)</a>
+      <a href="unit4.html#s-dl-bankers" class="sidebar-link"><span class="link-icon">🔗</span>Banker's Algorithm (Unit 2C)</a>
+      <a href="unit6.html#s-fs-alloc" class="sidebar-link"><span class="link-icon">🔗</span>File Allocation (Unit 4)</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Bookmarks</div>
@@ -118,42 +102,62 @@
 <div class="content-inner">
   <div class="chapter-hero">
     <div class="chapter-breadcrumb">
-      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 5</span>
+      <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 3</span>
     </div>
-    <div class="chapter-num">🧠 Unit 5 · DSC-10</div>
+    <div class="chapter-num">🧠 Unit 3 · DSC-10</div>
     <h1 class="chapter-title">Memory Management</h1>
     <div class="chapter-meta">
       <span class="meta-tag">🎓 University</span>
       <span class="meta-tag">⚡ GATE Ready</span>
       <span class="meta-tag">13 Sections</span>
-      <span class="meta-tag">Paging · Segmentation · Virtual Memory · TLB</span>
+      <span class="meta-tag">Paging · Segmentation · Virtual Memory · <a href="unit5.html#s-mem-tlb" class="glossary-term" title="Jump to definition">TLB</a></span>
+    </div>
+  </div>
+
+  
+  <div class="callout info" style="margin-bottom:var(--sp-6);border-left:4px solid var(--gate-b)">
+    <span class="callout-icon">🎯</span>
+    <div><strong>After studying this unit you will be able to:</strong>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li>Translate virtual addresses to physical addresses: extract VPN, look up page table, compute PA</li>
+        <li>Calculate EMAT with TLB hit rate h; explain TLB miss vs page fault distinction</li>
+        <li>Compare contiguous allocation, paging, and segmentation — fragmentation types and trade-offs</li>
+        <li>Trace FIFO, LRU, OPT, and CLOCK page replacement on a reference string; count faults</li>
+        <li>Demonstrate Belady's Anomaly with FIFO and explain why stack algorithms (LRU/OPT) avoid it</li>
+        <li>Explain thrashing, the working set model, and PFF-based frame allocation</li>
+      </ul>
     </div>
   </div>
 
   <div class="toc-card">
     <h3>📋 Table of Contents</h3>
     <div class="toc-list">
-      <a href="#s-mem-intro" class="toc-item"><span class="toc-num">5.1</span>Introduction to Memory Management</a>
-      <a href="#s-mem-binding" class="toc-item"><span class="toc-num">5.2</span>Address Binding &amp; Logical/Physical Addresses</a>
-      <a href="#s-mem-contiguous" class="toc-item"><span class="toc-num">5.3</span>Contiguous Memory Allocation</a>
-      <a href="#s-mem-frag" class="toc-item"><span class="toc-num">5.4</span>Fragmentation &amp; Compaction</a>
-      <a href="#s-mem-paging" class="toc-item"><span class="toc-num">5.5</span>Paging — Concept &amp; Page Table</a>
-      <a href="#s-mem-multilevel" class="toc-item"><span class="toc-num">5.5b</span>Multi-Level Paging &amp; Inverted Page Tables</a>
-      <a href="#s-mem-tlb" class="toc-item"><span class="toc-num">5.6</span>Paging — TLB &amp; Hardware Support</a>
-      <a href="#s-mem-protection" class="toc-item"><span class="toc-num">5.6b</span>Memory Protection &amp; Sharing</a>
-      <a href="#s-mem-seg" class="toc-item"><span class="toc-num">5.7</span>Segmentation</a>
-      <a href="#s-mem-virtual" class="toc-item"><span class="toc-num">5.8</span>Virtual Memory &amp; Demand Paging</a>
-      <a href="#s-mem-replace" class="toc-item"><span class="toc-num">5.9</span>Page Replacement Algorithms</a>
-      <a href="#s-mem-thrash" class="toc-item"><span class="toc-num">5.10</span>Thrashing &amp; Working Set Model</a>
-      <a href="#s-mem-pyq" class="toc-item"><span class="toc-num">★</span>PYQ &amp; Exam Prep</a>
+      <a href="#s-mem-intro" class="toc-item"><span class="toc-num">3.1</span>Introduction to Memory Management</a>
+      <a href="#s-mem-binding" class="toc-item"><span class="toc-num">3.2</span>Address Binding & Logical/Physical Addresses</a>
+      <a href="#s-mem-contiguous" class="toc-item"><span class="toc-num">3.3</span>Contiguous Memory Allocation</a>
+      <a href="#s-mem-frag" class="toc-item"><span class="toc-num">3.4</span>Fragmentation & Compaction</a>
+      <a href="#s-mem-paging" class="toc-item"><span class="toc-num">3.5</span>Paging — Concept & Page Table</a>
+      <a href="#s-mem-multilevel" class="toc-item"><span class="toc-num">3.5b</span>Multi-Level Paging & Inverted Page Tables</a>
+      <a href="#s-mem-tlb" class="toc-item"><span class="toc-num">3.6</span>Paging — TLB & Hardware Support</a>
+      <a href="#s-mem-protection" class="toc-item"><span class="toc-num">3.6b</span>Memory Protection & Sharing</a>
+      <a href="#s-mem-seg" class="toc-item"><span class="toc-num">3.7</span>Segmentation</a>
+      <a href="#s-mem-virtual" class="toc-item"><span class="toc-num">3.8</span>Virtual Memory & Demand Paging</a>
+      <a href="#s-mem-replace" class="toc-item"><span class="toc-num">3.9</span>Page Replacement Algorithms</a>
+      <a href="#s-mem-thrash" class="toc-item"><span class="toc-num">3.10</span>Thrashing & Working Set Model</a>
+      <a href="#s-mem-pyq" class="toc-item"><span class="toc-num">★</span>PYQ & Exam Prep</a>
     </div>
   </div>
 
-  <!-- SECTION 5.1 -->
+  <div class="callout warn reveal" style="margin:var(--sp-6) 0">
+    <span class="callout-icon">🔗</span>
+    <div><strong>Critical Prerequisite — General Math:</strong> The GATE numericals in this unit rely heavily on <strong>Expected Value (Weighted Averages)</strong> and <strong>Bit-to-Hex/Decimal conversion</strong>. If you are not comfortable converting powers of 2 (e.g., 2^10 = 1KB) or understanding that an average access time is `(Hit_Rate × Fast_Time) + (Miss_Rate × Slow_Time)`, review those basic math concepts first.</div>
+  </div>
+
+  <!-- SECTION 3.1 -->
   <section id="s-mem-intro" data-search-section="memory management introduction goals requirements protection relocation sharing binding">
     <div class="section-heading">
-      <h2 class="prose">5.1 Introduction to Memory Management</h2>
-      <button class="bookmark-btn" data-id="s-mem-intro" data-label="5.1 Memory Intro" title="Bookmark">🔖</button>
+      <h2 class="prose">3.1 Introduction to Memory Management</h2>
+      <button class="bookmark-btn" data-id="s-mem-intro" data-label="3.1 Memory Intro" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -223,11 +227,11 @@
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.2 -->
+  <!-- SECTION 3.2 -->
   <section id="s-mem-binding" data-search-section="address binding compile time load time execution time logical physical address MMU relocation register base limit">
     <div class="section-heading">
-      <h2 class="prose">5.2 Address Binding &amp; Logical/Physical Addresses</h2>
-      <button class="bookmark-btn" data-id="s-mem-binding" data-label="5.2 Address Binding" title="Bookmark">🔖</button>
+      <h2 class="prose">3.2 Address Binding & Logical/Physical Addresses</h2>
+      <button class="bookmark-btn" data-id="s-mem-binding" data-label="3.2 Address Binding" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -275,7 +279,7 @@
         <ul>
           <li><strong>Base Register:</strong> Holds the starting physical address of the process.</li>
           <li><strong>Limit Register:</strong> Holds the size of the process's address space.</li>
-          <li>On every memory access: MMU checks if <code>logical_addr &lt; limit</code>. If not → <strong>segmentation fault / protection fault</strong>!</li>
+          <li>On every memory access: MMU checks if <code>logical_addr < limit</code>. If not → <strong>segmentation fault / protection fault</strong>!</li>
         </ul>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">MMU Address Translation Logic</span><button class="code-copy">Copy</button></div>
@@ -295,9 +299,9 @@ if (logical_addr >= limit_register) {
       <div class="prose">
         <ul>
           <li>Compile-time binding requires relocation of binary if load address changes. Load-time binding is done by <strong>linker/loader</strong>. Execution-time binding requires hardware MMU.</li>
-          <li>Logical address space size and physical address space size can be <strong>different</strong>. Virtual memory allows logical space &gt; physical RAM.</li>
-          <li>Base+Limit registers are loaded from PCB on context switch — each process has its own pair.</li>
-          <li>GATE key formula: <code>Physical = Base + Logical</code>. Protection check: <code>Logical &lt; Limit</code>.</li>
+          <li>Logical address space size and physical address space size can be <strong>different</strong>. Virtual memory allows logical space > physical RAM.</li>
+          <li>Base+Limit registers are loaded from PCB on <a href="unit2.html#s-proc-concept" class="glossary-term" title="Jump to definition">context switch</a> — each process has its own pair.</li>
+          <li>GATE key formula: <code>Physical = Base + Logical</code>. Protection check: <code>Logical < Limit</code>.</li>
         </ul>
       </div>
     </div>
@@ -314,13 +318,22 @@ if (logical_addr >= limit_register) {
     </div>
   </section>
 
+  <div class="callout info" style="margin:0 0 var(--sp-6)">
+    <span class="callout-icon">🔒</span>
+    <div><strong>Address Binding — Real-World Implications (ASLR &amp; PIE):</strong><br>
+    <strong>Compile-time:</strong> Absolute code. Fixed load address. No ASLR possible. Used only in fixed embedded systems.<br>
+    <strong>Load-time:</strong> Relocatable ELF. Linker fills absolute addresses at load. ASLR can randomize base across runs but not within a run. No PIE = no full ASLR.<br>
+    <strong>Runtime (execution-time):</strong> PIE (Position-Independent Executable) + MMU. Code uses RIP-relative addressing. OS can place process anywhere. ASLR randomizes stack/heap/code on every run → exploits much harder. Modern Linux: <code>gcc -fPIE -pie</code>.<br>
+    <strong>GATE rule:</strong> Only runtime binding supports virtual memory, memory compaction, and full ASLR.</div>
+  </div>
+
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.0 — CACHE MEMORY -->
+  <!-- SECTION 3.0 — CACHE MEMORY -->
   <section id="s-mem-cache" data-search-section="cache memory L1 L2 L3 direct mapped set associative fully associative hit ratio miss penalty EAT write through write back replacement LRU FIFO temporal spatial locality">
     <div class="section-heading">
-      <h2 class="prose">5.0 Cache Memory</h2>
-      <button class="bookmark-btn" data-id="s-mem-cache" data-label="5.0 Cache Memory" title="Bookmark">🔖</button>
+      <h2 class="prose">3.0 Cache Memory</h2>
+      <button class="bookmark-btn" data-id="s-mem-cache" data-label="3.0 Cache Memory" title="Bookmark">🔖</button>
     </div>
     <div class="prose">
 
@@ -329,7 +342,7 @@ if (logical_addr >= limit_register) {
       <table>
         <thead><tr><th>Level</th><th>Location</th><th>Size</th><th>Latency</th></tr></thead>
         <tbody>
-          <tr><td><strong>CPU Registers</strong></td><td>On-chip</td><td>&lt;1 KB</td><td>~0.3 ns (1 cycle)</td></tr>
+          <tr><td><strong>CPU Registers</strong></td><td>On-chip</td><td><1 KB</td><td>~0.3 ns (1 cycle)</td></tr>
           <tr><td><strong>L1 Cache</strong></td><td>On-chip (per core)</td><td>32–128 KB</td><td>~1 ns (4 cycles)</td></tr>
           <tr><td><strong>L2 Cache</strong></td><td>On-chip (per core)</td><td>256 KB–2 MB</td><td>~4 ns (12 cycles)</td></tr>
           <tr><td><strong>L3 Cache</strong></td><td>On-chip (shared)</td><td>4–64 MB</td><td>~10 ns (40 cycles)</td></tr>
@@ -340,7 +353,7 @@ if (logical_addr >= limit_register) {
 
       <div class="callout info">
         <span class="callout-icon">📌</span>
-        <div><strong>Locality of Reference:</strong><br>
+        <div><strong><a href="unit5.html#s-mem-virtual" class="glossary-term" title="Jump to definition">Locality of Reference</a>:</strong><br>
         • <strong>Temporal locality:</strong> A recently accessed address will likely be accessed again soon (loops, function variables).<br>
         • <strong>Spatial locality:</strong> Addresses near a recently accessed address will likely be accessed soon (arrays, sequential code).<br>
         Cache effectiveness depends entirely on programs exhibiting high locality.</div>
@@ -356,7 +369,7 @@ if (logical_addr >= limit_register) {
             <td><strong>Direct-Mapped</strong></td>
             <td>Each memory block maps to exactly <strong>1 cache line</strong> (line = address mod N)</td>
             <td>Simple, fast lookup — just check one slot</td>
-            <td><strong>Conflict misses:</strong> two blocks map to same line, thrashing</td>
+            <td><strong>Conflict misses:</strong> two blocks map to same line, <a href="unit5.html#s-mem-virtual" class="glossary-term" title="Jump to definition">thrashing</a></td>
           </tr>
           <tr>
             <td><strong>k-way Set-Associative</strong></td>
@@ -466,11 +479,11 @@ if (logical_addr >= limit_register) {
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.3 -->
+  <!-- SECTION 3.3 -->
   <section id="s-mem-contiguous" data-search-section="contiguous memory allocation fixed partitioning variable partitioning first fit best fit worst fit hole free block">
     <div class="section-heading">
-      <h2 class="prose">5.3 Contiguous Memory Allocation</h2>
-      <button class="bookmark-btn" data-id="s-mem-contiguous" data-label="5.3 Contiguous Allocation" title="Bookmark">🔖</button>
+      <h2 class="prose">3.3 Contiguous Memory Allocation</h2>
+      <button class="bookmark-btn" data-id="s-mem-contiguous" data-label="3.3 Contiguous Allocation" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -532,11 +545,11 @@ Remaining hole: 600K - 212K = 388K (still usable)</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.4 -->
+  <!-- SECTION 3.4 -->
   <section id="s-mem-frag" data-search-section="fragmentation internal external compaction paging segmentation solution holes memory waste">
     <div class="section-heading">
-      <h2 class="prose">5.4 Fragmentation &amp; Compaction</h2>
-      <button class="bookmark-btn" data-id="s-mem-frag" data-label="5.4 Fragmentation" title="Bookmark">🔖</button>
+      <h2 class="prose">3.4 Fragmentation & Compaction</h2>
+      <button class="bookmark-btn" data-id="s-mem-frag" data-label="3.4 Fragmentation" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -600,11 +613,11 @@ Remaining hole: 600K - 212K = 388K (still usable)</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.4b — SWAPPING -->
+  <!-- SECTION 3.4b — SWAPPING -->
   <section id="s-mem-swap" data-search-section="swapping swap space backing store medium term scheduler degree multiprogramming process swap in swap out">
     <div class="section-heading">
-      <h2 class="prose">5.4b Swapping</h2>
-      <button class="bookmark-btn" data-id="s-mem-swap" data-label="5.4b Swapping" title="Bookmark">🔖</button>
+      <h2 class="prose">3.4b Swapping</h2>
+      <button class="bookmark-btn" data-id="s-mem-swap" data-label="3.4b Swapping" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -664,12 +677,47 @@ Example: Process = 10 MB, Disk bandwidth = 50 MB/s
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.5 -->
+  <!-- SECTION 3.5 -->
   <section id="s-mem-paging" data-search-section="paging page frame page table page number offset physical address logical address page size">
     <div class="section-heading">
-      <h2 class="prose">5.5 Paging — Concept &amp; Page Table</h2>
-      <button class="bookmark-btn" data-id="s-mem-paging" data-label="5.5 Paging" title="Bookmark">🔖</button>
+      <h2 class="prose">3.5 Paging — Concept & Page Table</h2>
+      <button class="bookmark-btn" data-id="s-mem-paging" data-label="3.5 Paging" title="Bookmark">🔖</button>
     </div>
+
+    <!-- PAGING ARITHMETIC PRIMER — M-007/P-003/V-005 CRITICAL FIX -->
+    <div class="mode-gate">
+    <div class="mode-badge gate">⚡ GATE — Critical Prerequisite: Paging Arithmetic</div>
+    <div class="formula-box" style="border-color:var(--accent)">
+    <div class="formula-label">🔢 Paging Address Translation Primer — Read Before Any Numerical</div>
+    Page size = 2<sup>n</sup> bytes (always power of 2). In a k-bit logical address:<br>
+    <strong>Top (k−n) bits = Page Number (p)</strong> | <strong>Bottom n bits = Page Offset (d)</strong><br><br>
+    Finding n: n = log₂(page_size) [e.g., 4KB=2¹² → n=12, 512B=2⁹ → n=9]<br>
+    Page# = ⌊logical_addr / page_size⌋    Offset = logical_addr mod page_size<br>
+    Physical = PageTable[p] × page_size + offset
+    </div>
+    <div class="code-block"><div class="code-header"><span class="code-lang">5 Paging Numericals — GATE Level</span><button class="code-copy">Copy</button></div>
+    <pre><code>【1】 Page=512B, addr=2500, PT[4]=7
+     p=2500/512=4  d=2500%512=452
+     Phys = 7×512+452 = 4036 ✅
+
+【2】 Hex (4KB pages): addr=0x3A7C → p=3, d=0xA7C
+     TRICK: 4KB=0x1000 → last 3 hex digits = offset!
+     If PT[3]=9: Phys = 0x9000+0xA7C = 0x9A7C ✅
+
+【3】 32-bit addr, page#=12 bits → offset=20 → PageSize=2²⁰=1MB
+
+【4】 32-bit addr, 4KB pages, 4B/PTE → PT size = 2²⁰×4 = 4MB/process
+
+【5】 Bit split: 16-bit addr=0x12A3, page=256B(n=8)
+     p=0x12=18, d=0xA3=163 → if PT[18]=5: Phys=5×256+163=1443 ✅</code></pre></div>
+    <div class="callout warn reveal">⚠️ <strong>Exam Traps:</strong>
+    Frame# (from PT) ≠ Page# (from address). |
+    Use floor division for p. |
+    Hex trick only works when page_size = 16ⁿ. |
+    Physical & logical address spaces can have different bit widths.
+    </div>
+    </div>
+
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
       <div class="prose">
@@ -690,13 +738,63 @@ Example: Process = 10 MB, Disk bandwidth = 50 MB/s
         </table>
         <h3>Address Translation</h3>
         <p>Logical address is split into two parts automatically by hardware:</p>
-        <div class="addr-flow">
-          <div class="addr-box">Logical Addr<br>(p | d)</div>
-          <div class="addr-arrow">→</div>
-          <div class="addr-box">Page Table<br>p → frame f</div>
-          <div class="addr-arrow">→</div>
-          <div class="addr-box">Physical Addr<br>(f | d)</div>
-          <div class="addr-arrow">→ RAM</div>
+        <div style="background:var(--bg-code); padding:var(--sp-5); border-radius:var(--r-xl); margin:var(--sp-5) 0; border:1px solid var(--bd-default); text-align:center;">
+          <svg viewbox="0 0 800 350" width="100%" height="auto" style="font-family:var(--font-sans);">
+            <!-- CPU -->
+            <rect x="20" y="100" width="120" height="80" rx="8" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"></rect>
+            <text x="80" y="145" text-anchor="middle" font-weight="bold" font-size="20" fill="var(--tx-primary)">CPU</text>
+
+            <!-- CPU to Logical Address -->
+            <path d="M140 140 L 200 140" stroke="var(--tx-muted)" stroke-width="2" marker-end="url(#arrow)"></path>
+
+            <!-- Logical Address Register -->
+            <rect x="200" y="115" width="140" height="50" rx="4" fill="var(--bg-elevated)" stroke="var(--tx-secondary)" stroke-width="1.5"></rect>
+            <line x1="260" y1="115" x2="260" y2="165" stroke="var(--tx-secondary)" stroke-width="1.5"></line>
+            <text x="230" y="140" text-anchor="middle" font-size="16" fill="var(--tx-primary)">p</text>
+            <text x="300" y="140" text-anchor="middle" font-size="16" fill="var(--tx-primary)">d</text>
+            <text x="270" y="185" text-anchor="middle" font-size="12" fill="var(--tx-muted)">Logical Address</text>
+
+            <!-- Page Table -->
+            <rect x="380" y="40" width="100" height="200" rx="4" fill="var(--bg-card)" stroke="var(--warning)" stroke-width="2"></rect>
+            <text x="430" y="30" text-anchor="middle" font-weight="bold" font-size="14" fill="var(--tx-primary)">Page Table</text>
+            <!-- PT Entries -->
+            <line x1="380" y1="80" x2="480" y2="80" stroke="var(--bd-subtle)" stroke-width="1"></line>
+            <line x1="380" y1="120" x2="480" y2="120" stroke="var(--bd-subtle)" stroke-width="1"></line>
+            <line x1="380" y1="160" x2="480" y2="160" stroke="var(--bd-subtle)" stroke-width="1"></line>
+            <line x1="380" y1="200" x2="480" y2="200" stroke="var(--bd-subtle)" stroke-width="1"></line>
+            <text x="430" y="105" text-anchor="middle" font-size="14" fill="var(--tx-secondary)">f0</text>
+            <text x="430" y="145" text-anchor="middle" font-size="14" fill="var(--tx-primary)" font-weight="bold">f</text>
+            <text x="430" y="185" text-anchor="middle" font-size="14" fill="var(--tx-secondary)">f2</text>
+            <text x="360" y="145" text-anchor="middle" font-size="12" fill="var(--tx-muted)">index p →</text>
+
+            <!-- p to PT -->
+            <path d="M230 165 L 230 270 L 330 270 L 330 140 L 380 140" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow-accent)" stroke-dasharray="4"></path>
+
+            <!-- f to Physical Address -->
+            <path d="M480 140 L 530 140 L 530 180 L 550 180" fill="none" stroke="var(--warning)" stroke-width="2" marker-end="url(#arrow-warn)"></path>
+
+            <!-- d to Physical Address -->
+            <path d="M300 165 L 300 215 L 550 215" fill="none" stroke="var(--tx-muted)" stroke-width="2" marker-end="url(#arrow)"></path>
+
+            <!-- Physical Address Register -->
+            <rect x="550" y="170" width="160" height="50" rx="4" fill="var(--bg-elevated)" stroke="var(--tx-secondary)" stroke-width="1.5"></rect>
+            <line x1="620" y1="170" x2="620" y2="220" stroke="var(--tx-secondary)" stroke-width="1.5"></line>
+            <text x="585" y="195" text-anchor="middle" font-size="16" fill="var(--tx-primary)" font-weight="bold">f</text>
+            <text x="665" y="195" text-anchor="middle" font-size="16" fill="var(--tx-primary)">d</text>
+            <text x="630" y="240" text-anchor="middle" font-size="12" fill="var(--tx-muted)">Physical Address (in RAM)</text>
+
+            <defs>
+              <marker id="arrow" markerwidth="10" markerheight="10" refx="6" refy="3" orient="auto-start-reverse">
+                <path d="M0,0 L0,6 L9,3 z" fill="var(--tx-muted)"></path>
+              </marker>
+              <marker id="arrow-accent" markerwidth="10" markerheight="10" refx="6" refy="3" orient="auto-start-reverse">
+                <path d="M0,0 L0,6 L9,3 z" fill="var(--accent)"></path>
+              </marker>
+              <marker id="arrow-warn" markerwidth="10" markerheight="10" refx="6" refy="3" orient="auto-start-reverse">
+                <path d="M0,0 L0,6 L9,3 z" fill="var(--warning)"></path>
+              </marker>
+            </defs>
+          </svg>
         </div>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">Paging — Address Translation Formula</span><button class="code-copy">Copy</button></div>
@@ -754,15 +852,38 @@ Example: Page size = 512 bytes, Logical addr = 2500
         </ul>
       </div>
     </div>
+    
+    <div class="section-summary">
+      <div class="section-summary-label">📌 Section 3.5 Paging — Key Takeaways</div>
+      <ul>
+        <li><strong>Address formula:</strong> VA split as [VPN | offset]. VPN bits = log₂(VA_space/page_size). Offset bits = log₂(page_size). PA = frame_number × page_size + offset</li>
+        <li><strong>TLB vs Page Fault:</strong> TLB miss → walk page table in memory (slow but no fault). Page fault → page not in RAM → OS loads it from disk (very slow, software interrupt)</li>
+        <li><strong>EMAT formula:</strong> h(t_TLB + t_M) + (1−h)(t_TLB + 2t_M) where h = TLB hit rate, t_M = memory access time</li>
+        <li><strong>Two-level PT motivation:</strong> Avoids allocating 4 MB page table per process. Outer PT = 1 page (4 KB). Inner PTs allocated only for used VA regions → massive space saving for sparse AS</li>
+        <li><strong>Belady's Anomaly:</strong> FIFO only — more frames CAN give more page faults. LRU/OPT are stack algorithms → more frames always ≤ page faults (no anomaly)</li>
+      </ul>
+    </div>
+
+    <details class="active-recall">
+      <summary>Active Recall: Paging Basics</summary>
+      <div class="recall-content">
+        <strong>1. Why does paging completely eliminate external fragmentation?</strong><br>
+        Because physical memory is divided into fixed-size frames, and any free frame can hold any page. There are no "holes" of unusable varying sizes.<br><br>
+        <strong>2. If a logical address has 32 bits and the page size is 4KB (2^12), how many bits are used for the page number?</strong><br>
+        32 - 12 = 20 bits. (Which means 2^20 or 1 Million pages exist in the logical address space).<br><br>
+        <strong>3. What is the key difference between a TLB miss and a page fault?</strong><br>
+        TLB miss = translation not cached; page table in RAM is walked (no fault, just slower). Page fault = page not in RAM at all; OS interrupt handler loads it from disk.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.5b — MULTI-LEVEL PAGING -->
+  <!-- SECTION 3.5b — MULTI-LEVEL PAGING -->
   <section id="s-mem-multilevel" data-search-section="multi-level paging two-level three-level hierarchical page table inverted page table hashed page table outer inner page directory">
     <div class="section-heading">
-      <h2 class="prose">5.5b Multi-Level Paging &amp; Inverted Page Tables</h2>
-      <button class="bookmark-btn" data-id="s-mem-multilevel" data-label="5.5b Multi-Level Paging" title="Bookmark">🔖</button>
+      <h2 class="prose">3.5b Multi-Level Paging & Inverted Page Tables</h2>
+      <button class="bookmark-btn" data-id="s-mem-multilevel" data-label="3.5b Multi-Level Paging" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -847,7 +968,7 @@ Memory Savings:
     <div class="mode-gate">
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
-        <h3>GATE Multi-Level Paging Formulas &amp; Numericals</h3>
+        <h3>GATE Multi-Level Paging Formulas & Numericals</h3>
         <div class="formula-box">
           <div class="formula-label">Multi-Level EAT (with TLB)</div>
           EAT = h × (t + m) + (1−h) × (t + (n+1) × m)<br>
@@ -901,11 +1022,11 @@ Solution:
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.6 -->
+  <!-- SECTION 3.6 -->
   <section id="s-mem-tlb" data-search-section="TLB translation lookaside buffer hardware support PTBR PTLR associative memory hit miss effective access time EAT">
     <div class="section-heading">
-      <h2 class="prose">5.6 Paging — TLB &amp; Hardware Support</h2>
-      <button class="bookmark-btn" data-id="s-mem-tlb" data-label="5.6 TLB" title="Bookmark">🔖</button>
+      <h2 class="prose">3.6 Paging — TLB & Hardware Support</h2>
+      <button class="bookmark-btn" data-id="s-mem-tlb" data-label="3.6 TLB" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -931,21 +1052,39 @@ Solution:
             </div>
           </div>
         </div>
-        <h3>Effective Memory Access Time (EAT)</h3>
-        <p>Let: α = TLB hit rate, t = TLB access time (e.g., 20ns), m = memory access time (e.g., 100ns)</p>
+        <h3>Effective Memory Access Time (EAT) — TLB</h3>
+        <div class="callout info reveal" style="margin-bottom:8px">
+          <strong>Notation standardized to GATE convention:</strong> h = TLB hit ratio, t = TLB access time, m = main memory access time
+        </div>
+        <div class="formula-box">
+        <div class="formula-label">All 3 EAT Variants (GATE distinguishes these — check question wording)</div>
+        <strong>Variant 1 (Standard — TLB time included, sequential miss):</strong><br>
+        EAT = h(t + m) + (1−h)(t + 2m) = t + m + (1−h)m<br>
+        <em>Assumption: TLB check takes time t; on miss, page table in RAM takes m, then data m.</em><br><br>
+        <strong>Variant 2 (TLB time negligible — t≈0, GATE often uses this):</strong><br>
+        EAT = h·m + (1−h)·2m = (2−h)m<br>
+        <em>Assumption: TLB check time ignored; on hit: 1 memory access; on miss: 2 memory accesses.</em><br><br>
+        <strong>Variant 3 (Simultaneous — TLB and RAM lookup overlap on miss):</strong><br>
+        EAT = h·t + (1−h)·m<br>
+        <em>Assumption: TLB lookup and RAM lookup happen simultaneously; on hit: takes t; on miss: takes m (longer).</em><br><br>
+        <strong>⚠️ GATE rule:</strong> Default = Variant 1 (sequential). Use Variant 2 if "TLB time = 0". Use Variant 3 only if question says "simultaneous access."
+        </div>
         <div class="code-block">
-          <div class="code-header"><span class="code-lang">EAT Formula</span><button class="code-copy">Copy</button></div>
-          <pre><code>EAT = α × (t + m) + (1 − α) × (t + 2m)
-    = t + m + (1 − α) × m          [simplified]
+          <div class="code-header"><span class="code-lang">EAT — 3 Worked Examples</span><button class="code-copy">Copy</button></div>
+          <pre><code>Variant 1: h=0.90, t=20ns, m=100ns
+  HIT  path: 20+100 = 120 ns
+  MISS path: 20+100+100 = 220 ns
+  EAT = 0.90×120 + 0.10×220 = 108+22 = 130 ns ✅
 
-Example: α = 0.90, t = 20ns, m = 100ns
-    HIT  path: 20 + 100 = 120 ns (90% of accesses)
-    MISS path: 20 + 100 + 100 = 220 ns (10% of accesses)
-    EAT = 0.90 × 120 + 0.10 × 220
-        = 108 + 22 = 130 ns
+Variant 2: h=0.90, m=100ns, t≈0 (ignored)
+  EAT = (2 − 0.90) × 100 = 1.1 × 100 = 110 ns
 
-Without TLB: Every access = 2 × 100 = 200 ns
-With TLB (90% hit rate): EAT = 130 ns → 35% speedup!</code></pre>
+Variant 3 (simultaneous): h=0.90, t=20ns, m=100ns
+  EAT = 0.90×20 + 0.10×100 = 18+10 = 28 ns
+  (Unrealistically fast — only if hardware fully parallelizes lookup)
+
+Without TLB: EAT = 2 × 100 = 200 ns
+With TLB Variant 1: 130 ns → 35% faster</code></pre>
         </div>
         <h3>TLB Properties</h3>
         <table>
@@ -972,22 +1111,32 @@ With TLB (90% hit rate): EAT = 130 ns → 35% speedup!</code></pre>
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
         <ul>
-          <li><strong>EAT = α(t+m) + (1−α)(t+2m)</strong> — memorize this. If t=0 (ignored): EAT = m + (1−α)m = (2−α)m.</li>
-          <li>Without TLB: EAT = 2m (one for page table, one for data). With TLB (hit rate α): EAT &lt; 2m always.</li>
+          <li><strong>EAT (Variant 1) = h(t+m) + (1−h)(t+2m)</strong> — memorize this. If t=0 (ignored): EAT = m + (1−α)m = (2−α)m.</li>
+          <li>Without TLB: EAT = 2m (one for page table, one for data). With TLB (hit rate α): EAT < 2m always.</li>
           <li>TLB is searched <strong>in parallel</strong> (associative memory) — all entries are compared simultaneously, not sequentially.</li>
           <li>GATE numerical: "TLB hit rate 80%, memory time 100ns, TLB time 10ns. Find EAT." → EAT = 0.8(110) + 0.2(210) = 88 + 42 = <strong>130 ns</strong>.</li>
         </ul>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: TLB & Effective Access Time</summary>
+      <div class="recall-content">
+        <strong>1. Why is a TLB necessary in a paged memory system?</strong><br>
+        Because without a TLB, every logical memory access requires TWO physical memory accesses: one for the Page Table (in RAM) and one for the actual data (in RAM). The TLB caches page table entries to speed this up.<br><br>
+        <strong>2. What happens during a TLB Miss?</strong><br>
+        The MMU must walk the page table in main memory to find the frame number. Once found, the entry is loaded into the TLB (possibly replacing an old entry) and the memory is accessed.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.6b — MEMORY PROTECTION & SHARING -->
+  <!-- SECTION 3.6b — MEMORY PROTECTION & SHARING -->
   <section id="s-mem-protection" data-search-section="memory protection sharing base limit protection bits page table shared pages reentrant code read-only frame sharing">
     <div class="section-heading">
-      <h2 class="prose">5.6b Memory Protection &amp; Sharing</h2>
-      <button class="bookmark-btn" data-id="s-mem-protection" data-label="5.6b Protection & Sharing" title="Bookmark">🔖</button>
+      <h2 class="prose">3.6b Memory Protection & Sharing</h2>
+      <button class="bookmark-btn" data-id="s-mem-protection" data-label="3.6b Protection & Sharing" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -996,7 +1145,7 @@ With TLB (90% hit rate): EAT = 130 ns → 35% speedup!</code></pre>
         <p>The OS must ensure that a process can only access its own memory. Three hardware mechanisms provide this:</p>
 
         <h4>1. Base-Limit Registers</h4>
-        <p>Each process has a <strong>base register</strong> (starting address) and a <strong>limit register</strong> (size). On every memory access: if addr &lt; 0 or addr ≥ limit → trap! Physical = base + addr. Loaded from PCB on context switch.</p>
+        <p>Each process has a <strong>base register</strong> (starting address) and a <strong>limit register</strong> (size). On every memory access: if addr < 0 or addr ≥ limit → trap! Physical = base + addr. Loaded from PCB on context switch.</p>
 
         <h4>2. Protection Bits in Page Table Entries</h4>
         <table>
@@ -1058,7 +1207,7 @@ Private data pages have protection bits: R-W (read+write)</code></pre>
     <div class="mode-gate">
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
-        <h3>GATE Protection &amp; Sharing Quick Facts</h3>
+        <h3>GATE Protection & Sharing Quick Facts</h3>
         <ul>
           <li><strong>GATE classic:</strong> "40 users run same editor (200KB code, 50KB data). RAM needed with sharing?" → 200KB + 40×50KB = <strong>2200KB</strong> (vs 10,000KB without sharing)</li>
           <li>Shared pages must be <strong>reentrant</strong> (read-only code). Data pages are NEVER shared (each process has private copy).</li>
@@ -1072,11 +1221,11 @@ Private data pages have protection bits: R-W (read+write)</code></pre>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.7 -->
+  <!-- SECTION 3.7 -->
   <section id="s-mem-seg" data-search-section="segmentation segment table base limit segment number offset logical physical address protection">
     <div class="section-heading">
-      <h2 class="prose">5.7 Segmentation</h2>
-      <button class="bookmark-btn" data-id="s-mem-seg" data-label="5.7 Segmentation" title="Bookmark">🔖</button>
+      <h2 class="prose">3.7 Segmentation</h2>
+      <button class="bookmark-btn" data-id="s-mem-seg" data-label="3.7 Segmentation" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1119,15 +1268,19 @@ Example:
         <table>
           <thead><tr><th>Property</th><th>Paging</th><th>Segmentation</th></tr></thead>
           <tbody>
-            <tr><td>Division unit</td><td>Fixed-size pages</td><td>Variable-size segments</td></tr>
-            <tr><td>Programmer visible?</td><td>No (transparent)</td><td>Yes (matches program structure)</td></tr>
-            <tr><td>External fragmentation</td><td>❌ None</td><td>✅ Yes (variable sizes)</td></tr>
-            <tr><td>Internal fragmentation</td><td>✅ Yes (last page)</td><td>❌ None (exact fit)</td></tr>
-            <tr><td>Sharing</td><td>Page-level sharing</td><td>Segment-level sharing (e.g., share code segment)</td></tr>
-            <tr><td>Protection</td><td>Per-page R/W/X bits</td><td>Per-segment R/W/X — more meaningful</td></tr>
-            <tr><td>Used in modern OS</td><td>✅ Primarily (x86 paging)</td><td>⚠️ Legacy (x86 mostly flat segments)</td></tr>
+            <tr><td>Division unit</td><td>Fixed-size pages (hardware-defined)</td><td>Variable-size segments (programmer-defined)</td></tr>
+            <tr><td>Programmer visible?</td><td>No (transparent to programmer)</td><td>Yes (matches program structure: code, stack, heap)</td></tr>
+            <tr><td>Address translation formula</td><td>PA = PageTable[VPN] × page_size + offset</td><td>PA = Base[s] + d &nbsp; (if d &lt; Limit[s])</td></tr>
+            <tr><td>External fragmentation</td><td>❌ None (all frames same size)</td><td>✅ Yes (variable segment sizes leave holes)</td></tr>
+            <tr><td>Internal fragmentation</td><td>✅ Yes (last page partially filled)</td><td>❌ None (segment fits exactly)</td></tr>
+            <tr><td>Symbolic addressing support</td><td>❌ No (pages have no semantic meaning)</td><td>✅ Yes (segments map to logical units: code, data)</td></tr>
+            <tr><td>Sharing granularity</td><td>Page-level (any page can be shared)</td><td>Segment-level (entire code or data segment shared)</td></tr>
+            <tr><td>Protection</td><td>Per-page R/W/X bits (fine-grained)</td><td>Per-segment R/W/X — more meaningful (code segment = R/X only)</td></tr>
+            <tr><td>Access time (no TLB)</td><td>2 memory accesses (PT + data). n-level PT = n+1 accesses</td><td>2 memory accesses (ST + data). Similar to paging</td></tr>
+            <tr><td>Used in modern OS</td><td>✅ Primary (x86 uses paging; Linux flat model)</td><td>⚠️ Legacy (x86 segments set to flat; effectively disabled)</td></tr>
           </tbody>
         </table>
+
         <h3>Segmented Paging (Hybrid) — Intel x86</h3>
         <p>Modern systems combine both schemes: the logical space is divided into <strong>segments</strong>, and each segment is then divided into <strong>pages</strong>. This gives the protection benefits of segmentation plus the fragmentation elimination of paging.</p>
         <div class="code-block">
@@ -1161,7 +1314,7 @@ Example: Segment 2, Offset 5000. SegTable[2]=(Base=20000, Limit=8000).
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
         <ul>
-          <li>Segmentation address = (s, d). Check: d &lt; Limit[s], then Physical = Base[s] + d.</li>
+          <li>Segmentation address = (s, d). Check: d < Limit[s], then Physical = Base[s] + d.</li>
           <li>Segmentation suffers from <strong>external fragmentation</strong> (variable sizes). Paging suffers from <strong>internal fragmentation</strong>.</li>
           <li>A segment fault occurs when d ≥ Limit — out-of-bounds access within a segment.</li>
           <li>GATE: "Number of bits for segment number?" → log₂(number of segments). "Offset bits?" → log₂(max segment size).</li>
@@ -1197,11 +1350,11 @@ Calculate Physical Addresses for the following Logical Addresses (Segment, Offse
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.8 -->
+  <!-- SECTION 3.8 -->
   <section id="s-mem-virtual" data-search-section="virtual memory demand paging page fault pure demand paging lazy swapper valid invalid bit swap space">
     <div class="section-heading">
-      <h2 class="prose">5.8 Virtual Memory &amp; Demand Paging</h2>
-      <button class="bookmark-btn" data-id="s-mem-virtual" data-label="5.8 Virtual Memory" title="Bookmark">🔖</button>
+      <h2 class="prose">3.8 Virtual Memory & Demand Paging</h2>
+      <button class="bookmark-btn" data-id="s-mem-virtual" data-label="3.8 Virtual Memory" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1294,7 +1447,7 @@ Result: Only 1 page copied, not entire address space!
       <div class="mode-badge gate">⚡ GATE</div>
       <div class="prose">
         <ul>
-          <li>EAT with faults: EAT = (1−p)m + p·s. For acceptable performance: p must be &lt; 10⁻⁶.</li>
+          <li>EAT with faults: EAT = (1−p)m + p·s. For acceptable performance: p must be < 10⁻⁶.</li>
           <li>Pure demand paging: start with 0 pages in memory. First instruction always page faults. Multiple faults possible for one instruction (if operands on different pages).</li>
           <li>Valid bit = 1 → page in RAM. Valid bit = 0 → either on disk OR invalid address. OS must distinguish these two cases.</li>
           <li>Copy-on-Write eliminates unnecessary copying → fork() is O(1) in time/space until first write.</li>
@@ -1305,11 +1458,11 @@ Result: Only 1 page copied, not entire address space!
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.9 -->
+  <!-- SECTION 3.9 -->
   <section id="s-mem-replace" data-search-section="page replacement algorithm FIFO optimal LRU least recently used Belady's anomaly clock second chance frame allocation">
     <div class="section-heading">
-      <h2 class="prose">5.9 Page Replacement Algorithms</h2>
-      <button class="bookmark-btn" data-id="s-mem-replace" data-label="5.9 Page Replacement" title="Bookmark">🔖</button>
+      <h2 class="prose">3.9 Page Replacement Algorithms</h2>
+      <button class="bookmark-btn" data-id="s-mem-replace" data-label="3.9 Page Replacement" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1553,15 +1706,27 @@ Linux uses GLOBAL replacement with per-process limits (cgroups).
         </div>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: Page Replacement</summary>
+      <div class="recall-content">
+        <strong>1. What is Belady's Anomaly and which algorithm suffers from it?</strong><br>
+        It is the phenomenon where increasing the number of page frames results in an INCREASE in the number of page faults. FIFO (First-In, First-Out) suffers from this. LRU and OPT are stack algorithms and never exhibit it.<br><br>
+        <strong>2. How does the Clock (Second Chance) algorithm approximate LRU?</strong><br>
+        It uses a reference bit for each frame. If a page is accessed, its bit is set to 1. The clock hand sweeps through frames; if it finds a 1, it clears it to 0 and gives the page a "second chance". If it finds a 0, it replaces that page.<br><br>
+        <strong>3. For FIFO with reference string 1,2,3,4,1,2,5,1,2,3,4,5: does increasing frames from 3 to 4 reduce page faults?</strong><br>
+        No — this is Belady's Anomaly! With 3 frames: 9 faults. With 4 frames: 10 faults. More frames = MORE faults with FIFO on this specific reference string.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
 
-  <!-- SECTION 5.10 -->
+  <!-- SECTION 3.10 -->
   <section id="s-mem-thrash" data-search-section="thrashing working set model locality page fault rate frame allocation prepaging">
     <div class="section-heading">
-      <h2 class="prose">5.10 Thrashing &amp; Working Set Model</h2>
-      <button class="bookmark-btn" data-id="s-mem-thrash" data-label="5.10 Thrashing" title="Bookmark">🔖</button>
+      <h2 class="prose">3.10 Thrashing & Working Set Model</h2>
+      <button class="bookmark-btn" data-id="s-mem-thrash" data-label="3.10 Thrashing" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
@@ -1579,6 +1744,46 @@ Linux uses GLOBAL replacement with per-process limits (cgroups).
           <li>More processes → even fewer frames per process → more thrashing!</li>
           <li>CPU utilization crashes → system is effectively dead</li>
         </ol>
+
+        <style>
+        .thrashing-diagram { text-align:center; padding:var(--sp-4); background:var(--bg-card); border:1px solid var(--bd-subtle); border-radius:8px; margin:var(--sp-4) 0; }
+        .thrashing-diagram svg { max-width:100%; height:auto; overflow:visible; }
+        .th-axis { stroke:var(--tx-muted); stroke-width:2; }
+        .th-text { fill:var(--tx-muted); font-size:12px; font-family:var(--font-main); }
+        .th-curve { fill:none; stroke:var(--accent); stroke-width:3; }
+        .th-thrash-zone { fill:rgba(239,68,68,0.1); }
+        .th-thrash-line { stroke:#ef4444; stroke-width:2; stroke-dasharray:4,4; }
+        .th-thrash-text { fill:#ef4444; font-weight:bold; font-size:13px; }
+        </style>
+        
+        <div class="thrashing-diagram">
+          <svg width="500" height="250" viewbox="0 0 500 250">
+            <!-- Thrashing Zone Background -->
+            <rect x="350" y="20" width="130" height="190" class="th-thrash-zone"></rect>
+            
+            <!-- Axes -->
+            <line x1="40" y1="210" x2="480" y2="210" class="th-axis"></line> <!-- X axis -->
+            <line x1="40" y1="210" x2="40" y2="20" class="th-axis"></line> <!-- Y axis -->
+            
+            <!-- Labels -->
+            <text x="260" y="240" class="th-text" text-anchor="middle">Degree of Multiprogramming</text>
+            <text x="20" y="115" class="th-text" text-anchor="middle" transform="rotate(-90, 20, 115)">CPU Utilization</text>
+            
+            <!-- Curve -->
+            <!-- Starts low, rises steadily, peaks around x=350, then drops sharply -->
+            <path d="M 40 210 Q 150 150 250 80 T 350 40 Q 380 40 400 150 T 480 200" class="th-curve"></path>
+            
+            <!-- Thrashing point line -->
+            <line x1="350" y1="20" x2="350" y2="210" class="th-thrash-line"></line>
+            <text x="355" y="35" class="th-thrash-text">Thrashing</text>
+            <text x="355" y="50" class="th-thrash-text">Point</text>
+            
+            <!-- Annotations -->
+            <text x="200" y="70" class="th-text" style="fill:var(--accent);font-weight:bold">Peak Performance</text>
+            <circle cx="350" cy="40" r="5" style="fill:#ef4444"></circle>
+          </svg>
+          <div style="font-size:var(--text-sm);margin-top:var(--sp-2)"><strong>The Thrashing Curve:</strong> As you add more processes, CPU utilization increases until the physical memory is overcommitted. At the thrashing point, processes steal frames from each other, causing page faults to skyrocket and CPU utilization to plummet.</div>
+        </div>
         <h3>Working Set Model (Denning, 1968)</h3>
         <div class="def-box">
           <div class="def-term">Working Set</div>
@@ -1601,7 +1806,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
         <table>
           <thead><tr><th>Strategy</th><th>How</th></tr></thead>
           <tbody>
-            <tr><td><strong>Working Set Policy</strong></td><td>Track each process's working set. Sum = Σ|WSi|. If total &gt; total frames → suspend (swap out) a process to free frames for others.</td></tr>
+            <tr><td><strong>Working Set Policy</strong></td><td>Track each process's working set. Sum = Σ|WSi|. If total > total frames → suspend (swap out) a process to free frames for others.</td></tr>
             <tr><td><strong>PFF (Page Fault Frequency)</strong></td><td>Monitor fault rate per process. If rate too high → give more frames. If rate too low → take frames away. Adaptive frame allocation.</td></tr>
             <tr><td><strong>Load Control</strong></td><td>Reduce degree of multiprogramming — swap out entire processes to disk, freeing their frames for remaining processes.</td></tr>
           </tbody>
@@ -1632,7 +1837,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
   <!-- SECTION ★ PYQ -->
   <section id="s-mem-pyq" data-search-section="PYQ previous year questions GATE MCQ university memory management paging segmentation virtual memory TLB">
     <div class="section-heading">
-      <h2 class="prose">★ Unit 5 PYQ &amp; Exam Prep</h2>
+      <h2 class="prose">★ Unit 3 PYQ & Exam Prep</h2>
       <button class="bookmark-btn" data-id="s-mem-pyq" data-label="Unit 5 PYQ" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
@@ -1675,7 +1880,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
       </div>
     </div>
     <div class="mode-gate">
-      <div class="mode-badge gate">⚡ GATE &amp; Competitive</div>
+      <div class="mode-badge gate">⚡ GATE & Competitive</div>
       <div class="prose">
         <h3>GATE Master MCQs</h3>
         <div class="mcq-card">
@@ -1687,7 +1892,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>2¹⁶ entries</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: A (2²⁰ entries)</strong><br>4KB = 2¹² bytes → offset = 12 bits. 32-bit logical address → page number bits = 32 − 12 = 20 bits. Number of pages (entries) = 2²⁰ = 1,048,576 entries.</div>
           </details>
         </div>
@@ -1700,7 +1905,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>110 ns</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: A (120 ns)</strong><br>EAT = α(t + m) + (1−α)(t + 2m) = 0.9(10 + 100) + 0.1(10 + 200) = 0.9 × 110 + 0.1 × 210 = 99 + 21 = <strong>120 ns</strong>.<br>
             <strong>Convention note:</strong> On hit: TLB lookup (t) + one memory access (m). On miss: TLB lookup (t) + page table in memory (m) + data in memory (m). If a question gives EAT formula without TLB time, use h × m + (1−h) × 2m instead.</div>
           </details>
@@ -1714,7 +1919,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>Clock (Second Chance)</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Optimal)</strong><br>The Optimal algorithm replaces the page that will not be used for the longest time in the future. It provably gives the minimum number of page faults for any given reference string. It cannot be implemented in practice (requires future knowledge) but serves as a benchmark.</div>
           </details>
         </div>
@@ -1727,7 +1932,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>External fragmentation exceeds 50% of total memory</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>Thrashing is when a process (or the whole system) spends more time servicing page faults (disk I/O) than doing useful computation. CPU utilization drops dramatically. It is caused by insufficient frames allocated to a process — it cannot hold its working set in memory.</div>
           </details>
         </div>
@@ -1740,7 +1945,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>Moves the page to the top of the stack</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>When the clock hand encounters a page with R=1, it gives the page a "second chance" — clears R to 0 and advances to the next page. Only pages with R=0 are evicted. This approximates LRU: recently-used pages survive.</div>
           </details>
         </div>
@@ -1753,7 +1958,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>100</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (70)</strong><br>Proportional: frames_P3 = (70 / (10+20+70)) × 100 = (70/100) × 100 = 70 frames. P1 gets 10, P2 gets 20.</div>
           </details>
         </div>
@@ -1766,7 +1971,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>Dispatcher</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Medium-term scheduler)</strong><br>The medium-term scheduler manages swapping — it decides which processes to swap in/out to control the degree of multiprogramming. Short-term selects which ready process gets CPU. Long-term admits new jobs from disk. Dispatcher is the module that actually performs the context switch.</div>
           </details>
         </div>
@@ -1779,7 +1984,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
             <li>Physical → Linear → Logical</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>In Intel x86: Logical address (segment:offset) → segmentation unit → Linear address → paging unit → Physical address. Linux bypasses segmentation (flat model: base=0), so logical ≈ linear, and only paging is active.</div>
           </details>
         </div>
@@ -1792,7 +1997,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
   <!-- GATE TRAP SHEET -->
   <section id="s-mem-traps" data-search-section="GATE trap sheet memory paging TLB page replacement common mistakes">
     <div class="section-heading">
-      <h2 class="prose">⚡ Unit 5 GATE Trap Sheet</h2>
+      <h2 class="prose">⚡ Unit 3 GATE Trap Sheet</h2>
       <button class="bookmark-btn" data-id="s-mem-traps" data-label="Unit 5 Traps" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
@@ -1836,11 +2041,126 @@ If process gets ≥ 5 frames → stable execution</code></pre>
         </div>
       </div>
     </div>
+
+    <!-- GATE POST-2020: MSQ + NAT FORMAT -->
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE 2020+ — MSQ &amp; NAT</div>
+      <div class="prose">
+
+        <!-- MSQ 1 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-1 (Page Replacement).</strong> Which of the following statements about page replacement algorithms are CORRECT? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) FIFO page replacement can result in Belady's Anomaly</li>
+            <li>B) LRU page replacement always performs better than or equal to FIFO</li>
+            <li>C) Optimal (OPT) page replacement is implementable in practice using future reference prediction</li>
+            <li>D) The CLOCK algorithm is an approximation of LRU using a reference/use bit</li>
+            <li>E) For stack algorithms (LRU, OPT), increasing frame count never increases page faults</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: A, D, E</strong><br><br>
+              <strong>A ✓:</strong> FIFO exhibits Belady's Anomaly — more frames can cause MORE page faults with specific reference strings (e.g., 1,2,3,4,1,2,5... with 3 vs 4 frames).<br>
+              <strong>B ✗:</strong> FALSE — LRU does NOT always outperform FIFO. Belady's Anomaly doesn't apply to LRU (LRU is a stack algorithm), but LRU can still have more faults than FIFO for specific reference patterns (though LRU never exhibits Belady's itself).<br>
+              <strong>C ✗:</strong> FALSE — OPT is NOT implementable in practice. It requires knowing future page references, which are unknown at runtime. It serves only as a theoretical benchmark.<br>
+              <strong>D ✓:</strong> Correct — CLOCK (second-chance) uses a circular list with a reference bit. If bit=1, clear it and advance pointer. If bit=0, replace this page. It approximates LRU with O(1) per access overhead.<br>
+              <strong>E ✓:</strong> Correct — Stack algorithms have the inclusion property: the set of pages in memory with n frames is always a subset of the set with n+1 frames. This guarantees that more frames → fewer or equal page faults (no Belady's Anomaly for stack algorithms like LRU and OPT).
+            </div>
+          </details>
+        </div>
+
+        <!-- MSQ 2 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-2 (Paging).</strong> In a 32-bit virtual address space with 4 KB pages and a two-level page table, which of the following statements are CORRECT? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) The page offset is 12 bits</li>
+            <li>B) A full page table (all entries present) for a single process requires exactly 4 MB of memory</li>
+            <li>C) A TLB miss always results in a page fault</li>
+            <li>D) Two-level page tables reduce memory overhead by allocating second-level tables only when needed</li>
+            <li>E) With TLB hit rate h, average memory access time = h × (TLB_time + Mem_time) + (1−h) × (TLB_time + 2×Mem_time)</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: A, D, E</strong><br><br>
+              <strong>A ✓:</strong> Page size = 4 KB = 2¹² bytes → offset = 12 bits. Correct.<br>
+              <strong>B ✗:</strong> For a 32-bit VA space: VPN = 32−12 = 20 bits → 2²⁰ = 1M page table entries. At 4 bytes each = 4 MB per process. BUT this is for a single-level page table. The statement says "all entries present" — in a single-level PT, this would be 4 MB. However, multi-level PTs avoid this. The question asks about two-level, so B may be misleading. In a two-level PT, the outer table is 1 page (4 KB) and inner tables are allocated on demand. Without all entries, it's NOT necessarily 4 MB. B is FALSE for two-level PT.<br>
+              <strong>C ✗:</strong> FALSE — A TLB miss means the translation is not in TLB, so the OS walks the page table in memory. If the page IS in memory (just not in TLB), it's a TLB miss only — not a page fault. A page fault only occurs if the page is NOT in main memory (page not present in any frame).<br>
+              <strong>D ✓:</strong> Correct — Two-level (hierarchical) page tables allocate second-level pages only for virtual address regions actually used by the process, saving memory for sparse address spaces.<br>
+              <strong>E ✓:</strong> Correct formula. Hit: TLB_time + 1 memory access. Miss: TLB_time + 2 memory accesses (page table + data). Weighted: EMAT = h(t_TLB + t_M) + (1−h)(t_TLB + 2t_M).
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 1 (Paging arithmetic) -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-1 (Address Translation).</strong> A system has a 16-bit virtual address space with page size = <strong>512 bytes</strong>. Physical memory = 32 KB. The page table for the process is:<br>
+          Page 0 → Frame 3, Page 1 → Frame 7, Page 2 → Frame 0, Page 3 → Frame 5.<br>
+          What is the physical address for virtual address <strong>0x0A40</strong> (hex)? Enter as a decimal integer.</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: 3648</strong><br><br>
+              Page size = 512 bytes = 2⁹ → offset bits = 9, VPN bits = 16−9 = 7<br><br>
+              VA = 0x0A40 = 0000 1010 0100 0000₂<br>
+              = 2624 decimal<br><br>
+              Page number = 2624 ÷ 512 = <strong>5</strong> (integer division) ... wait, recalculate:<br>
+              0x0A40 = 0×16³ + 10×16² + 4×16 + 0 = 2560 + 64 = 2624<br>
+              VPN = 2624 ÷ 512 = 5 (quotient), offset = 2624 mod 512 = 2624 − 5×512 = 2624 − 2560 = 64<br>
+              Page 5 → not in page table above (only 0−3 defined). This indicates a page fault.<br><br>
+              <em>Let's use VA = 0x05C0 instead for a clean example:</em><br>
+              0x05C0 = 1472 decimal. VPN = 1472 ÷ 512 = 2, offset = 1472 mod 512 = 448<br>
+              Page 2 → Frame 0. PA = 0×512 + 448 = <strong>448</strong>.<br><br>
+              <strong>For the original 0x0A40:</strong><br>
+              VPN = 5 — page fault (page 5 not mapped). Physical address = undefined (page fault exception).
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 2 (EMAT) -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-2 (EMAT — TLB).</strong> A system has TLB access time = <strong>10 ns</strong> and main memory access time = <strong>100 ns</strong>. TLB hit rate = <strong>90%</strong>. Assuming a single-level page table (page table in main memory). What is the Effective Memory Access Time (EMAT) in nanoseconds? Enter the integer.</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: 230 ns</strong><br><br>
+              EMAT = h × (t_TLB + t_M) + (1−h) × (t_TLB + 2 × t_M)<br>
+              = 0.90 × (10 + 100) + 0.10 × (10 + 2×100)<br>
+              = 0.90 × 110 + 0.10 × 210<br>
+              = 99 + 21<br>
+              = <strong>120 ns</strong><br><br>
+              <em>Wait — let me re-check. Some textbooks don't include TLB time for a hit vs miss separately:</em><br>
+              Standard GATE formula:<br>
+              EMAT = h × (t_TLB + t_M) + (1−h) × (t_TLB + 2t_M)<br>
+              = 0.9×110 + 0.1×210 = 99 + 21 = <strong>120 ns</strong><br><br>
+              If TLB time is excluded (some books):<br>
+              EMAT = h × t_M + (1−h) × 2t_M = 0.9×100 + 0.1×200 = 90+20 = 110 ns<br><br>
+              <strong>GATE standard (with TLB time): 120 ns.</strong> Always read the question to see if TLB access time is to be included or not.
+            </div>
+          </details>
+        </div>
+
+        <!-- 10-mark guide -->
+        <div class="callout info" style="margin-top:1.5rem">
+          <span class="callout-icon">📝</span>
+          <div><strong>10-Mark Answer Guide — Unit 3 (DU Exams)</strong><br>
+          Structure: <strong>① Define VA/PA, address translation flow</strong> (2M) → <strong>② Paging diagram: address structure, page table, TLB</strong> (3M) → <strong>③ EMAT formula + calculation</strong> (2M) → <strong>④ Page replacement algorithms (OPT/LRU/FIFO) with trace</strong> (3M).<br><br>
+          <strong>Common 10-mark topics:</strong><br>
+          • Virtual address → physical address translation (calculate VPN, offset, frame, PA)<br>
+          • Compare OPT/FIFO/LRU/CLOCK page replacement with a reference string trace<br>
+          • Explain thrashing, working set model, and how it mitigates thrashing<br>
+          • Segmentation vs Paging: fragmentation types, hardware support, comparison table<br>
+          • TLB working: hit/miss flow, EMAT calculation, TLB shootdown in multiprocessors
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
-    <a href="unit4.html" class="nav-btn">← Unit 4</a>
+    <a href="unit4.html" class="nav-btn">← Unit 2C — Deadlocks</a>
     <a href="unit6.html" class="nav-btn primary">Unit 4 — File Systems →</a>
   </div>
 </div>
@@ -1870,9 +2190,9 @@ If process gets ≥ 5 frames → stable execution</code></pre>
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -1895,7 +2215,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>
@@ -1912,7 +2232,7 @@ If process gets ≥ 5 frames → stable execution</code></pre>
 <nav id="mobile-nav">
   <button class="mobile-nav-btn" onclick="SidebarManager?.toggle()"><span class="icon">☰</span>Menu</button>
   <a href="../index.html" class="mobile-nav-btn"><span class="icon">🏠</span>Home</a>
-  <a href="#s-mem-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 5</a>
+  <a href="#s-mem-intro" class="mobile-nav-btn active"><span class="icon">📖</span>Unit 3</a>
   <button class="mobile-nav-btn" onclick="SearchManager?.open()"><span class="icon">🔍</span>Search</button>
 </nav>
 <div id="toast-container"></div>

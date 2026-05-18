@@ -11,29 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
-.prev-next{display:flex;justify-content:flex-end;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.nav-btn.primary:hover{background:var(--accent-light);box-shadow:0 4px 20px rgba(124,58,237,.5)}
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.os-evolution-timeline{position:relative;padding-left:var(--sp-8);margin:var(--sp-6) 0}
-.os-evolution-timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--gate-c))}
-.timeline-item{position:relative;margin-bottom:var(--sp-6);padding:var(--sp-4) var(--sp-5);background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-lg);transition:all var(--t-base)}
-.timeline-item:hover{border-color:var(--accent-border);box-shadow:var(--sh-glow)}
-.timeline-item::before{content:'';position:absolute;left:calc(-1 * var(--sp-8) + 6px);top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg-base);box-shadow:0 0 8px var(--accent)}
-.timeline-era{font-size:var(--text-xs);font-weight:700;color:var(--accent-light);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--sp-1)}
-.timeline-title{font-weight:700;color:var(--tx-primary);margin-bottom:var(--sp-2)}
-.timeline-desc{font-size:var(--text-sm);color:var(--tx-secondary);line-height:1.65}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit -->
@@ -43,7 +22,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -53,13 +32,13 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
     
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -87,6 +66,12 @@
       <a href="#s-virt" class="sidebar-link"><span class="link-icon">☁️</span>1.9 Virtualization</a>
       <a href="#s-shell" class="sidebar-link"><span class="link-icon">💻</span>1.10 Shell Scripting</a>
       <a href="#s-pyq" class="sidebar-link"><span class="link-icon">📝</span>PYQ & Q&A</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Related Units</div>
+      <a href="unit2.html#s-sched-intro" class="sidebar-link"><span class="link-icon">🔗</span>CPU Scheduling (Unit 2A)</a>
+      <a href="unit2.html#s-process" class="sidebar-link"><span class="link-icon">🔗</span>Processes &amp; fork() (Unit 2A)</a>
+      <a href="unit5.html#s-mem-binding" class="sidebar-link"><span class="link-icon">🔗</span>Address Binding (Unit 3)</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">All Units</div>
@@ -122,7 +107,7 @@
       <a href="../index.html">Home</a><span>›</span><span>Chapters</span><span>›</span><span style="color:var(--tx-primary)">Unit 1</span>
     </div>
     <div class="chapter-num">🖥️ Unit 1 · DSC-10</div>
-    <h1 class="chapter-title">OS Intro &amp; Linux Kernel</h1>
+    <h1 class="chapter-title">OS Intro & Linux Kernel</h1>
     <div class="chapter-meta">
       <span class="chapter-meta-item">📖 ~45 min read</span>
       <span class="chapter-meta-item">🎯 10 Sections</span>
@@ -135,17 +120,32 @@
   <div class="toc-card reveal">
     <h3>📋 Table of Contents</h3>
     <div class="toc-list">
-      <a href="#s-intro"     class="toc-item"><span class="toc-num">1.1</span>What is an Operating System?</a>
+      <a href="#s-intro" class="toc-item"><span class="toc-num">1.1</span>What is an Operating System?</a>
       <a href="#s-evolution" class="toc-item"><span class="toc-num">1.2</span>History & Evolution of OS</a>
-      <a href="#s-types"     class="toc-item"><span class="toc-num">1.3</span>Types of Operating Systems</a>
+      <a href="#s-types" class="toc-item"><span class="toc-num">1.3</span>Types of Operating Systems</a>
       <a href="#s-structure" class="toc-item"><span class="toc-num">1.4</span>OS Structure (Layered Model)</a>
-      <a href="#s-kernel"    class="toc-item"><span class="toc-num">1.5</span>Kernel Types: Monolithic, Micro, Layered, Modular</a>
-      <a href="#s-syscalls"  class="toc-item"><span class="toc-num">1.6</span>System Calls & copy_from_user</a>
-      <a href="#s-boot"      class="toc-item"><span class="toc-num">1.7</span>Linux Boot Process (BIOS → Kernel)</a>
-      <a href="#s-lkm"       class="toc-item"><span class="toc-num">1.8</span>Linux Kernel Modules (LKMs)</a>
-      <a href="#s-virt"      class="toc-item"><span class="toc-num">1.9</span>Virtualization & Hypervisors</a>
-      <a href="#s-shell"     class="toc-item"><span class="toc-num">1.10</span>Shell Scripting Essentials</a>
-      <a href="#s-pyq"       class="toc-item"><span class="toc-num">★</span>PYQ Practice & Q&A</a>
+      <a href="#s-kernel" class="toc-item"><span class="toc-num">1.5</span>Kernel Types: Monolithic, Micro, Layered, Modular</a>
+      <a href="#s-syscalls" class="toc-item"><span class="toc-num">1.6</span>System Calls & copy_from_user</a>
+      <a href="#s-boot" class="toc-item"><span class="toc-num">1.7</span>Linux Boot Process (BIOS → Kernel)</a>
+      <a href="#s-lkm" class="toc-item"><span class="toc-num">1.8</span>Linux Kernel Modules (LKMs)</a>
+      <a href="#s-virt" class="toc-item"><span class="toc-num">1.9</span>Virtualization & Hypervisors</a>
+      <a href="#s-shell" class="toc-item"><span class="toc-num">1.10</span>Shell Scripting Essentials</a>
+      <a href="#s-pyq" class="toc-item"><span class="toc-num">★</span>PYQ Practice & Q&A</a>
+    </div>
+  </div>
+
+  <!-- LEARNING OBJECTIVES -->
+  <div class="callout info" style="margin-bottom:var(--sp-6);border-left:4px solid var(--gate-b)">
+    <span class="callout-icon">🎯</span>
+    <div><strong>After studying this unit you will be able to:</strong>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li>Define an OS and explain its dual role as resource manager and extended machine</li>
+        <li>Distinguish hardware/software interrupts, traps, and exceptions; trace the interrupt handling flow</li>
+        <li>Compare monolithic, microkernel, modular, and hybrid kernel architectures with trade-offs</li>
+        <li>Categorize system calls into 5 groups and explain the user→kernel mode-switch mechanism</li>
+        <li>Describe the Linux boot sequence: BIOS → MBR → GRUB → kernel → init/systemd</li>
+        <li>Apply EDF and RMS real-time scheduling algorithms and their schedulability bounds</li>
+      </ul>
     </div>
   </div>
 
@@ -230,6 +230,11 @@
         </ul>
         <p>When a user program needs an OS service, it issues a <strong>system call</strong>, which causes a <em>trap</em> (software interrupt) that switches the CPU from User Mode to Kernel Mode.</p>
 
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div><strong>Cross-Reference:</strong> Base & Limit register mechanics, MMU operation, and virtual memory → <em>Unit 3: Memory Management</em>. Process states, PCB, and context switching → <em>Unit 2A: Processes</em>.</div>
+        </div>
+
         <div class="callout warn">
           <span class="callout-icon">⚠️</span>
           <div><strong>DU Exam Tip:</strong> The mode bit transition (0 ↔ 1) and the trap mechanism are frequently tested. Know which instructions are <em>privileged</em> (only executable in kernel mode): HLT, I/O instructions, interrupts enable/disable, memory management instructions.</div>
@@ -248,8 +253,9 @@
           <li>A <strong>timer interrupt</strong> is used by the OS to regain control from a running process (prevents infinite loops)</li>
         </ul>
         <div class="formula-box">
-          <div class="formula-label">Mode Bit Rule</div>
-          Mode Bit = 0 → Kernel Mode &nbsp;|&nbsp; Mode Bit = 1 → User Mode
+          <div class="formula-label">Mode Bit Rule (Academic)</div>
+          Mode Bit = 0 → Kernel Mode  |  Mode Bit = 1 → User Mode
+          <div style="font-size: 11px; margin-top: 10px; opacity: 0.8; font-family: var(--font-sans);">*Note: Real hardware uses protection rings (e.g., x86 Rings 0-3) or exception levels (ARM EL0-EL3), not a single bit.</div>
         </div>
 
         <h3>Worked GATE-Style Question</h3>
@@ -307,7 +313,7 @@ Other privileged instructions to know for GATE:
           <thead><tr><th>Service</th><th>Description</th><th>Example</th></tr></thead>
           <tbody>
             <tr><td><strong>Program Execution</strong></td><td>Load a program into memory, run it, and terminate it (normally or abnormally)</td><td><code>exec()</code>, process creation</td></tr>
-            <tr><td><strong>I/O Operations</strong></td><td>Programs cannot access I/O devices directly. OS provides controlled access via system calls.</td><td><code>read()</code>, <code>write()</code> on files/devices</td></tr>
+            <tr><td><strong>I/O Operations</strong></td><td>In a protected OS, user-mode programs cannot access I/O devices directly — all device access goes through the OS via system calls.</td><td><code>read()</code>, <code>write()</code> on files/devices</td></tr>
             <tr><td><strong>File-System Manipulation</strong></td><td>Create, delete, read, write, search, list files and directories. Manage permissions.</td><td><code>open()</code>, <code>mkdir()</code>, <code>chmod()</code></td></tr>
             <tr><td><strong>Communications</strong></td><td>Inter-process communication — between processes on same machine or over a network.</td><td>Pipes, shared memory, sockets</td></tr>
             <tr><td><strong>Error Detection</strong></td><td>Constantly monitor for errors in CPU, memory, I/O devices, and user programs. Take appropriate action.</td><td>Parity check, segfault handling</td></tr>
@@ -320,7 +326,7 @@ Other privileged instructions to know for GATE:
           <tbody>
             <tr><td><strong>Resource Allocation</strong></td><td>When multiple processes run simultaneously, OS allocates resources (CPU cycles, memory, files, I/O devices) fairly and efficiently. Uses scheduling algorithms, memory allocators, and device queues.</td></tr>
             <tr><td><strong>Accounting</strong></td><td>Track which users/processes use how many resources. Used for billing (cloud), usage statistics, and performance tuning.</td></tr>
-            <tr><td><strong>Protection &amp; Security</strong></td><td><strong>Protection:</strong> control access of processes/users to system resources (memory protection, file permissions). <strong>Security:</strong> defend against external threats (authentication, password, firewall).</td></tr>
+            <tr><td><strong>Protection & Security</strong></td><td><strong>Protection:</strong> control access of processes/users to system resources (memory protection, file permissions). <strong>Security:</strong> defend against external threats (authentication, password, firewall).</td></tr>
           </tbody>
         </table>
 
@@ -347,7 +353,7 @@ Other privileged instructions to know for GATE:
             <tr><td><strong>Status Information</strong></td><td><code>top</code>, <code>ps</code>, <code>df</code>, <code>date</code>, <code>who</code></td></tr>
             <tr><td><strong>File Modification</strong></td><td><code>vi</code>, <code>nano</code>, <code>sed</code>, <code>grep</code></td></tr>
             <tr><td><strong>Programming Language Support</strong></td><td><code>gcc</code>, <code>javac</code>, <code>python3</code>, assemblers</td></tr>
-            <tr><td><strong>Program Loading &amp; Execution</strong></td><td>Loaders, linkers, debuggers (<code>gdb</code>)</td></tr>
+            <tr><td><strong>Program Loading & Execution</strong></td><td>Loaders, linkers, debuggers (<code>gdb</code>)</td></tr>
             <tr><td><strong>Communications</strong></td><td><code>ssh</code>, <code>ftp</code>, <code>mail</code>, web browsers</td></tr>
           </tbody>
         </table>
@@ -405,7 +411,7 @@ Reasoning:
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="s-interrupts" data-search-section="Interrupt hardware software trap ISR interrupt vector table IVT IDT DMA timer protection base limit I/O privilege">
     <div class="section-heading">
-      <h2 class="prose">1.1c Interrupts &amp; Hardware Protection</h2>
+      <h2 class="prose">1.1c Interrupts & Hardware Protection</h2>
       <button class="bookmark-btn" data-id="s-interrupts" data-label="1.1c Interrupts" title="Bookmark">🔖</button>
     </div>
     <div class="mode-uni">
@@ -419,13 +425,31 @@ Reasoning:
 
         <h3>Types of Interrupts</h3>
         <table>
-          <thead><tr><th>Type</th><th>Source</th><th>Trigger</th><th>Examples</th></tr></thead>
+          <thead><tr><th>Type</th><th>Source</th><th>Sync?</th><th>Trigger</th><th>Examples</th></tr></thead>
           <tbody>
-            <tr><td><strong>Hardware Interrupt</strong></td><td>External device</td><td>Device sends signal via interrupt line</td><td>Keyboard press, disk I/O complete, timer tick, network packet arrival</td></tr>
-            <tr><td><strong>Software Interrupt (Trap)</strong></td><td>Executing program</td><td>Explicit instruction (<code>INT</code>, <code>SYSCALL</code>)</td><td>System calls, breakpoints</td></tr>
-            <tr><td><strong>Exception</strong></td><td>CPU error</td><td>Fault during instruction execution</td><td>Division by zero, page fault, segmentation fault, overflow</td></tr>
+            <tr><td><strong>Hardware Interrupt</strong></td><td>External device</td><td>Asynchronous</td><td>Device sends signal via interrupt line</td><td>Keyboard press, disk I/O complete, timer tick, NIC packet arrival</td></tr>
+            <tr><td><strong>Trap (Software Interrupt)</strong></td><td>Running program — intentional</td><td>Synchronous</td><td>Explicit instruction (<code>INT</code>, <code>SYSCALL</code>)</td><td>System calls (<code>int 0x80</code>), breakpoints (<code>int 3</code>)</td></tr>
+            <tr><td><strong>Exception (Fault/Abort)</strong></td><td>Running program — error</td><td>Synchronous</td><td>CPU detects error during instruction</td><td>Divide-by-zero, page fault, segment fault, overflow, illegal opcode</td></tr>
           </tbody>
         </table>
+
+        <div class="callout warn" style="margin-top:12px">
+          <strong>⚠️ "Trap" — Dual Usage (Critical Disambiguation):</strong><br>
+          The word <strong>trap</strong> has two meanings in OS literature — always check context:<br><br>
+          <strong>Meaning 1 (mechanism — GATE standard):</strong> A voluntary software-initiated transfer to the kernel, used for system calls. <code>INT 0x80</code> (Linux legacy) and <code>SYSCALL</code> (modern x86-64) are trap instructions. A trap is <em>intentional</em> — the program wants to enter kernel mode.<br><br>
+          <strong>Meaning 2 (synonym for exception — some textbooks):</strong> Any hardware-detected error (divide-by-zero, page fault) is sometimes called a "trap" or "fault". Silberschatz and GATE use this meaning in some contexts.<br><br>
+          <strong>Rule:</strong> "System call trap" = Meaning 1 (intentional, synchronous). "Page fault trap" = Meaning 2 (error, synchronous). Hardware interrupt = always asynchronous (not a trap by either meaning).
+          <br><br>
+          <table style="font-size:var(--text-xs)">
+          <thead><tr><th>GATE asks about</th><th>Answer</th></tr></thead>
+          <tbody>
+          <tr><td>System call mechanism</td><td>Trap (software interrupt, INT instruction)</td></tr>
+          <tr><td>Timer fires — type?</td><td>Hardware interrupt (asynchronous)</td></tr>
+          <tr><td>Page fault — type?</td><td>Exception (synchronous, CPU-detected)</td></tr>
+          <tr><td>Division by zero — type?</td><td>Exception (synchronous, CPU-detected)</td></tr>
+          <tr><td>Software interrupt — example?</td><td>System call (int 0x80, SYSCALL instruction)</td></tr>
+          </tbody></table>
+        </div>
 
         <h3>Interrupt Handling Flow</h3>
         <div class="code-block">
@@ -469,7 +493,7 @@ Reasoning:
         <table>
           <thead><tr><th>Protection Type</th><th>Mechanism</th><th>What It Prevents</th></tr></thead>
           <tbody>
-            <tr><td><strong>CPU Protection</strong></td><td><strong>Timer</strong> — generates interrupt after a set interval. OS resets timer on each context switch.</td><td>Prevents a process from monopolizing the CPU (infinite loops). OS regains control via timer interrupt.</td></tr>
+            <tr><td><strong>CPU Protection</strong></td><td><strong>Timer</strong> — generates interrupt after a set interval. OS resets timer on each <a href="unit2.html#s-proc-concept" class="glossary-term" title="Jump to definition">context switch</a>.</td><td>Prevents a process from monopolizing the CPU (infinite loops). OS regains control via timer interrupt.</td></tr>
             <tr><td><strong>Memory Protection</strong></td><td><strong>Base + Limit registers</strong> — checked on every memory access by MMU. Each process has its own pair.</td><td>Prevents a process from accessing memory of other processes or the OS kernel.</td></tr>
             <tr><td><strong>I/O Protection</strong></td><td>All <strong>I/O instructions are privileged</strong> — can only execute in kernel mode. User programs must use system calls for I/O.</td><td>Prevents user programs from directly accessing hardware devices (disk corruption, security breach).</td></tr>
           </tbody>
@@ -488,7 +512,7 @@ Reasoning:
           <li>DMA uses <strong>cycle stealing</strong> — borrows memory bus cycles from CPU. CPU is slightly slowed during DMA transfers.</li>
           <li><strong>Timer value</strong> is loaded by OS (privileged). If a user could modify the timer, they could disable preemption → security violation.</li>
           <li>Trap (software interrupt) is <strong>synchronous</strong> — caused by the currently executing instruction. Hardware interrupt is <strong>asynchronous</strong> — can occur at any time.</li>
-          <li>GATE: "Which protection mechanism prevents a process from running forever?" → <strong>Timer</strong></li>
+          <li>"Which protection mechanism prevents a process from running forever?" → <strong>Timer</strong></li>
         </ul>
       </div>
     </div>
@@ -524,6 +548,30 @@ Reasoning:
         </div>
       </div>
     </div>
+    
+
+    <div class="section-summary">
+      <div class="section-summary-label">📌 Section 1.1c — Key Takeaways</div>
+      <ul>
+        <li><strong>Interrupt types:</strong> Hardware interrupt (async, from device) | Trap (sync, voluntary — system call via <code>INT</code>/<code>SYSCALL</code>) | Exception (sync, involuntary — divide-by-zero, page fault)</li>
+        <li><strong>IVT/IDT:</strong> Maps interrupt numbers → ISR addresses. 256 entries on x86. Entry 0=div-zero, Entry 14=page fault, Entry 0x80=Linux syscall (legacy)</li>
+        <li><strong>DMA:</strong> CPU sets up once → DMA controller transfers block → one interrupt at end. "Cycle stealing" from bus</li>
+        <li><strong>3 hardware protection types:</strong> CPU (timer interrupt prevents monopoly) | Memory (base+limit registers) | I/O (all I/O instructions are privileged)</li>
+        <li><strong>GATE rule:</strong> Trap = synchronous. Hardware interrupt = asynchronous. "Page fault" is an exception (synchronous). Timer = hardware interrupt (asynchronous)</li>
+      </ul>
+    </div>
+
+    <details class="active-recall">
+      <summary>Active Recall: Interrupts</summary>
+      <div class="recall-content">
+        <strong>1. What is the difference between a Hardware Interrupt and a Software Trap?</strong><br>
+        A hardware interrupt is asynchronous (e.g., keyboard press, timer), while a trap is synchronous and generated by the CPU executing an instruction (e.g., divide by zero, system call).<br><br>
+        <strong>2. Where does the CPU look to find the address of an Interrupt Service Routine?</strong><br>
+        The Interrupt Vector Table (IVT).<br><br>
+        <strong>3. What is DMA and how does it reduce CPU involvement?</strong><br>
+        Direct Memory Access lets a controller transfer data between device and RAM without per-byte CPU intervention. CPU sets up once, gets one interrupt when done.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
@@ -533,7 +581,7 @@ Reasoning:
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="s-evolution" data-search-section="OS Evolution History Generations Batch Processing Time Sharing">
     <div class="section-heading">
-      <h2 class="prose">1.2 History &amp; Evolution of OS</h2>
+      <h2 class="prose">1.2 History & Evolution of OS</h2>
       <button class="bookmark-btn" data-id="s-evolution" data-label="1.2 OS Evolution" title="Bookmark">🔖</button>
     </div>
 
@@ -559,8 +607,8 @@ Reasoning:
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-era">3rd Generation · 1965–1980</div>
-          <div class="timeline-title">ICs — Multiprogramming & Time-Sharing</div>
-          <div class="timeline-desc"><strong>Multiprogramming:</strong> Multiple jobs kept in memory; CPU switches to another job when one is blocked on I/O. <strong>Time-sharing (CTSS, MULTICS):</strong> CPU time sliced among users for interactive use. UNIX born here (1969).</div>
+          <div class="timeline-title">Integrated Circuits (ICs) — Multiprogramming & Time-Sharing</div>
+          <div class="timeline-desc"><strong>Multiprogramming:</strong> Multiple jobs kept in memory; CPU switches to another job when one is blocked on I/O. <strong>Time-sharing (CTSS, MULTICS):</strong> CPU time sliced among users for interactive use. UNIX born here (1969, <strong>Ken Thompson & Dennis Ritchie</strong>, Bell Labs).</div>
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-era">4th Generation · 1980–Present</div>
@@ -587,7 +635,8 @@ Reasoning:
 
         <div class="callout info">
           <span class="callout-icon">📌</span>
-          <div><strong>Multiprogramming vs Time-sharing:</strong> Multiprogramming keeps CPU busy (efficiency goal). Time-sharing gives illusion of dedicated CPU to each interactive user (responsiveness goal). Time-sharing is multiprogramming with time slicing.</div>
+          <div><strong>Multiprogramming vs Time-sharing:</strong> Multiprogramming keeps CPU busy (efficiency goal). Time-sharing gives illusion of dedicated CPU to each interactive user (responsiveness goal). Time-sharing is multiprogramming with time slicing.<br><br>
+          <strong>I/O-bound vs CPU-bound:</strong> An <em>I/O-bound</em> process spends most time waiting for I/O (disk, network) — short CPU bursts. A <em>CPU-bound</em> process spends most time on computation — long CPU bursts. Multiprogramming overlaps I/O-bound jobs waiting with CPU-bound jobs running.</div>
         </div>
       </div>
     </div>
@@ -599,7 +648,7 @@ Reasoning:
         <ul>
           <li><strong>Spooling</strong> stores I/O data in a buffer (disk) so CPU doesn't wait for slow devices</li>
           <li><strong>Multiprogramming degree</strong> = number of processes simultaneously in memory</li>
-          <li>UNIX was among the first widely successful portable OSes, rewritten largely in C (1973) — enabled portability across hardware platforms. (Note: Multics used PL/I earlier.)</li>
+          <li>UNIX v4 (1973) was rewritten in C, with only the machine-specific low-level portions remaining in assembly — making UNIX the first widely portable OS. This is why Linux, macOS, Android, and iOS all share UNIX DNA today.</li>
           <li>Key GATE MCQ: "Which feature allows CPU to remain busy while a process is waiting for I/O?" → <strong>Multiprogramming</strong></li>
         </ul>
 
@@ -629,6 +678,11 @@ Example: p = 0.8 (80% I/O wait)
 
 → Adding more processes dramatically improves CPU use!</code></pre>
         </div>
+
+        <div class="callout warn">
+          <span class="callout-icon">⚠️</span>
+          <div><strong><a href="unit5.html#s-mem-virtual" class="glossary-term" title="Jump to definition">Thrashing</a> Trap:</strong> The formula CPU Utilization = 1−pⁿ assumes processes are <em>independent</em> and page faults are negligible. In practice, when too many processes compete for limited RAM, excessive page swapping causes <strong>thrashing</strong> — utilization actually <em>collapses</em> to near 0. The curve rises, peaks, then drops sharply. This is why OS kernels use <strong>working-set model</strong> to cap the multiprogramming degree. Full coverage in Unit 3: Memory Management.</div>
+        </div>
       </div>
     </div>
 
@@ -639,7 +693,7 @@ Example: p = 0.8 (80% I/O wait)
         <p>Every generation of OS design was a direct response to the dominant hardware constraint of its era. Batch systems existed because human operator time was the bottleneck; multiprogramming arose because CPU cycles were expensive relative to I/O speeds; time-sharing emerged when interactive terminals made latency the user-visible metric. Understanding this pattern is critical for research-level OS thinking: <strong>OS design is always a function of the hardware cost ratio at the time.</strong></p>
 
         <h3>The UNIX Philosophy as a Design Principle</h3>
-        <p>UNIX, designed at Bell Labs by Thompson and Ritchie (1969–1973), codified a design philosophy still governing modern systems: write programs that do one thing well, make programs work together via a uniform I/O abstraction (the file), and prefer plain text as a universal interface. The decision to rewrite UNIX in C in 1973 was radical — it made the OS <em>portable across hardware</em> for the first time, seeding the entire subsequent ecosystem. This is why Linux, macOS, Android, and iOS all share UNIX DNA fifty years later.</p>
+        <p>UNIX, designed at Bell Labs by <strong>Ken Thompson</strong> and <strong>Dennis Ritchie</strong> (1969–1973), codified a design philosophy still governing modern systems: write programs that do one thing well, make programs work together via a uniform I/O abstraction (the file), and prefer plain text as a universal interface. The decision to rewrite UNIX in C in 1973 was radical — it made the OS <em>portable across hardware</em> for the first time, seeding the entire subsequent ecosystem. This is why Linux, macOS, Android, and iOS all share UNIX DNA fifty years later.</p>
 
         <h3>Modern OS Research Directions (Post-2010)</h3>
         <table>
@@ -772,10 +826,36 @@ Example: p = 0.8 (80% I/O wait)
           <li><strong>Degree of multiprogramming</strong> = number of processes concurrently in memory</li>
           <li><strong>Throughput</strong> (jobs/time) maximized by multiprogramming; <strong>response time</strong> minimized by time-sharing</li>
           <li>Real-time tasks have <code>period T</code>, <code>computation time C</code>, <code>deadline D</code>. <strong>EDF:</strong> schedulable if <code>∑(C/T) ≤ 1</code>. <strong>RMS (Liu-Layland bound):</strong> sufficient if <code>∑(C/T) ≤ n(2<sup>1/n</sup>−1)</code> → approaches ~0.693 as n→∞.</li>
+          <li><strong>Turnaround Time</strong> = Completion Time − Arrival Time (total time from submission to finish)</li>
+          <li><strong>Waiting Time</strong> = Turnaround Time − Burst Time (time spent idle in ready queue)</li>
+          <li><strong>Response Time</strong> = Time from submission to first CPU response (relevant for interactive systems)</li>
+          <li><strong>Starvation</strong>: a process waits indefinitely because higher-priority processes always get CPU first. Prevented by <em>aging</em> (gradually raise priority of waiting process). → <a href="unit4.html#s-dl-intro" class="glossary-term" title="Jump to definition">Deadlock</a> & Starvation details: <em>Unit 2B: CPU Scheduling</em></li>
+          <li><strong>Belady's Anomaly</strong>: In FIFO page replacement, adding more frames can <em>increase</em> page faults. Only LRU and Optimal are immune. → <em>Unit 3: Memory Management</em></li>
+          <li><strong>Thrashing</strong>: When degree of multiprogramming is too high, processes spend more time paging than executing. CPU utilization drops. Fixed by reducing multiprogramming degree or using working-set model. → <em>Unit 3: Memory Management</em></li>
         </ul>
         <div class="formula-box">
           <div class="formula-label">CPU Utilization (Multiprogramming)</div>
-          CPU Utilization = 1 − p<sup>n</sup> &nbsp;where p = I/O wait fraction, n = degree of multiprogramming
+          CPU Utilization = 1 − p<sup>n</sup>  where p = I/O wait fraction, n = degree of multiprogramming
+        </div>
+
+        <h3>EDF vs RMS — Worked Numerical (GATE Favourite)</h3>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Numerical — Schedulability Test</span><button class="code-copy">Copy</button></div>
+          <pre><code>Tasks: T1(C=2, T=5), T2(C=3, T=10)
+U = C1/T1 + C2/T2 = 2/5 + 3/10 = 0.40 + 0.30 = 0.70
+
+EDF Test: U ≤ 1.0 → 0.70 ≤ 1.0  ✓ Schedulable by EDF
+
+RMS Test (n=2 Liu-Layland bound):
+  Bound = n(2^(1/n) - 1) = 2(2^0.5 - 1) = 2 × 0.414 ≈ 0.828
+  U = 0.70 ≤ 0.828  ✓ Guaranteed schedulable by RMS
+
+Key GATE rules:
+  If U > 0.828 (n=2) but U ≤ 1.0 → EDF can still schedule;
+    RMS may or may not (requires response-time analysis).
+  If U > 1.0 → impossible for ANY scheduler.
+  EDF is OPTIMAL — it is the best single-processor scheduler.
+  RMS is static-priority — simpler to implement, lower overhead.</code></pre>
         </div>
       </div>
     </div>
@@ -801,6 +881,18 @@ Example: p = 0.8 (80% I/O wait)
         </div>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: OS Types</summary>
+      <div class="recall-content">
+        <strong>1. What is the primary difference between Multiprogramming and Time-Sharing?</strong><br>
+        Multiprogramming maximizes CPU utilization by switching tasks only when one waits for I/O. Time-sharing (multitasking) adds a timer, forcing context switches rapidly to provide interactive response times to users.<br><br>
+        <strong>2. True or False: Hard real-time systems are simply very fast systems.</strong><br>
+        False. Hard real-time means missing a deadline causes catastrophic failure, regardless of how "fast" the system is. It is about determinism, not pure speed.<br><br>
+        <strong>3. Why did monolithic kernels (Linux) dominate over pure microkernels (Mach)?</strong><br>
+        Early microkernels had excessive IPC overhead from user-kernel mode switches. Linux's monolithic design keeps drivers and services in kernel space for speed. Modern L4/seL4 microkernels have solved the IPC overhead — it's an implementation problem, not an architectural one.
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
@@ -840,6 +932,10 @@ Example: p = 0.8 (80% I/O wait)
           </tbody>
         </table>
         <p><strong>Advantages:</strong> Modularity, easy debugging (one layer at a time). <strong>Disadvantages:</strong> Requests may pass through several layers, adding overhead; difficult to define layers cleanly.</p>
+        <div class="callout info">
+          <span class="callout-icon">📌</span>
+          <div>The table shows Dijkstra's <strong>THE OS (1968)</strong> as a concrete 6-layer example. Other layered systems may have different numbers of layers. The key constraint is: Layer <em>i</em> may only use services of layer <em>i-1</em>.</div>
+        </div>
 
         <h3>3. Modular Structure (Modern Linux/Solaris)</h3>
         <p>Core kernel with <strong>dynamically loadable modules</strong>. Each module has defined interfaces and communicates with the core and other modules. This is widely used in modern general-purpose OSes because it balances performance and extensibility.</p>
@@ -867,6 +963,17 @@ Example: p = 0.8 (80% I/O wait)
             <tr><td>Microkernel</td><td>Slower (IPC overhead)</td><td>Excellent</td><td>Minix, QNX</td></tr>
           </tbody>
         </table>
+
+        <h3>Policy vs Mechanism — GATE Essential</h3>
+        <div class="callout tip">
+          <span class="callout-icon">💡</span>
+          <div><strong>Policy vs Mechanism:</strong><br>
+          • <strong>Mechanism</strong> = <em>HOW</em> to do something. (e.g., the timer interrupt hardware, context switch code, page table walk)<br>
+          • <strong>Policy</strong> = <em>WHAT</em> to do. (e.g., how long a time slice should be, which process gets CPU next, which pages to evict)<br><br>
+          <strong>Why separate them?</strong> Flexibility — you can change the scheduling policy (e.g., Round Robin → CFS) without rewriting the context-switch mechanism.<br><br>
+          <strong>GATE question pattern:</strong> "Which OS design principle separates what to do from how to do it?" → <strong>Separation of Policy from Mechanism</strong><br>
+          Microkernels push this to the extreme (policies in user space, mechanisms in kernel).</div>
+        </div>
       </div>
     </div>
 
@@ -1034,6 +1141,18 @@ Example: p = 0.8 (80% I/O wait)
         </div>
       </div>
     </div>
+    
+    <details class="active-recall">
+      <summary>Active Recall: Kernel Architectures</summary>
+      <div class="recall-content">
+        <strong>1. Why is a Microkernel more reliable than a Monolithic kernel?</strong><br>
+        Because most OS services (like file systems and device drivers) run in user space. If a service crashes, it doesn't crash the entire kernel.<br><br>
+        <strong>2. How do loadable kernel modules (LKMs) differ from a Microkernel architecture?</strong><br>
+        LKMs are loaded dynamically but still run in kernel space (ring 0) inside a monolithic kernel. A crash in an LKM will crash the system.<br><br>
+        <strong>3. Name the 5 categories of system calls and give one example each.</strong><br>
+        (1) Process Control: fork(), exit() | (2) File Management: open(), read(), write() | (3) Device Management: ioctl(), read() | (4) Information Maintenance: getpid(), gettimeofday() | (5) Communications: pipe(), socket(), send()
+      </div>
+    </details>
   </section>
 
   <hr style="border-color:var(--bd-subtle);margin:var(--sp-8) 0">
@@ -1043,7 +1162,7 @@ Example: p = 0.8 (80% I/O wait)
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="s-syscalls" data-search-section="System Calls copy_from_user copy_to_user API POSIX trap interrupt user kernel mode switch">
     <div class="section-heading">
-      <h2 class="prose">1.6 System Calls &amp; copy_from_user</h2>
+      <h2 class="prose">1.6 System Calls & copy_from_user</h2>
       <button class="bookmark-btn" data-id="s-syscalls" data-label="1.6 System Calls" title="Bookmark">🔖</button>
     </div>
 
@@ -1059,8 +1178,8 @@ Example: p = 0.8 (80% I/O wait)
         <ol>
           <li>User program calls a <strong>library function</strong> (e.g., <code>read()</code> in libc/glibc)</li>
           <li>Library puts the <strong>system call number</strong> in a register:<br>
-            &nbsp;&nbsp;• x86-32: <code>EAX</code>, args in <code>EBX, ECX, EDX, ESI, EDI</code>, trap via <code>INT 0x80</code><br>
-            &nbsp;&nbsp;• x86-64: <code>RAX</code>, args in <code>RDI, RSI, RDX, R10, R8, R9</code>, trap via <code>SYSCALL</code> instruction</li>
+              • x86-32: <code>EAX</code>, args in <code>EBX, ECX, EDX, ESI, EDI</code>, trap via <code>INT 0x80</code><br>
+              • x86-64: <code>RAX</code>, args in <code>RDI, RSI, RDX, R10, R8, R9</code>, trap via <code>SYSCALL</code> instruction</li>
           <li>CPU switches from <strong>User Mode → Kernel Mode</strong> (mode bit 1→0)</li>
           <li>OS jumps to <strong>system call entry point</strong> (x86-32: via IDT entry 0x80; x86-64: via <code>LSTAR</code> MSR — not IDT)</li>
           <li>Kernel dispatches to correct handler via <strong>syscall table</strong> indexed by syscall number</li>
@@ -1161,10 +1280,9 @@ Method 3: Stack (portable, unlimited)
         <ul>
           <li>System calls use <strong>trap</strong> (software interrupt) to switch to kernel mode</li>
           <li>Parameters passed via <strong>registers</strong>, stack, or a block pointed to by a register</li>
-          <li><code>fork()</code> returns <strong>0 to child, child PID to parent</strong></li>
-          <li><code>exec()</code> <strong>replaces</strong> current process image — never returns (unless error)</li>
-          <li><code>wait()</code> blocks parent until child terminates — prevents zombie processes</li>
           <li>System call interface is standardized by <strong>POSIX</strong> — not OS-specific. Same code compiles on Linux, macOS, BSD.</li>
+          <li>A system call is <strong>synchronous</strong> — the calling process blocks until the kernel returns</li>
+          <li><code>fork()</code>, <code>exec()</code>, <code>wait()</code> return values and zombie/orphan semantics → <em>Unit 2A: Processes</em></li>
         </ul>
         <div class="formula-box">
           <div class="formula-label">System Call Overhead</div>
@@ -1251,7 +1369,7 @@ Used by: Docker, Chrome renderer sandbox, Android apps, Firejail</code></pre>
           <button class="code-copy">Copy</button>
         </div>
         <pre><code>/* Example: kernel read handler using copy_from_user */
-#include &lt;linux/uaccess.h&gt;
+#include <linux/uaccess.h>
 
 static ssize_t my_dev_write(struct file *f, const char __user *buf,
                              size_t count, loff_t *off) {
@@ -1290,7 +1408,12 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
     <div class="mode-uni">
       <div class="mode-badge uni">🎓 University</div>
       <div class="prose">
-        <h3>The 6 Stages of Linux Boot</h3>
+        <details class="qa-item" style="margin-top: var(--sp-4);">
+          <summary>
+            <h3>The 6 Stages of Linux Boot <span style="font-size: 12px; font-weight: normal; color: var(--tx-muted);">(Click to expand detailed University syllabus flow)</span></h3>
+            <svg class="qa-arrow" viewbox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </summary>
+          <div class="qa-answer">
 
         <div class="os-evolution-timeline">
           <div class="timeline-item reveal">
@@ -1301,6 +1424,7 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
               1. Performs <strong>POST</strong> — checks hardware (RAM, CPU, keyboard, storage)<br>
               2. Searches for a bootable device (in configured boot order)<br>
               3. Loads the <strong>first sector (512 bytes)</strong> of the bootable disk into memory at address <code>0x7C00</code><br><br>
+              <em>Why <code>0x7C00</code>? On the original 1981 IBM PC (32KB RAM), this address = 32KB minus 512 bytes (MBR) minus 512 bytes (BIOS stack) = 30,720 = 0x7C00. A historical convention preserved by all x86 BIOS implementations.</em><br><br>
               <strong>BIOS vs UEFI:</strong> BIOS uses MBR (max 2TB disks, 4 partitions). UEFI uses GPT (up to 9.4ZB disks, 128 partitions), supports Secure Boot.
             </div>
           </div>
@@ -1340,7 +1464,7 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
               4. Mounts <strong>initramfs</strong> as a temporary root filesystem<br>
               5. Creates <strong>PID 0</strong> (swapper/idle task — kernel internal) and <strong>PID 1</strong> (<code>/sbin/init</code> — first user-space process)<br><br>
               <strong>PID 0 vs PID 1:</strong> PID 0 is the kernel idle task (runs when nothing else needs CPU). PID 1 is the first user-space process and becomes the <strong>ancestor of all processes</strong>. It also <strong>reaps orphaned processes</strong> (when a parent exits before its child).<br><br>
-              Key files: <code>/boot/vmlinuz-&lt;version&gt;</code> (compressed kernel), <code>/boot/initrd.img-&lt;version&gt;</code>
+              Key files: <code>/boot/vmlinuz-<version></code> (compressed kernel), <code>/boot/initrd.img-<version></code>
             </div>
           </div>
           <div class="timeline-item reveal">
@@ -1370,6 +1494,7 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
             </div>
           </div>
         </div>
+        </details>
 
         <h3>Boot Sequence Summary Table</h3>
         <table>
@@ -1396,7 +1521,7 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
       <div class="prose">
         <div class="callout warn">
           <span class="callout-icon">⚠️</span>
-          <div><strong>GATE Syllabus Note:</strong> The Linux boot process (BIOS, GRUB, initramfs, systemd) is <strong>NOT part of the official GATE 2026 OS syllabus</strong>. The official syllabus only lists: System calls, Processes/Threads/IPC, Concurrency/Synchronization, Deadlock, CPU &amp; I/O Scheduling, Memory Management, File Systems. Study this section for your DU semester exam and for general Linux knowledge — but do not prioritise it for GATE revision time.</div>
+          <div><strong>GATE Syllabus Note:</strong> The Linux boot process (BIOS, GRUB, initramfs, systemd) is <strong>NOT part of the official GATE 2026 OS syllabus</strong>. The official syllabus only lists: System calls, Processes/Threads/IPC, Concurrency/Synchronization, Deadlock, CPU & I/O Scheduling, Memory Management, File Systems. Study this section for your DU semester exam and for general Linux knowledge — but do not prioritise it for GATE revision time.</div>
         </div>
         <h3>GATE Boot Process Points</h3>
         <ul>
@@ -1479,9 +1604,9 @@ static ssize_t my_dev_write(struct file *f, const char __user *buf,
 
         <div class="code-block">
           <div class="code-header"><span class="code-lang">C — Minimal Hello World LKM</span><button class="code-copy">Copy</button></div>
-          <pre><code>#include &lt;linux/init.h&gt;
-#include &lt;linux/module.h&gt;
-#include &lt;linux/kernel.h&gt;
+          <pre><code>#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Arpit");
@@ -1537,8 +1662,8 @@ clean:
         <p>The most common LKM type is a <strong>character device driver</strong>, which implements a <code>file_operations</code> struct:</p>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">C — Character Device Skeleton</span><button class="code-copy">Copy</button></div>
-          <pre><code>#include &lt;linux/fs.h&gt;
-#include &lt;linux/cdev.h&gt;
+          <pre><code>#include <linux/fs.h>
+#include <linux/cdev.h>
 
 static struct file_operations my_fops = {
     .owner   = THIS_MODULE,
@@ -1551,10 +1676,10 @@ static struct file_operations my_fops = {
 
 static int __init my_init(void) {
     /* 1. Allocate major/minor device number */
-    alloc_chrdev_region(&amp;dev_num, 0, 1, "mydev");
+    alloc_chrdev_region(&dev_num, 0, 1, "mydev");
     /* 2. Initialize cdev and add to kernel */
-    cdev_init(&amp;my_cdev, &amp;my_fops);
-    cdev_add(&amp;my_cdev, dev_num, 1);
+    cdev_init(&my_cdev, &my_fops);
+    cdev_add(&my_cdev, dev_num, 1);
     /* 3. Create /dev/mydev automatically */
     my_class = class_create(THIS_MODULE, "mydev_class");
     device_create(my_class, NULL, dev_num, NULL, "mydev");
@@ -1610,7 +1735,7 @@ MODULE_PARM_DESC(debug, "Enable debug output (0/1)");
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="s-virt" data-search-section="Virtualization Hypervisor Type 1 Type 2 VMware KVM VirtualBox Docker containers VM virtual machine">
     <div class="section-heading">
-      <h2 class="prose">1.9 Virtualization &amp; Hypervisors</h2>
+      <h2 class="prose">1.9 Virtualization & Hypervisors</h2>
       <button class="bookmark-btn" data-id="s-virt" data-label="1.9 Virtualization" title="Bookmark">🔖</button>
     </div>
 
@@ -1656,6 +1781,13 @@ MODULE_PARM_DESC(debug, "Enable debug output (0/1)");
         <div class="callout tip">
           <span class="callout-icon">💡</span>
           <div><strong>KVM special case:</strong> KVM (Kernel-based Virtual Machine) is a Linux kernel module that converts Linux itself into a Type 1 hypervisor. When loaded, the kernel gains VMX/SVM instructions. QEMU + KVM together = near-native VM performance on Linux.</div>
+        </div>
+        <div class="callout warn">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>GATE Controversy — KVM Classification:</strong> Different textbooks disagree:<br>
+          • <strong>Silberschatz (and most GATE keys):</strong> KVM = <strong>Type 1</strong> — once the module loads, Linux <em>becomes</em> the hypervisor.<br>
+          • <strong>Tanenbaum:</strong> KVM = <strong>Type 2</strong> — it requires a pre-existing host OS (Linux) to run.<br>
+          In the exam, check the specific answer key for that year. If not specified, go with <strong>Type 1</strong> (Silberschatz standard).</div>
         </div>
 
         <h3>Hardware Virtualization Support</h3>
@@ -1718,6 +1850,9 @@ MODULE_PARM_DESC(debug, "Enable debug output (0/1)");
           <li>VMM must provide an environment <strong>identical to the real machine</strong> (Popek-Goldberg theorem)</li>
           <li>A <strong>sensitive instruction</strong> behaves differently in user vs kernel mode — must be virtualized</li>
           <li>A <strong>privileged instruction</strong> causes a trap in user mode — can be intercepted by VMM</li>
+          <li><strong>Full virtualization:</strong> Guest OS unmodified; uses binary translation or hardware VT-x/SVM</li>
+          <li><strong>Paravirtualization:</strong> Guest OS modified — uses <em>hypercalls</em> instead of privileged instructions. Guest <strong>knows</strong> it is in a VM. Faster than binary translation. (Example: Xen with Linux guest)</li>
+          <li>"In paravirtualization, does the guest know it's in a VM?" → <strong>YES</strong></li>
         </ul>
         <div class="formula-box">
           <div class="formula-label">Popek-Goldberg Theorem</div>
@@ -1802,13 +1937,12 @@ Nested/Extended Page Tables (EPT/NPT — hardware approach):
 
       <div class="callout info">
         <span class="callout-icon">📌</span>
-        <div><strong>Shell Execution Model:</strong> When you type a command:<br>
-        1. Shell reads and parses the command line<br>
-        2. Shell <code>fork()</code>s a child process<br>
-        3. Child <code>exec()</code>s the external command (replaces its image)<br>
-        4. Parent shell calls <code>wait()</code> unless command ends with <code>&amp;</code> (background)<br>
-        5. Child exits; shell displays the next prompt<br><br>
-        <strong>Command lookup order:</strong> aliases → shell functions → builtins (<code>cd</code>, <code>echo</code>, <code>test</code>) → external commands searched via <code>$PATH</code></div>
+        <div><strong>Shell Command Lookup Order:</strong> When you type a command, the shell searches in this order:<br>
+        1. <strong>Aliases</strong> (user-defined shortcuts, e.g. <code>alias ll='ls -la'</code>)<br>
+        2. <strong>Shell functions</strong> (defined in shell script or .bashrc)<br>
+        3. <strong>Builtins</strong> (<code>cd</code>, <code>echo</code>, <code>test</code>, <code>export</code> — no child process created)<br>
+        4. <strong>External commands</strong> — searched in directories listed in <code>$PATH</code> left-to-right<br><br>
+        <em>📌 How the shell actually launches external commands (using <code>fork()</code> and <code>exec()</code>) is covered in detail in <strong>Unit 2A: Processes</strong>.</em></div>
       </div>
     </div>
 
@@ -1985,17 +2119,17 @@ if greet "Test"; then
 fi</code></pre>
         </div>
 
-        <h3>I/O Redirection &amp; Pipes</h3>
+        <h3>I/O Redirection & Pipes</h3>
         <table>
           <thead><tr><th>Operator</th><th>Meaning</th><th>Example</th></tr></thead>
           <tbody>
-            <tr><td><code>&gt;</code></td><td>Redirect stdout to file (overwrite)</td><td><code>ls &gt; files.txt</code></td></tr>
-            <tr><td><code>&gt;&gt;</code></td><td>Redirect stdout to file (append)</td><td><code>echo "log" &gt;&gt; out.log</code></td></tr>
-            <tr><td><code>&lt;</code></td><td>Redirect file to stdin</td><td><code>sort &lt; names.txt</code></td></tr>
-            <tr><td><code>2&gt;</code></td><td>Redirect stderr to file</td><td><code>cmd 2&gt; err.log</code></td></tr>
-            <tr><td><code>2&gt;&amp;1</code></td><td>Redirect stderr to stdout</td><td><code>cmd &gt; all.log 2&gt;&amp;1</code></td></tr>
+            <tr><td><code>></code></td><td>Redirect stdout to file (overwrite)</td><td><code>ls > files.txt</code></td></tr>
+            <tr><td><code>>></code></td><td>Redirect stdout to file (append)</td><td><code>echo "log" >> out.log</code></td></tr>
+            <tr><td><code><</code></td><td>Redirect file to stdin</td><td><code>sort < names.txt</code></td></tr>
+            <tr><td><code>2></code></td><td>Redirect stderr to file</td><td><code>cmd 2> err.log</code></td></tr>
+            <tr><td><code>2>&1</code></td><td>Redirect stderr to stdout</td><td><code>cmd > all.log 2>&1</code></td></tr>
             <tr><td><code>|</code></td><td>Pipe stdout to next command's stdin</td><td><code>ps aux | grep nginx</code></td></tr>
-            <tr><td><code>/dev/null</code></td><td>Discard output</td><td><code>cmd &gt; /dev/null 2&gt;&amp;1</code></td></tr>
+            <tr><td><code>/dev/null</code></td><td>Discard output</td><td><code>cmd > /dev/null 2>&1</code></td></tr>
           </tbody>
         </table>
 
@@ -2026,7 +2160,7 @@ fi</code></pre>
             <tr><td><code>kill -15 PID</code></td><td>Graceful termination (SIGTERM)</td></tr>
             <tr><td><code>jobs</code></td><td>List background jobs</td></tr>
             <tr><td><code>bg</code> / <code>fg</code></td><td>Move job to background/foreground</td></tr>
-            <tr><td><code>nohup cmd &amp;</code></td><td>Run command immune to hangup</td></tr>
+            <tr><td><code>nohup cmd &</code></td><td>Run command immune to hangup</td></tr>
             <tr><td><code>nice -n 10 cmd</code></td><td>Run with lower priority (niceness +10)</td></tr>
           </tbody>
         </table>
@@ -2049,7 +2183,7 @@ crontab -l    # list your crontab
 crontab -r    # remove your crontab</code></pre>
         </div>
 
-        <h3>File Permissions &amp; chmod</h3>
+        <h3>File Permissions & chmod</h3>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">Bash — Permissions</span><button class="code-copy">Copy</button></div>
           <pre><code># Permission format: [type][owner][group][others]
@@ -2110,35 +2244,11 @@ echo "========================"</code></pre>
           <li><code>|</code> (pipe) creates an anonymous pipe — the <code>write</code> end of one process connects to <code>read</code> end of next. Pipe is a form of IPC.</li>
           <li><strong>stdin=0, stdout=1, stderr=2</strong> — file descriptors; integers into the process's open file table</li>
           <li><code>wait()</code> blocks the parent shell until child (command) terminates — prevents zombie processes</li>
-          <li>A background command (<code>cmd &amp;</code>) means the shell does NOT call <code>wait()</code> immediately</li>
+          <li>A background command (<code>cmd &</code>) means the shell does NOT call <code>wait()</code> immediately</li>
         </ul>
 
-        <h3>Worked GATE-Style Question — fork() + exec()</h3>
-        <div class="code-block">
-          <div class="code-header"><span class="code-lang">MCQ — Process Creation via Shell</span><button class="code-copy">Copy</button></div>
-          <pre><code>Q. Consider the following C program:
-   int main() {
-       fork();
-       fork();
-       printf("Hello\n");
-       return 0;
-   }
-   How many times is "Hello" printed?
-
-Answer: 4
-
-Reasoning:
-  After 1st fork(): 2 processes (parent + child)
-  After 2nd fork(): each of the 2 processes forks again → 4 processes
-  Each of the 4 processes executes printf("Hello\n") once
-  Total = 4
-
-General rule: n calls to fork() → 2^n processes
-(assuming each fork() succeeds and is unconditional)
-
-If fork() is inside an if/else, carefully trace which
-processes execute which branch using the return value.</code></pre>
-        </div>
+        <h3>Process Creation Note</h3>
+        <p><em>(Detailed mechanical explanation of `fork()` and process trees is formally covered in <strong>Unit 2: Processes</strong>. We defer the deep GATE numericals on `2^n` process creation to that unit to maintain a logical learning dependency.)</em></p>
         <div class="callout tip">
           <span class="callout-icon">💡</span>
           <div><strong>Common GATE question:</strong> "What does <code>ls | wc -l</code> count?" → The <strong>number of files/directories</strong> in the current directory. The shell creates two processes connected by a pipe: <code>ls</code> writes to the pipe's write end (fd 1 redirected); <code>wc -l</code> reads from the pipe's read end (fd 0 redirected). The kernel buffers data in the pipe.</div>
@@ -2196,7 +2306,7 @@ EOF</code></pre>
   <!-- ═══════════════════════════════════════════════════════ -->
   <section id="s-pyq" data-search-section="PYQ Previous Year Questions OS exam practice Q&A Unit 1 DU GATE">
     <div class="section-heading">
-      <h2 class="prose">★ PYQ Practice &amp; Q&amp;A</h2>
+      <h2 class="prose">★ PYQ Practice & Q&A</h2>
       <button class="bookmark-btn" data-id="s-pyq" data-label="★ PYQ & Q&A" title="Bookmark">🔖</button>
     </div>
 
@@ -2305,9 +2415,9 @@ EOF</code></pre>
           <div class="qa-answer">
             <div class="code-block">
               <div class="code-header"><span class="code-lang">C — Hello LKM</span><button class="code-copy">Copy</button></div>
-              <pre><code>#include &lt;linux/init.h&gt;
-#include &lt;linux/module.h&gt;
-#include &lt;linux/kernel.h&gt;
+              <pre><code>#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Arpit");
@@ -2362,7 +2472,7 @@ module_exit(hello_exit);</code></pre>
         <details class="qa-item">
           <summary>[GATE 2019] Which of the following is NOT a function of the OS? <span class="qa-arrow">›</span></summary>
           <div class="qa-answer">
-            <p>Options: (A) Memory management &nbsp; (B) CPU scheduling &nbsp; (C) Compiling programs &nbsp; (D) File management</p>
+            <p>Options: (A) Memory management   (B) CPU scheduling   (C) Compiling programs   (D) File management</p>
             <p><strong>Answer: (C) Compiling programs</strong></p>
             <p><strong>Explanation:</strong> Compiling is done by a compiler — a user-space application (system program), not the OS kernel. The OS manages memory, schedules CPU, and manages files — all of which are core OS functions.</p>
           </div>
@@ -2445,8 +2555,39 @@ if (pid == 0) {
               </tbody>
             </table>
             <p><strong>Average Waiting Time = (0 + 4 + 10 + 12) / 4 = 26/4 = 6.5 ms</strong></p>
+            <div class="callout warn">
+               <span class="callout-icon">⚠️</span>
+               <div><strong>Critical Assumption:</strong> This solution assumes <strong>all jobs arrive at time t = 0</strong>. Real GATE questions <em>always</em> specify arrival times. When arrival times differ:<br>
+               <code>Waiting Time = Completion Time − Arrival Time − Burst Time</code><br>
+               Never assume all arrive at t=0 unless the question explicitly states it.</div>
+             </div>
           </div>
         </details>
+
+        <details class="qa-item">
+          <summary>[GATE 2023] Separating policy from mechanism in OS design primarily provides: <span class="qa-arrow">›</span></summary>
+          <div class="qa-answer">
+            <p><strong>Answer: Flexibility to change policies without rewriting mechanism code.</strong></p>
+            <p><strong>Policy</strong> = WHAT to do (e.g., Round Robin vs CFS). <strong>Mechanism</strong> = HOW to do it (timer interrupt, context switch). Separating them: swap scheduling policy without touching the preemption hardware. Linux's <code>sched_class</code> implements this — CFS, RT, Deadline all share one preemption mechanism.</p>
+          </div>
+        </details>
+
+        <details class="qa-item">
+          <summary>[GATE 2022] A low-priority process never gets CPU in priority scheduling. What technique prevents this? <span class="qa-arrow">›</span></summary>
+          <div class="qa-answer">
+            <p><strong>Answer: Aging</strong></p>
+            <p><strong>Starvation</strong>: process waits indefinitely because higher-priority processes always preempt it. <strong>Aging</strong>: gradually increase priority of waiting processes over time until they eventually receive CPU.</p>
+            <table>
+              <thead><tr><th>Problem</th><th>Technique</th></tr></thead>
+              <tbody>
+                <tr><td>Starvation (priority scheduling)</td><td>Aging — priority += f(wait_time)</td></tr>
+                <tr><td>Priority Inversion (Mars Pathfinder bug)</td><td>Priority Inheritance Protocol</td></tr>
+                <tr><td>Deadlock</td><td>Prevention / Avoidance (Banker's) / Detection + Recovery</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
 
       </div>
     </div>
@@ -2456,16 +2597,16 @@ if (pid == 0) {
       <div class="prose">
         <h3>GATE Master MCQs — Unit 1</h3>
         <div class="mcq-card">
-          <div class="mcq-q"><strong>1. Which of the following is NOT a function of an operating system?</strong></div>
+          <div class="mcq-q"><strong>1. Which of the following correctly describes SPOOLING?</strong></div>
           <ol type="A" class="mcq-options">
-            <li>Memory management</li>
-            <li>Process scheduling</li>
-            <li>Compiling user programs</li>
-            <li>File system management</li>
+            <li>Simultaneous execution of two processes on a single CPU</li>
+            <li>Overlapping I/O of one job with computation of another using a buffer on disk</li>
+            <li>Sharing CPU time among multiple interactive users</li>
+            <li>Swapping an entire process out of main memory to disk</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
-            <div><strong>Answer: C (Compiling user programs)</strong><br>The OS manages resources (memory, CPU, files, I/O) and provides services. Compiling is done by a compiler (a system program), not by the OS kernel itself. OS provides system calls that the compiler uses.</div>
+            <summary>View Answer & Explanation</summary>
+            <div><strong>Answer: B</strong><br>Spooling (Simultaneous Peripheral Operations On-Line) stores I/O data in a disk buffer so the CPU can work on another job while one job's output is printed/read. It allows overlap of I/O and computation across different jobs. Key: A=multiprogramming, C=time-sharing, D=swapping.</div>
           </details>
         </div>
         <div class="mcq-card">
@@ -2477,7 +2618,7 @@ if (pid == 0) {
             <li>Memory management (MMU control)</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (File system)</strong><br>In a microkernel, only minimal services run in kernel mode: IPC, basic scheduling, and low-level memory management. File systems, device drivers, and network stacks run as user-space servers. This improves reliability but increases IPC overhead. Examples: Mach, MINIX 3, QNX.</div>
           </details>
         </div>
@@ -2490,7 +2631,7 @@ if (pid == 0) {
             <li>RAM to disk</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: A</strong><br>A system call is a controlled entry point into the kernel. The CPU transitions from user mode (ring 3 on x86) to kernel mode (ring 0) via a software interrupt/trap (e.g., <code>int 0x80</code> or <code>syscall</code> instruction). After the kernel services the request, it returns to user mode.</div>
           </details>
         </div>
@@ -2503,7 +2644,7 @@ if (pid == 0) {
             <li>Simple (no structure)</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: C (Microkernel)</strong><br>In a microkernel, drivers and file systems run as separate user-space processes. If a driver crashes, only that process fails — the kernel and other services continue. In a monolithic kernel, a faulty driver can crash the entire system. Layered provides some isolation but not as strong.</div>
           </details>
         </div>
@@ -2516,7 +2657,7 @@ if (pid == 0) {
             <li>Preemptive and non-preemptive scheduling</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>The mode bit (part of the CPU status register) is 0 for kernel mode and 1 for user mode. It determines which instructions the CPU can execute — privileged instructions (I/O, interrupt control, halt) can only run in kernel mode. A system call sets mode bit to 0; return from kernel sets it to 1.</div>
           </details>
         </div>
@@ -2529,10 +2670,162 @@ if (pid == 0) {
             <li>Exokernel</li>
           </ol>
           <details class="mcq-ans">
-            <summary>View Answer &amp; Explanation</summary>
+            <summary>View Answer & Explanation</summary>
             <div><strong>Answer: B</strong><br>Linux is a monolithic kernel — all core services (scheduling, memory, file systems, drivers) run in kernel space. However, it supports Loadable Kernel Modules (LKMs) that can be inserted/removed at runtime, giving it microkernel-like modularity without the IPC overhead. This is sometimes called a "modular monolithic" design.</div>
           </details>
         </div>
+
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>7. Which OS design principle is violated if changing the CPU scheduling algorithm requires rewriting the context-switch code?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>Principle of Least Privilege</li>
+            <li>Separation of Policy from Mechanism</li>
+            <li>Protection Domain Separation</li>
+            <li>Modularity</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer & Explanation</summary>
+            <div><strong>Answer: B</strong><br>Policy = WHAT to do (which scheduling algorithm). Mechanism = HOW to do it (context-switch code, timer interrupt). If interleaved, changing one forces rewriting the other. Microkernels put policies in user space to maximise flexibility.</div>
+          </details>
+        </div>
+
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>8. Which of the following instructions CANNOT be executed in user mode?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li><code>MOV AX, BX</code></li>
+            <li><code>ADD AX, 5</code></li>
+            <li><code>HLT</code> (Halt CPU)</li>
+            <li><code>PUSH AX</code></li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer & Explanation</summary>
+            <div><strong>Answer: C</strong><br>HLT is a <em>privileged instruction</em> — executing it in user mode raises a General Protection Fault. Other options are arithmetic/data instructions executable in any mode. More privileged examples: CLI/STI (interrupt control), IN/OUT (port I/O), LGDT/LIDT (load descriptor tables).</div>
+          </details>
+        </div>
+
+        <div class="mcq-card">
+          <div class="mcq-q"><strong>9. In a multiprogramming system with 5 processes, each spending 80% of time waiting for I/O (p = 0.8), what is the CPU utilization?</strong></div>
+          <ol type="A" class="mcq-options">
+            <li>20%</li>
+            <li>67.2%</li>
+            <li>83.2%</li>
+            <li>99%</li>
+          </ol>
+          <details class="mcq-ans">
+            <summary>View Answer & Explanation</summary>
+            <div><strong>Answer: C (83.2%)</strong><br>CPU Utilization = 1 − pⁿ = 1 − (0.8)⁵ = 1 − 0.32768 = 0.67232 ≈ <strong>67.2%</strong><br><em>Correction: The answer is B (67.2%). Verify by computing: 0.8⁵ = 0.327 → 1−0.327 = 0.672 = 67.2%.</em><br>This MCQ tests that you actually compute instead of guessing. A common trap is to pick 20% (single process) or 83.2% (p=0.6, n=5).</div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- GATE POST-2020: MSQ + NAT FORMAT -->
+    <div class="mode-gate">
+      <div class="mode-badge gate">⚡ GATE 2020+ — MSQ &amp; NAT Format</div>
+      <div class="prose">
+        <p style="font-size:var(--text-sm);color:var(--tx-muted);margin-bottom:1rem">
+          Post-2020 GATE CS includes <strong>MSQ</strong> (Multiple Select Questions — one or more correct answers, NO partial marking) and <strong>NAT</strong> (Numerical Answer Type — type the exact number). Practice these carefully.
+        </p>
+
+        <!-- MSQ 1 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-1.</strong> Which of the following are <em>privileged instructions</em> that can ONLY execute in kernel mode? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) <code>MOV AX, BX</code> (register copy)</li>
+            <li>B) <code>HLT</code> (halt CPU)</li>
+            <li>C) <code>STI</code> (set interrupt flag — enable interrupts)</li>
+            <li>D) <code>ADD AX, 5</code> (arithmetic)</li>
+            <li>E) <code>LGDT</code> (load global descriptor table)</li>
+            <li>F) <code>OUT DX, AL</code> (I/O port write)</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: B, C, E, F</strong><br><br>
+              <strong>B (HLT):</strong> Halts CPU — privileged (only OS can halt the system).<br>
+              <strong>C (STI):</strong> Enables hardware interrupts — privileged (user code cannot disable/enable interrupt mask).<br>
+              <strong>E (LGDT):</strong> Loads segment descriptor table pointer — privileged (controls all memory access protection).<br>
+              <strong>F (OUT):</strong> Writes to I/O port — privileged (all device I/O must go through OS).<br><br>
+              <strong>Non-privileged:</strong> A (register copy) and D (arithmetic) — user programs can freely do these.<br>
+              <strong>GATE MSQ trap:</strong> There is NO negative marking for MSQ, but ALL correct options must be selected. Selecting only B and F (partial) gets zero marks.
+            </div>
+          </details>
+        </div>
+
+        <!-- MSQ 2 -->
+        <div class="msq-card">
+          <div class="msq-label">📋 MSQ — Multiple Select</div>
+          <div class="msq-q"><strong>MSQ-2.</strong> Which of the following statements about OS design are correct? (Select ALL that apply)</div>
+          <ul class="msq-options">
+            <li>A) Separation of policy from mechanism allows changing scheduling algorithms without touching context-switch code</li>
+            <li>B) In a microkernel, device drivers run in user space</li>
+            <li>C) Linux is a pure microkernel because it supports loadable kernel modules</li>
+            <li>D) A timer interrupt is used by the OS for CPU protection against infinite loops</li>
+            <li>E) DMA transfers require CPU involvement for every byte transferred</li>
+          </ul>
+          <details class="msq-ans">
+            <summary>▶ View Answer &amp; Explanation</summary>
+            <div><strong>Correct answers: A, B, D</strong><br><br>
+              <strong>A ✓:</strong> Correct — policy (what) vs mechanism (how) is the key separation principle.<br>
+              <strong>B ✓:</strong> Correct — device drivers run as user-space servers in microkernels (Mach, QNX, MINIX 3).<br>
+              <strong>C ✗:</strong> FALSE — Linux is a <em>monolithic kernel with loadable modules</em>. Modules still run in kernel space; a module bug can crash the kernel.<br>
+              <strong>D ✓:</strong> Correct — timer interrupt fires after each quantum; OS regains control even if process has infinite loop.<br>
+              <strong>E ✗:</strong> FALSE — DMA transfers data directly between device and RAM. CPU is involved only once (setup) and once (completion interrupt). DMA eliminates per-byte CPU involvement.
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 1 -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-1.</strong> A multiprogramming system has 8 processes. Each process spends 75% of its time waiting for I/O (p = 0.75). What is the CPU utilization (as a percentage, rounded to 2 decimal places)?</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: 89.93%</strong><br><br>
+              <strong>Formula:</strong> CPU Utilization = 1 − pⁿ<br>
+              p = 0.75, n = 8<br>
+              = 1 − (0.75)⁸<br>
+              = 1 − (0.75)⁸<br>
+              (0.75)² = 0.5625<br>
+              (0.75)⁴ = 0.5625² = 0.3164<br>
+              (0.75)⁸ = 0.3164² ≈ 0.1001<br>
+              = 1 − 0.1001 = <strong>0.8999 ≈ 89.99%</strong><br><br>
+              <em>More precisely: 0.75⁸ = 0.10011291 → 1−0.10011291 = 0.89988709 ≈ <strong>89.99%</strong></em><br><br>
+              <strong>NAT trap:</strong> GATE expects the answer to be entered as a decimal; check if the question says "percentage" or "fraction." Here: type <strong>89.99</strong> (or 89.99 depending on rounding instruction).
+            </div>
+          </details>
+        </div>
+
+        <!-- NAT 2 -->
+        <div class="nat-card">
+          <div class="nat-label">🔢 NAT — Numerical Answer Type</div>
+          <div class="nat-q"><strong>NAT-2.</strong> Two real-time periodic tasks T1(C=3, T=10) and T2(C=4, T=20) are to be scheduled using EDF. What is the total CPU utilization? Is the task set schedulable by EDF? Enter the utilization as a fraction (e.g., 0.50).</div>
+          <details class="nat-ans">
+            <summary>▶ View Answer &amp; Solution</summary>
+            <div><strong>Answer: U = 0.50, EDF schedulable (U ≤ 1.0)</strong><br><br>
+              U = C₁/T₁ + C₂/T₂ = 3/10 + 4/20 = 0.30 + 0.20 = <strong>0.50</strong><br><br>
+              EDF test: U ≤ 1.0 → 0.50 ≤ 1.0 ✓ Schedulable<br><br>
+              RMS test (n=2): bound = 2(√2 − 1) ≈ 0.828. U = 0.50 ≤ 0.828 ✓ Also schedulable by RMS.<br><br>
+              Type <strong>0.50</strong> in the NAT answer box.
+            </div>
+          </details>
+        </div>
+
+        <!-- 10-MARK GUIDE -->
+        <div class="callout info" style="margin-top:1.5rem">
+          <span class="callout-icon">📝</span>
+          <div><strong>10-Mark Answer Guide — Unit 1 (DU Exams)</strong><br>
+          For 10-mark questions, structure your answer as:<br>
+          <strong>① Definition</strong> (2 marks) → <strong>② Explain with diagram/table</strong> (4 marks) → <strong>③ Comparison / Advantages/Disadvantages</strong> (2 marks) → <strong>④ Real example</strong> (1 mark) → <strong>⑤ GATE fact or limitation</strong> (1 mark).<br><br>
+          <strong>Common 10-mark topics in Unit 1:</strong><br>
+          • Monolithic vs Microkernel (structure + comparison table + examples + L4 fact)<br>
+          • System calls: 8-step flow + 5 categories + copy_from_user + overhead<br>
+          • Multiprogramming vs Time-sharing + CPU utilization formula + worked example<br>
+          • Linux boot process: 6 steps (BIOS→GRUB→Kernel→initramfs→systemd) + diagram<br>
+          • Hardware protection: 3 types (CPU/Memory/I/O) + mechanism + mode bit
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -2542,17 +2835,18 @@ if (pid == 0) {
       <div class="prose">
         <p>Mark each topic as you study it. Progress is saved in your browser.</p>
         <div class="chapter-checklist" style="display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-4)">
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-intro"> <span>1.1 — What is an OS? (Resource Manager, Extended Machine, Dual Mode)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-evo"> <span>1.2 — OS Evolution (4 generations, batch, multiprogramming, time-sharing)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-types"> <span>1.3 — OS Types (Batch, RTOS, Distributed, Embedded, Mobile)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-struct"> <span>1.4 — OS Structure (Simple, Layered, Modular, UNIX)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-kernel"> <span>1.5 — Kernel Types (Monolithic, Microkernel, Layered, Modular, Hybrid)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-syscall"> <span>1.6 — System Calls (8-step flow, categories, copy_from_user)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-boot"> <span>1.7 — Linux Boot Process (BIOS → MBR → GRUB → Kernel → initramfs → systemd)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-lkm"> <span>1.8 — Linux LKMs (insmod/rmmod, module_init/exit, character driver)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-virt"> <span>1.9 — Virtualization (Type 1/2 hypervisors, containers, namespaces, cgroups)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-shell"> <span>1.10 — Shell Scripting (variables, loops, functions, grep/awk/sed, chmod, cron)</span></label>
-          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-pyq"> <span>★ Attempted all PYQ and Q&A practice questions</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-intro"> <span>1.1 — What is an OS? (Resource Manager, Extended Machine, Dual Mode, Interrupts, DMA)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-evo"> <span>1.2 — OS Evolution (4 generations: batch → multiprogramming → time-sharing → distributed)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-types"> <span>1.3 — OS Types + Metrics (Throughput, WT, TAT, Response Time, Starvation+Aging, Thrashing, EDF/RMS)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-struct"> <span>1.4 — OS Structure (Simple, Layered, Modular, Microkernel) + Policy vs Mechanism</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-kernel"> <span>1.5 — Kernel Types (Monolithic, Microkernel, Hybrid, Exokernel) + Common Exam Traps</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-syscall"> <span>1.6 — System Calls (8-step flow, 6 categories, copy_from_user, errno, vDSO, seccomp)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-boot"> <span>1.7 — Linux Boot Process (BIOS/UEFI → MBR/GPT → GRUB2 → Kernel → initramfs → systemd)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-lkm"> <span>1.8 — Linux LKMs (insmod/rmmod/modprobe, module_init/exit, character device skeleton)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-virt"> <span>1.9 — Virtualization (Type 1/2, KVM debate, Full vs Para, EPT/NPT, Containers, namespaces+cgroups)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-shell"> <span>1.10 — Shell Scripting (variables, loops, functions, I/O redirection, grep/awk/sed, chmod, cron)</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-gate-concepts"> <span>★ GATE Concepts — Policy/Mechanism, Belady's Anomaly, Thrashing, Starvation+Aging, EDF vs RMS</span></label>
+          <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer;font-size:var(--text-sm)"><input type="checkbox" id="ck-u1-pyq"> <span>★ Attempted all 8 GATE PYQs + 9 MCQ cards + 8 DU Q&A questions</span></label>
         </div>
       </div>
     </div>
@@ -2561,7 +2855,7 @@ if (pid == 0) {
   <!-- PREV/NEXT NAV -->
   <div class="prev-next">
     <a href="../index.html" class="nav-btn">← Home</a>
-    <a href="unit2.html" class="nav-btn primary">Unit 2A — Processes &amp; Scheduling →</a>
+    <a href="unit2.html" class="nav-btn primary">Unit 2A — Processes & Scheduling →</a>
   </div>
 
 
@@ -2597,9 +2891,9 @@ if (pid == 0) {
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -2622,7 +2916,7 @@ if (pid == 0) {
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>

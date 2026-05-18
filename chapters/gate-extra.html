@@ -11,30 +11,8 @@
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/animations.css">
 <link rel="stylesheet" href="../assets/css/timer.css">
-<style>
-.toc-card{background:var(--bg-card);border:1px solid var(--bd-default);border-radius:var(--r-xl);padding:var(--sp-6);margin-bottom:var(--sp-8)}
-.toc-card h3{font-size:var(--text-sm);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--tx-muted);margin-bottom:var(--sp-4)}
-.toc-list{display:flex;flex-direction:column;gap:var(--sp-1)}
-.toc-item{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-radius:var(--r-md);font-size:var(--text-sm);color:var(--tx-secondary);transition:all var(--t-fast)}
-.toc-item:hover{background:var(--accent-soft);color:var(--accent-light)}
-.toc-num{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--tx-muted);min-width:22px}
-.prev-next{display:flex;justify-content:space-between;padding:var(--sp-8) 0 var(--sp-16);gap:var(--sp-4)}
-.nav-btn{display:flex;align-items:center;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-lg);border:1px solid var(--bd-default);color:var(--tx-secondary);font-size:var(--text-sm);font-weight:600;transition:all var(--t-base);background:var(--bg-card)}
-.nav-btn:hover{border-color:var(--accent-border);color:var(--accent-light);box-shadow:var(--sh-glow)}
-.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.def-box{background:var(--bg-elevated);border:1px solid var(--accent-border);border-radius:var(--r-lg);padding:var(--sp-5);margin:var(--sp-4) 0}
-.def-box .def-term{font-weight:700;color:var(--accent-light);margin-bottom:var(--sp-2);font-size:var(--text-sm);text-transform:uppercase;letter-spacing:.05em}
-.mem-diagram{display:flex;flex-direction:column;gap:2px;margin:var(--sp-4) 0;font-family:var(--font-mono);font-size:var(--text-xs)}
-.mem-block{padding:var(--sp-2) var(--sp-4);border-radius:4px;display:flex;justify-content:space-between;align-items:center}
-.mem-os{background:#4f46e5;color:#fff}
-.mem-p1{background:#059669;color:#fff}
-.mem-p2{background:#d97706;color:#fff}
-.mem-p3{background:#dc2626;color:#fff}
-.mem-free{background:var(--bg-card);border:1px dashed var(--bd-default);color:var(--tx-muted)}
-.addr-flow{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin:var(--sp-4) 0;padding:var(--sp-4);background:var(--bg-elevated);border-radius:var(--r-lg)}
-.addr-box{background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:var(--r-md);padding:var(--sp-2) var(--sp-4);font-size:var(--text-sm);font-weight:700;color:var(--accent-light);text-align:center}
-.addr-arrow{color:var(--tx-muted);font-size:1.2rem}
-</style>
+
+<link rel="stylesheet" href="../assets/css/chapters.css">
 </head>
 <body>
 <!-- ⚡ Arpit -->
@@ -42,7 +20,7 @@
 <header id="main-header">
   <div class="header-left">
     <button id="sidebar-toggle" class="icon-btn" title="Toggle Sidebar (S)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     <div class="brand-logo">
       <div class="brand-icon">A⚡</div>
@@ -52,13 +30,13 @@
   <span class="header-chapter-title"></span>
   <div class="header-right">
     <button id="search-btn" class="icon-btn" title="Search (Ctrl+K)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
     </button>
     <button id="tts-toggle" class="icon-btn" title="Read Aloud">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"></path></svg>
     </button>
     
-    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span class="print-label">PDF</span></button>
+    <button id="print-btn" title="Print / Save as PDF (Ctrl+P)" aria-label="Print"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg><span class="print-label">PDF</span></button>
     <button id="reading-mode-btn" class="icon-btn" title="Reading Mode (F)" aria-pressed="false" aria-label="Toggle reading mode">📖</button>
     <button id="theme-toggle" class="icon-btn" title="Toggle Theme (T)"></button>
   </div>
@@ -134,12 +112,12 @@
       <a href="#s-gate-formulas" class="toc-item"><span class="toc-num">G.1</span>Master Formula Sheet</a>
       <a href="#s-gate-cpu" class="toc-item"><span class="toc-num">G.2</span>CPU Scheduling — Advanced</a>
       <a href="#s-gate-mem" class="toc-item"><span class="toc-num">G.3</span>Memory — Advanced Topics</a>
-      <a href="#s-gate-sync" class="toc-item"><span class="toc-num">G.4</span>Sync Traps &amp; Priority Inversion</a>
+      <a href="#s-gate-sync" class="toc-item"><span class="toc-num">G.4</span>Sync Traps & Priority Inversion</a>
       <a href="#s-gate-bankers" class="toc-item"><span class="toc-num">G.5</span>Banker's Algorithm Fast-Track</a>
       <a href="#s-gate-pagerep" class="toc-item"><span class="toc-num">G.6</span>Page Replacement Numericals</a>
       <a href="#s-gate-disk" class="toc-item"><span class="toc-num">G.7</span>Disk Scheduling Numericals</a>
-      <a href="#s-gate-io" class="toc-item"><span class="toc-num">G.8</span>I/O Systems &amp; Device Management</a>
-      <a href="#s-gate-security" class="toc-item"><span class="toc-num">G.9</span>Protection &amp; Security</a>
+      <a href="#s-gate-io" class="toc-item"><span class="toc-num">G.8</span>I/O Systems & Device Management</a>
+      <a href="#s-gate-security" class="toc-item"><span class="toc-num">G.9</span>Protection & Security</a>
       <a href="#s-gate-pyqs" class="toc-item"><span class="toc-num">G.10</span>GATE 2019–2024 Solved PYQs</a>
       <a href="#s-gate-cheat" class="toc-item"><span class="toc-num">★</span>Unit Cheat Sheets</a>
     </div>
@@ -188,14 +166,24 @@ Number of pages = 2^m / 2^n = 2^(m−n)
 Physical addr = PageTable[p] × page_size + d
 Max internal fragmentation per process = page_size − 1
 
-── TLB / EAT ────────────────────────────────────────────────────
-EAT (with TLB) = α(t + m) + (1−α)(t + 2m)
-   α = hit rate, t = TLB time, m = memory access time
-   Simplified (t≈0): EAT = (2 − α) × m
+── TLB / EAT — ALL 3 VARIANTS (h = TLB hit ratio, t = TLB time, m = memory time) ──
+Variant 1 (Standard, sequential miss):     EAT = h(t+m) + (1−h)(t+2m) = t + (2−h)m
+Variant 2 (TLB time negligible, t≈0):     EAT = (2−h)m
+  ← GATE default when "TLB time = 0" or not given; most common GATE use
+Variant 3 (Simultaneous TLB+RAM lookup):  EAT = h·t + (1−h)·m
+  ← Only when question says "TLB and RAM accessed simultaneously"
+⚠️ Check which variant the question implies from wording.
+
+── PAGING ADDRESS SPLIT ──────────────────────────────────────────
+Page size = 2^n bytes → offset = n bits
+Page number bits = m − n  (where m = address space bits)
+p = ⌊addr / page_size⌋ (floor div)    d = addr mod page_size
+Physical = PageTable[p] × page_size + d
+HEX SHORTCUT: page_size=4KB=0x1000 → last 3 hex digits = offset!
 
 ── VIRTUAL MEMORY ───────────────────────────────────────────────
-EAT (page faults) = (1−p) × m + p × (page_fault_service_time)
-   p = fault rate; keep p < 10^−6 for acceptable perf
+EAT (page faults) = (1−p)×m + p×(page_fault_service_time)
+  p = fault rate; keep p < 10^−6 for acceptable perf
 
 ── INODE / INDEXED ALLOC ────────────────────────────────────────
 Let B = block size, P = pointer size (use problem's value; often 4)
@@ -307,7 +295,7 @@ Example:
    Q1: runs 16ms → not done → demote to Q2
    Q2: runs remaining 76ms to completion (FCFS)</code></pre>
         </div>
-        <h3>Priority Scheduling — Starvation &amp; Aging</h3>
+        <h3>Priority Scheduling — Starvation & Aging</h3>
         <table>
           <thead><tr><th>Problem</th><th>Cause</th><th>Solution</th></tr></thead>
           <tbody>
@@ -322,7 +310,7 @@ Example:
           <tbody>
             <tr><td>FCFS</td><td>❌</td><td>Simple batch</td><td>Convoy effect, high WT</td></tr>
             <tr><td>SJF</td><td>❌</td><td>Minimum avg WT (provable)</td><td>Starvation, burst prediction needed</td></tr>
-            <tr><td>SRTF</td><td>✅</td><td>Minimum avg WT (preemptive)</td><td>Starvation, heavy context switch</td></tr>
+            <tr><td>SRTF</td><td>✅</td><td>Minimum avg WT (preemptive)</td><td>Starvation, heavy <a href="unit2.html#s-proc-concept" class="glossary-term" title="Jump to definition">context switch</a></td></tr>
             <tr><td>RR</td><td>✅</td><td>Fair, interactive</td><td>High TAT if Q too small</td></tr>
             <tr><td>Priority</td><td>Both</td><td>Real-time, urgent tasks</td><td>Starvation without aging</td></tr>
             <tr><td>MLFQ</td><td>✅</td><td>General purpose (adaptive)</td><td>Complex to tune</td></tr>
@@ -397,7 +385,7 @@ Solution: Hash table on (pid, p) → O(1) lookup</code></pre>
             <tr><td>"Does paging cause external fragmentation?"</td><td>❌ NO — paging eliminates external fragmentation entirely</td></tr>
             <tr><td>"Does paging cause internal fragmentation?"</td><td>✅ YES — last page of a process may be partially filled</td></tr>
             <tr><td>"Can logical address space > physical memory?"</td><td>✅ YES — this is the entire point of virtual memory</td></tr>
-            <tr><td>"Is page table stored in RAM or CPU registers?"</td><td>RAM (pointed to by PTBR). Only TLB is in CPU.</td></tr>
+            <tr><td>"Is page table stored in RAM or CPU registers?"</td><td>RAM (pointed to by PTBR). Only <a href="unit5.html#s-mem-tlb" class="glossary-term" title="Jump to definition">TLB</a> is in CPU.</td></tr>
             <tr><td>"How many memory accesses with 2-level PT, no TLB?"</td><td>3: outer PT + inner PT + data</td></tr>
           </tbody>
         </table>
@@ -410,7 +398,7 @@ Solution: Hash table on (pid, p) → O(1) lookup</code></pre>
   <!-- SECTION G.4 -->
   <section id="s-gate-sync" data-search-section="synchronization traps priority inversion priority inheritance ceiling protocol bounded buffer classical problems common mistakes">
     <div class="section-heading">
-      <h2 class="prose">G.4 Sync Traps &amp; Priority Inversion</h2>
+      <h2 class="prose">G.4 Sync Traps & Priority Inversion</h2>
       <button class="bookmark-btn" data-id="s-gate-sync" data-label="G.4 Sync Traps" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
@@ -420,9 +408,9 @@ Solution: Hash table on (pid, p) → O(1) lookup</code></pre>
         <table>
           <thead><tr><th>Trap</th><th>Wrong Assumption</th><th>Correct Answer</th></tr></thead>
           <tbody>
-            <tr><td>Binary semaphore vs mutex</td><td>They're the same</td><td>Binary semaphore can be signaled by ANY process. Mutex can only be released by the process that locked it (ownership).</td></tr>
+            <tr><td>Binary <a href="unit3.html#s-semaphore" class="glossary-term" title="Jump to definition">semaphore</a> vs mutex</td><td>They're the same</td><td>Binary semaphore can be signaled by ANY process. Mutex can only be released by the process that locked it (ownership).</td></tr>
             <tr><td>Counting semaphore initial value</td><td>Always 0 or 1</td><td>Can be any N — used for resource counting (e.g., N buffer slots: initialized to N)</td></tr>
-            <tr><td>wait() order in Producer-Consumer</td><td>Order doesn't matter</td><td>Always wait(mutex) AFTER wait(full/empty). Reversing causes <strong>deadlock</strong>!</td></tr>
+            <tr><td>wait() order in Producer-Consumer</td><td>Order doesn't matter</td><td>Always wait(mutex) AFTER wait(full/empty). Reversing causes <strong><a href="unit4.html#s-dl-intro" class="glossary-term" title="Jump to definition">deadlock</a></strong>!</td></tr>
             <tr><td>Peterson's algorithm for N > 2</td><td>Works for N processes</td><td>Original Peterson's is for exactly 2 processes only. N-process version is different.</td></tr>
             <tr><td>Monitors guarantee mutual exclusion</td><td>Only for explicit lock calls</td><td>Monitor body: only ONE process active at a time — mutex is implicit, not explicit.</td></tr>
           </tbody>
@@ -744,7 +732,7 @@ Typically: 389 cylinders total (jump included) or 190 (jump excluded, without co
   <!-- SECTION G.8 -->
   <section id="s-gate-io" data-search-section="I/O systems device management DMA polling interrupts device driver kernel buffering spooling">
     <div class="section-heading">
-      <h2 class="prose">G.8 I/O Systems &amp; Device Management</h2>
+      <h2 class="prose">G.8 I/O Systems & Device Management</h2>
       <button class="bookmark-btn" data-id="s-gate-io" data-label="G.8 I/O Systems" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
@@ -807,7 +795,7 @@ to one interrupt per block transfer → major speedup!</code></pre>
   <!-- SECTION G.9 -->
   <section id="s-gate-security" data-search-section="protection security access matrix ACL capability list access control principle least privilege authentication threats">
     <div class="section-heading">
-      <h2 class="prose">G.9 Protection &amp; Security</h2>
+      <h2 class="prose">G.9 Protection & Security</h2>
       <button class="bookmark-btn" data-id="s-gate-security" data-label="G.9 Protection & Security" title="Bookmark">🔖</button>
     </div>
     <div class="mode-gate">
@@ -855,7 +843,7 @@ Implementation:
             <tr><td><strong>Fail-Safe Defaults</strong></td><td>Default = deny access. Explicitly grant, never explicitly deny.</td></tr>
           </tbody>
         </table>
-        <h3>Common Threats &amp; Attacks</h3>
+        <h3>Common Threats & Attacks</h3>
         <table>
           <thead><tr><th>Attack</th><th>Description</th></tr></thead>
           <tbody>
@@ -1025,9 +1013,7 @@ Paging: no external frag. Segmentation: no internal frag.
 Page bits: p = addr/pgsize, d = addr%pgsize; Physical = PT[p]*pgsize + d
 TLB EAT = α(t+m) + (1-α)(t+2m)   [α=hit rate]
 Page fault EAT = (1-p)m + p*s    [p=fault rate, s=service time]
-Replacement: OPT<LRU<FIFO(faults). Only FIFO has Bélády's anomaly.
-Thrashing: process spends more time paging than executing. Fix: working set / PFF.
-(No fixed % threshold; it means useful work is overwhelmed by paging I/O.)</code></pre>
+Replacement: OPT<lru<fifo(faults). only fifo has bélády's anomaly. thrashing: process spends more time paging than executing. fix: working set pff. (no fixed % threshold; it means useful work is overwhelmed by paging i o.)< code></pre>
         </div>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">Unit 4 — File Systems Cheat Sheet</span><button class="code-copy">Copy</button></div>
@@ -1107,7 +1093,7 @@ Multi-level: entries_per_page = page_size / PTE_size
 Levels needed = ⌈page_number_bits / bits_per_level⌉</code></pre>
         </div>
 
-        <h3>🔒 Synchronization &amp; Deadlock Formulas</h3>
+        <h3>🔒 Synchronization & Deadlock Formulas</h3>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">Sync & Deadlock — Quick Reference</span><button class="code-copy">Copy</button></div>
           <pre><code>Semaphore: wait(S) → S--; if S<0 block.  signal(S) → S++; wake one.
@@ -1133,7 +1119,7 @@ RAG: Single instance → cycle = deadlock
      Multi-instance → cycle ≠ guaranteed deadlock</code></pre>
         </div>
 
-        <h3>💾 File System &amp; Disk Formulas</h3>
+        <h3>💾 File System & Disk Formulas</h3>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">File & Disk — Quick Reference</span><button class="code-copy">Copy</button></div>
           <pre><code>Disk Access = Seek Time + Rotational Latency + Transfer Time
@@ -1210,9 +1196,9 @@ RAID 6: Usable = (N-2)/N, tolerates 2 disk failures</code></pre>
       </div>
     </div>
     <div id="pomo-ring-wrap">
-      <svg id="pomo-ring" viewBox="0 0 200 200">
-        <circle class="ring-track" cx="100" cy="100" r="88"/>
-        <circle id="ring-progress" cx="100" cy="100" r="88"/>
+      <svg id="pomo-ring" viewbox="0 0 200 200">
+        <circle class="ring-track" cx="100" cy="100" r="88"></circle>
+        <circle id="ring-progress" cx="100" cy="100" r="88"></circle>
       </svg>
       <div id="pomo-time-wrap">
         <div id="pomo-time">25:00</div>
@@ -1235,7 +1221,7 @@ RAID 6: Usable = (N-2)/N, tolerates 2 disk failures</code></pre>
       </div>
       <div id="pomo-goal-bar"><div id="pomo-goal-fill"></div></div>
     </div>
-    <div id="pomo-hints"><kbd>Space</kbd> start/pause &nbsp;<kbd>R</kbd> reset &nbsp;<kbd>S</kbd> skip</div>
+    <div id="pomo-hints"><kbd>Space</kbd> start/pause  <kbd>R</kbd> reset  <kbd>S</kbd> skip</div>
   </div></div>
 </div>
 <div class="modal" id="pomo-distraction-modal" hidden></div>

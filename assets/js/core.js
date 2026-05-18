@@ -494,6 +494,67 @@ const DocumentEnhancer = (() => {
     // Basic Syntax Highlighting Wrapper (Checks for PRISM/HLJS globally)
     if (window.Prism) { document.querySelectorAll('pre code').forEach(el => Prism.highlightElement(el)); }
     else if (window.hljs) { document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el)); }
+
+    // ── TABLE AUTO-WRAP (responsive horizontal scroll) ──────────────────
+    document.querySelectorAll(
+      '.content-inner table, .mode-uni table, .mode-gate table, .mode-adv table, section table'
+    ).forEach(table => {
+      // Skip if already wrapped
+      if (table.parentElement?.classList.contains('table-wrap')) return;
+      // Skip tiny tables (e.g., inside def-box without min-width issue)
+      const wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+
+    // ── MCQ INTERACTION WIRING ──────────────────────────────────────────
+    document.querySelectorAll('.mcq-item').forEach(item => {
+      const submitBtn = item.querySelector('.mcq-submit');
+      const hintBtn   = item.querySelector('.mcq-hint');
+      const explanation = item.querySelector('.mcq-explanation');
+      const options   = item.querySelectorAll('.mcq-option');
+      const correctAns = item.dataset.correct;
+
+      submitBtn?.addEventListener('click', () => {
+        const selected = item.querySelector('.mcq-option input:checked');
+        if (!selected) { Toast.show('⚠️ Please select an answer first', 'warn'); return; }
+        const selectedVal = selected.value || selected.closest('.mcq-option')?.dataset.val;
+        options.forEach(opt => {
+          const val = opt.querySelector('input')?.value || opt.dataset.val;
+          if (val === correctAns) opt.classList.add('correct-answer');
+          if (val === selectedVal && val !== correctAns) opt.classList.add('selected-wrong');
+          if (val === selectedVal && val === correctAns) opt.classList.add('selected-correct');
+        });
+        if (selectedVal === correctAns) {
+          item.classList.add('correct');
+          Toast.show('✅ Correct!', 'success');
+        } else {
+          item.classList.add('wrong');
+          Toast.show('❌ Incorrect — check the highlighted answer', 'warn');
+        }
+        if (explanation) explanation.classList.add('visible');
+        submitBtn.disabled = true;
+      });
+
+      hintBtn?.addEventListener('click', () => {
+        if (explanation) explanation.classList.toggle('visible');
+      });
+    });
+
+    // ── CODE COPY BUTTONS (fallback if not in event delegation) ─────────
+    document.querySelectorAll('.code-copy').forEach(btn => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const pre = btn.closest('.code-block')?.querySelector('pre');
+        if (!pre) return;
+        navigator.clipboard.writeText(pre.textContent).then(() => {
+          btn.textContent = '✓ Copied!'; btn.style.color = 'var(--success)';
+          setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 1800);
+        });
+      });
+    });
   }
   return { init };
 })();

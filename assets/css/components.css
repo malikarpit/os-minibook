@@ -462,3 +462,55 @@ body.reading-mode #reading-mode-btn { color: var(--accent-light); background: va
     transform: none !important;
   }
 }
+
+/* ── ACTIVE RECALL CHECKPOINTS ── */
+.active-recall {
+  margin: var(--sp-6) 0;
+  background: var(--bg-card);
+  border: 1px solid var(--bd-strong);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.active-recall summary {
+  padding: var(--sp-4);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: var(--bg-elevated);
+  user-select: none;
+  color: var(--tx-primary);
+  transition: background var(--t-fast);
+}
+.active-recall summary:hover {
+  background: var(--accent-soft);
+}
+.active-recall summary::-webkit-details-marker { display: none; }
+.active-recall summary::before {
+  content: '🧠';
+  font-size: 1.2rem;
+}
+.active-recall summary::after {
+  content: '▶';
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--tx-muted);
+  transition: transform var(--t-fast);
+}
+.active-recall[open] summary::after {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+.active-recall .recall-content {
+  padding: var(--sp-4);
+  border-top: 1px solid var(--bd-subtle);
+  font-size: var(--text-sm);
+  color: var(--tx-secondary);
+  line-height: 1.6;
+}
+.active-recall ul { margin-top: 0; padding-left: var(--sp-5); }
+.active-recall li { margin-bottom: var(--sp-2); }
+
